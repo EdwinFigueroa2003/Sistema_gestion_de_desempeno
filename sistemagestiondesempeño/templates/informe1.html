@@ -8,7 +8,8 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <style>
         html,
@@ -333,11 +334,13 @@
         .rectangle-2101 {
             background: #ffffff;
             border-radius: 40px;
-            width: 355px;
+            width: 365px;
             height: 375px;
             margin-right: 20px;
             margin-top: 20px;
+            margin-left: 19px;
             padding: 10px;
+
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
         }
 
@@ -350,6 +353,20 @@
             margin-right: 19px;
             /* Ajusta el margen entre los rectángulos */
             margin-top: 19px;
+            /* Ajusta el margen superior */
+            margin-left: 19px;
+            padding: 10px;
+        }
+
+        .rectangle-2070 {
+            background: #ffffff;
+            border-radius: 40px;
+            width: 250px;
+            height: 45px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            margin-right: 20px;
+            /* Ajusta el margen entre los rectángulos */
+            margin-top: 70px;
             /* Ajusta el margen superior */
             padding: 10px;
         }
@@ -395,6 +412,14 @@
             /* Aplicar negrita */
             margin-right: 5px;
             /* Espacio entre la etiqueta y el texto */
+        }
+
+        .vector {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            position: relative;
+            overflow: visible;
         }
     </style>
 </head>
@@ -493,7 +518,13 @@
             <h6><span class="label">Número de contacto:</span> 3168113679</h6>
             <h6><span class="label">Correo electrónico:</span> francisco.el.matematico@hotmail.com</h6>
 
-
+            <!--Eliminar integrante-->
+            <div class="rectangle-2070">
+                <a href="#"> <!--Agregar link hacia algun lugar-->
+                    <h6> <img src="{{ url_for('static', filename='img/vector0.jpg')}}" class="vetor" /> Eliminar</h6>
+                </a>
+            </div>
+            <!--Eliminar integrante-->
 
         </div>
         <!-- <div class="info-wrapper"> este sirve para acomodar los rectangulos cuando la barra esta desplegada, depronto sirve para despues-->
