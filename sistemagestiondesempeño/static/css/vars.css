@@ -1,0 +1,105 @@
+/* Figma Styles of your File */
+:root {
+  /* Colors */
+  --verde: linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    linear-gradient(to left, #1c7368, #1c7368);
+  --fondo-g-desempeno: radial-gradient(
+    closest-side,
+    rgba(0, 115, 250, 1) 0%,
+    rgba(0, 52, 101, 1) 100%
+  );
+  --tradicional: linear-gradient(
+    180deg,
+    rgba(242, 110, 46, 1) 0%,
+    rgba(241, 76, 108, 1) 100%
+  );
+  --darck-25: rgba(0, 0, 0, 0.2);
+  --primario: #0d6efd;
+  --darck-50: rgba(0, 0, 0, 0.5);
+  --primario-hover: #0b5ed7;
+  --primarios-naranjado: linear-gradient(
+      to left,
+      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.2)
+    ),
+    linear-gradient(to left, #f4762c, #f4762c);
+  --primarios-amarillo: linear-gradient(
+      to left,
+      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.2)
+    ),
+    linear-gradient(to left, #ffa30a, #ffa30a);
+  --primarios-fucsia: linear-gradient(
+      to left,
+      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.2)
+    ),
+    linear-gradient(to left, #fa0c4a, #fa0c4a);
+  --primarios-azul: linear-gradient(
+      to left,
+      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.2)
+    ),
+    linear-gradient(to left, #33ccff, #33ccff);
+  --primarios-gris: linear-gradient(
+      to left,
+      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.2)
+    ),
+    linear-gradient(to left, #e2e2e2, #e2e2e2);
+  --primarios-gris-on: linear-gradient(
+      to left,
+      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.2)
+    ),
+    linear-gradient(to left, #666666, #666666);
+
+  /* Fonts */
+  --subtitulo-font-family: NexaLight-Regular, sans-serif;
+  --subtitulo-font-size: 12px;
+  --subtitulo-line-height: normal;
+  --subtitulo-font-weight: 400;
+  --subtitulo-font-style: normal;
+  --super-titulo-font-family: NexaBold-Regular, sans-serif;
+  --super-titulo-font-size: 64px;
+  --super-titulo-line-height: normal;
+  --super-titulo-font-weight: 400;
+  --super-titulo-font-style: normal;
+  --sub-titulo-neg-font-family: NexaBold-Regular, sans-serif;
+  --sub-titulo-neg-font-size: 20px;
+  --sub-titulo-neg-line-height: normal;
+  --sub-titulo-neg-font-weight: 400;
+  --sub-titulo-neg-font-style: normal;
+  --sub-titulo-font-family: Inter-Black, sans-serif;
+  --sub-titulo-font-size: 16px;
+  --sub-titulo-line-height: normal;
+  --sub-titulo-font-weight: 900;
+  --sub-titulo-font-style: normal;
+  --titulo-principal-font-family: NexaBold-Regular, sans-serif;
+  --titulo-principal-font-size: 48px;
+  --titulo-principal-line-height: normal;
+  --titulo-principal-font-weight: 400;
+  --titulo-principal-font-style: normal;
+  --titulo-secundario-font-family: NexaLight-Regular, sans-serif;
+  --titulo-secundario-font-size: 40px;
+  --titulo-secundario-line-height: normal;
+  --titulo-secundario-font-weight: 400;
+  --titulo-secundario-font-style: normal;
+  --titulo-texto-de-parrafo-font-family: Nexa-Regular, sans-serif;
+  --titulo-texto-de-parrafo-font-size: 24px;
+  --titulo-texto-de-parrafo-line-height: normal;
+  --titulo-texto-de-parrafo-font-weight: 400;
+  --titulo-texto-de-parrafo-font-style: normal;
+  --titulo-notas-font-family: NexaLight-Regular, sans-serif;
+  --titulo-notas-font-size: 16px;
+  --titulo-notas-line-height: normal;
+  --titulo-notas-font-weight: 400;
+  --titulo-notas-font-style: normal;
+  --body-paragrah-font-family: Poppins-Regular, sans-serif;
+  --body-paragrah-font-size: 16px;
+  --body-paragrah-line-height: normal;
+  --body-paragrah-font-weight: 400;
+  --body-paragrah-font-style: normal;
+
+  /* Effects */
+}

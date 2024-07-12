@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Conectate</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    
+    <style>
+        body {
+            color: #000;
+            overflow-x: hidden;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #F8F5F5;
+            z-index: 1;
+        }
+
+        .container-login100 {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: 0 15px; /* Añadido relleno horizontal para evitar que el contenido se desborde en dispositivos pequeños */
+        }
+
+        .card {
+            border-radius: 20px;
+            box-shadow: 0px 4px 8px 0px #c7afaf;
+            display: flex;
+            flex-direction: column;
+            width: 100%; /* Ancho del contenedor del formulario */
+            max-width: 500px; /* Ancho máximo para mantener el diseño responsivo */
+            padding: 20px; /* Añadido espacio interno para el contenido */
+            
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente */
+            backdrop-filter: blur(10px); /* Efecto de desenfoque para un fondo translúcido */
+        
+        }
+
+        .input100 {
+            padding: 12px; /* Aumentado el relleno para los campos de entrada */
+            border: 1px solid #E5E5E5;
+            border-radius: 2px;
+            margin-bottom: 10px;
+            width: 100%;
+            color: #2C3E50;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .btn-blue {
+            background-color: #023059;
+            color: #fff;
+            border-radius: 2px;
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            margin-top: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-blue:hover {
+            background-color: #b2b3b6;
+        }
+
+        .iniciar-sesion {
+            color: #666666;
+            text-align: left;
+            font-family: var(--titulo-secundario-font-family, "NexaLight-Regular", sans-serif);
+            font-size: var(--titulo-secundario-font-size, 40px);
+            font-weight: var(--titulo-secundario-font-weight, 400);
+            text-transform: uppercase;
+            margin-bottom: 20px; /* Añadido margen inferior para separar el título del contenido */
+        }
+
+        .mariposa {
+            width: 641.27px;
+            height: 579.2px;
+            position: absolute;
+            left: 74.67px;
+            top: -181px;
+            transform-origin: 0 0;
+            transform: rotate(24.988deg) scale(1, 1);
+            object-fit: cover;
+            z-index: -1; /* Coloca la imagen detrás del contenido */
+        }
+
+        .mariposa-gif-1 {
+            width: 320px; /* Ancho de la imagen */
+            height: 252px; /* Alto de la imagen */
+            position: absolute; /* Posicionamiento absoluto respecto a su contenedor */
+            left: 650px; /* Posición izquierda respecto al borde izquierdo del contenedor */
+            top: 550px; /* Posición superior respecto al borde superior del contenedor */
+            transform-origin: 0 0; /* Punto de origen de la transformación (esquina superior izquierda) */
+            transform: rotate(-37.108deg) scale(1, 1); /* Transformaciones: rotación y escala */
+            object-fit: cover; /* Ajuste del contenido para cubrir el tamaño especificado */
+            z-index: -1; /* Coloca la imagen detrás del contenido principal del formulario */
+}
+
+
+        .clarity-eye-hide-line {
+            border-radius: 40px;
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            left: calc(50% - -214px);
+            top: calc(50% - 3px);
+            overflow: visible;
+        }
+
+        .group-1 {
+            height: auto;
+            position: absolute;
+            left: 990px;
+            top: -88px;
+            overflow: visible;
+            z-index: -1; /* Coloca la imagen detrás del contenido */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overlay">
+        <div class="container-login100">
+            <form id="form1" method="post">
+                <div class="card card0 border-0">
+                    <div class="card-content">
+                        <div class="iniciar-sesion">Iniciar sesión</div>
+
+                        <div class="row px-3">
+                            <label for="txtEmail" class="mb-1">Email</label>
+                            <input type="email" id="txtEmail" name="txtEmail" class="input100 mb-4"
+                                placeholder="Ingrese un email válido">
+                        </div>
+
+                        <div class="row px-3">
+                            <label for="txtContrasena" class="mb-1">Contraseña</label>
+                            <input id="txtContrasena" name="txtContrasena" class="input100 mb-4"
+                                type="password">
+                        </div>
+
+                        <div class="row mb-3 px-3">
+                            <button type="submit" id="btnLogin" name="btnLogin" value="Login"
+                                class="btn btn-blue text-center">Conéctate</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Imágenes adicionales -->
+        <!-- <img src="{{ url_for('static', filename='img/mariposa-gif-10.png') }}" class="mariposa-gif-1" /> -->
+        <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+        <img src="{{ url_for('static', filename='img/group-10.jpg')}}" class="group-1" />
+        <img src="{{ url_for('static', filename='img/clarity-eye-hide-line0.jpg')}}" class="clarity-eye-hide-line" />
+    </div>
+
+</body>
+
+</html>

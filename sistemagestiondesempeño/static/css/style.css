@@ -1,0 +1,226 @@
+.login,
+.login * {
+  box-sizing: border-box;
+}
+.login {
+  background: #f8f5f5;
+  height: 1024px;
+  position: relative;
+  overflow: hidden;
+}
+.group-1 {
+  height: auto;
+  position: absolute;
+  left: 990px;
+  top: -88px;
+  overflow: visible;
+}
+.rectangle-1380 {
+  background: rgba(255, 254, 254, 0.28);
+  border-radius: 40px;
+  border-width: 3px;
+  border-style: solid;
+  border-image: linear-gradient(
+    135.59deg,
+    rgba(88, 130, 193, 0.49) 0%,
+    rgba(14, 86, 192, 0.11) 100%
+  );
+  border-image-slice: 1;
+  width: 700px;
+  height: 628px;
+  position: absolute;
+  left: calc(50% - 350px);
+  top: calc(50% - 314px);
+  backdrop-filter: blur(12.5px);
+}
+.group-2255 {
+  position: absolute;
+  inset: 0;
+}
+.iniciar-sesi-n {
+  color: #666666;
+  text-align: left;
+  font-family: var(
+    --titulo-secundario-font-family,
+    "NexaLight-Regular",
+    sans-serif
+  );
+  font-size: var(--titulo-secundario-font-size, 40px);
+  font-weight: var(--titulo-secundario-font-weight, 400);
+  text-transform: uppercase;
+  position: absolute;
+  left: calc(50% - 249px);
+  top: calc(50% - 221px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.olvid-su-contrase-a {
+  color: #ffffff;
+  text-align: left;
+  font-family: "Numans-Regular", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  position: absolute;
+  left: calc(50% - 101px);
+  top: calc(50% - -242px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.frame-1577 {
+  width: 500px;
+  height: 50px;
+  position: absolute;
+  left: 474px;
+  top: 615px;
+}
+.rectangle-1383 {
+  background: #003465;
+  border-radius: 10px;
+  width: 500px;
+  height: 50px;
+  position: absolute;
+  left: calc(50% - 250px);
+  top: calc(50% - 25px);
+}
+.entrar {
+  color: #ffffff;
+  text-align: left;
+  font-family: var(
+    --titulo-texto-de-parrafo-font-family,
+    "Nexa-Regular",
+    sans-serif
+  );
+  font-size: var(--titulo-texto-de-parrafo-font-size, 24px);
+  font-weight: var(--titulo-texto-de-parrafo-font-weight, 400);
+  position: absolute;
+  left: calc(50% - 32px);
+  top: calc(50% - 14px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.group-2250 {
+  width: 500px;
+  height: 213px;
+  position: static;
+}
+.rectangle-1381 {
+  background: #ffffff;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #bcbec0;
+  border-width: 1px;
+  width: 500px;
+  height: 50px;
+  position: absolute;
+  left: calc(50% - 249px);
+  top: calc(50% - 126px);
+}
+.email {
+  color: #666666;
+  text-align: left;
+  font-family: "Numans-Regular", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  position: absolute;
+  left: calc(50% - 249px);
+  top: calc(50% - 152px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.rectangle-1382 {
+  background: #ffffff;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #bcbec0;
+  border-width: 1px;
+  width: 500px;
+  height: 50px;
+  position: absolute;
+  left: calc(50% - 249px);
+  top: calc(50% - 20px);
+}
+.contrase-a {
+  color: #666666;
+  text-align: left;
+  font-family: "Numans-Regular", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  position: absolute;
+  left: calc(50% - 249px);
+  top: calc(50% - 46px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.username-gmail-com {
+  color: #bcbec0;
+  text-align: left;
+  font-family: "Numans-Regular", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  position: absolute;
+  left: calc(50% - 226px);
+  top: calc(50% - 109px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.password {
+  color: #bcbec0;
+  text-align: left;
+  font-family: "Numans-Regular", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  position: absolute;
+  left: calc(50% - 226px);
+  top: calc(50% - 3px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.olvid-su-contrase-a2 {
+  color: #666666;
+  text-align: left;
+  font-family: "Numans-Regular", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  position: absolute;
+  left: calc(50% - 249px);
+  top: calc(50% - -47px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.clarity-eye-hide-line {
+  border-radius: 40px;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  left: calc(50% - -214px);
+  top: calc(50% - 3px);
+  overflow: visible;
+}
+.mariposa {
+  width: 641.27px;
+  height: 579.2px;
+  position: absolute;
+  left: 74.67px;
+  top: -181px;
+  transform-origin: 0 0;
+  transform: rotate(24.988deg) scale(1, 1);
+  object-fit: cover;
+}
+.mariposa-gif-1 {
+  width: 326px;
+  height: 252px;
+  position: absolute;
+  left: 810px;
+  top: 814.68px;
+  transform-origin: 0 0;
+  transform: rotate(-37.108deg) scale(1, 1);
+  object-fit: cover;
+}
