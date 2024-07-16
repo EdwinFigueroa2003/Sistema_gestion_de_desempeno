@@ -9,7 +9,8 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <style>
         html,
@@ -48,7 +49,7 @@
         .sidebar {
             width: 280px;
             height: 100%;
-            background-color: #333;
+            background-color: #ffffff;
             color: white;
             transition: width 0.3s ease;
             position: fixed;
@@ -57,6 +58,17 @@
             bottom: 0;
             z-index: 1000;
             overflow-y: auto;
+            border-radius: 10px;
+            /* Bordes redondeados de 10px */
+            box-shadow: 0px 16px 16px 4px rgba(0, 0, 0, 0.25);
+            margin-top: 10px;
+            /* Margen superior externo */
+            margin-right: 15px;
+            /* Margen derecho externo */
+            margin-bottom: 0 px;
+            /* Margen inferior externo */
+            margin-left: 15px;
+            /* Margen izquierdo externo */
         }
 
         .sidebar.collapsed {
@@ -358,7 +370,8 @@
         }
 
         h6 {
-            margin-right: 20px;        /* Ajuste del margen a la derecha*/
+            margin-right: 20px;
+            /* Ajuste del margen a la derecha*/
         }
 
         .label {
@@ -367,6 +380,148 @@
             margin-right: 5px;
             /* Espacio entre la etiqueta y el texto */
         }
+
+        /*Abre nueva version*/
+
+        .frame-2371 {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+            width: 95.56%;
+            height: 12.98%;
+            position: absolute;
+            right: 2.22%;
+            left: 2.22%;
+            bottom: 87.02%;
+            top: 0%;
+        }
+
+        .frame-2370 {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            height: 108px;
+            position: absolute;
+            left: 269px;
+            top: 221px;
+        }
+
+        .frame-2330 {
+            padding: 0px 50px 0px 0px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .group-2307 {
+            flex-shrink: 0;
+            width: 270px;
+            height: 132px;
+            position: static;
+        }
+
+        .frame-2374 {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            align-items: flex-start;
+            justify-content: flex-start;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+
+        .titulo-podcast {
+            color: #000000;
+            text-align: left;
+            font-family: var(--sub-titulo-neg-font-family,
+                    "NexaBold-Regular",
+                    sans-serif);
+            font-size: var(--sub-titulo-neg-font-size, 20px);
+            font-weight: var(--sub-titulo-neg-font-weight, 400);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .descripcion {
+            color: #373737;
+            text-align: left;
+            font-family: var(--titulo-notas-font-family, "NexaLight-Regular", sans-serif);
+            font-size: var(--titulo-notas-font-size, 16px);
+            font-weight: var(--titulo-notas-font-weight, 400);
+            position: relative;
+            width: 250px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .info-podcast {
+            background-color: #ff0000;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            border-radius: 35px;
+            box-shadow: 0px 16px 16px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        .medium-filled,
+        .medium-filled * {
+            box-sizing: border-box;
+        }
+
+        .medium-filled,
+        .volver {
+            background: linear-gradient(90deg,
+                    rgba(89, 238, 254, 1) 0%,
+                    rgba(40, 128, 242, 1) 100%);
+            color: white;
+            border-radius: 8px;
+
+            padding: 9px 32px 9px 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 0px;
+            align-items: center;
+            justify-content: center;
+            width: 228px;
+            position: relative;
+        }
+
+        .volver {
+            text-align: center;
+            font-family: "Roboto-SemiBold", sans-serif;
+            font-size: 14px;
+            /* Ajustado el tamaño del texto */
+            line-height: 32px;
+            /* Ajustado el alto del botón */
+            font-weight: 600;
+            padding: 0 20px;
+            /* Espaciado interno horizontal */
+            background-color: #EA5C10;
+            /* Color de fondo */
+            border: none;
+            /* Quitamos el borde */
+            border-radius: 5px;
+            /* Borde redondeado */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            /* Transición suave para el cambio de color de fondo */
+        }
+
+        /*Fin de nueva version*/
     </style>
 </head>
 
@@ -458,7 +613,55 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
         </form>
 
+        <div class="info-podcast">
+            <div class="frame-2330">
+                <div class="group-2307">
+                    <div class="frame-2374">
+                        <a href="#">
+                            <div class="titulo-podcast">la educación</div>
+                            <div class="descripcion">
+                                descripcion
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-podcast">
+            <div class="frame-2330">
+                <div class="group-2307">
+                    <div class="frame-2374">
+                        <a href="#">
+                            <div class="titulo-podcast">la educación</div>
+                            <div class="descripcion">
+                                descripcion
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-podcast">
+            <div class="frame-2330">
+                <div class="group-2307">
+                    <div class="frame-2374">
+                        <a href="#">
+                            <div class="titulo-podcast">la educación</div>
+                            <div class="descripcion">
+                                descripcion
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="medium-filled">
+            <a href="/gestiondeldesarrollo" class="volver">VOLVER</a>
+        </div>
     </div>
+
     <!-- Scripts al final del cuerpo -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -478,5 +681,6 @@
             content.classList.toggle('collapsed');
         }
     </script>
+
 </body>
 </html>
