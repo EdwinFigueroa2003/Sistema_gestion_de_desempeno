@@ -396,6 +396,62 @@
             /* Degradado al pasar el cursor */
             color: #525252;
         }
+
+        .rectangles-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .medium-filled,
+        .medium-filled * {
+            box-sizing: border-box;
+        }
+
+        .medium-filled,
+        .volver {
+            background: linear-gradient(90deg,
+                    rgba(89, 238, 254, 1) 0%,
+                    rgba(40, 128, 242, 1) 100%);
+            color: white;
+            border-radius: 8px;
+            padding: 9px 32px 9px 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 0px;
+            align-items: center;
+            justify-content: center;
+            width: 228px;
+            position: relative;
+        }
+
+        .volver {
+            text-align: center;
+            font-family: "Roboto-SemiBold", sans-serif;
+            font-size: 14px;
+            /* Ajustado el tamaño del texto */
+            line-height: 32px;
+            /* Ajustado el alto del botón */
+            font-weight: 600;
+            padding: 0 20px;
+            /* Espaciado interno horizontal */
+            background-color: #EA5C10;
+            /* Color de fondo */
+            border: none;
+            /* Quitamos el borde */
+            border-radius: 5px;
+            /* Borde redondeado */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            /* Transición suave para el cambio de color de fondo */
+        }
+
+        .volver:hover {
+            background: linear-gradient(90deg,
+                    rgba(89, 238, 254, 1) 0%,
+                    rgba(40, 128, 242, 1) 100%);
+            /* Color de fondo al pasar el ratón */
+        }
     </style>
 </head>
 
@@ -418,7 +474,7 @@
 
                         <li class="nav-item dropdown active">
                             <div class="btn-group">
-                                
+
                                 <a class="nav-link gestion-desempeno btn btn-warning" href="/gestiondeldesempeno"
                                     role="button">
                                     GESTIÓN DEL DESEMPEÑO
@@ -490,22 +546,34 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
         </form>
         <br>
-        <div class="rectangle-2101">
+        <div class="rectangles-container">
+            <div class="rectangle-2101">
+                <video controls poster="{{ url_for('static', filename='img/mariposa0.png') }}" width="70%">
+                    <source src="{{ url_for('static', filename='videos/Dancing triangle video.mp4') }}"
+                        type="video/mp4">
+                </video>
+            </div>
 
-            <video controls poster="{{ url_for('static', filename='img/mariposa0.png') }}" width="70%">
-                <source src="{{ url_for('static', filename='videos/Dancing triangle video.mp4') }}" type="video/mp4">
-            </video>
+            <div class="rectangle-2101">
+                <video controls poster="{{ url_for('static', filename='img/mariposa0.png') }}" width="70%">
+                    <source src="{{ url_for('static', filename='videos/Dancing triangle video.mp4') }}"
+                        type="video/mp4">
+                </video>
+            </div>
         </div>
-        
-        <div class="rectangle-2101">
-            <video controls poster="{{ url_for('static', filename='img/mariposa0.png') }}" width="70%">
-                <source src="{{ url_for('static', filename='videos/Dancing triangle video.mp4') }}" type="video/mp4">
-            </video>
+        <div class="rectangles-container">
+            <div class="rectangle-2101">
+                <video controls poster="{{ url_for('static', filename='img/mariposa0.png') }}" width="70%">
+                    <source src="{{ url_for('static', filename='videos/Dancing triangle video.mp4') }}"
+                        type="video/mp4">
+                </video>
+            </div>
         </div>
-        <div class="rectangle-2101">
-            <video controls poster="{{ url_for('static', filename='img/mariposa0.png') }}" width="70%">
-                <source src="{{ url_for('static', filename='videos/Dancing triangle video.mp4') }}" type="video/mp4">
-            </video>
+
+        <div class="rectangles-container">
+            <div class="medium-filled">
+                <a href="/gestiondeldesarrollo" class="volver">VOLVER</a>
+            </div>
         </div>
 
     </div>
