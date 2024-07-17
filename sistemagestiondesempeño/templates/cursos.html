@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 
 <head>
@@ -49,7 +48,7 @@
         .sidebar {
             width: 280px;
             height: 100%;
-            background-color: #333;
+            background-color: #ffffff;
             color: white;
             transition: width 0.3s ease;
             position: fixed;
@@ -58,6 +57,20 @@
             bottom: 0;
             z-index: 1000;
             overflow-y: auto;
+            border-radius: 10px;
+            /* Bordes redondeados de 10px */
+            box-shadow: 0px 16px 16px 4px rgba(0, 0, 0, 0.25);
+            /* lo ultimo que de agrego */
+            /*width: 277px;
+            height: 640px;*/
+            margin-top: 10px;
+            /* Margen superior externo */
+            margin-right: 15px;
+            /* Margen derecho externo */
+            margin-bottom: 0 px;
+            /* Margen inferior externo */
+            margin-left: 15px;
+            /* Margen izquierdo externo */
         }
 
         .sidebar.collapsed {
@@ -109,114 +122,9 @@
             margin: 0;
         }
 
-        /* Estilos específicos para los botones dentro del título */
-        .btn-title {
-            margin-left: 10px;
-        }
-
-        .logo {
-            max-width: 100%;
-            /* Ancho máximo de la imagen */
-            height: auto;
-            /* Altura automática para mantener la proporción */
-            display: block;
-            /* Evita espacios no deseados alrededor de la imagen */
-            margin-top: 20px;
-            /* Espacio superior */
-        }
-
-        .svg-button {
-            cursor: pointer;
-            /* Cambia el cursor al pasar sobre el botón */
-            display: inline-block;
-        }
-
-        .svg-button svg rect {
-            transition: fill 0.3s;
-            /* Añade una transición suave al cambiar el color de fondo */
-        }
-
-        .svg-button:hover svg rect {
-            fill: lightgray;
-            /* Cambia el color de fondo al pasar sobre el botón */
-        }
-
-        .nav-link h5,
-        .nav-link-cerrar h5 {
-            border-radius: 25px;
-            border: 1px solid #EA5C10;
-            padding: 10px;
-            color: rgb(0, 173, 253);
-            font-size: 16px;
-            text-decoration: none;
-        }
-
-        .nav-link-cerrar h5 {
-            background-color: #ffffff;
-            color: rgb(0, 0, 0);
-            font-size: 14px;
-            padding: 8px 12px;
-        }
-
-        .nav-link-cerrar h5:hover {
-            background-color: #EA5C10;
-            border-color: #EA5C10;
-        }
-
         .btn-group {
             margin-left: 10px;
         }
-
-        .sidebar {
-            width: 280px;
-            height: 100%;
-            background-color: #ffffff;
-            color: white;
-            transition: width 0.3s ease;
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            z-index: 1000;
-            overflow-y: auto;
-            border-radius: 10px;
-            /* Bordes redondeados de 10px */
-            box-shadow: 0px 16px 16px 4px rgba(0, 0, 0, 0.25);
-            /* lo ultimo que de agrego */
-            /*width: 277px;
-            height: 640px;*/
-            margin-top: 10px;
-            /* Margen superior externo */
-            margin-right: 15px;
-            /* Margen derecho externo */
-            margin-bottom: 0 px;
-            /* Margen inferior externo */
-            margin-left: 15px;
-            /* Margen izquierdo externo */
-        }
-
-        .sidebar.collapsed {
-            width: 50px;
-        }
-
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .sidebar ul li {
-            padding: 10px;
-        }
-
-        .sidebar ul li a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .btn-title {
-            margin-left: 10px;
-        }
-
 
         .gestion-desempeno {
             background-color: #C35E23;
@@ -327,48 +235,87 @@
             border-color: rgb(0, 0, 0);
         }
 
-        .rectangle-2101 {
-            background: #ffffff;
-            border-radius: 40px;
-            width: 300px;
-            height: 200px;
-            margin-right: 20px;
+        .rectangle {
+            width: 350px;
+            height: 150px;
+            margin: 5 px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #ECE9E9;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .rectangles-container {
+            display: flex;
+            justify-content: space-around;
             margin-top: 20px;
-            padding: 10px;
-            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
         }
 
-        hr {
-            width: 102%;
-            height: 10px;
-            margin-top: 1px;
-            margin-bottom: 5px;
-            border-width: 2px;
-            border-color: rgb(0, 0, 0);
+        .rectangle-link {
+            text-decoration: none;
+            color: inherit;
         }
 
-        h3 {
-            font-size: 23px;
-            /* Tamaño de fuente base */
-            line-height: 2;
-            /* Espaciado entre líneas */
-            margin: 1;
-            /* Eliminar margen para ajuste */
-            margin-right: 20px;
-            /* Ajuste del margen a la derecha */
+        .rectangle-link:hover,
+        .rectangle {
+            background-color: #f0f0f0;
+            /* Cambia el color de fondo al pasar el ratón, si lo deseas */
         }
 
-        h6 {
-            margin-right: 20px;        /* Ajuste del margen a la derecha*/
+        .medium-filled,
+        .medium-filled * {
+            box-sizing: border-box;
         }
 
-        .label {
-            font-weight: bold;
-            /* Aplicar negrita */
-            margin-right: 5px;
-            /* Espacio entre la etiqueta y el texto */
+        .medium-filled,
+        .volver {
+            background: linear-gradient(90deg,
+                    rgba(89, 238, 254, 1) 0%,
+                    rgba(40, 128, 242, 1) 100%);
+            color: white;
+            border-radius: 8px;
+            padding: 9px 32px 9px 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 0px;
+            align-items: center;
+            justify-content: center;
+            width: 228px;
+            position: relative;
         }
-        
+
+        .volver {
+            text-align: center;
+            font-family: "Roboto-SemiBold", sans-serif;
+            font-size: 14px;
+            /* Ajustado el tamaño del texto */
+            line-height: 32px;
+            /* Ajustado el alto del botón */
+            font-weight: 600;
+            padding: 0 20px;
+            /* Espaciado interno horizontal */
+            background-color: #EA5C10;
+            /* Color de fondo */
+            border: none;
+            /* Quitamos el borde */
+            border-radius: 5px;
+            /* Borde redondeado */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            /* Transición suave para el cambio de color de fondo */
+        }
+
+        .volver:hover {
+            background: linear-gradient(90deg,
+                    rgba(89, 238, 254, 1) 0%,
+                    rgba(40, 128, 242, 1) 100%);
+            /* Color de fondo al pasar el ratón */
+        }
+
     </style>
 </head>
 
@@ -459,6 +406,54 @@
             <input class="form-control mr-sm-2" type="search" placeholder="Ingresa el nombre" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
         </form>
+
+
+        <div class="rectangles-container">
+            
+            <a href="#" class="rectangle-link">
+                <div class="rectangle">
+                    <h2>Figma</h2>
+                    <p class="text"> Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
+                        malesuada rutrum diam, sed sollicitudin sed sed.</p>
+                </div>
+            </a>
+            
+                <a href="#" class="rectangle-link">
+                    <div class="rectangle">
+                        <h2>Otro curso</h2>
+                        <p class="text"> Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
+                            malesuada rutrum diam, sed sollicitudin sed sed.
+                        </p>
+                    </div>
+                </a>
+
+
+        </div>
+
+        <div class="rectangles-container">
+            <a href="#" class="rectangle-link">
+                <div class="rectangle">
+                    <h2>IA</h2>
+                    <p class="text"> Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
+                        malesuada rutrum diam, sed sollicitudin sed sed.
+                    </p>
+                </div>
+            </a>
+            <a href="#" class="rectangle-link">
+                <div class="rectangle">
+                    <h2>Otro curso</h2>
+                    <p class="text"> Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
+                        malesuada rutrum diam, sed sollicitudin sed sed. </p>
+                </div>
+            </a>
+        </div>
+        <div class="rectangles-container">
+            <div class="medium-filled">
+                <a href="/gestiondeldesarrollo" class="volver">VOLVER</a>
+            </div>
+        </div>
+
+
     </div>
     <!-- Scripts al final del cuerpo -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
