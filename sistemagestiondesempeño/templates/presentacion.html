@@ -8,7 +8,8 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <style>
         body {
@@ -29,13 +30,14 @@
             text-align: left;
             font-family: "Nexa-Regular", sans-serif;
             font-size: 24px;
-            font-weight: 400;
+            font-weight: 400px;
             position: absolute;
-            left: 80px;
-            top: 325px;
+            left: 325px;
+            top: 150px;
             width: 673px;
             display: flex;
             align-items: center;
+            text-align: center;
             justify-content: flex-start;
         }
 
@@ -47,10 +49,11 @@
             font-weight: 400;
             text-transform: uppercase;
             position: absolute;
-            left: 80px;
+            left: 325px;
             top: 55px;
             width: 650px;
             display: flex;
+            text-align: center;
             align-items: center;
             justify-content: flex-start;
         }
@@ -84,7 +87,8 @@
         .btn-blue {
             background: linear-gradient(90deg,
                     rgba(89, 238, 254, 1) 0%,
-                    rgba(40, 128, 242, 1) 100%);;
+                    rgba(40, 128, 242, 1) 100%);
+            ;
             color: #000000;
             border-radius: 10px;
             width: 500px;
@@ -93,28 +97,87 @@
             right: 25px;
             bottom: 35px;
         }
+
         .btn-blue:hover {
             background-color: #204bcc;
         }
-        
+
+        /* Abre Nuevo */
+        .rectangle-2101 {
+            background: linear-gradient(90deg,
+                    rgba(89, 238, 254, 1) 0%,
+                    rgba(40, 128, 242, 1) 100%);
+            border-color: #204bcc;
+            color: #000000;
+            border-radius: 60px;
+            font-family: "NexaBold-Regular", sans-serif;  /* Cambia el estilo de letra */
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 265px;
+            height: 210px;
+            margin-right: auto;
+            margin-top: 240px;
+            padding: 10px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        }
+
+        .rectangle-2101:hover {
+            background-image: linear-gradient(to right, #D99DE2, #ffffff);
+        }
+
+        .rectangles-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        /*Cierra nuevo*/
     </style>
 </head>
 
 <body>
     <div class="inicio">
         <div class="titulo">
-            SISTEMA DE<br>
-            GESTIÓN DE <br>
-            DESEMPEÑO 
+            Analitica Universitaria
         </div>
         <div class="descripcion">
-            Área donde los estudiantes, líderes, colaboradores y administrativos realizamos actividades para el
-            crecimiento de todos.
+            En este apartdado podras entrar a los proyectos universitarios. <br>
+            ¿A cual deseas ingresar?
         </div>
+
+
+        <div class="rectangles-container">
+            <a href="/inicio">
+                <div class="rectangle-2101">
+                    <h1>Gestion del Desempeño</h1>
+                </div>
+            </a>
+            <a href="#">
+                <div class="rectangle-2101">
+                    <h1>Innovación</h1>
+                </div>
+            </a>
+            <a href="#">
+                <div class="rectangle-2101">
+                    <h1>Transferencia del Conocimiento</h1>
+                </div>
+            </a>
+            <a href="#">
+                <div class="rectangle-2101">
+                    <h1>Gestión de Proyectos</h1>
+                </div>
+            </a>
+
+        </div>
+
+        <!--
         <a href="/menu">
-        <button class=" btn-blue" >Entrar</button>
-    </a>
-        
+            <button class=" btn-blue">Entrar</button>
+        </a>
+        -->
+
         <img src="{{ url_for('static', filename='img/mariposa0.png') }}" class="mariposa" />
         <img src="{{ url_for('static', filename='img/group-10.jpg') }}" class="group-1" />
     </div>

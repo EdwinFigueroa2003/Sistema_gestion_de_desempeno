@@ -48,11 +48,11 @@
         }
 
         .sidebar {
-            width: 280px;
+            width: 340px;
             height: 100%;
             background-color: #ffffff;
             color: white;
-            transition: width 0.3s ease;
+            transition: width 0.4s ease;
             position: fixed;
             left: 0;
             top: 0;
@@ -62,9 +62,6 @@
             border-radius: 10px;
             /* Bordes redondeados de 10px */
             box-shadow: 0px 16px 16px 4px rgba(0, 0, 0, 0.25);
-            /* lo ultimo que de agrego */
-            /*width: 277px;
-            height: 640px;*/
             margin-top: 10px;
             /* Margen superior externo */
             margin-right: 15px;
@@ -97,7 +94,7 @@
             flex: 1;
             padding: 20px;
             transition: margin-left 0.3s ease;
-            margin-left: 280px;
+            margin-left: 345px;
         }
 
         .content.collapsed {
@@ -139,7 +136,8 @@
             width: 75%;
             opacity: 0;
             transition: .5s ease;
-            border: 2px solid rgba(99, 99, 99, 0.568); /* Cambia #FF5733 al color que desees */
+            border: 2px solid rgba(99, 99, 99, 0.568);
+            /* Cambia #FF5733 al color que desees */
             background-color: rgba(255, 255, 255, 0.5);
             display: flex;
             align-items: center;
@@ -192,16 +190,31 @@
             color: #000;
         }
 
-        .dropdown-item {
-            color: rgb(223, 0, 0);
-            background-color: #EAEAEA;
-            /* Color del texto de los elementos del menú */
+        .dropdown-container {
+            position: relative;
+            /* Ajusta otros estilos según sea necesario */
         }
 
-        .dropdown-item:hover {
-            color: rgb(0, 0, 0);
-            background-color: #EAEAEA;
-            /* Color del texto y fondo al pasar el cursor */
+        .dropdown-menu {
+            position: absolute;
+            right: 0;
+            /* Alinea el menú al lado derecho */
+            background-color: rgb(97, 97, 97);
+            /* Color del texto de los elementos del menú */
+            top: 100%;
+            /* Fondo del menú */
+            width: 250px;
+            /* Ajusta el ancho del menú según sea necesario */
+        }
+
+        .dropdown-item {
+            color: rgb(255, 0, 0);
+            text-align: center;
+
+            padding: 10px;
+            /* Ajusta el relleno según sea necesario */
+            display: block;
+            /* Asegúrate de que los elementos se comporten como bloques */
         }
 
         .mi-equipo {
@@ -254,7 +267,342 @@
             /* Degradado al pasar el cursor */
             color: #525252;
         }
-/*
+
+        .inicio-png {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            left: 85px;
+            position: relative;
+            object-fit: cover;
+        }
+
+        .configuracion-png {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            left: 45px;
+            position: relative;
+            object-fit: cover;
+        }
+
+        .equipo-png {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            left: 70px;
+            position: relative;
+            object-fit: cover;
+        }
+
+        .BGDesarrollo-png {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            position: relative;
+            object-fit: cover;
+        }
+
+        .BGDesempeño-png {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            position: relative;
+            object-fit: cover;
+        }
+
+        /*Boton de siguiente */
+
+        .circulo {
+            position: relative;
+            width: 100px;
+            /* Ajusta el tamaño según el tamaño del elemento más grande */
+            height: 100px;
+            /* Ajusta el tamaño según el tamaño del elemento más grande */
+        }
+
+        .circulo .ellipse-285,
+        .circulo .ellipse-271,
+        .circulo .ellipse-272,
+        .circulo .ellipse-273 {
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .circulo .ellipse-285 {
+            background: #d9d9d9;
+            width: 100px;
+            height: 100px;
+            top: 0;
+            left: 0;
+        }
+
+        .circulo .ellipse-271 {
+            background: #eeecec;
+            width: 72px;
+            height: 72px;
+            top: 14px;
+            left: 14px;
+            box-shadow: 4px 4px 20px 0px rgba(0, 0, 0, 0.25);
+        }
+
+        .circulo .ellipse-272 {
+            background: #eeecec;
+            width: 66px;
+            height: 66px;
+            top: 17px;
+            left: 17px;
+            box-shadow: inset 4px 4px 4px 0px rgba(255, 251, 251, 1),
+                0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        }
+
+        .circulo .ellipse-273 {
+            background: #eeecec;
+            width: 66px;
+            height: 66px;
+            top: 17px;
+            left: 17px;
+            box-shadow: inset 4px 4px 4px 0px rgba(255, 251, 251, 1),
+                -31px -31px 43px 0px rgba(0, 0, 0, 0.25);
+        }
+
+        .siguiente {
+            width: 64px;
+            height: 64px;
+            position: absolute;
+            left: 18px;
+            top: 18px;
+            object-fit: cover;
+        }
+
+        /* Fin boton siguiente*/
+
+        /* Inicio Lineas */
+        /*
+        .line-1 {
+            margin-top: -5px;
+            border-width: 5px 0 0 0;
+            border-style: solid;
+            border-image: linear-gradient(180deg, rgba(242, 110, 46, 0.8) 0%, rgba(241, 76, 108, 0.8) 100%);
+            border-image-slice: 1;
+            width: 537.03px;
+            height: 0px;
+            position: absolute;
+            left: 876px;
+            top: 253px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            transform-origin: 0 0;
+            transform: rotate(111.98deg) scale(1, 1);
+            z-index: 1;
+        }
+
+        .line-2 {
+            margin-top: -5px;
+            border-width: 5px 0 0 0;
+            border-style: solid;
+            border-image: linear-gradient(180deg, rgba(242, 110, 46, 0.8) 0%, rgba(241, 76, 108, 0.8) 100%);
+            border-image-slice: 1;
+            width: 293.44px;
+            height: 0px;
+            position: absolute;
+            left: 1123px;
+            top: 94px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            transform-origin: 0 0;
+            transform: rotate(146.256deg) scale(1, 1);
+            z-index: 1;
+        }
+
+        .line-3 {
+            margin-top: -5px;
+            border-width: 5px 0 0 0;
+            border-style: solid;
+            border-image: linear-gradient(180deg, rgba(242, 110, 46, 0.8) 0%, rgba(241, 76, 108, 0.8) 100%);
+            border-image-slice: 1;
+            width: 301.99px;
+            height: 0px;
+            position: absolute;
+            left: 1123px;
+            top: 94px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            transform-origin: 0 0;
+            transform: rotate(-103.208deg) scale(1, 1);
+            z-index: 1;
+        }
+
+        .line-4 {
+            margin-top: -5px;
+            border-width: 5px 0 0 0;
+            border-style: solid;
+            border-image: linear-gradient(180deg, rgba(242, 110, 46, 0.8) 0%, rgba(241, 76, 108, 0.8) 100%);
+            border-image-slice: 1;
+            width: 484.54px;
+            height: 0px;
+            position: absolute;
+            left: 385px;
+            top: 310px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            transform-origin: 0 0;
+            transform: rotate(146.703deg) scale(1, 1);
+            z-index: 1;
+        }
+
+        .line-5 {
+            margin-top: -5px;
+            border-width: 5px 0 0 0;
+            border-style: solid;
+            border-image: linear-gradient(180deg, rgba(242, 110, 46, 0.8) 0%, rgba(241, 76, 108, 0.8) 100%);
+            border-image-slice: 1;
+            width: 476.89px;
+            height: 0px;
+            position: absolute;
+            left: 385px;
+            top: 310px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            transform-origin: 0 0;
+            transform: rotate(-132.961deg) scale(1, 1);
+            z-index: 1;
+        }
+
+        .line-6 {
+            margin-top: -5px;
+            border-width: 5px 0 0 0;
+            border-style: solid;
+            border-image: linear-gradient(180deg, rgba(242, 110, 46, 0.8) 0%, rgba(241, 76, 108, 0.8) 100%);
+            border-image-slice: 1;
+            width: 384.68px;
+            height: 0px;
+            position: absolute;
+            left: 354px;
+            top: 801px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            transform-origin: 0 0;
+            transform: rotate(-166.47deg) scale(1, 1);
+            z-index: 1;
+        }
+
+        .line-7 {
+            margin-top: -5px;
+            border-width: 5px 0 0 0;
+            border-style: solid;
+            border-image: linear-gradient(180deg, rgba(242, 110, 46, 0.8) 0%, rgba(241, 76, 108, 0.8) 100%);
+            border-image-slice: 1;
+            width: 324.47px;
+            height: 0px;
+            position: absolute;
+            left: 1445px;
+            top: 134px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            transform-origin: 0 0;
+            transform: rotate(-172.919deg) scale(1, 1);
+            z-index: 1;
+        }
+
+        .line-8 {
+            margin-top: -5px;
+            border-width: 5px 0 0 0;
+            border-style: solid;
+            border-image: linear-gradient(180deg, rgba(242, 110, 46, 0.8) 0%, rgba(241, 76, 108, 0.8) 100%);
+            border-image-slice: 1;
+            width: 283.53px;
+            height: 0px;
+            position: absolute;
+            left: 870px;
+            top: 544px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            transform-origin: 0 0;
+            transform: rotate(130.996deg) scale(1, 1);
+            z-index: 1;
+        }
+
+        .line-9 {
+            margin-top: -5px;
+            border-width: 5px 0 0 0;
+            border-style: solid;
+            border-image: linear-gradient(180deg, rgba(242, 110, 46, 0.8) 0%, rgba(241, 76, 108, 0.8) 100%);
+            border-image-slice: 1;
+            width: 486.12px;
+            height: 0px;
+            position: absolute;
+            left: 870px;
+            top: 277px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            transform-origin: 0 0;
+            transform: rotate(176.108deg) scale(1, 1);
+            z-index: 1;
+        }
+
+        .line-10 {
+            margin-top: -5px;
+            border-width: 5px 0 0 0;
+            border-style: solid;
+            border-image: linear-gradient(180deg, rgba(242, 110, 46, 0.8) 0%, rgba(241, 76, 108, 0.8) 100%);
+            border-image-slice: 1;
+            width: 546px;
+            height: 0px;
+            position: absolute;
+            left: 1494px;
+            top: 542px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            transform-origin: 0 0;
+            transform: rotate(180deg) scale(1, 1);
+            z-index: 1;
+        }
+
+        .line-11 {
+            margin-top: -5px;
+            border-width: 5px 0 0 0;
+            border-style: solid;
+            border-image: linear-gradient(180deg, rgba(242, 110, 46, 0.8) 0%, rgba(241, 76, 108, 0.8) 100%);
+            border-image-slice: 1;
+            width: 315.77px;
+            height: 0px;
+            position: absolute;
+            left: 665px;
+            top: 779px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            transform-origin: 0 0;
+            transform: rotate(176.005deg) scale(1, 1);
+            z-index: 1;
+        }
+
+        .line-12 {
+            margin-top: -5px;
+            border-width: 5px 0 0 0;
+            border-style: solid;
+            border-image: linear-gradient(180deg, rgba(242, 110, 46, 0.8) 0%, rgba(241, 76, 108, 0.8) 100%);
+            border-image-slice: 1;
+            width: 332.7px;
+            height: 0px;
+            position: absolute;
+            left: 885px;
+            top: 1057px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            transform-origin: 0 0;
+            transform: rotate(-125.458deg) scale(1, 1);
+            z-index: 1;
+        }
+
+        .line-13 {
+            margin-top: -5px;
+            border-width: 5px 0 0 0;
+            border-style: solid;
+            border-image: linear-gradient(180deg, rgba(242, 110, 46, 0.8) 0%, rgba(241, 76, 108, 0.8) 100%);
+            border-image-slice: 1;
+            width: 580.1px;
+            height: 0px;
+            position: absolute;
+            left: 1152px;
+            top: 1057px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            transform-origin: 0 0;
+            transform: rotate(-117.404deg) scale(1, 1);
+            z-index: 1;
+        }
+
+        /* Fin Lineas */
+
+        /*
         .mariposa1 {
             width: 419.94px;
             height: 373.75px;
@@ -303,6 +651,8 @@
                                 <a class="nav-link gestion-desempeno btn btn-warning" href="/gestiondeldesempeno"
                                     role="button">
                                     GESTIÓN DEL DESEMPEÑO
+                                    <img src="{{ url_for('static', filename='img/BGDesempeño.png')}}" />
+
                                 </a>
                                 <button
                                     class="btn btn-secondary dropdown-toggle dropdown-toggle-split gestion-desempeno"
@@ -311,12 +661,12 @@
                                     <span class="sr-only ">Toggle Dropdown</span>
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="#">Proyectos</a>
-                                    <a class="dropdown-item" href="#">Análisis Organizacional</a>
-                                    <a class="dropdown-item" href="#">Evaluación de Competencias</a>
-                                    <a class="dropdown-item" href="#">Construcción de propositos</a>
-                                    <a class="dropdown-item" href="#">Identificación de Lideres</a>
-                                    <a class="dropdown-item" href="#">Factores Claves de exito</a>
+                                    <a class="dropdown-item" href="/proyectos">Proyectos</a>
+                                    <a class="dropdown-item" href="/analisisorganizacional">Análisis Organizacional</a>
+                                    <a class="dropdown-item" href="/evaluaciondecompetencias">Evaluación de Competencias</a>
+                                    <a class="dropdown-item" href="/concertaciondepropositos">Concertación de propositos</a>
+                                    <a class="dropdown-item" href="/identificaciondelideres">Identificación de Lideres</a>
+                                    <a class="dropdown-item" href="/factoresclavesdeexito">Factores Claves de exito</a>
                                 </div>
                             </div>
                         </li>
@@ -326,6 +676,7 @@
                                 <a class="nav-link gestion-desarrollo btn btn-warning" href="/gestiondeldesarrollo"
                                     role="button">
                                     GESTIÓN DEL DESARROLLO
+                                    <img src="{{ url_for('static', filename='img/BGDesarrollo.png')}}" />
                                 </a>
                                 <button
                                     class="btn btn-secondary dropdown-toggle dropdown-toggle-split gestion-desarrollo"
@@ -346,17 +697,21 @@
                         <li class="nav-item active">
                             <a class="nav-link mi-equipo btn btn-primary" href="/equipo">
                                 MI EQUIPO
+                                <img src="{{ url_for('static', filename='img/equipo.png')}}" class="equipo-png" />
                             </a>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link configuracion btn btn-success" href="/configuracion">
                                 CONFIGURACIÓN
+                                <img src="{{ url_for('static', filename='img/configuracion.png')}}" />
                             </a>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link inicio btn btn-dark" href="/inicio">
                                 INICIO
+                                <img src="{{ url_for('static', filename='img/inicio.png')}}" class="inicio-png" />
                             </a>
+
                         </li>
                     </ul>
                 </div>
@@ -366,9 +721,36 @@
 
     <!-- Content -->
     <div class="content">
+
+        <div class="line-1"></div>
+        <div class="line-2"></div>
+        <div class="line-3"></div>
+        <div class="line-4"></div>
+        <div class="line-5"></div>
+        <div class="line-6"></div>
+        <div class="line-7"></div>
+        <div class="line-8"></div>
+        <div class="line-9"></div>
+        <div class="line-10"></div>
+        <div class="line-11"></div>
+        <div class="line-12"></div>
+        <div class="line-13"></div>
+
+
+        <div class="line-16"></div>
+
         <h1>
             <a href="/gestiondeldesempeno" style="text-decoration: none; color: inherit;">
                 GESTIÓN DEL DESEMPEÑO
+
+                <div class="circulo">
+                    <div class="ellipse-285"></div>
+                    <div class="ellipse-271"></div>
+                    <div class="ellipse-272"></div>
+                    <div class="ellipse-273"></div>
+                    <img src="{{ url_for('static', filename='img/siguiente.png')}}" class="siguiente" />
+                </div>
+
             </a>
         </h1>
 
@@ -383,6 +765,15 @@
         <h1>
             <a href="/gestiondeldesarrollo" style="text-decoration: none; color: inherit;">
                 GESTIÓN DEL DESARROLLO
+
+                <div class="circulo">
+                    <div class="ellipse-285"></div>
+                    <div class="ellipse-271"></div>
+                    <div class="ellipse-272"></div>
+                    <div class="ellipse-273"></div>
+                    <img src="{{ url_for('static', filename='img/siguiente.png')}}" class="siguiente" />
+                </div>
+
             </a>
         </h1>
         <p>Descripción</p>
@@ -396,15 +787,27 @@
         <h1>
             <a href="/equipo" style="text-decoration: none; color: inherit;">
                 EQUIPOS
+
+                <div class="circulo">
+                    <div class="ellipse-285"></div>
+                    <div class="ellipse-271"></div>
+                    <div class="ellipse-272"></div>
+                    <div class="ellipse-273"></div>
+                    <img src="{{ url_for('static', filename='img/siguiente.png')}}" class="siguiente" />
+                </div>
+
             </a>
         </h1>
+
         <p>Descripción</p>
+
         <div class="image-container">
             <img src="{{ url_for('static', filename='img/image.png') }}" class="logo" />
             <div class="overlay">
                 <div class="overlay-text">Texto sobre la imagen</div>
             </div>
         </div>
+
     </div>
 
     <!-- Scripts al final del cuerpo -->

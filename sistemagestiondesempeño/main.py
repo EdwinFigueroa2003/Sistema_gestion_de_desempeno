@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, url_for, redirect, session
 import markupsafe
 from Entidad import Entidad
 from control.ControlEntidad import ControlEntidad
-import templates
+
 
  
 from menu import menu
@@ -12,14 +12,14 @@ from vista.vistaequipo import vistaequipo
 from vista.vistaagregarequipo import vistaagregarequipo
 from vista.vistaconfiguracion import vistaconfiguracion
 from vista.vistagestiondeldesarrollo import vistagestiondeldesarrollo
-from vista.vistainforme1 import vistainforme1
+from vista.vistainforme import vistainforme
 from vista.vistacompetenciastransversales import vistacompetenciastransversales
 from vista.vistacompetenciasdocentes import vistacompetenciasdocentes
 from vista.vistaconcertaciondepropositos import vistaconcertaciondepropositos
 from vista.vistafactoresclavesdeexito import vistafactoresclavesdeexito
 from vista.vistapresentacion import vistapresentacion
 from vista.vistagestiondeldesempeno import vistagestiondeldesempeno
-from vista.vistaaotrascontribuciones import vistaotrascontribuciones
+from vista.vistaotrascontribuciones import vistaotrascontribuciones
 from vista.vistaareportes import vistareportes
 from vista.vistareportesanalisisorganizacional import vistareportesanalisisorganizacional
 from vista.vistareportesimpulsandoelcrecimiento import vistareportesimpulsandoelcrecimiento
@@ -43,7 +43,7 @@ app.register_blueprint(vistaequipo)
 app.register_blueprint(vistaagregarequipo)
 app.register_blueprint(vistaconfiguracion)
 app.register_blueprint(vistagestiondeldesarrollo)
-app.register_blueprint(vistainforme1)
+app.register_blueprint(vistainforme)
 app.register_blueprint(vistacompetenciastransversales)
 app.register_blueprint(vistacompetenciasdocentes)
 app.register_blueprint(vistaconcertaciondepropositos)
@@ -64,17 +64,20 @@ app.register_blueprint(vistareportesgeneral)
 app.register_blueprint(vistavideos)
 app.register_blueprint(vistacursos)
 app.register_blueprint(vistapodcast)
-
-
-
-
- 
  
 # Establecer la ruta base si es necesario, por defecto es '/'
 #breakpoint();
+
+
+def home():
+    return redirect(url_for('presentacion'))
+
+@app.route('/presentacion')
+def presentacion():
+    return render_template('presentacion.html')  
+
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/inicio', methods = ['GET', 'POST'])
-
 
 def inicio():
     email=""

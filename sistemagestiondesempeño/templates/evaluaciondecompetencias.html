@@ -47,7 +47,7 @@
         }
 
         .sidebar {
-            width: 280px;
+            width: 340px;
             height: 100%;
             background-color: #ffffff;
             color: white;
@@ -97,7 +97,7 @@
             padding: 20px;
             transition: margin-left 0.3s ease;
             /* Agregamos transición para un cambio suave */
-            margin-left: 280px;
+            margin-left: 345px;
             /* Ancho inicial de la barra lateral */
             flex-wrap: wrap;
             /* Permite que los elementos se envuelvan cuando no hay suficiente espacio */
@@ -170,16 +170,31 @@
             color: #000;
         }
 
-        .dropdown-item {
-            color: rgb(0, 0, 0);
-            background-color: rgb(255, 255, 255);
-            /* Color del texto de los elementos del menú */
+        .dropdown-container {
+            position: relative;
+            /* Ajusta otros estilos según sea necesario */
         }
 
-        .dropdown-item:hover {
-            color: rgb(0, 0, 0);
-            background-color: rgb(255, 255, 255);
-            /* Color del texto y fondo al pasar el cursor */
+        .dropdown-menu {
+            position: absolute;
+            right: 0;
+            /* Alinea el menú al lado derecho */
+            background-color: rgb(97, 97, 97);
+            /* Color del texto de los elementos del menú */
+            top: 100%;
+            /* Fondo del menú */
+            width: 250px;
+            /* Ajusta el ancho del menú según sea necesario */
+        }
+
+        .dropdown-item {
+            color: rgb(255, 0, 0);
+            text-align: center;
+
+            padding: 10px;
+            /* Ajusta el relleno según sea necesario */
+            display: block;
+            /* Asegúrate de que los elementos se comporten como bloques */
         }
 
         .mi-equipo {
@@ -263,6 +278,49 @@
             /* Espacio entre la etiqueta y el texto */
         }
         
+        .inicio-png {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            left: 85px;
+            position: relative;
+            object-fit: cover;
+        }
+
+        .configuracion-png {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            left: 45px;
+            position: relative;
+            object-fit: cover;
+        }
+
+        .equipo-png {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            left: 70px;
+            position: relative;
+            object-fit: cover;
+        }
+
+        .BGDesarrollo-png {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            position: relative;
+            object-fit: cover;
+        }
+
+        .BGDesempeño-png {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            position: relative;
+            object-fit: cover;
+        }
+
     </style>
 </head>
 
@@ -275,9 +333,11 @@
                 <br>
                 <a class="navbar-brand" href="#">Nombre del usuario</a>
 
+
                 <a href="/cerrarSesion" class="text-white ml-3 nav-link-cerrar">
                     <h5>Cerrar Sesión</h5>
                 </a>
+
 
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav flex-column">
@@ -287,6 +347,8 @@
                                 <a class="nav-link gestion-desempeno btn btn-warning" href="/gestiondeldesempeno"
                                     role="button">
                                     GESTIÓN DEL DESEMPEÑO
+                                    <img src="{{ url_for('static', filename='img/BGDesempeño.png')}}" />
+
                                 </a>
                                 <button
                                     class="btn btn-secondary dropdown-toggle dropdown-toggle-split gestion-desempeno"
@@ -295,12 +357,12 @@
                                     <span class="sr-only ">Toggle Dropdown</span>
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="#">Proyectos</a>
-                                    <a class="dropdown-item" href="#">Análisis Organizacional</a>
-                                    <a class="dropdown-item" href="#">Evaluación de Competencias</a>
-                                    <a class="dropdown-item" href="#">Construcción de propositos</a>
-                                    <a class="dropdown-item" href="#">Identificación de Lideres</a>
-                                    <a class="dropdown-item" href="#">Factores Claves de exito</a>
+                                    <a class="dropdown-item" href="/proyectos">Proyectos</a>
+                                    <a class="dropdown-item" href="/analisisorganizacional">Análisis Organizacional</a>
+                                    <a class="dropdown-item" href="/evaluaciondecompetencias">Evaluación de Competencias</a>
+                                    <a class="dropdown-item" href="/concertaciondepropositos">Concertación de propositos</a>
+                                    <a class="dropdown-item" href="/identificaciondelideres">Identificación de Lideres</a>
+                                    <a class="dropdown-item" href="/factoresclavesdeexito">Factores Claves de exito</a>
                                 </div>
                             </div>
                         </li>
@@ -310,6 +372,7 @@
                                 <a class="nav-link gestion-desarrollo btn btn-warning" href="/gestiondeldesarrollo"
                                     role="button">
                                     GESTIÓN DEL DESARROLLO
+                                    <img src="{{ url_for('static', filename='img/BGDesarrollo.png')}}" />
                                 </a>
                                 <button
                                     class="btn btn-secondary dropdown-toggle dropdown-toggle-split gestion-desarrollo"
@@ -328,14 +391,23 @@
 
 
                         <li class="nav-item active">
-                            <a class="nav-link mi-equipo" href="/equipo">MI EQUIPO <span
-                                    class="sr-only">(current)</span></a>
+                            <a class="nav-link mi-equipo btn btn-primary" href="/equipo">
+                                MI EQUIPO
+                                <img src="{{ url_for('static', filename='img/equipo.png')}}" class="equipo-png" />
+                            </a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link configuracion" href="/configuracion">CONFIGURACIÓN</a>
+                            <a class="nav-link configuracion btn btn-success" href="/configuracion">
+                                CONFIGURACIÓN
+                                <img src="{{ url_for('static', filename='img/configuracion.png')}}" />
+                            </a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link inicio" href="/menu">INICIO</a>
+                            <a class="nav-link inicio btn btn-dark" href="/inicio">
+                                INICIO
+                                <img src="{{ url_for('static', filename='img/inicio.png')}}" class="inicio-png" />
+                            </a>
+
                         </li>
                     </ul>
                 </div>
@@ -347,6 +419,7 @@
 
     <div class="content">
         <h1>Evaluación de Competencias</h1>
+        <hr>
 
     </div>
     <!-- Scripts al final del cuerpo -->
