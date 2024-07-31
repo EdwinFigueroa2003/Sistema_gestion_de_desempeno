@@ -48,128 +48,7 @@
         }
 
         .sidebar {
-            width: 280px;
-            height: 100%;
-            background-color: #333;
-            color: white;
-            transition: width 0.3s ease;
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            z-index: 1000;
-            overflow-y: auto;
-        }
-
-        .sidebar.collapsed {
-            width: 50px;
-        }
-
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .sidebar ul li {
-            padding: 10px;
-        }
-
-        .sidebar ul li a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .content {
-            flex: 1;
-            padding: 20px;
-            transition: margin-left 0.3s ease;
-            /* Agregamos transición para un cambio suave */
-            margin-left: 280px;
-            /* Ancho inicial de la barra lateral */
-            flex-wrap: wrap;
-            /* Permite que los elementos se envuelvan cuando no hay suficiente espacio */
-            justify-content: flex-start;
-            /* Alinea los elementos al inicio del contenedor */
-            display: flex;
-            /* Utilizamos flexbox para alinear los elementos */
-            align-items: flex-start;
-            /* Alinea los elementos al inicio del contenedor */
-        }
-
-        .content.collapsed {
-            margin-left: 50px;
-            /* Ancho de la barra lateral colapsada */
-        }
-
-        /* Estilo para el título y botones de acción */
-        h1 {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            margin: 0;
-        }
-
-        /* Estilos específicos para los botones dentro del título */
-        .btn-title {
-            margin-left: 10px;
-        }
-
-        .logo {
-            max-width: 100%;
-            /* Ancho máximo de la imagen */
-            height: auto;
-            /* Altura automática para mantener la proporción */
-            display: block;
-            /* Evita espacios no deseados alrededor de la imagen */
-            margin-top: 20px;
-            /* Espacio superior */
-        }
-
-        .svg-button {
-            cursor: pointer;
-            /* Cambia el cursor al pasar sobre el botón */
-            display: inline-block;
-        }
-
-        .svg-button svg rect {
-            transition: fill 0.3s;
-            /* Añade una transición suave al cambiar el color de fondo */
-        }
-
-        .svg-button:hover svg rect {
-            fill: lightgray;
-            /* Cambia el color de fondo al pasar sobre el botón */
-        }
-
-        .nav-link h5,
-        .nav-link-cerrar h5 {
-            border-radius: 25px;
-            border: 1px solid #EA5C10;
-            padding: 10px;
-            color: rgb(0, 173, 253);
-            font-size: 16px;
-            text-decoration: none;
-        }
-
-        .nav-link-cerrar h5 {
-            background-color: #ffffff;
-            color: rgb(0, 0, 0);
-            font-size: 14px;
-            padding: 8px 12px;
-        }
-
-        .nav-link-cerrar h5:hover {
-            background-color: #EA5C10;
-            border-color: #EA5C10;
-        }
-
-        .btn-group {
-            margin-left: 10px;
-        }
-
-        .sidebar {
-            width: 280px;
+            width: 340px;
             height: 100%;
             background-color: #ffffff;
             color: white;
@@ -214,10 +93,66 @@
             text-decoration: none;
         }
 
+        .content {
+            flex: 1;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+            /* Agregamos transición para un cambio suave */
+            margin-left: 345px;
+            /* Ancho inicial de la barra lateral */
+            flex-wrap: wrap;
+            /* Permite que los elementos se envuelvan cuando no hay suficiente espacio */
+            justify-content: flex-start;
+            /* Alinea los elementos al inicio del contenedor */
+            display: flex;
+            /* Utilizamos flexbox para alinear los elementos */
+            align-items: flex-start;
+            /* Alinea los elementos al inicio del contenedor */
+        }
+
+        .content.collapsed {
+            margin-left: 50px;
+            /* Ancho de la barra lateral colapsada */
+        }
+
+        /* Estilo para el título y botones de acción */
+        h1 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        /* Estilos específicos para los botones dentro del título */
         .btn-title {
             margin-left: 10px;
         }
 
+
+        .svg-button {
+            cursor: pointer;
+            /* Cambia el cursor al pasar sobre el botón */
+            display: inline-block;
+        }
+
+        .svg-button svg rect {
+            transition: fill 0.3s;
+            /* Añade una transición suave al cambiar el color de fondo */
+        }
+
+        .svg-button:hover svg rect {
+            fill: lightgray;
+            /* Cambia el color de fondo al pasar sobre el botón */
+        }
+
+        .btn-group {
+            margin-left: 10px;
+        }
+
+        .btn-title {
+            margin-left: 10px;
+        }
 
         .gestion-desempeno {
             background-color: #C35E23;
@@ -428,6 +363,50 @@
             justify-content: space-around;
             margin-top: 20px;
         }
+
+        .inicio-png {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            left: 85px;
+            position: relative;
+            object-fit: cover;
+        }
+
+        .configuracion-png {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            left: 45px;
+            position: relative;
+            object-fit: cover;
+        }
+
+        .equipo-png {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            left: 70px;
+            position: relative;
+            object-fit: cover;
+        }
+
+        .BGDesarrollo-png {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            position: relative;
+            object-fit: cover;
+        }
+
+        .BGDesempeño-png {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            position: relative;
+            object-fit: cover;
+        }
+
     </style>
 </head>
 

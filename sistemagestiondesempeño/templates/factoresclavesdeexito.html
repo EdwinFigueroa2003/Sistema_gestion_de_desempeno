@@ -71,11 +71,57 @@
 
         /* Estilo para el título y botones de acción */
         h1 {
+            font-size: 30px;
+            /* Tamaño de fuente base */
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px;
             margin: 0;
+        }
+
+        h2 {
+            font-size: 15px;
+            /* Tamaño de fuente base */
+            line-height: 2;
+            /* Espaciado entre líneas */
+            margin: 1;
+            /* Eliminar margen para ajuste */
+            margin-right: 20px;
+            /* Ajuste del margen a la derecha */
+
+        }
+
+        h3 {
+            font-size: 20px;
+            /* Tamaño de fuente base */
+            line-height: 2;
+            /* Espaciado entre líneas */
+            margin: 1;
+            /* Eliminar margen para ajuste */
+            margin-right: 20px;
+            /* Ajuste del margen a la derecha */
+        }
+
+        h4 {
+            font-size: 17px;
+            /* Tamaño de fuente base */
+            margin-right: 20px;
+            /* Ajuste del margen a la derecha*/
+            text-align: center;
+        }
+
+        h6 {
+            font-size: 27px;
+            /* Tamaño de fuente base */
+            line-height: 2;
+            /* Espaciado entre líneas */
+            margin: 1;
+            /* Eliminar margen para ajuste */
+            margin-right: 20px;
+            /* Ajuste del margen a la derecha */
+            align-items: center;
+
         }
 
         /* Estilos específicos para los botones dentro del título */
@@ -258,24 +304,215 @@
         .rectangle-2101 {
             background: #ffffff;
             border-radius: 40px;
-            width: 300px;
-            height: 200px;
+            width: 270px;
+            height: 175px;
             margin-right: 20px;
-            margin-top: 20px;
             padding: 10px;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
         }
 
-        h3 {
+        .circle-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            /* Ajusta el ancho según el diseño */
+            margin-bottom: 10px;
+            /* Espacio entre el círculo y los otros elementos */
+        }
+
+        .circle {
+            background-color: blue;
+            width: 101px;
+            height: 101px;
+            border-radius: 50%;
+        }
+
+        .titulo-dimension {
+            color: #1100ff;
+            top: 50px;
+            font-family: Arial, Helvetica, sans-serif
+        }
+
+        .cuadro-respuestas,
+        .cuadro-respuestas * {
+            box-sizing: border-box;
+        }
+
+        .cuadro-respuestas {
+            background: #e6f5f7;
+            color: #000;
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            row-gap: 0px;
+            align-items: flex-start;
+            justify-content: flex-start;
+            position: relative;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            align-items: center;
+        }
+
+        .pregunta {
             font-size: 23px;
             /* Tamaño de fuente base */
+            text-align: center;
+            color: #1100ff;
+            font-size: 50px;
+            /* Tamaño de fuente base */
+            font-family: Arial, sans-serif;
+            /* Fuente de la letra */
             line-height: 2;
             /* Espaciado entre líneas */
             margin: 1;
             /* Eliminar margen para ajuste */
             margin-right: 20px;
             /* Ajuste del margen a la derecha */
+
         }
+
+                /*Inicio botones*/
+                .boton-atras,
+        .boton-atras * {
+            box-sizing: border-box;
+        }
+
+        .boton-atras {
+            background: rgba(255, 255, 255, 0.29);
+            border-radius: 8px;
+            border-style: solid;
+            border-color: #000000;
+            border-width: 1px;
+            padding: 10px 24px 10px 24px;
+            display: flex;
+            flex-direction: row;
+            gap: 16px;
+            row-gap: 0px;
+            align-items: center;
+            justify-content: center;
+            width: 99.89px;
+            height: 42.24px;
+            position: relative;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        }
+
+        .atras {
+            background: var(--primarios-gris-on,
+                    linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+                    linear-gradient(to left, #666666, #666666));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: left;
+            font-family: var(--sub-titulo-neg-font-family,
+                    "NexaBold-Regular",
+                    sans-serif);
+            font-size: var(--sub-titulo-neg-font-size, 20px);
+            font-weight: var(--sub-titulo-neg-font-weight, 400);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .boton-siguiente,
+        .boton-siguiente * {
+            box-sizing: border-box;
+        }
+
+        .boton-siguiente {
+            background: #333333;
+            border-radius: 8px;
+            border-style: solid;
+            border-color: #dcd4d4;
+            border-width: 1px;
+            padding: 10px 40px 10px 40px;
+            display: flex;
+            flex-direction: row;
+            gap: 16px;
+            row-gap: 0px;
+            align-items: center;
+            justify-content: center;
+            width: 99.89px;
+            height: 42.24px;
+            position: relative;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        }
+
+        .siguiente {
+            color: #ffffff;
+            text-align: left;
+            font-family: var(--sub-titulo-neg-font-family,
+                    "NexaBold-Regular",
+                    sans-serif);
+            font-size: var(--sub-titulo-neg-font-size, 20px);
+            font-weight: var(--sub-titulo-neg-font-weight, 400);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .rectangles-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .medium-filled,
+        .medium-filled * {
+            box-sizing: border-box;
+        }
+
+        .medium-filled,
+        .volver {
+            background: linear-gradient(90deg,
+                    rgba(89, 238, 254, 1) 0%,
+                    rgba(40, 128, 242, 1) 100%);
+            color: white;
+            border-radius: 8px;
+            padding: 9px 32px 9px 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 0px;
+            align-items: center;
+            justify-content: center;
+            width: 99.89px;
+            height: 42.24px;
+            position: relative;
+        }
+
+        .volver {
+            text-align: center;
+            font-family: "Roboto-SemiBold", sans-serif;
+            font-size: 14px;
+            /* Ajustado el tamaño del texto */
+            line-height: 32px;
+            /* Ajustado el alto del botón */
+            font-weight: 600;
+            padding: 0 20px;
+            /* Espaciado interno horizontal */
+            background-color: #EA5C10;
+            /* Color de fondo */
+            border: none;
+            /* Quitamos el borde */
+            border-radius: 5px;
+            /* Borde redondeado */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            /* Transición suave para el cambio de color de fondo */
+        }
+
+        .volver:hover {
+            background: linear-gradient(90deg,
+                    rgba(89, 238, 254, 1) 0%,
+                    rgba(40, 128, 242, 1) 100%);
+            /* Color de fondo al pasar el ratón */
+        }
+
+        /*Fin Botones*/
 
         .label {
             font-weight: bold;
@@ -427,10 +664,53 @@
     <!-- Fin de la barra lateral -->
 
     <div class="content">
-        <h1>Factores claves de Éxito</h1>
+        <h1>GESTIÓN DEL DESEMPEÑO</h1>
         <hr>
 
-    </div>
+        <div class="rectangle-2101">
+            <div class="circle-wrapper">
+                <div class="circle"></div>
+            </div>
+            <h4>Francisco (se saca de la base de datos)</h4>
+        </div>
+
+        <div class="titulo-dimension">
+            <h3>FACTORES CLAVES DE EXITO</h3>
+
+        </div>
+
+        <div>
+
+            <div class="pregunta">
+                <h6>Que te parece el trabajo que se esta realizando en la universidad</h6>
+            </div>
+
+            <div class="cuadro-respuestas">
+                <h2>Tomar respuestas de la base de datos</h2>
+                <h2>Tomar respuestas de la base de datos</h2>
+                <h2>Tomar respuestas de la base de datos</h2>
+                <h2>Tomar respuestas de la base de datos</h2>
+            </div>
+
+            <div class="btn">
+                <div class="medium-filled">
+                    <a href="/informe" class="volver">VOLVER</a>
+                </div>
+            </div>
+
+            <div class="btn">
+                <div class="boton-atras">
+                    <div class="atras">Atrás</div>
+                </div>
+            </div>
+
+            <div class="btn">
+                <div class="boton-siguiente">
+                    <div class="siguiente">Siguiente</div>
+                </div>
+            </div>
+
+        </div>
     <!-- Scripts al final del cuerpo -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

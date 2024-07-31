@@ -283,7 +283,8 @@
         }
 
         h6 {
-            margin-right: 20px;        /* Ajuste del margen a la derecha*/
+            margin-right: 20px;
+            /* Ajuste del margen a la derecha*/
         }
 
         .label {
@@ -335,111 +336,110 @@
             position: relative;
             object-fit: cover;
         }
-
     </style>
 
 </head>
 
 <body>
 
- <!-- Sidebar -->
- <div class="sidebar">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light flex-column">
-        <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
-        <ul>
-            <a class="navbar-brand" href="#">Colocar imagen del usuario</a>
-            <br>
-            <a class="navbar-brand" href="#">Nombre del usuario</a>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light flex-column">
+            <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+            <ul>
+                <a class="navbar-brand" href="#">Colocar imagen del usuario</a>
+                <br>
+                <a class="navbar-brand" href="#">Nombre del usuario</a>
 
 
-            <a href="/cerrarSesion" class="text-white ml-3 nav-link-cerrar">
-                <h5>Cerrar Sesión</h5>
-            </a>
+                <a href="/cerrarSesion" class="text-white ml-3 nav-link-cerrar">
+                    <h5>Cerrar Sesión</h5>
+                </a>
 
 
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav flex-column">
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav flex-column">
 
-                    <li class="nav-item dropdown active">
-                        <div class="btn-group">
-                            <a class="nav-link gestion-desempeno btn btn-warning" href="/gestiondeldesempeno"
-                                role="button">
-                                GESTIÓN DEL DESEMPEÑO
-                                <img src="{{ url_for('static', filename='img/BGDesempeño.png')}}" />
+                        <li class="nav-item dropdown active">
+                            <div class="btn-group">
+                                <a class="nav-link gestion-desempeno btn btn-warning" href="/gestiondeldesempeno"
+                                    role="button">
+                                    GESTIÓN DEL DESEMPEÑO
+                                    <img src="{{ url_for('static', filename='img/BGDesempeño.png')}}" />
 
-                            </a>
-                            <button
-                                class="btn btn-secondary dropdown-toggle dropdown-toggle-split gestion-desempeno"
-                                type="button" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <span class="sr-only ">Toggle Dropdown</span>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="/proyectos">Proyectos</a>
-                                <a class="dropdown-item" href="/analisisorganizacional">Análisis Organizacional</a>
-                                <a class="dropdown-item" href="/evaluaciondecompetencias">Evaluación de Competencias</a>
-                                <a class="dropdown-item" href="/concertaciondepropositos">Concertación de propositos</a>
-                                <a class="dropdown-item" href="/identificaciondelideres">Identificación de Lideres</a>
-                                <a class="dropdown-item" href="/factoresclavesdeexito">Factores Claves de exito</a>
+                                </a>
+                                <button
+                                    class="btn btn-secondary dropdown-toggle dropdown-toggle-split gestion-desempeno"
+                                    type="button" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <span class="sr-only ">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="/proyectos">Proyectos</a>
+                                    <a class="dropdown-item" href="/analisisorganizacional">Análisis Organizacional</a>
+                                    <a class="dropdown-item" href="/evaluaciondecompetencias">Evaluación de
+                                        Competencias</a>
+                                    <a class="dropdown-item" href="/concertaciondepropositos">Concertación de
+                                        propositos</a>
+                                    <a class="dropdown-item" href="/identificaciondelideres">Identificación de
+                                        Lideres</a>
+                                    <a class="dropdown-item" href="/factoresclavesdeexito">Factores Claves de exito</a>
+                                </div>
                             </div>
-                        </div>
-                    </li>
+                        </li>
 
-                    <li class="nav-item dropdown active">
-                        <div class="btn-group">
-                            <a class="nav-link gestion-desarrollo btn btn-warning" href="/gestiondeldesarrollo"
-                                role="button">
-                                GESTIÓN DEL DESARROLLO
-                                <img src="{{ url_for('static', filename='img/BGDesarrollo.png')}}" />
-                            </a>
-                            <button
-                                class="btn btn-secondary dropdown-toggle dropdown-toggle-split gestion-desarrollo"
-                                type="button" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="/reportes">Reportes</a>
-                                <a class="dropdown-item" href="/cursos">Cursos</a>
-                                <a class="dropdown-item" href="/podcast">Podcast</a>
-                                <a class="dropdown-item" href="/videos">Videos</a>
+                        <li class="nav-item dropdown active">
+                            <div class="btn-group">
+                                <a class="nav-link gestion-desarrollo btn btn-warning" href="/gestiondeldesarrollo"
+                                    role="button">
+                                    GESTIÓN DEL DESARROLLO
+                                    <img src="{{ url_for('static', filename='img/BGDesarrollo.png')}}" />
+                                </a>
+                                <button
+                                    class="btn btn-secondary dropdown-toggle dropdown-toggle-split gestion-desarrollo"
+                                    type="button" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="/reportes">Reportes</a>
+                                    <a class="dropdown-item" href="/cursos">Cursos</a>
+                                    <a class="dropdown-item" href="/podcast">Podcast</a>
+                                    <a class="dropdown-item" href="/videos">Videos</a>
+                                </div>
                             </div>
-                        </div>
-                    </li>
+                        </li>
 
 
-                    <li class="nav-item active">
-                        <a class="nav-link mi-equipo btn btn-primary" href="/equipo">
-                            MI EQUIPO
-                            <img src="{{ url_for('static', filename='img/equipo.png')}}" class="equipo-png" />
-                        </a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link configuracion btn btn-success" href="/configuracion">
-                            CONFIGURACIÓN
-                            <img src="{{ url_for('static', filename='img/configuracion.png')}}" />
-                        </a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link inicio btn btn-dark" href="/inicio">
-                            INICIO
-                            <img src="{{ url_for('static', filename='img/inicio.png')}}" class="inicio-png" />
-                        </a>
+                        <li class="nav-item active">
+                            <a class="nav-link mi-equipo btn btn-primary" href="/equipo">
+                                MI EQUIPO
+                                <img src="{{ url_for('static', filename='img/equipo.png')}}" class="equipo-png" />
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link configuracion btn btn-success" href="/configuracion">
+                                CONFIGURACIÓN
+                                <img src="{{ url_for('static', filename='img/configuracion.png')}}" />
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link inicio btn btn-dark" href="/inicio">
+                                INICIO
+                                <img src="{{ url_for('static', filename='img/inicio.png')}}" class="inicio-png" />
+                            </a>
 
-                    </li>
-                </ul>
-            </div>
-        </ul>
-    </nav>
-</div>
+                        </li>
+                    </ul>
+                </div>
+            </ul>
+        </nav>
+    </div>
 
-<!-- Content-->
- <div class="content">
+    <!-- Content-->
+    <div class="content">
 
-
-
-
- </div>
+    </div>
     <!-- Scripts al final del cuerpo -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -462,4 +462,5 @@
     </script>
 
 </body>
+
 </html>
