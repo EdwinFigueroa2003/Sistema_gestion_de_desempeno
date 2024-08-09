@@ -358,6 +358,7 @@
                     rgba(40, 128, 242, 1) 100%);
             /* Color de fondo al pasar el ratón */
         }
+
         .rectangles-container {
             display: flex;
             justify-content: space-around;
@@ -406,7 +407,6 @@
             position: relative;
             object-fit: cover;
         }
-
     </style>
 </head>
 
@@ -445,9 +445,12 @@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" href="/proyectos">Proyectos</a>
                                     <a class="dropdown-item" href="/analisisorganizacional">Análisis Organizacional</a>
-                                    <a class="dropdown-item" href="/evaluaciondecompetencias">Evaluación de Competencias</a>
-                                    <a class="dropdown-item" href="/concertaciondepropositos">Concertación de propositos</a>
-                                    <a class="dropdown-item" href="/identificaciondelideres">Identificación de Lideres</a>
+                                    <a class="dropdown-item" href="/evaluaciondecompetencias">Evaluación de
+                                        Competencias</a>
+                                    <a class="dropdown-item" href="/concertaciondepropositos">Concertación de
+                                        propositos</a>
+                                    <a class="dropdown-item" href="/identificaciondelideres">Identificación de
+                                        Lideres</a>
                                     <a class="dropdown-item" href="/factoresclavesdeexito">Factores Claves de exito</a>
                                 </div>
                             </div>
@@ -493,7 +496,6 @@
                                 INICIO
                                 <img src="{{ url_for('static', filename='img/inicio.png')}}" class="inicio-png" />
                             </a>
-
                         </li>
                     </ul>
                 </div>
@@ -506,6 +508,11 @@
     <div class="content">
         <h1>individual</h1>
         <hr>
+        <div class="col-sm-6">
+            <button type="button" class="btn btn-outline-success" id="btnDescargarCSV" onclick="descargarCSV()"
+                data-toggle="modal"> <i class="material-icons">&#xE2C0;</i>
+                <span>Descargar CSV</span></button>
+        </div>
         <div class="rectangles-container">
             <div class="medium-filled">
                 <a href="/dashboard" class="volver">VOLVER</a>
@@ -525,12 +532,55 @@
         crossorigin="anonymous"></script>
 
     <script>
+
         function toggleSidebar() {
             var sidebar = document.querySelector('.sidebar');
             var content = document.querySelector('.content');
             sidebar.classList.toggle('collapsed');
             content.classList.toggle('collapsed');
         }
+
+        function descargarCSV() {
+            // Obtener la tabla
+            var table = document.querySelector('.table');
+
+            // Crear un arreglo para almacenar los datos
+            var data = [];
+
+            // Obtener los encabezados de columna
+            var headers = [];
+            table.querySelectorAll('th').forEach(function (header) {
+                headers.push(header.innerText);
+            });
+            data.push(headers.join(','));
+
+            // Recorrer las filas de la tabla
+            table.querySelectorAll('tr').forEach(function (row) {
+                var rowData = [];
+                row.querySelectorAll('td').forEach(function (cell) {
+                    rowData.push(cell.innerText);
+                });
+                data.push(rowData.join(','));
+            });
+
+            // Crear un blob de texto con los datos
+            var csv = data.join('\n');
+            var blob = new Blob([csv], { type: 'text/csv' });
+
+            // Crear una URL para el blob
+            var url = window.URL.createObjectURL(blob);
+
+            // Crear un enlace para descargar el archivo
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'Usuario.csv';
+            document.body.appendChild(a);
+            a.click();
+
+            // Limpiar la URL creada
+            window.URL.revokeObjectURL(url);
+        }
+
     </script>
 </body>
 

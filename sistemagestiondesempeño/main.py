@@ -1,7 +1,7 @@
 # main.py
 from pprint import pprint
-from flask import Flask, render_template, request, url_for, redirect, session
-import markupsafe
+from flask import Flask, render_template, request, url_for, redirect, session, jsonify
+import markupsafe, uuid, psycopg2
 from Entidad import Entidad
 from control.ControlEntidad import ControlEntidad
 
@@ -33,6 +33,7 @@ from vista.vistareportesgeneral import vistareportesgeneral
 from vista.vistavideos import vistavideos
 from vista.vistacursos import vistacursos
 from vista.vistapodcast import vistapodcast
+from vista.vistaidentificaciondelideres import vistaidentificaciondelideres
 
 
 
@@ -64,17 +65,19 @@ app.register_blueprint(vistareportesgeneral)
 app.register_blueprint(vistavideos)
 app.register_blueprint(vistacursos)
 app.register_blueprint(vistapodcast)
+app.register_blueprint(vistaidentificaciondelideres)
  
 # Establecer la ruta base si es necesario, por defecto es '/'
 #breakpoint();
 
-
+@app.route('/presentacion')
 def home():
     return redirect(url_for('presentacion'))
 
 @app.route('/presentacion')
 def presentacion():
     return render_template('presentacion.html')  
+
 
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/inicio', methods = ['GET', 'POST'])
@@ -111,6 +114,11 @@ def inicio():
 def cerrarSesion():
     #session.clear()
     return redirect('inicio')
+
+@app.route('/informe')
+def informe():
+    return jsonify(redirect('informe'))
+
  
 if __name__ == '__main__':
     # Corre la aplicación en el modo debug, lo que permitirá
