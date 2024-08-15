@@ -17,6 +17,7 @@
             justify-content: center;
             align-items: center;
             background-size: cover;
+            overflow: hidden;   
         }
 
         .overlay {
@@ -25,7 +26,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #F8F5F5;
+            background: #ffffff;
             z-index: 1;
         }
 
@@ -63,7 +64,7 @@
             padding: 12px;
             /* Aumentado el relleno para los campos de entrada */
             border: 1px solid #E5E5E5;
-            border-radius: 2px;
+            border-radius: 10px;
             margin-bottom: 10px;
             width: 100%;
             color: #2C3E50;
@@ -73,8 +74,8 @@
 
         .btn-blue {
             background-color: #023059;
-            color: #fff;
-            border-radius: 2px;
+            color: #ffffff;
+            border-radius: 10px;
             width: 100%;
             padding: 12px;
             font-size: 16px;
@@ -118,9 +119,9 @@
             /* Alto de la imagen */
             position: absolute;
             /* Posicionamiento absoluto respecto a su contenedor */
-            left: 650px;
+            left: 690px;
             /* Posición izquierda respecto al borde izquierdo del contenedor */
-            top: 415px;
+            top: 450px;
             /* Posición superior respecto al borde superior del contenedor */
             transform-origin: 0 0;
             /* Punto de origen de la transformación (esquina superior izquierda) */
@@ -133,13 +134,14 @@
         }
 
         .group-1 {
+            width: 25%;
+            /* Ajusta el tamaño relativo al contenedor */
             height: auto;
+            /* Mantiene la proporción */
             position: absolute;
-            left: 990px;
-            top: -88px;
+            right: 0;
+            top: 0;
             overflow: visible;
-            z-index: -1;
-            /* Coloca la imagen detrás del contenido */
         }
     </style>
 </head>
@@ -173,8 +175,8 @@
         </div>
         <!-- Imágenes adicionales -->
         <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />        
-        <img src="{{ url_for('static', filename='img/group-10.jpg')}}" class="group-1" />
-        <img src="{{ url_for('static', filename='img/mariposa-gif-1.png')}}" class="mariposa-gif-1" />
+        <img src="{{ url_for('static', filename='img/group-10.png')}}" class="group-1" />
+        <img src="{{ url_for('static', filename='img/mariposa GIF.gif')}}" class="mariposa-gif-1" />
     </div>
 </body>
 </html>

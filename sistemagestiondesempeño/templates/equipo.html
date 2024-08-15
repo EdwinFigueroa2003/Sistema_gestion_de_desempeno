@@ -20,6 +20,8 @@
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
+            /*Este de encarga de que la pagina no se mueva*/
         }
 
         .nav-link h5,
@@ -135,20 +137,12 @@
         }
 
         .svg-button:hover svg rect {
-            fill: rgb(233, 10, 10);
+            fill: rgb(182, 182, 182);
             /* Cambia el color de fondo al pasar sobre el botón */
         }
 
         .btn-group {
             margin-left: 10px;
-        }
-
-        h1 {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            margin: 0;
         }
 
         .btn-title {
@@ -272,7 +266,7 @@
             height: 30px;
             margin-right: auto;
             margin-left: auto;
-            margin-top: 1 px;
+            margin-top: -1 px;
             margin-bottom: 5px;
             border-width: 2px;
             border-color: rgb(0, 0, 0);
@@ -319,6 +313,33 @@
             height: 30px;
             position: relative;
             object-fit: cover;
+        }
+
+        .mariposa {
+            width: 459px;
+            height: 459px;
+            position: absolute;
+            left: 1000px;
+            top: -170px;
+            transform: rotate(-45deg) scale(1, 1);
+            object-fit: cover;
+        }
+
+        .usuarios {
+            width: 100px;
+            height: 90px;
+            border-radius: 50%;
+            border-width: 5px;
+            /* Grosor del borde */
+            border-style: solid;
+            /* Estilo del borde */
+            border-color: #023262;
+            /* Color del borde */
+            position: absolute;
+            left: 1170px;
+            top: 100px;
+            /* transform: rotate(-45deg) scale(1, 1); */
+            /* object-fit: cover; */
         }
     </style>
 
@@ -424,8 +445,6 @@
         <h1>Equipo</h1>
         <hr>
 
-
-
         <p>Búsqueda de colaborador por nombre</p>
         <form class="form-inline">
             <input class="form-control mr-sm-2" type="search" placeholder="Ingresa el nombre" aria-label="Search">
@@ -436,11 +455,11 @@
         <p>Busqueda de colaborador</p>
 
 
-        <div class="col-sm-6">
-            <a href="/agregarequipo" class="btn btn-outline-success"><i
-                    class="material-icons">&#xE147;</i> <span>Agregar Colaboradores</span>
+<!--         <div class="col-sm-6">
+            <a href="/agregarequipo" class="btn btn-outline-success"><i class="material-icons">&#xE147;</i>
+                <span>Agregar Colaboradores</span>
             </a>
-        </div>
+        </div> -->
 
 
         <div class="svg-button">
@@ -450,25 +469,25 @@
                         stroke-width="2" />
                     <text x="125" y="70" font-family="Arial" font-size="20" fill="black" text-anchor="middle"
                         alignment-baseline="central">
-                        Colaborador 1
+                        Fransisco
                     </text>
                 </svg>
             </a>
         </div>
         <div class="svg-button">
-            <a href="/presentacion">
+            <a href="/presentacionGDD">
                 <svg version="1.1" width="200" height="150" viewBox="0 0 250 150">
                     <rect x="20" y="20" width="210" height="100" rx="30" ry="30" fill="white" stroke="black"
                         stroke-width="2" />
                     <text x="125" y="70" font-family="Arial" font-size="20" fill="black" text-anchor="middle"
                         alignment-baseline="central">
-                        Colaborador 2
+                        Juan
                     </text>
                 </svg>
             </a>
         </div>
-        <div class="svg-button">
-            <a href="/informe3">
+<!--         <div class="svg-button">
+            <a href="/data">
                 <svg version="1.1" width="200" height="150" viewBox="0 0 250 150">
                     <rect x="20" y="20" width="210" height="100" rx="30" ry="30" fill="white" stroke="black"
                         stroke-width="2" />
@@ -478,44 +497,7 @@
                     </text>
                 </svg>
             </a>
-        </div>
-        <div class="svg-button">
-            <a href="/informe4">
-                <svg version="1.1" width="200" height="150" viewBox="0 0 250 150">
-                    <rect x="20" y="20" width="210" height="100" rx="30" ry="30" fill="white" stroke="black"
-                        stroke-width="2" />
-                    <text x="125" y="70" font-family="Arial" font-size="20" fill="black" text-anchor="middle"
-                        alignment-baseline="central">
-                        Colaborador 4
-                    </text>
-                </svg>
-            </a>
-        </div>
-        <div class="svg-button">
-            <a href="/informe5">
-                <svg version="1.1" width="200" height="150" viewBox="0 0 250 150">
-                    <rect x="20" y="20" width="210" height="100" rx="30" ry="30" fill="white" stroke="black"
-                        stroke-width="2" />
-                    <text x="125" y="70" font-family="Arial" font-size="20" fill="black" text-anchor="middle"
-                        alignment-baseline="central">
-                        Colaborador 5
-                    </text>
-                </svg>
-            </a>
-        </div>
-        <div class="svg-button">
-            <a href="/informe6">
-                <svg version="1.1" width="200" height="150" viewBox="0 0 250 150">
-                    <rect x="20" y="20" width="210" height="100" rx="30" ry="30" fill="white" stroke="black"
-                        stroke-width="2" />
-                    <text x="125" y="70" font-family="Arial" font-size="20" fill="black" text-anchor="middle"
-                        alignment-baseline="central">
-                        Colaborador 6
-                    </text>
-                </svg>
-            </a>
-        </div>
-
+        </div> -->
         <div class="svg-button">
             <a href="/agregarequipo">
                 <svg version="1.1" width="200" height="150" viewBox="0 0 250 150">
@@ -528,10 +510,11 @@
                 </svg>
             </a>
         </div>
+
+        <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+        <img src="{{ url_for('static', filename='img/icon-user-friends-icon0.jpg')}}" class="usuarios" />
+
     </div>
-
-
-
 
     <!-- Scripts al final del cuerpo -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -597,4 +580,5 @@
     </script>
 
 </body>
+
 </html>

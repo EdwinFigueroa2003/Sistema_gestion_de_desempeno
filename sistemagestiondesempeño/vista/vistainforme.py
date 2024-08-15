@@ -7,6 +7,7 @@ vistainforme = Blueprint('idinforme', __name__, template_folder='templates')
 
 @vistainforme.route('/informe', methods=['GET', 'POST'])
 def vista_informe():
+    #Inicio de lo nuevo
     """ mensaje = ""
     objControlEntidad = ControlEntidad('usuario')
 
@@ -79,6 +80,7 @@ def vista_informe():
 
     return jsonify({'success': False, 'message': 'Método no soportado'})
  """
+    #Fin de lo nuevo
 
 # Suponiendo que existe un método to_dict() en la clase Entidad para convertir los datos en un diccionario.
      
