@@ -292,15 +292,14 @@
         hr {
             width: 102%;
             height: 30px;
-            /*background-color: red;*/
             margin-right: auto;
             margin-left: auto;
-            margin-top: 1 px;
             margin-bottom: 5px;
             border-width: 2px;
             border-color: rgb(0, 0, 0);
+            position: relative;
+            z-index: 10;
         }
-
         .rectangle-2101 {
             background: #ffffff;
             border-radius: 40px;
@@ -564,6 +563,32 @@
             object-fit: cover;
         }
 
+        .mariposa {
+            width: 459px;
+            height: 459px;
+            position: absolute;
+            left: 1000px;
+            top: -170px;
+            transform: rotate(-45deg) scale(1, 1);
+            object-fit: cover;
+        }
+
+        .usuarios {
+            width: 100px;
+            height: 90px;
+            border-radius: 50%;
+            border-width: 5px;
+            /* Grosor del borde */
+            border-style: solid;
+            /* Estilo del borde */
+            border-color: #F24464;
+            /* Color del borde */
+            position: absolute;
+            left: 1170px;
+            top: 60px;
+            z-index: 10;
+        }
+
     </style>
 </head>
 
@@ -709,6 +734,9 @@
                     <div class="siguiente">Siguiente</div>
                 </div>
             </div>
+
+            <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+            <img src="{{ url_for('static', filename='img/exito0.png')}}" class="usuarios" />
 
         </div>
     <!-- Scripts al final del cuerpo -->

@@ -22,6 +22,7 @@
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
 
         .nav-link h5,
@@ -69,14 +70,7 @@
             /* Ancho de la barra lateral colapsada */
         }
 
-        /* Estilo para el título y botones de acción */
-        h1 {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            margin: 0;
-        }
+
 
         /* Estilos específicos para los botones dentro del título */
         .btn-title {
@@ -262,37 +256,102 @@
             color: #525252;
         }
 
-        hr {
-            width: 102%;
-            height: 30px;
-            /*background-color: red;*/
-            margin-right: auto;
-            margin-left: auto;
-            margin-top: 1 px;
-            margin-bottom: 5px;
-            border-width: 2px;
-            border-color: rgb(0, 0, 0);
+        .rectangulos,
+        .rectangle-2101 {
+            margin-top: -10px;
         }
 
         .rectangle-2101 {
             background: #ffffff;
             border-radius: 40px;
-            width: 270px;
+            width: 300px;
             height: 175px;
-            margin-right: 20px;
-            margin-top: 20px;
+            margin-left: 19px;
             padding: 10px;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        }
+
+        .rectangle-2070 {
+            background: #ffffff;
+            /* #4296f8; */
+            background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 85%, #4296f8 50%, #4296f8 70%);
+            border-radius: 16px;
+            width: 475px;
+            height: 40px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            margin-right: 19px;
+            /* Ajusta el margen entre los rectángulos */
+            margin-top: 15px;
+            /* Ajusta el margen superior */
+            margin-left: 19px;
+            padding: 10px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .rectangle-2071 {
+            background: #ffffff;
+            background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 85%, #656465 50%, #656465 70%);
+            border-radius: 16px;
+            width: 475px;
+            height: 40px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            margin-right: 19px;
+            /* Ajusta el margen entre los rectángulos */
+            margin-top: 19px;
+            /* Ajusta el margen superior */
+            margin-left: 19px;
+            padding: 10px;
+        }
+
+        .rectangle-2072 {
+            background: #ffffff;
+            background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 85%, #f842e5 50%, #f842e5 70%);
+            border-radius: 16px;
+            width: 475px;
+            height: 40px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            margin-right: 19px;
+            /* Ajusta el margen entre los rectángulos */
+            margin-top: 19px;
+            /* Ajusta el margen superior */
+            margin-left: 19px;
+            padding: 10px;
+        }
+
+        .imagenes {
+            width: 40x;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 50%;
         }
 
 
         hr {
             width: 102%;
-            height: 10px;
-            margin-top: 1px;
+            height: 30px;
+            margin-right: auto;
+            margin-left: auto;
+            margin-top: -1 px;
             margin-bottom: 5px;
             border-width: 2px;
             border-color: rgb(0, 0, 0);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Estilo para el título y botones de acción */
+        h1 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #000000;
         }
 
         h3 {
@@ -307,8 +366,13 @@
         }
 
         h6 {
-            margin-right: 20px;
-            /* Ajuste del margen a la derecha*/
+            color: #000000;
+            font-size: 17px;
+            /* Tamaño de fuente base */
+            line-height: 1.6;
+            /* Espaciado entre líneas */
+            margin-top: -7px;
+            /* Eliminar margen para ajuste */
         }
 
         .label {
@@ -360,6 +424,87 @@
             position: relative;
             object-fit: cover;
         }
+
+        .circle-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            /* Ajusta el ancho según el diseño */
+            margin-bottom: 10px;
+            /* Espacio entre el círculo y los otros elementos */
+        }
+
+        .circle {
+            background-color: blue;
+            width: 101px;
+            height: 101px;
+            border-radius: 50%;
+
+        }
+
+        .usuarios {
+            width: 100px;
+            height: 90px;
+            border-radius: 50%;
+            border-width: 5px;
+            /* Grosor del borde */
+            border-style: solid;
+            /* Estilo del borde */
+            border-color: #1C7368;
+            /* Color del borde */
+            position: absolute;
+            left: 1170px;
+            top: 80px;
+            z-index: 10;
+        }
+
+        .mariposa {
+            width: 459px;
+            height: 459px;
+            position: absolute;
+            left: 1000px;
+            top: -170px;
+            transform: rotate(-45deg) scale(1, 1);
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .medium-filled,
+        .medium-filled * {
+            box-sizing: border-box;
+
+
+        }
+
+        .medium-filled {
+            background: var(--primarios-gris-on,
+                    linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+                    linear-gradient(to left, #666666, #666666));
+            border-radius: 8px;
+            padding: 9px 32px 9px 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 0px;
+            align-items: center;
+            justify-content: center;
+            width: 290px;
+
+        }
+
+        .volver {
+            color: #ffffff;
+            text-align: center;
+            font-family: var(--titulo-notas-font-family, "NexaLight-Regular", sans-serif);
+            font-size: var(--titulo-notas-font-size, 16px);
+            font-weight: var(--titulo-notas-font-weight, 400);
+            position: relative;
+        }
+
+/*         .btn{
+            margin-left: 50px;
+        } */
+
     </style>
 </head>
 
@@ -398,9 +543,12 @@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" href="/proyectos">Proyectos</a>
                                     <a class="dropdown-item" href="/analisisorganizacional">Análisis Organizacional</a>
-                                    <a class="dropdown-item" href="/evaluaciondecompetencias">Evaluación de Competencias</a>
-                                    <a class="dropdown-item" href="/concertaciondepropositos">Concertación de propositos</a>
-                                    <a class="dropdown-item" href="/identificaciondelideres">Identificación de Lideres</a>
+                                    <a class="dropdown-item" href="/evaluaciondecompetencias">Evaluación de
+                                        Competencias</a>
+                                    <a class="dropdown-item" href="/concertaciondepropositos">Concertación de
+                                        propositos</a>
+                                    <a class="dropdown-item" href="/identificaciondelideres">Identificación de
+                                        Lideres</a>
                                     <a class="dropdown-item" href="/factoresclavesdeexito">Factores Claves de exito</a>
                                 </div>
                             </div>
@@ -460,47 +608,55 @@
         <h1>Resultados:</h1>
         <hr>
 
-        <a href="#">
-            <div class="rectangle-2101">
-                <h3>Competencias Transversales</h3>
-                <h6>Descripción que se va a poner de esto.</h6>
+        <div class="rectangle-2101">
+            <div class="circle-wrapper">
+                <div class="circle"></div>
             </div>
-        </a>
+            <h2>Francisco</h2>
+        </div>
 
-        <a href="#">
-            <div class="rectangle-2101">
-                <h3>Competencias Docentes</h3>
-                <h6>Descripción que se va a poner de esto.</h6>
+        <div class="rectangulos">
+            <div class="rectangle-2070">
+                <a href="#" style="display: 
+                flex; align-items: center; justify-content: space-between;">
+                    <h6><span>Competencias transversales</span></h6>
+                    <img src="{{ url_for('static', filename='img/competencias-transversales.jpeg')}}" class="imagenes"
+                        style="float: right; margin-top: -10px;" />
+                </a>
             </div>
-        </a>
 
-        <a href="#">
-            <div class="rectangle-2101">
-                <h3>Concertación de Propositos</h3>
-                <h6>Descripción que se va a poner de esto.</h6>
+            <div class="rectangle-2071">
+                <a href="#" style="display: 
+                flex; align-items: center; justify-content: space-between;">
+                    <h6><span>Competencias docentes</span> </h6>
+                    <img src="{{ url_for('static', filename='img/ensenar0.png')}}" class="imagenes"
+                        style="float: right; margin-top: -10px;" />
+                </a>
             </div>
-        </a>
 
-        <a href="#">
-            <div class="rectangle-2101">
-                <h3>Factores Claves de Éxito</h3>
-                <h6>Descripción que se va a poner de esto.</h6>
+            <div class="rectangle-2072">
+                <a href="#" style="display: 
+                flex; align-items: center; justify-content: space-between;">
+                    <h6> <span>Concertación de propósitos </span> </h6>
+                    <img src="{{ url_for('static', filename='img/concertación-de-propósitos.jpeg')}}" class="imagenes"
+                        style="float: right; margin-top: -10px;" />
+                </a>
             </div>
-        </a>
+        </div>
 
-        <a href="#">
-            <div class="rectangle-2101">
-                <h3>Proyectos</h3>
-                <h6>Descripción que se va a poner de esto.</h6>
-            </div>
-        </a>
 
-        <a href="#">
-            <div class="rectangle-2101">
-                <h3>Evaluación de Competencias</h3>
-                <h6>Descripción que se va a poner de esto.</h6>
-            </div>
-        </a>
+        <div class="btn">
+            <a href="/informe" class="volver">
+                <div class="medium-filled">
+                    VOLVER
+                </div>
+            </a>
+        </div>
+        
+
+
+        <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+        <img src="{{ url_for('static', filename='img/reporte0.png')}}" class="usuarios" />
 
     </div>
     <!-- Scripts al final del cuerpo -->

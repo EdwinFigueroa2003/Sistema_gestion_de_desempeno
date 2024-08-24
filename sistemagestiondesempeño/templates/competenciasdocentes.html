@@ -565,6 +565,31 @@
             object-fit: cover;
         }
 
+        .mariposa {
+            width: 459px;
+            height: 459px;
+            position: absolute;
+            left: 1000px;
+            top: -170px;
+            transform: rotate(-45deg) scale(1, 1);
+            object-fit: cover;
+        }
+
+        .usuarios {
+            width: 100px;
+            height: 90px;
+            border-radius: 50%;
+            border-width: 5px;
+            /* Grosor del borde */
+            border-style: solid;
+            /* Estilo del borde */
+            border-color: #656465;
+            /* Color del borde */
+            position: absolute;
+            left: 1170px;
+            top: 60px;
+            z-index: 10;
+        }
     </style>
 </head>
 
@@ -677,20 +702,45 @@
 
         <div class="titulo-dimension">
             <h3>COMPETENCIAS DOCENTES</h3>
-
         </div>
 
         <div>
-
             <div class="pregunta">
-                <h6>Que te parece el trabajo que se esta realizando en la universidad</h6>
+                <h6><!-- Que te parece el trabajo que se esta realizando en la universidad</h6> -->
+                    {% if docente and docente|length > 0 %}
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    {{ docente[1].nombre_comp }}
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p>No se encontraron datos.</p>
+                    {% endif %}
+                </h6>
             </div>
 
             <div class="cuadro-respuestas">
-                <h2>Tomar respuestas de la base de datos</h2>
-                <h2>Tomar respuestas de la base de datos</h2>
-                <h2>Tomar respuestas de la base de datos</h2>
-                <h2>Tomar respuestas de la base de datos</h2>
+                <h2>
+                    {% if docente and docente|length > 0 %}
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    {{ docente[1].preg_eval_comp }}
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p>No se encontraron datos.</p>
+                    {% endif %}
+                </h2>
             </div>
 
             <div class="btn">
@@ -712,6 +762,11 @@
             </div>
 
         </div>
+
+
+        <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+        <img src="{{ url_for('static', filename='img/ensenar0.png')}}" class="usuarios" />
+
 
     </div>
     <!-- Scripts al final del cuerpo -->

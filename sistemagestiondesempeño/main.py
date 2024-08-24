@@ -15,17 +15,13 @@ from vista.vistaagregarequipo import vistaagregarequipo
 from vista.vistaconfiguracion import vistaconfiguracion
 from vista.vistagestiondeldesarrollo import vistagestiondeldesarrollo
 from vista.vistainforme import vistainforme
-from vista.vistacompetenciastransversales import vistacompetenciastransversales
-from vista.vistacompetenciasdocentes import vistacompetenciasdocentes
 from vista.vistaconcertaciondepropositos import vistaconcertaciondepropositos
 from vista.vistafactoresclavesdeexito import vistafactoresclavesdeexito
-""" from vista.vistapresentacion import vistapresentacion """
 from vista.vistagestiondeldesempeno import vistagestiondeldesempeno
 from vista.vistaotrascontribuciones import vistaotrascontribuciones
 from vista.vistaareportes import vistareportes
 from vista.vistareportesanalisisorganizacional import vistareportesanalisisorganizacional
 from vista.vistareportesimpulsandoelcrecimiento import vistareportesimpulsandoelcrecimiento
-""" from vista.vistaanalisisorganizacional import vistaanalisisorganizacional """
 from vista.vistaproyectos import vistaproyectos
 from vista.vistaevaluaciondecompetencias import vistaevaluaciondecompetencias
 from vista.vistaresultados import vistaresultados
@@ -47,17 +43,13 @@ app.register_blueprint(vistaagregarequipo)
 app.register_blueprint(vistaconfiguracion)
 app.register_blueprint(vistagestiondeldesarrollo)
 app.register_blueprint(vistainforme)
-app.register_blueprint(vistacompetenciastransversales)
-app.register_blueprint(vistacompetenciasdocentes)
 app.register_blueprint(vistaconcertaciondepropositos)
 app.register_blueprint(vistafactoresclavesdeexito)
-""" app.register_blueprint(vistapresentacion) """
 app.register_blueprint(vistagestiondeldesempeno)
 app.register_blueprint(vistaotrascontribuciones)
 app.register_blueprint(vistareportes)
 app.register_blueprint(vistareportesanalisisorganizacional)
 app.register_blueprint(vistareportesimpulsandoelcrecimiento)
-""" app.register_blueprint(vistaanalisisorganizacional) """
 app.register_blueprint(vistaproyectos)
 app.register_blueprint(vistaevaluaciondecompetencias)
 app.register_blueprint(vistaresultados)
@@ -71,6 +63,10 @@ app.register_blueprint(vistaidentificaciondelideres)
  
 # Establecer la ruta base si es necesario, por defecto es '/'
 #breakpoint();
+
+from flask import Blueprint, render_template, request, redirect,url_for, flash, session
+import markupsafe
+import requests
 
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/inicio', methods = ['GET', 'POST'])
@@ -106,22 +102,7 @@ def inicio():
 @app.route('/cerrarSesion')
 def cerrarSesion():
     #session.clear()
-    return redirect('inicio')
-
-#Prueba
-
-@app.route('/data', methods = ['GET'])
-def get_data():
-    response = requests.get('http://190.217.58.246:5184/api/sgd/cargo')
-    try:
-        data = response.json()  # Intenta decodificar la respuesta como JSON
-    except requests.exceptions.JSONDecodeError:
-        return "Error: La respuesta no es un JSON válido.", 500
-    # Aquí puedes pasar 'data' a la plantilla HTML que desees renderizar.
-    return render_template('data.html', data=data)
-
-#Prueba
-
+    return redirect('inicio.html')
 
 @app.route('/analisisorganizacional', methods = ['GET'])
 def get_dimensiones():
@@ -134,13 +115,61 @@ def get_dimensiones():
     return render_template('analisisorganizacional.html', data=data)
 
 
-@app.route('/presentacion', methods = ['GET'])
-def get_presentacion():
-    return render_template('presentacion.html')
+""" @app.route('/competenciastransversales', methods = ['GET', 'POST']) 
+def get_competencias():
+    response = requests.get('http://190.217.58.246:5184/api/sgd/competencia')
+    try:
+        comp = response.json()  # Intenta decodificar la respuesta como JSON
+    except requests.exceptions.JSONDecodeError:
+        return "Error: La respuesta no es un JSON válido.", 500
+    # Aquí puedes pasar 'data' a la plantilla HTML que desees renderizar.
+    return render_template('competenciastransversales.html', comp=comp)
+ """
+
+@app.route('/competenciastransversales', methods=['GET', 'POST'])
+def get_competencias():
+    response = requests.get('http://190.217.58.246:5184/api/sgd/competencia')
+    try:
+        competencias = response.json()  # Decodificar la respuesta como JSON
+    except requests.exceptions.JSONDecodeError:
+        return "Error: La respuesta no es un JSON válido.", 500
+
+    current_index = int(request.form.get('current_index', 0))
+
+    # Manejo de índice de la pregunta actual
+    if request.method == 'POST':
+        current_index = int(request.form.get('current_index', 0)) + 1
+        if current_index >= len(competencias):
+            return redirect(url_for('finalizo'))  # Redirigir a finalizo.html cuando se llega al final
+        elif 'prev' in request.form:
+            if current_index > 0:
+                current_index -= 1
+
+    pregunta_actual = competencias[current_index]
+    return render_template('competenciastransversales.html', item=pregunta_actual, current_index=current_index)
+
+
+@app.route('/competenciasdocentes', methods = ['GET', 'POST'])
+def get_docentes():
+    response = requests.get('http://190.217.58.246:5184/api/sgd/competencia')
+    try:
+        docente = response.json()  # Intenta decodificar la respuesta como JSON
+    except requests.exceptions.JSONDecodeError:
+        return "Error: La respuesta no es un JSON válido.", 500
+    # Aquí puedes pasar 'data' a la plantilla HTML que desees renderizar.
+    return render_template('competenciasdocentes.html', docente=docente)
 
 @app.route('/presentacionGDD', methods = ['GET'])
 def get_presentacionGDD():
     return render_template('presentacionGDD.html')
+
+@app.route('/finalizo', methods = ['GET'])
+def finalizo():
+    return render_template('finalizo.html')
+
+@app.route('/infoproyectos', methods = ['GET'])
+def get_infoproyectos():
+    return render_template('infoproyectos.html')
 
 if __name__ == '__main__':
     # Corre la aplicación en el modo debug, lo que permitirá

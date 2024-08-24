@@ -158,15 +158,13 @@
         }
 
         h6 {
-            font-size: 27px;
+            font-size: 15px;
             /* Tamaño de fuente base */
-            line-height: 2;
-            /* Espaciado entre líneas */
-            margin: 1;
-            /* Eliminar margen para ajuste */
             margin-right: 20px;
             /* Ajuste del margen a la derecha */
+            text-align: center;
             align-items: center;
+            color: #000000;
 
         }
 
@@ -294,13 +292,25 @@
         hr {
             width: 102%;
             height: 30px;
-            /*background-color: red;*/
             margin-right: auto;
             margin-left: auto;
-            margin-top: 1 px;
             margin-bottom: 5px;
             border-width: 2px;
             border-color: rgb(0, 0, 0);
+            position: relative;
+            z-index: 10;
+        }
+
+        .rectangle-2102 {
+            background: #dadada;
+            background: linear-gradient(900deg, #dadada 0%, #dadada 90%, #ff8000 70%, #ff8000 90%);
+            border-radius: 40px;
+            width: 270px;
+            height: 100px;
+            margin-right: 20px;
+            margin-top: 5px;
+            padding: 10px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
         }
 
         .rectangle-2101 {
@@ -309,6 +319,24 @@
             width: 270px;
             height: 175px;
             margin-right: 20px;
+            padding: 10px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        }
+
+        .cuadro {
+            margin-right: 20px;
+            margin-top: 20px;
+            margin-left: 50px;
+        }
+
+        .rectangle-2100 {
+            background: #dadada;
+            background: linear-gradient(900deg, #dadada 0%, #dadada 90%, #ff8000 70%, #ff8000 90%);
+            border-radius: 40px;
+            width: 270px;
+            height: 200px;
+            margin-right: 20px;
+
             padding: 10px;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
         }
@@ -565,6 +593,36 @@
             position: relative;
             object-fit: cover;
         }
+
+        .mariposa {
+            width: 459px;
+            height: 459px;
+            position: absolute;
+            left: 1000px;
+            top: -170px;
+            transform: rotate(-45deg) scale(1, 1);
+            object-fit: cover;
+        }
+
+        .usuarios {
+            width: 100px;
+            height: 90px;
+            border-radius: 50%;
+            border-width: 5px;
+            /* Grosor del borde */
+            border-style: solid;
+            /* Estilo del borde */
+            border-color: #F2E205;
+            /* Color del borde */
+            position: absolute;
+            left: 1170px;
+            top: 60px;
+            z-index: 10;
+        }
+
+        .texto {
+            color: #000;
+        }
     </style>
 </head>
 
@@ -671,46 +729,52 @@
             <div class="circle-wrapper">
                 <div class="circle"></div>
             </div>
-            <h4>Francisco (se saca de la base de datos)</h4>
+            <h4>Francisco</h4>
         </div>
 
         <div class="titulo-dimension">
             <h3>CONCERTACIÓN DE PROPOSITOS</h3>
-
         </div>
 
-        <div>
-
-            <div class="pregunta">
-                <h6>Que te parece el trabajo que se esta realizando en la universidad</h6>
-            </div>
-
-            <div class="cuadro-respuestas">
-                <h2>Tomar respuestas de la base de datos</h2>
-                <h2>Tomar respuestas de la base de datos</h2>
-                <h2>Tomar respuestas de la base de datos</h2>
-                <h2>Tomar respuestas de la base de datos</h2>
-            </div>
-
-            <div class="btn">
-                <div class="medium-filled">
-                    <a href="/informe" class="volver">VOLVER</a>
-                </div>
-            </div>
-
-            <div class="btn">
-                <div class="boton-atras">
-                    <div class="atras">Atrás</div>
-                </div>
-            </div>
-
-            <div class="btn">
-                <div class="boton-siguiente">
-                    <div class="siguiente">Siguiente</div>
-                </div>
-            </div>
-
+        <div class="rectangle-2100">
+            <a href="#" class="texto">
+                <h4>Concertación de Propositos Estrategicos</h4>
+                <hr>
+                <h6>Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
+                    malesuada rutrum diam, sed sollicitudin sed sed.</h6>
+            </a>
         </div>
+
+        <div class="rectangle-2100">
+            <a href="#" class="texto">
+                <h4>Concertación de Propositos Personales</h4>
+                <hr>
+                <h6>Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
+                    malesuada rutrum diam, sed sollicitudin sed sed.</h6>
+            </a>
+        </div>
+
+        <div class="rectangle-2100">
+            <a href="#" class="texto">
+                <h4>Concertación de Propositos Para la Mejora de Procesos</h4>
+                <hr>
+                <h6>Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
+                    malesuada rutrum diam, sed sollicitudin sed sed.</h6>
+            </a>
+        </div>
+
+        <div class="texto">
+            <div class="rectangle-2102">
+                <a href="#" class="texto">
+                    <h4>Concertación de Disponibilidad</h4>
+                    <hr>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+    <img src="{{ url_for('static', filename='img/objetivo-10.png')}}" class="usuarios" />
 
     </div>
     <!-- Scripts al final del cuerpo -->

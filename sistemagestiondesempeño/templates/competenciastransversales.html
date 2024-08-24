@@ -247,10 +247,11 @@
             height: 30px;
             margin-right: auto;
             margin-left: auto;
-            margin-top: 1 px;
             margin-bottom: 5px;
             border-width: 2px;
             border-color: rgb(0, 0, 0);
+            position: relative;
+            z-index: 10;
         }
 
         h1 {
@@ -322,7 +323,7 @@
             /* Eliminar margen para ajuste */
             margin-right: 20px;
             /* Ajuste del margen a la derecha */
-            margin-bottom: 20px;
+            /* margin-bottom: 1px; */
             /* Añadir margen inferior */
         }
 
@@ -336,9 +337,9 @@
             background: #ffffff;
             border-radius: 40px;
             width: 270px;
-            height: 175px;
+            height: 155px;
             margin-right: 20px;
-            margin-top: 20px;
+            /* margin-top: 5px; */
             padding: 10px;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
         }
@@ -356,6 +357,7 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+            height: 175px;
             row-gap: 0px;
             align-items: flex-start;
             justify-content: flex-start;
@@ -572,6 +574,32 @@
             position: relative;
             object-fit: cover;
         }
+
+        .mariposa {
+            width: 459px;
+            height: 459px;
+            position: absolute;
+            left: 1000px;
+            top: -170px;
+            transform: rotate(-45deg) scale(1, 1);
+            object-fit: cover;
+        }
+
+        .usuarios {
+            width: 100px;
+            height: 90px;
+            border-radius: 50%;
+            border-width: 5px;
+            /* Grosor del borde */
+            border-style: solid;
+            /* Estilo del borde */
+            border-color: #44A1F2;
+            /* Color del borde */
+            position: absolute;
+            left: 1170px;
+            top: 60px;
+            z-index: 10;
+        }
     </style>
 </head>
 
@@ -679,7 +707,7 @@
             <div class="circle-wrapper">
                 <div class="circle"></div>
             </div>
-            <h4>Francisco (se saca de la base de datos)</h4>
+            <h4>Francisco</h4>
         </div>
 
         <div class="titulo-dimension">
@@ -689,58 +717,57 @@
 
         <div>
 
-            <div class="pregunta">
-                <h6>Que te parece el trabajo que se esta realizando en la universidad</h6>
-            </div>
-
-            <div class="cuadro-respuestas">
-                <h2>Tomar respuestas de la base de datos</h2>
-                <h2>Tomar respuestas de la base de datos</h2>
-                <h2>Tomar respuestas de la base de datos</h2>
-                <h2>Tomar respuestas de la base de datos</h2>
-            </div>
-
-            <div class="btn">
-                <div class="medium-filled">
-                    <a href="/informe" class="volver">VOLVER</a>
+            <form method="POST" action="{{ url_for('get_competencias') }}">
+                <div class="pregunta">
+                    <h6>{{ item.nombre_comp }}</h6>
                 </div>
-            </div>
-
-            <div class="btn">
-                <div class="boton-atras">
-                    <div class="atras">Atrás</div>
+                <div class="cuadro-respuestas">
+                    {{ item.definicion_comp }}
                 </div>
-            </div>
+                <input type="hidden" name="current_index" value="{{ current_index }}">
+                <button type="submit" class="boton-siguiente">
 
-            <div class="btn">
-                <div class="boton-siguiente">
-                    <div class="siguiente">Siguiente</div>
+                    <span class="siguiente">Siguiente</span>
+                </button>
+                <div class="btn">
+                    <div class="medium-filled">
+                        <a href="/informe" class="volver">VOLVER</a>
+                    </div>
                 </div>
-            </div>
+
+                <div class="btn">
+                    <div class="boton-atras">
+                        <div class="atras">Atrás</div>
+                    </div>
+                </div>
+
+
+            </form>
+
+            <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+            <img src="{{ url_for('static', filename='img/competencias-transversales.jpeg')}}" class="usuarios" />
 
         </div>
 
-    </div>
+        <!-- Scripts al final del cuerpo -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+            integrity="sha384-dq3gms3U00/GRxUOAvFXTvDN+qkdOqcqTT8HqG+oqm4xU49TclE3i9ezZs4CwBf3"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
+            integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
+            crossorigin="anonymous"></script>
 
-    <!-- Scripts al final del cuerpo -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
-        integrity="sha384-dq3gms3U00/GRxUOAvFXTvDN+qkdOqcqTT8HqG+oqm4xU49TclE3i9ezZs4CwBf3"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
-        integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
-        crossorigin="anonymous"></script>
+        <script>
+            function toggleSidebar() {
+                var sidebar = document.querySelector('.sidebar');
+                var content = document.querySelector('.content');
+                sidebar.classList.toggle('collapsed');
+                content.classList.toggle('collapsed');
+            }
 
-    <script>
-        function toggleSidebar() {
-            var sidebar = document.querySelector('.sidebar');
-            var content = document.querySelector('.content');
-            sidebar.classList.toggle('collapsed');
-            content.classList.toggle('collapsed');
-        }
-    </script>
+        </script>
 </body>
-
 </html>
