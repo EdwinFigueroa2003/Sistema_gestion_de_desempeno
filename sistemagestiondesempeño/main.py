@@ -36,6 +36,7 @@ from vista.vistaidentificaciondelideres import vistaidentificaciondelideres
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
+
 app.register_blueprint(menu)
 app.register_blueprint(vistaequipo)
 app.register_blueprint(vistaagregarequipo)
@@ -99,6 +100,7 @@ def cerrarSesion():
 
 @app.route('/analisisorganizacional', methods = ['GET'])
 def get_dimensiones():
+    
     response = requests.get('http://190.217.58.246:5184/api/sgd/dimension')
     try:
         data = response.json()  # Intenta decodificar la respuesta como JSON
@@ -120,12 +122,16 @@ def get_competencias():
     # Manejo de índice de la pregunta actual
     if request.method == 'POST':
         respuesta_seleccionada = request.form.get('respuesta', None)
+        print(f"Respuesta seleccionada: {respuesta_seleccionada}")  # Debugging
         if respuesta_seleccionada:
             # Guardar respuesta en la sesión
             if 'respuestas' not in session:
                 session['respuestas'] = []
             session['respuestas'].append(respuesta_seleccionada)
             session.modified = True
+
+            print("Respuesta seleccionada:", respuesta_seleccionada)
+            print("Respuestas hasta ahora:", session['respuestas'])
 
         if 'next' in request.form:
             current_index += 1
@@ -140,7 +146,8 @@ def get_competencias():
 
 @app.route('/resultadoscompetenciastransversales', methods = ['GET', 'POST'])
 def get_resultadoscompetenciastransversales():
-    return render_template('resultadoscompetenciastransversales.html')
+    respuestas = session.get('respuestas', [])  # Obtener las respuestas de la sesión
+    return render_template('resultadoscompetenciastransversales.html', respuestas=respuestas)
 
 @app.route('/resultadoscompetenciasdocentes', methods = ['GET', 'POST'])
 def get_resultadoscompetenciasdocentes():
@@ -212,6 +219,10 @@ def concertaciondepropositospersonales():
 @app.route('/infoproyectos', methods = ['GET'])
 def get_infoproyectos():
     return render_template('infoproyectos.html')
+
+@app.route('/tete', methods = ['GET'])
+def tete():
+    return render_template('tete.html')
 
 if __name__ == '__main__':
     # Corre la aplicación en el modo debug, lo que permitirá

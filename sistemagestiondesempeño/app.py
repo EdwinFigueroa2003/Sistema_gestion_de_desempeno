@@ -3,7 +3,8 @@ import requests
 
 app = Flask(__name__)
 
-API_URL = "http://localhost:5000/api/{projectName}/procedures/execute"
+API_URL = "http://190.217.58.246:5184/api/proyecto/procedures/execute"
+
 headers = {'Content-Type': 'application/json'}
 
 @app.route('/', ['GET', 'POST'])

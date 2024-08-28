@@ -31,7 +31,6 @@
             border-radius: 25px;
             border: 1px solid #EA5C10;
             padding: 10px;
-            color: rgb(0, 173, 253);
             font-size: 16px;
             text-decoration: none;
             /* Ajuste para evitar subrayado en h5 */
@@ -42,6 +41,7 @@
             color: rgb(0, 0, 0);
             font-size: 14px;
             padding: 8px 12px;
+            margin-top: -25px;
         }
 
         .nav-link-cerrar h5:hover {
@@ -82,7 +82,7 @@
 
         .sidebar {
             width: 340px;
-            height: 100%;
+            height: 96.81%;
             background-color: #ffffff;
             color: white;
             transition: width 0.3s ease;
@@ -95,14 +95,11 @@
             border-radius: 10px;
             /* Bordes redondeados de 10px */
             box-shadow: 0px 16px 16px 4px rgba(0, 0, 0, 0.25);
-            /* lo ultimo que de agrego */
-            /*width: 277px;
-            height: 640px;*/
             margin-top: 10px;
             /* Margen superior externo */
             margin-right: 15px;
             /* Margen derecho externo */
-            margin-bottom: 0 px;
+            margin-bottom: -10 px;
             /* Margen inferior externo */
             margin-left: 15px;
             /* Margen izquierdo externo */
@@ -265,14 +262,12 @@
         }
 
         h2 {
-            font-size: 15px;
-            /* Tamaño de fuente base */
-            line-height: 2;
-            /* Espaciado entre líneas */
-            margin: 1;
-            /* Eliminar margen para ajuste */
-            margin-right: 20px;
-            /* Ajuste del margen a la derecha */
+            color: #000000;
+            font-size: 17px;
+            /* margin-right: 350px; */
+            margin-top: 5px;
+            /* margin-bottom: 15px; */
+            text-align: center;
 
         }
 
@@ -303,6 +298,8 @@
             align-items: center;
             text-align: center;
         }
+
+
 
         .pregunta {
             font-size: 23px;
@@ -380,6 +377,22 @@
             border-radius: 50%;
 
         }
+
+        .circle1 {
+            background-color: rgb(0, 0, 0);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .circle-wrapper1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: -30px;
+        }
+
+        
 
         .label {
             font-weight: bold;
@@ -609,9 +622,12 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light flex-column">
             <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
             <ul>
-                <a class="navbar-brand" href="#">Colocar imagen del usuario</a>
+                <div class="circle-wrapper1">
+                    <div class="circle1"></div>
+                </div>
                 <br>
-                <a class="navbar-brand" href="#">Nombre del usuario</a>
+                <h2>James Bond</h2>
+                <h2>Director de programa</h2>
 
 
                 <a href="/cerrarSesion" class="text-white ml-3 nav-link-cerrar">
@@ -721,41 +737,33 @@
                 <h6>{{ item.preg_eval_comp }}</h6>
             </div>
             <div class="cuadro-respuestas">
-                <form id="preguntasForm" method="post" action="/send/">                    
+                <form method="POST">
+                    <input type="hidden" name="current_index" value="{{ current_index }}">
 
-                    <input type="radio" name="respuesta" value="{{ item.definicion_comp }}"> {{ item.definicion_comp }}<br>
-                    <input type="radio" name="respuesta" value="{{ item.definicion_comp }}"> {{ item.definicion_comp }}<br>
-                    <input type="radio" name="respuesta" value="{{ item.definicion_comp }}"> {{ item.definicion_comp }}<br>
-                    <!-- Agrega más opciones según sea necesario -->
+                    <input type="radio" name="respuesta" value="{{ item.definicion_comp }}"> {{ item.definicion_comp
+                    }}<br>
+                    <input type="radio" name="respuesta" value="{{ item.definicion_comp }}"> {{ item.definicion_comp
+                    }}<br>
+                    <input type="radio" name="respuesta" value="{{ item.definicion_comp }}"> {{ item.definicion_comp
+                    }}<br>
+
+                    <div class="btn">
+                        <button type="submit" name="prev" class="boton-atras" {% if current_index==0 %}disabled{% endif
+                            %}>
+                            <span class="atras">Atrás</span>
+                        </button>
+                    </div>
+
+                    <div class="btn">
+                        <button type="submit" name="next" class="boton-siguiente">
+                            <span class="siguiente">Siguiente</span>
+                        </button>
+                    </div>
                 </form>
             </div>
 
-            <form method="POST">
-                <input type="hidden" name="current_index" value="{{ current_index }}">
-
-                <div class="btn">
-                    <div class="medium-filled">
-                        <a href="/informe" class="volver">VOLVER</a>
-                    </div>
-                </div>
-
-                <div class="btn">
-                    <button type="submit" name="prev" class="boton-atras" {% if current_index==0 %}disabled{% endif %}>
-                        <span class="atras">Atrás</span>
-                    </button>
-                </div>
-
-                <div class="btn">
-                    <button type="submit" name="next" class="boton-siguiente">
-                        <span class="siguiente">Siguiente</span>
-                    </button>
-                </div>
-
-            </form>
-
             <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
             <img src="{{ url_for('static', filename='img/competencias-transversales.jpeg')}}" class="usuarios" />
-
         </div>
 
         <!-- Scripts al final del cuerpo -->

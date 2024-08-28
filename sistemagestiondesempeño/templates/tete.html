@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+    <style>
+        .sidebar {
+            width: 200px;
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0px 16px 16px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: fixed;
+            left: 0;
+            top: 10px;
+            bottom: 10px;
+        }
+
+        .user-profile {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .user-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .user-name {
+            font-size: 16px;
+            color: #000000;
+            margin: 0;
+        }
+
+        .user-title {
+            font-size: 12px;
+            color: #666666;
+            margin: 0;
+        }
+
+        .navbar-nav {
+            width: 100%;
+        }
+
+        .nav-item {
+            margin-bottom: 15px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: bold;
+            transition: background 0.3s ease;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        .nav-link img.icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .gestion-desempeno {
+            background-color: #C35E23;
+        }
+
+        .gestion-desempeno:hover {
+            background-color: #b45120;
+        }
+
+        .gestion-desarrollo {
+            background-color: #BF0B3B;
+        }
+
+        .gestion-desarrollo:hover {
+            background-color: #a10933;
+        }
+
+        .equipo {
+            background-color: #29A3CC;
+        }
+
+        .equipo:hover {
+            background-color: #2385a6;
+        }
+
+        .configuracion {
+            background-color: #16594D;
+        }
+
+        .configuracion:hover {
+            background-color: #12483e;
+        }
+
+        .inicio {
+            background-color: #525252;
+        }
+
+        .inicio:hover {
+            background-color: #3e3e3e;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="user-profile">
+            <img src="profile.png" alt="User Image" class="user-img">
+            <h4 class="user-name">James Bonb</h4>
+            <p class="user-title">Director de Programa</p>
+        </div>
+        <nav class="navbar">
+            <ul class="navbar-nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link gestion-desempeno" href="/gestiondeldesempeno">
+                        GESTIÓN DEL DESEMPEÑO
+                        <img src="{{ url_for('static', filename='img/BGDesempeño.png')}}" class="icon">
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link gestion-desarrollo" href="/gestiondeldesarrollo">
+                        GESTIÓN DEL DESARROLLO
+                        <img src="{{ url_for('static', filename='img/BGDesarrollo.png')}}" class="icon">
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link equipo" href="/equipo">
+                        EQUIPO
+                        <img src="{{ url_for('static', filename='img/equipo.png')}}" class="icon">
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link configuracion" href="/configuracion">
+                        CONFIGURACIÓN
+                        <img src="{{ url_for('static', filename='img/configuracion.png')}}" class="icon">
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link inicio" href="/inicio">
+                        INICIO
+                        <img src="{{ url_for('static', filename='img/inicio.png')}}" class="icon">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <script src="" async defer></script>
+</body>
+
+</html>
