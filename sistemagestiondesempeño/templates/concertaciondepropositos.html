@@ -22,6 +22,7 @@
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
 
         .nav-link h5,
@@ -154,7 +155,17 @@
             /* Tamaño de fuente base */
             margin-right: 20px;
             /* Ajuste del margen a la derecha*/
+            text-align: left;
+            align-items: center;
+        }
+
+        h5 {
+            font-size: 17px;
+            /* Tamaño de fuente base */
+            margin-right: 20px;
+            /* Ajuste del margen a la derecha*/
             text-align: center;
+            align-items: center;
         }
 
         h6 {
@@ -162,7 +173,8 @@
             /* Tamaño de fuente base */
             margin-right: 20px;
             /* Ajuste del margen a la derecha */
-            text-align: center;
+            margin-top: -35px;
+            text-align: left;
             align-items: center;
             color: #000000;
 
@@ -292,9 +304,9 @@
         hr {
             width: 102%;
             height: 30px;
+            margin-top: -5px;
             margin-right: auto;
             margin-left: auto;
-            margin-bottom: 5px;
             border-width: 2px;
             border-color: rgb(0, 0, 0);
             position: relative;
@@ -302,41 +314,39 @@
         }
 
         .rectangle-2102 {
+            /* concertacion de disponibilidad */
             background: #dadada;
             background: linear-gradient(900deg, #dadada 0%, #dadada 90%, #ff8000 70%, #ff8000 90%);
             border-radius: 40px;
             width: 270px;
-            height: 100px;
+            height: 80px;
             margin-right: 20px;
-            margin-top: 5px;
+            padding: 10px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        }
+
+        .rectangle-2100 {
+            /* Concertación de Propositos */
+            background: #dadada;
+            background: linear-gradient(900deg, #dadada 0%, #dadada 90%, #ff8000 70%, #ff8000 90%);
+            border-radius: 40px;
+            width: 270px;
+            height: 175px;
+            margin-right: 35px;
+            margin-bottom: 30px;
             padding: 10px;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
         }
 
         .rectangle-2101 {
+            /* Nombre del usuario */
             background: #ffffff;
             border-radius: 40px;
             width: 270px;
-            height: 175px;
+            height: 155px;
             margin-right: 20px;
-            padding: 10px;
-            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-        }
-
-        .cuadro {
-            margin-right: 20px;
-            margin-top: 20px;
-            margin-left: 50px;
-        }
-
-        .rectangle-2100 {
-            background: #dadada;
-            background: linear-gradient(900deg, #dadada 0%, #dadada 90%, #ff8000 70%, #ff8000 90%);
-            border-radius: 40px;
-            width: 270px;
-            height: 200px;
-            margin-right: 20px;
-
+            margin-top: -30px;
+            margin-bottom: 15px;
             padding: 10px;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
         }
@@ -371,185 +381,28 @@
             font-family: Arial, Helvetica, sans-serif
         }
 
-        .cuadro-respuestas,
-        .cuadro-respuestas * {
-            box-sizing: border-box;
-        }
-
-        .cuadro-respuestas {
-            background: #e6f5f7;
-            color: #000;
-            border-radius: 16px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            row-gap: 0px;
-            align-items: flex-start;
-            justify-content: flex-start;
-            position: relative;
-            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-            align-items: center;
-        }
-
-        .pregunta {
-            font-size: 23px;
-            /* Tamaño de fuente base */
-            text-align: center;
-            color: #1100ff;
-            font-size: 50px;
-            /* Tamaño de fuente base */
-            font-family: Arial, sans-serif;
-            /* Fuente de la letra */
-            line-height: 2;
-            /* Espaciado entre líneas */
-            margin: 1;
-            /* Eliminar margen para ajuste */
-            margin-right: 20px;
-            /* Ajuste del margen a la derecha */
-
-        }
-
-        /*Inicio botones*/
-        .boton-atras,
-        .boton-atras * {
-            box-sizing: border-box;
-        }
-
-        .boton-atras {
-            background: rgba(255, 255, 255, 0.29);
-            border-radius: 8px;
-            border-style: solid;
-            border-color: #000000;
-            border-width: 1px;
-            padding: 10px 24px 10px 24px;
-            display: flex;
-            flex-direction: row;
-            gap: 16px;
-            row-gap: 0px;
-            align-items: center;
-            justify-content: center;
-            width: 99.89px;
-            height: 42.24px;
-            position: relative;
-            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-        }
-
-        .atras {
-            background: var(--primarios-gris-on,
-                    linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-                    linear-gradient(to left, #666666, #666666));
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-align: left;
-            font-family: var(--sub-titulo-neg-font-family,
-                    "NexaBold-Regular",
-                    sans-serif);
-            font-size: var(--sub-titulo-neg-font-size, 20px);
-            font-weight: var(--sub-titulo-neg-font-weight, 400);
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-        }
-
-        .boton-siguiente,
-        .boton-siguiente * {
-            box-sizing: border-box;
-        }
-
-        .boton-siguiente {
-            background: #333333;
-            border-radius: 8px;
-            border-style: solid;
-            border-color: #dcd4d4;
-            border-width: 1px;
-            padding: 10px 40px 10px 40px;
-            display: flex;
-            flex-direction: row;
-            gap: 16px;
-            row-gap: 0px;
-            align-items: center;
-            justify-content: center;
-            width: 99.89px;
-            height: 42.24px;
-            position: relative;
-            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-        }
-
-        .siguiente {
-            color: #ffffff;
-            text-align: left;
-            font-family: var(--sub-titulo-neg-font-family,
-                    "NexaBold-Regular",
-                    sans-serif);
-            font-size: var(--sub-titulo-neg-font-size, 20px);
-            font-weight: var(--sub-titulo-neg-font-weight, 400);
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-        }
-
-        .rectangles-container {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
-        }
-
-        .medium-filled,
-        .medium-filled * {
-            box-sizing: border-box;
-        }
-
-        .medium-filled,
-        .volver {
-            background: linear-gradient(90deg,
-                    rgba(89, 238, 254, 1) 0%,
-                    rgba(40, 128, 242, 1) 100%);
-            color: white;
+        .medium-filled {
+            background: #525252;
+            font-family: "Roboto-SemiBold", sans-serif;
+            font-size: 14px;
             border-radius: 8px;
             padding: 9px 32px 9px 32px;
             display: flex;
             flex-direction: column;
-            gap: 0px;
             align-items: center;
+            text-align: center;
             justify-content: center;
-            width: 99.89px;
+            width: 290px;
             height: 42.24px;
-            position: relative;
+            margin-left: 300px;
+            margin-top: 30px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
         }
 
         .volver {
-            text-align: center;
-            font-family: "Roboto-SemiBold", sans-serif;
-            font-size: 14px;
-            /* Ajustado el tamaño del texto */
-            line-height: 32px;
-            /* Ajustado el alto del botón */
-            font-weight: 600;
-            padding: 0 20px;
-            /* Espaciado interno horizontal */
-            background-color: #EA5C10;
-            /* Color de fondo */
-            border: none;
-            /* Quitamos el borde */
-            border-radius: 5px;
-            /* Borde redondeado */
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            /* Transición suave para el cambio de color de fondo */
+            color: white;
+            text-decoration: none;
         }
-
-        .volver:hover {
-            background: linear-gradient(90deg,
-                    rgba(89, 238, 254, 1) 0%,
-                    rgba(40, 128, 242, 1) 100%);
-            /* Color de fondo al pasar el ratón */
-        }
-
-        /*Fin Botones*/
 
         .inicio-png {
             flex-shrink: 0;
@@ -622,6 +475,10 @@
 
         .texto {
             color: #000;
+        }
+
+        .texto1 {
+            color: #ffffff;
         }
     </style>
 </head>
@@ -729,7 +586,7 @@
             <div class="circle-wrapper">
                 <div class="circle"></div>
             </div>
-            <h4>Francisco</h4>
+            <h5>Francisco</h5>
         </div>
 
         <div class="titulo-dimension">
@@ -746,7 +603,7 @@
         </div>
 
         <div class="rectangle-2100">
-            <a href="#" class="texto">
+            <a href="/concertaciondepropositospersonales" class="texto">
                 <h4>Concertación de Propositos Personales</h4>
                 <hr>
                 <h6>Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
@@ -771,6 +628,13 @@
                 </a>
             </div>
         </div>
+
+        <div class="btn">
+            <div class="medium-filled">
+                <a href="/informe" class="texto1">VOLVER</a>
+            </div>
+        </div>
+
     </div>
 
     <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />

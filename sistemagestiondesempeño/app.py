@@ -6,9 +6,9 @@ app = Flask(__name__)
 API_URL = "http://localhost:5000/api/{projectName}/procedures/execute"
 headers = {'Content-Type': 'application/json'}
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+@app.route('/', ['GET', 'POST'])
+def inicio():
+    return render_template('inicio.html')
 
 @app.route('/execute', methods=['POST'])
 def execute_procedure():

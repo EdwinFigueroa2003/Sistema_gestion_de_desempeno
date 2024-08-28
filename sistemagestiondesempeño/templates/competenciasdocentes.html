@@ -22,6 +22,9 @@
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
         }
 
         .nav-link h5,
@@ -355,6 +358,7 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+            height: 175px;
             row-gap: 0px;
             align-items: flex-start;
             justify-content: flex-start;
@@ -590,6 +594,11 @@
             top: 60px;
             z-index: 10;
         }
+
+        .centro{
+            margin-left: 265px;
+        }
+
     </style>
 </head>
 
@@ -697,71 +706,43 @@
             <div class="circle-wrapper">
                 <div class="circle"></div>
             </div>
-            <h4>Francisco (se saca de la base de datos)</h4>
+            <h4>Francisco</h4>
         </div>
 
         <div class="titulo-dimension">
             <h3>COMPETENCIAS DOCENTES</h3>
         </div>
 
-        <div>
+                <div class="centro">
             <div class="pregunta">
-                <h6><!-- Que te parece el trabajo que se esta realizando en la universidad</h6> -->
-                    {% if docente and docente|length > 0 %}
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    {{ docente[1].nombre_comp }}
-                                </td>
-
-                            </tr>
-                        </tbody>
-                    </table>
-                    {% else %}
-                    <p>No se encontraron datos.</p>
-                    {% endif %}
-                </h6>
+                <h6>{{ item.nombre_comp }}</h6>
             </div>
-
             <div class="cuadro-respuestas">
-                <h2>
-                    {% if docente and docente|length > 0 %}
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    {{ docente[1].preg_eval_comp }}
-                                </td>
-
-                            </tr>
-                        </tbody>
-                    </table>
-                    {% else %}
-                    <p>No se encontraron datos.</p>
-                    {% endif %}
-                </h2>
+                <p>{{ item.definicion_comp }}</p>
             </div>
 
-            <div class="btn">
-                <div class="medium-filled">
-                    <a href="/informe" class="volver">VOLVER</a>
+            <form method="POST">
+                <input type="hidden" name="current_index" value="{{ current_index }}">
+
+                <div class="btn">
+                    <div class="medium-filled">
+                        <a href="/informe" class="volver">VOLVER</a>
+                    </div>
                 </div>
-            </div>
 
-            <div class="btn">
-                <div class="boton-atras">
-                    <div class="atras">Atrás</div>
+                <div class="btn">
+                    <button type="submit" name="prev" class="boton-atras" {% if current_index==0 %}disabled{% endif %}>
+                        <span class="atras">Atrás</span>
+                    </button>
                 </div>
-            </div>
 
-            <div class="btn">
-                <div class="boton-siguiente">
-                    <div class="siguiente">Siguiente</div>
+                <div class="btn">
+                    <button type="submit" name="next" class="boton-siguiente">
+                        <span class="siguiente">Siguiente</span>
+                    </button>
                 </div>
-            </div>
 
-        </div>
+            </form>
 
 
         <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />

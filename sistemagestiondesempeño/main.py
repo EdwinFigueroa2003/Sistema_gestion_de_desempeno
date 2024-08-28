@@ -1,6 +1,6 @@
 # main.py
 from pprint import pprint
-from flask import Flask, render_template, request, url_for, redirect, session, jsonify
+from flask import Flask, render_template, request, url_for, redirect, session, jsonify, flash
 import markupsafe, uuid, psycopg2, os
 import requests
 from Entidad import Entidad
@@ -8,7 +8,6 @@ from werkzeug.utils import secure_filename
 from control.ControlEntidad import ControlEntidad
 
 
- 
 from menu import menu
 from vista.vistaequipo import vistaequipo
 from vista.vistaagregarequipo import vistaagregarequipo
@@ -16,7 +15,6 @@ from vista.vistaconfiguracion import vistaconfiguracion
 from vista.vistagestiondeldesarrollo import vistagestiondeldesarrollo
 from vista.vistainforme import vistainforme
 from vista.vistaconcertaciondepropositos import vistaconcertaciondepropositos
-from vista.vistafactoresclavesdeexito import vistafactoresclavesdeexito
 from vista.vistagestiondeldesempeno import vistagestiondeldesempeno
 from vista.vistaotrascontribuciones import vistaotrascontribuciones
 from vista.vistaareportes import vistareportes
@@ -36,6 +34,7 @@ from vista.vistaidentificaciondelideres import vistaidentificaciondelideres
 
 
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
 
 app.register_blueprint(menu)
 app.register_blueprint(vistaequipo)
@@ -44,7 +43,6 @@ app.register_blueprint(vistaconfiguracion)
 app.register_blueprint(vistagestiondeldesarrollo)
 app.register_blueprint(vistainforme)
 app.register_blueprint(vistaconcertaciondepropositos)
-app.register_blueprint(vistafactoresclavesdeexito)
 app.register_blueprint(vistagestiondeldesempeno)
 app.register_blueprint(vistaotrascontribuciones)
 app.register_blueprint(vistareportes)
@@ -63,10 +61,6 @@ app.register_blueprint(vistaidentificaciondelideres)
  
 # Establecer la ruta base si es necesario, por defecto es '/'
 #breakpoint();
-
-from flask import Blueprint, render_template, request, redirect,url_for, flash, session
-import markupsafe
-import requests
 
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/inicio', methods = ['GET', 'POST'])
@@ -98,7 +92,6 @@ def inicio():
     else:
         return render_template('/inicio.html')
 
-
 @app.route('/cerrarSesion')
 def cerrarSesion():
     #session.clear()
@@ -114,18 +107,6 @@ def get_dimensiones():
     # Aquí puedes pasar 'data' a la plantilla HTML que desees renderizar.
     return render_template('analisisorganizacional.html', data=data)
 
-
-""" @app.route('/competenciastransversales', methods = ['GET', 'POST']) 
-def get_competencias():
-    response = requests.get('http://190.217.58.246:5184/api/sgd/competencia')
-    try:
-        comp = response.json()  # Intenta decodificar la respuesta como JSON
-    except requests.exceptions.JSONDecodeError:
-        return "Error: La respuesta no es un JSON válido.", 500
-    # Aquí puedes pasar 'data' a la plantilla HTML que desees renderizar.
-    return render_template('competenciastransversales.html', comp=comp)
- """
-
 @app.route('/competenciastransversales', methods=['GET', 'POST'])
 def get_competencias():
     response = requests.get('http://190.217.58.246:5184/api/sgd/competencia')
@@ -138,9 +119,18 @@ def get_competencias():
 
     # Manejo de índice de la pregunta actual
     if request.method == 'POST':
-        current_index = int(request.form.get('current_index', 0)) + 1
-        if current_index >= len(competencias):
-            return redirect(url_for('finalizo'))  # Redirigir a finalizo.html cuando se llega al final
+        respuesta_seleccionada = request.form.get('respuesta', None)
+        if respuesta_seleccionada:
+            # Guardar respuesta en la sesión
+            if 'respuestas' not in session:
+                session['respuestas'] = []
+            session['respuestas'].append(respuesta_seleccionada)
+            session.modified = True
+
+        if 'next' in request.form:
+            current_index += 1
+            if current_index >= len(competencias):
+                return redirect(url_for('finalizo'))  # Redirigir a resultados1.html cuando se llega al final
         elif 'prev' in request.form:
             if current_index > 0:
                 current_index -= 1
@@ -148,16 +138,64 @@ def get_competencias():
     pregunta_actual = competencias[current_index]
     return render_template('competenciastransversales.html', item=pregunta_actual, current_index=current_index)
 
+@app.route('/resultadoscompetenciastransversales', methods = ['GET', 'POST'])
+def get_resultadoscompetenciastransversales():
+    return render_template('resultadoscompetenciastransversales.html')
+
+@app.route('/resultadoscompetenciasdocentes', methods = ['GET', 'POST'])
+def get_resultadoscompetenciasdocentes():
+    return render_template('resultadoscompetenciasdocentes.html')
+
+@app.route('/resultadosconcertaciondepropositos', methods = ['GET', 'POST'])
+def get_resultadosconcertaciondepropositos():
+    return render_template('resultadosconcertaciondepropositos.html')
 
 @app.route('/competenciasdocentes', methods = ['GET', 'POST'])
 def get_docentes():
     response = requests.get('http://190.217.58.246:5184/api/sgd/competencia')
     try:
-        docente = response.json()  # Intenta decodificar la respuesta como JSON
+        competencias = response.json()  # Decodificar la respuesta como JSON
     except requests.exceptions.JSONDecodeError:
         return "Error: La respuesta no es un JSON válido.", 500
-    # Aquí puedes pasar 'data' a la plantilla HTML que desees renderizar.
-    return render_template('competenciasdocentes.html', docente=docente)
+
+    current_index = int(request.form.get('current_index', 0))
+
+    # Manejo de índice de la pregunta actual
+    if request.method == 'POST':
+        if 'next' in request.form:
+            current_index += 1
+            if current_index >= len(competencias):
+                return redirect(url_for('finalizo'))  # Redirigir a finalizo.html cuando se llega al final
+        elif 'prev' in request.form:
+            if current_index > 0:
+                current_index -= 1
+
+    pregunta_actual = competencias[current_index]
+    return render_template('competenciasdocentes.html', item=pregunta_actual, current_index=current_index)
+
+@app.route('/factoresclavesdeexito', methods = ['GET', 'POST'])
+def get_factoresclavesdeexito():
+    response = requests.get('http://190.217.58.246:5184/api/sgd/competencia')
+    try:
+        competencias = response.json()  # Decodificar la respuesta como JSON
+    except requests.exceptions.JSONDecodeError:
+        return "Error: La respuesta no es un JSON válido.", 500
+
+    current_index = int(request.form.get('current_index', 0))
+
+    # Manejo de índice de la pregunta actual
+    if request.method == 'POST':
+        if 'next' in request.form:
+            current_index += 1
+            if current_index >= len(competencias):
+                return redirect(url_for('finalizo'))  # Redirigir a finalizo.html cuando se llega al final
+        elif 'prev' in request.form:
+            if current_index > 0:
+                current_index -= 1
+
+    pregunta_actual = competencias[current_index]
+    return render_template('factoresclavesdeexito.html', item=pregunta_actual, current_index=current_index)
+
 
 @app.route('/presentacionGDD', methods = ['GET'])
 def get_presentacionGDD():
@@ -166,6 +204,10 @@ def get_presentacionGDD():
 @app.route('/finalizo', methods = ['GET'])
 def finalizo():
     return render_template('finalizo.html')
+
+@app.route('/concertaciondepropositospersonales', methods = ['GET'])
+def concertaciondepropositospersonales():
+    return render_template('concertaciondepropositospersonales.html')
 
 @app.route('/infoproyectos', methods = ['GET'])
 def get_infoproyectos():
