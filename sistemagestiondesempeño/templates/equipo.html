@@ -20,8 +20,6 @@
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
-            /*overflow-x: hidden; 
-
         }
 
         .nav-link h5,
@@ -29,7 +27,7 @@
             border-radius: 25px;
             border: 1px solid #EA5C10;
             padding: 10px;
-            color: rgb(0, 173, 253);
+            color: rgb(0, 0, 0);
             font-size: 16px;
             text-decoration: none;
             /* Ajuste para evitar subrayado en h5 */
@@ -52,269 +50,208 @@
         }
 
         .sidebar {
-            width: 340px;
-            height: 100%;
-            background-color: #ffffff;
-            color: white;
-            transition: width 0.4s ease;
+            width: 300px;
+            background-color: #EAEAEA;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0px 16px 16px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            z-index: 1000;
-            overflow-y: auto;
-            border-radius: 10px;
-            /* Bordes redondeados de 10px */
-            box-shadow: 0px 16px 16px 4px rgba(0, 0, 0, 0.25);
-            /* lo ultimo que de agrego */
-            /*width: 277px;
-            height: 640px;*/
-            margin-top: 10px;
-            /* Margen superior externo */
-            margin-right: 15px;
-            /* Margen derecho externo */
-            margin-bottom: 0 px;
-            /* Margen inferior externo */
-            margin-left: 15px;
-            /* Margen izquierdo externo */
+            margin-left: 30px;
+            top: 10px;
+            bottom: 10px;
         }
 
-        .sidebar.collapsed {
-            width: 50px;
+        .user-profile {
+            text-align: center;
+            margin-bottom: 30px;
         }
 
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
+        .user-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
         }
 
-        .sidebar ul li {
+        .user-name {
+            font-size: 16px;
+            color: #000000;
+            margin: 0;
+        }
+
+        .user-title {
+            font-size: 12px;
+            color: #666666;
+            margin: 0;
+        }
+
+        .navbar-nav {
+            width: 100%;
+        }
+
+        .nav-item {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             padding: 10px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #ffffff;
+
+            font-weight: bold;
+            transition: background 0.3s ease;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         }
 
-        .sidebar ul li a {
-            color: white;
+        .nav-link img.icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 50px;
+        }
+
+        .dropdown-toggle {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: transparent;
+            margin-top: 10px;
+            border: none;
+            color: rgb(255, 255, 255);
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .dropdown-menu {
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            margin-top: 10px;
+        }
+
+        .dropdown-item {
+            color: #333;
+            padding: 10px;
             text-decoration: none;
+            display: block;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: #ddd;
+        }
+
+        .gestion-desempeno {
+            background-color: #C35E23;
+
+        }
+
+        .gestion-desempeno:hover {
+            background-color: #b45120;
+        }
+
+        .gestion-desarrollo {
+            background-color: #BF0B3B;
+        }
+
+        .gestion-desarrollo:hover {
+            background-color: #a10933;
+        }
+
+        .equipo {
+            background-color: #29A3CC;
+        }
+
+        .equipo:hover {
+            background-color: #2385a6;
+        }
+
+        .configuracion {
+            background-color: #16594D;
+        }
+
+        .configuracion:hover {
+            background-color: #12483e;
+        }
+
+        .inicio {
+            background-color: #525252;
+        }
+
+        .inicio:hover {
+            background-color: #3e3e3e;
+        }
+
+
+        .circle1 {
+            background-color: rgb(0, 0, 0);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .circle-wrapper1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: -30px;
         }
 
         .content {
             flex: 1;
             padding: 20px;
-            transition: margin-left 0.3s ease;
-            /* Agregamos transición para un cambio suave */
             margin-left: 345px;
             /* Ancho inicial de la barra lateral */
+            flex-wrap: wrap;
+            /* Permite que los elementos se envuelvan cuando no hay suficiente espacio */
+            display: flex;
+            /* Utilizamos flexbox para alinear los elementos */
+            align-items: flex-start;
+            /* Alinea los elementos al inicio del contenedor */
         }
 
-        .content.collapsed {
-            margin-left: 50px;
-            /* Ancho de la barra lateral colapsada */
-        }
-
-        /* Estilo para el título y botones de acción */
+        /* Estilo de las letras */
         h1 {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px;
-            margin: 0;
         }
 
-        /* Estilos específicos para los botones dentro del título */
-        .btn-title {
-            margin-left: 10px;
+        h2 {
+            font-size: 50px;
+            /* margin-bottom: 20px; */
+            margin-top: -60px; 
+            margin-right: 300px;
         }
 
-        .svg-button {
-            cursor: pointer;
-            /* Cambia el color al pasar sobre el botón */
-            display: inline-block;
+        p {
+            font-size: 15px;
+            margin-top: 20px
         }
 
-        .svg-button svg rect {
-            transition: fill 0.3s;
-            /* Añade una transición suave al cambiar el color de fondo */
-        }
+        /* Estilo de las letras */
 
-        .svg-button:hover svg rect {
-            fill: rgb(182, 182, 182);
-            /* Cambia el color de fondo al pasar sobre el botón */
-        }
-
-        .btn-group {
-            margin-left: 10px;
-        }
-
-        .btn-title {
-            margin-left: 10px;
-        }
-
-        .gestion-desempeno {
-            background-color: #C35E23;
-            /* Elige el color de fondo que desees */
-            color: #000;
-            /* Asegúrate de que el texto sea legible sobre el fondo */
-            padding: 10px;
-            /* Añade algo de relleno para que el texto no esté pegado al borde */
-            border-radius: 5px;
-            /* Opcional: añade bordes redondeados */
-        }
-
-        .gestion-desempeno:hover {
-            background-image: linear-gradient(to right, #C35E23, #FFC700);
-            /* Degradado al pasar el cursor */
-            color: #000;
-        }
-
-        .gestion-desarrollo {
-            background-color: #BF0B3B;
-            /* Elige el color de fondo que desees */
-            color: #000;
-            /* Asegúrate de que el texto sea legible sobre el fondo */
-            padding: 10px;
-            /* Añade algo de relleno para que el texto no esté pegado al borde */
-            border-radius: 5px;
-            /* Opcional: añade bordes redondeados */
-        }
-
-        .gestion-desarrollo:hover {
-            background-image: linear-gradient(to right, #BF0B3B, #FFC700);
-            /* Degradado al pasar el cursor */
-            color: #000;
-        }
-
-        .dropdown-container {
-            position: relative;
-            /* Ajusta otros estilos según sea necesario */
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            right: 0;
-            /* Alinea el menú al lado derecho */
-            background-color: rgb(97, 97, 97);
-            /* Color del texto de los elementos del menú */
-            top: 100%;
-            /* Fondo del menú */
-            width: 250px;
-            /* Ajusta el ancho del menú según sea necesario */
-        }
-
-        .dropdown-item {
-            color: rgb(255, 0, 0);
-            text-align: center;
-
-            padding: 10px;
-            /* Ajusta el relleno según sea necesario */
-            display: block;
-            /* Asegúrate de que los elementos se comporten como bloques */
-        }
-
-        .mi-equipo {
-            background-color: #29A3CC;
-            /* Elige el color de fondo que desees */
-            color: #000;
-            /* Asegúrate de que el texto sea legible sobre el fondo */
-            padding: 10px;
-            /* Añade algo de relleno para que el texto no esté pegado al borde */
-            border-radius: 5px;
-            /* Opcional: añade bordes redondeados */
-        }
-
-        .mi-equipo:hover {
-            background-image: linear-gradient(to right, #29A3CC, #FFC700);
-            /* Degradado al pasar el cursor */
-            color: #000;
-        }
-
-        .configuracion {
-            background-color: #16594D;
-            /* Elige el color de fondo que desees */
-            color: #000;
-            /* Asegúrate de que el texto sea legible sobre el fondo */
-            padding: 10px;
-            /* Añade algo de relleno para que el texto no esté pegado al borde */
-            border-radius: 5px;
-            /* Opcional: añade bordes redondeados */
-        }
-
-        .configuracion:hover {
-            background-image: linear-gradient(to right, #16594D, #FFC700);
-            /* Degradado al pasar el cursor */
-            color: #000;
-        }
-
-        .inicio {
-            background-color: #525252;
-            /* Elige el color de fondo que desees */
-            color: #000;
-            /* Asegúrate de que el texto sea legible sobre el fondo */
-            padding: 10px;
-            /* Añade algo de relleno para que el texto no esté pegado al borde */
-            border-radius: 5px;
-            /* Opcional: añade bordes redondeados */
-        }
-
-        .inicio:hover {
-            background-image: linear-gradient(to right, #525252, #FFC700);
-            /* Degradado al pasar el cursor */
-            color: #525252;
-        }
 
         hr {
             width: 102%;
             height: 30px;
             margin-right: auto;
             margin-left: auto;
-            margin-top: -1 px;
+            margin-top: -50px;
             margin-bottom: 5px;
             border-width: 2px;
             border-color: rgb(0, 0, 0);
             position: relative;
             z-index: 10;
-        }
-
-        .inicio-png {
-            flex-shrink: 0;
-            width: 30px;
-            height: 30px;
-            left: 85px;
-            position: relative;
-            object-fit: cover;
-        }
-
-        .configuracion-png {
-            flex-shrink: 0;
-            width: 30px;
-            height: 30px;
-            left: 45px;
-            position: relative;
-            object-fit: cover;
-        }
-
-        .equipo-png {
-            flex-shrink: 0;
-            width: 30px;
-            height: 30px;
-            left: 70px;
-            position: relative;
-            object-fit: cover;
-        }
-
-        .BGDesarrollo-png {
-            flex-shrink: 0;
-            width: 30px;
-            height: 30px;
-            position: relative;
-            object-fit: cover;
-        }
-
-        .BGDesempeño-png {
-            flex-shrink: 0;
-            width: 30px;
-            height: 30px;
-            position: relative;
-            object-fit: cover;
         }
 
         .mariposa {
@@ -342,6 +279,16 @@
             top: 80px;
             z-index: 10;
         }
+
+        .busqueda{
+            margin-bottom: -75px;
+            margin-top: -55px;
+        }
+
+        .busqueda-equipo{
+            margin-top: 120px;
+            margin-right: 300px;
+        }
     </style>
 
 </head>
@@ -349,95 +296,69 @@
 <body>
 
     <div class="sidebar">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light flex-column">
-            <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
-            <ul>
-                <a class="navbar-brand" href="#">Colocar imagen del usuario</a>
-                <br>
-                <a class="navbar-brand" href="#">Nombre del usuario</a>
+        <div class="user-profile">
+            <!-- <img src="profile.png" alt="User Image" class="user-img"> -->
+            <img src="{{ url_for('static', filename='img/image copy.png')}}" class="user-img">
+            <h4 class="user-name">James Bonb</h4>
+            <p class="user-title">Director de Programa</p>
+        </div>
+        <nav class="navbar">
+            <ul class="navbar-nav flex-column">
+                <li class="nav-item dropdown">
+                    <a class="nav-link gestion-desempeno" href="/gestiondeldesempeno">
+                        GESTIÓN DEL DESEMPEÑO
+                        <img src="{{ url_for('static', filename='img/BGDesempeño.png')}}" class="icon">
+                    </a>
+                    <button class="dropdown-toggle btn btn-secondary" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="/proyectos">Proyectos</a>
+                        <a class="dropdown-item" href="/analisisorganizacional">Análisis Organizacional</a>
+                        <a class="dropdown-item" href="/evaluaciondecompetencias">Evaluación de Competencias</a>
+                        <a class="dropdown-item" href="/concertaciondepropositos">Concertación de Propositos</a>
+                        <a class="dropdown-item" href="/identificaciondelideres">Identificación de Lideres</a>
+                        <a class="dropdown-item" href="/factoresclavesdeexito">Factores Claves de Éxito</a>
+                    </div>
+                </li>
 
-                <a href="/cerrarSesion" class="text-white ml-3 nav-link-cerrar">
-                    <h5>Cerrar Sesión</h5>
-                </a>
+                <ul class="navbar-nav flex-column">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link gestion-desarrollo" href="/gestiondeldesarrollo">
+                            GESTIÓN DEL DESARROLLO
+                            <img src="{{ url_for('static', filename='img/BGDesarrollo.png')}}" class="icon">
+                        </a>
+                        <button class="dropdown-toggle btn btn-secondary" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav flex-column">
-
-                        <li class="nav-item dropdown active">
-                            <div class="btn-group">
-                                <a class="nav-link gestion-desempeno btn btn-warning" href="/gestiondeldesempeno"
-                                    role="button">
-                                    GESTIÓN DEL DESEMPEÑO
-                                    <img src="{{ url_for('static', filename='img/BGDesempeño.png')}}" />
-
-                                </a>
-                                <button
-                                    class="btn btn-secondary dropdown-toggle dropdown-toggle-split gestion-desempeno"
-                                    type="button" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <span class="sr-only ">Toggle Dropdown</span>
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="/proyectos">Proyectos</a>
-                                    <a class="dropdown-item" href="/analisisorganizacional">Análisis Organizacional</a>
-                                    <a class="dropdown-item" href="/evaluaciondecompetencias">Evaluación de
-                                        Competencias</a>
-                                    <a class="dropdown-item" href="/concertaciondepropositos">Concertación de
-                                        propositos</a>
-                                    <a class="dropdown-item" href="/identificaciondelideres">Identificación de
-                                        Lideres</a>
-                                    <a class="dropdown-item" href="/factoresclavesdeexito">Factores Claves de exito</a>
-                                </div>
-                            </div>
-                        </li>
-
-                        <li class="nav-item dropdown active">
-                            <div class="btn-group">
-                                <a class="nav-link gestion-desarrollo btn btn-warning" href="/gestiondeldesarrollo"
-                                    role="button">
-                                    GESTIÓN DEL DESARROLLO
-                                    <img src="{{ url_for('static', filename='img/BGDesarrollo.png')}}" />
-                                </a>
-                                <button
-                                    class="btn btn-secondary dropdown-toggle dropdown-toggle-split gestion-desarrollo"
-                                    type="button" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <span class="sr-only">Toggle Dropdown</span>
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="/reportes">Reportes</a>
-                                    <a class="dropdown-item" href="/cursos">Cursos</a>
-                                    <a class="dropdown-item" href="/podcast">Podcast</a>
-                                    <a class="dropdown-item" href="/videos">Videos</a>
-                                </div>
-                            </div>
-                        </li>
-
-
-                        <li class="nav-item active">
-                            <a class="nav-link mi-equipo btn btn-primary" href="/equipo">
-                                MI EQUIPO
-                                <img src="{{ url_for('static', filename='img/equipo.png')}}" class="equipo-png" />
-                            </a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link configuracion btn btn-success" href="/configuracion">
-                                CONFIGURACIÓN
-                                <img src="{{ url_for('static', filename='img/configuracion.png')}}" />
-                            </a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link inicio btn btn-dark" href="/inicio">
-                                INICIO
-                                <img src="{{ url_for('static', filename='img/inicio.png')}}" class="inicio-png" />
-                            </a>
-
-                        </li>
-                    </ul>
-                </div>
-            </ul>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="/reportes">Reportes</a>
+                            <a class="dropdown-item" href="/cursos">Cursos</a>
+                            <a class="dropdown-item" href="/podcast">Podcast</a>
+                            <a class="dropdown-item" href="/videos">Videos</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link equipo" href="/equipo">
+                            EQUIPO
+                            <img src="{{ url_for('static', filename='img/equipo.png')}}" class="icon">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link configuracion" href="/configuracion">
+                            CONFIGURACIÓN
+                            <img src="{{ url_for('static', filename='img/configuracion.png')}}" class="icon">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link inicio" href="/inicio">
+                            INICIO
+                            <img src="{{ url_for('static', filename='img/inicio.png')}}" class="icon">
+                        </a>
+                    </li>
+                </ul>
         </nav>
     </div>
 
@@ -445,15 +366,18 @@
     <div class="content">
         <h1>Equipo</h1>
         <hr>
+        <div class="busqueda">
+            <p>Búsqueda de colaborador por nombre:</p>
+            <form class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="Ingresa el nombre" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+            </form>
+        </div>
 
-        <p>Búsqueda de colaborador por nombre</p>
-        <form class="form-inline">
-            <input class="form-control mr-sm-2" type="search" placeholder="Ingresa el nombre" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-        </form>
-
-        <h1>MI EQUIPO</h1>
-        <p>Busqueda de colaborador</p>
+        <div class="busqueda-equipo">
+            <h2>MI EQUIPO</h2>
+            <p>Busqueda de colaborador</p>
+        </div>
 
         <div class="svg-button">
             <a href="/informe">
@@ -467,7 +391,6 @@
                 </svg>
             </a>
         </div>
-
 
         <div class="svg-button">
             <a href="/presentacionGDD">
