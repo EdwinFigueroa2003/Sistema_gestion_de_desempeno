@@ -12,7 +12,7 @@
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <style>
-html,
+        html,
         body {
             height: 100%;
             margin: 0;
@@ -159,6 +159,7 @@ html,
             width: 24px;
             height: 24px;
             margin-right: 50px;
+            border-radius: 50%;
         }
 
         .dropdown-toggle {
@@ -245,10 +246,41 @@ html,
             margin-bottom: 20px;
         }
 
+        hr {
+            width: 100%;
+            height: 30px;
+            margin-right: auto;
+            margin-left: auto;
+            margin-top: 5px;
+            margin-bottom: -25px;
+            border-width: 2px;
+            border-color: rgb(0, 0, 0);
+            position: relative;
+            z-index: 10;
+        }
+
         h1 {
-            font-size: 36px;
+            font-size: 35px;
             color: #333;
             text-transform: uppercase;
+        }
+
+        h2 {
+            font-size: 25px;
+            color: #333;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            margin-top: -50px;
+        }
+
+        p {
+            margin-top: 10px;
+            align-items: center;
+            text-align: center;
+        }
+
+        ul {
+            margin-right: 30px;
         }
 
         .dashboard {
@@ -258,15 +290,15 @@ html,
         }
 
         .dashboard .avatar {
-            width: 120px;
-            height: 120px;
-            background: #fff;
-            border-radius: 20px;
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: #ffffff;
+            border-radius: 40px;
+            width: 215px;
+            height: 175px;
+            margin-left: 25px;
             margin-right: 20px;
+            margin-top: 7px;
+            padding: 10px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
         }
 
         .dashboard .dashboard-content {
@@ -280,7 +312,8 @@ html,
             border-radius: 20px;
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
             padding: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 1px;
+            margin-top: -50px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -292,12 +325,13 @@ html,
         }
 
         .dashboard .dashboard-content .chart-container {
-            background: #fff;
+            background: #ffffff;
             border-radius: 20px;
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
             padding: 20px;
             margin-top: 20px;
             position: relative;
+            z-index: 10;
         }
 
         .dashboard .dashboard-content .chart-container img {
@@ -323,7 +357,7 @@ html,
             margin-top: 20px;
         }
 
-        .action-buttons {
+        /*         .action-buttons {
             display: flex;
             justify-content: space-between;
             margin-top: 40px;
@@ -339,14 +373,88 @@ html,
             font-size: 16px;
             text-decoration: none;
             display: block;
-            width: 200px;
+            width: 290px;
+            margin-top: 25px;
+            margin-left: 550px;
+        } */
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            /* Distribuye los botones uniformemente */
+            margin-top: 40px;
+            /* Añade espacio superior al contenedor de botones */
         }
+
+        .action-buttons a {
+            background: #666;
+            /* Color de fondo de los botones */
+            border-radius: 8px;
+            /* Bordes redondeados */
+            color: #fff;
+            /* Color del texto */
+            padding: 10px 30px;
+            /* Relleno interno del botón */
+            text-align: center;
+            /* Alineación centrada del texto */
+            text-transform: uppercase;
+            /* Texto en mayúsculas */
+            font-size: 16px;
+            /* Tamaño de fuente */
+            text-decoration: none;
+            /* Sin subrayado en el texto */
+            display: block;
+            /* Muestra los botones como bloques */
+            width: 290px;
+            height: 60px;
+            /* Ancho fijo para los botones */
+            transition: background 0.3s ease;
+            /* Transición suave al pasar el cursor */
+            margin-top: 25px;
+            margin-right: 20px;
+            margin-left: 25px;
+        }
+
+        .action-buttons a:hover {
+            background: #444;
+            /* Cambia el color de fondo al pasar el cursor */
+        }
+
         /* Jaider */
+
+        .mariposa {
+            width: 459px;
+            height: 459px;
+            position: absolute;
+            left: 1000px;
+            top: -170px;
+            transform: rotate(-45deg) scale(1, 1);
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .circle-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            /* Ajusta el ancho según el diseño */
+            margin-bottom: 10px;
+            /* Espacio entre el círculo y los otros elementos */
+        }
+
+        .circle {
+            background-color: blue;
+            width: 101px;
+            height: 101px;
+            border-radius: 50%;
+
+        }
     </style>
 
 </head>
 
-<body> 
+<body>
     <!-- Barra Lateral -->
     <div class="sidebar">
         <div class="user-profile">
@@ -419,43 +527,62 @@ html,
     <!-- Contenido Principal -->
     <div class="contenido-principal">
         <h1>Gestión del Desempeño</h1>
-        <p class="breadcrumb">Inicio / Gestión del Desempeño / Análisis Organizacional</p>
-
+        <!-- <p class="breadcrumb">Inicio / Gestión del Desempeño / Análisis Organizacional</p> -->
+        <hr>
         <div class="dashboard">
             <div class="avatar">
-                <img src="mask-group0.svg" alt="MONO MONSTER">
+                <div class="circle-wrapper">
+                    <div class="circle"></div>
+                </div>
+                <p>Fransisco</p>
             </div>
             <div class="dashboard-content">
                 <div class="reporte-item">
-                    Competencias Transversales <img src="icon1.png" alt="Icono">
+                    Competencias Transversales <img
+                        src="{{ url_for('static', filename='img/competencias-transversales.jpeg')}}" class="icon" />
                 </div>
 
                 <div class="chart-container">
                     <div class="chart-title">
-                        <h3>Competencias Transversales</h3>
-                        <img src="descargar.png" alt="Descargar">
-                        <h1>Resultados</h1>
+                        <h2>Resultados</h2>
                         <ul>
                             {% for respuesta in respuestas %}
                             <li>{{ respuesta }}</li>
                             {% endfor %}
                         </ul>
                     </div>
-                    <div class="chart">
-                        <img src="grafico.png" alt="Gráfico">
-                    </div>
                 </div>
             </div>
         </div>
 
         <div class="action-buttons">
-            <a href="#">Imprimir Gráfica e Informe</a>
-            <a href="#">Gráfica ILUO</a>
+            <a href="#" onclick="window.print();">Imprimir Gráfica e Informe</a>
+            <a href="{{ url_for('download_excel') }}">Descargar Excel</a>
+            <a href="/resultados">Volver</a>
         </div>
     </div>
+    <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
 
-    </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script>
+        function downloadExcel() {
+            var respuestas = [];
+            document.querySelectorAll('.selected-answers ul li').forEach(function(li) {
+                respuestas.push([li.textContent.trim()]);
+            });
+         
+            // Crear una hoja de cálculo
+            var wb = XLSX.utils.book_new();
+            var ws = XLSX.utils.aoa_to_sheet(respuestas);
+         
+            // Añadir la hoja de cálculo al libro de trabajo
+            XLSX.utils.book_append_sheet(wb, ws, "Resultados");
+         
+            // Descargar el archivo
+            XLSX.writeFile(wb, "Resultados.xlsx");
+        }
+        </script>
 </body>
+
 
 </html>

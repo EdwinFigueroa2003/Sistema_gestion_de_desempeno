@@ -1,7 +1,7 @@
 # main.py
 from pprint import pprint
-from flask import Flask, render_template, request, url_for, redirect, session, jsonify, flash
-import markupsafe, uuid, psycopg2, os
+from flask import Flask, render_template, request, url_for, redirect, session, jsonify, flash, send_file
+import markupsafe, uuid, psycopg2, os, io, xlsxwriter
 import requests
 from Entidad import Entidad
 from werkzeug.utils import secure_filename
@@ -148,6 +148,26 @@ def get_competencias():
 def get_resultadoscompetenciastransversales():
     respuestas = session.get('respuestas', [])  # Obtener las respuestas de la sesión
     return render_template('resultadoscompetenciastransversales.html', respuestas=respuestas)
+
+@app.route('/download_excel')
+def download_excel():
+    # Aquí deberías asegurarte de que estás obteniendo las respuestas correctas
+    respuestas = ["respuesta_seleccionada"]  # Aquí deberías cargar las respuestas reales
+ 
+    # Crear un archivo Excel en memoria
+    output = io.BytesIO()
+    workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+    worksheet = workbook.add_worksheet()
+ 
+    # Escribir las respuestas en el archivo Excel
+    worksheet.write('A1', 'Resultados')
+    for i, respuesta in enumerate(respuestas, start=1):
+        worksheet.write(f'A{i+1}', respuesta)
+ 
+    workbook.close()
+    output.seek(0)
+ 
+    return send_file(output, download_name="Resultados.xlsx", as_attachment=True)
 
 @app.route('/resultadoscompetenciasdocentes', methods = ['GET', 'POST'])
 def get_resultadoscompetenciasdocentes():
