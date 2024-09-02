@@ -1,7 +1,7 @@
 # main.py
 from pprint import pprint
 from flask import Flask, render_template, request, url_for, redirect, session, jsonify, flash, send_file
-import markupsafe, uuid, psycopg2, os, io, xlsxwriter
+import markupsafe, uuid, psycopg2, os, io, xlsxwriter, openpyxl, pandas
 import requests
 from Entidad import Entidad
 from werkzeug.utils import secure_filename
@@ -10,6 +10,7 @@ from control.ControlEntidad import ControlEntidad
 
 from menu import menu
 from vista.vistaequipo import vistaequipo
+from vista.vistacompetenciastransversales import vistacompetenciastransversales
 from vista.vistaagregarequipo import vistaagregarequipo
 from vista.vistaconfiguracion import vistaconfiguracion
 from vista.vistagestiondeldesarrollo import vistagestiondeldesarrollo
@@ -30,6 +31,7 @@ from vista.vistavideos import vistavideos
 from vista.vistacursos import vistacursos
 from vista.vistapodcast import vistapodcast
 from vista.vistaidentificaciondelideres import vistaidentificaciondelideres
+from vista.vistaanalisisorganizacional import vistaanalisisorganizacional
 
 
 
@@ -39,6 +41,8 @@ app.secret_key = os.urandom(24)
 
 app.register_blueprint(menu)
 app.register_blueprint(vistaequipo)
+app.register_blueprint(vistaanalisisorganizacional)
+app.register_blueprint(vistacompetenciastransversales)
 app.register_blueprint(vistaagregarequipo)
 app.register_blueprint(vistaconfiguracion)
 app.register_blueprint(vistagestiondeldesarrollo)
@@ -98,52 +102,6 @@ def cerrarSesion():
     #session.clear()
     return redirect('inicio.html')
 
-@app.route('/analisisorganizacional', methods = ['GET'])
-def get_dimensiones():
-    
-    response = requests.get('http://190.217.58.246:5184/api/sgd/dimension')
-    try:
-        data = response.json()  # Intenta decodificar la respuesta como JSON
-    except requests.exceptions.JSONDecodeError:
-        return "Error: La respuesta no es un JSON válido.", 500
-    # Aquí puedes pasar 'data' a la plantilla HTML que desees renderizar.
-    return render_template('analisisorganizacional.html', data=data)
-
-@app.route('/competenciastransversales', methods=['GET', 'POST'])
-def get_competencias():
-    response = requests.get('http://190.217.58.246:5184/api/sgd/competencia')
-    try:
-        competencias = response.json()  # Decodificar la respuesta como JSON
-    except requests.exceptions.JSONDecodeError:
-        return "Error: La respuesta no es un JSON válido.", 500
-
-    current_index = int(request.form.get('current_index', 0))
-
-    # Manejo de índice de la pregunta actual
-    if request.method == 'POST':
-        respuesta_seleccionada = request.form.get('respuesta', None)
-        print(f"Respuesta seleccionada: {respuesta_seleccionada}")  # Debugging
-        if respuesta_seleccionada:
-            # Guardar respuesta en la sesión
-            if 'respuestas' not in session:
-                session['respuestas'] = []
-            session['respuestas'].append(respuesta_seleccionada)
-            session.modified = True
-
-            print("Respuesta seleccionada:", respuesta_seleccionada)
-            print("Respuestas hasta ahora:", session['respuestas'])
-
-        if 'next' in request.form:
-            current_index += 1
-            if current_index >= len(competencias):
-                return redirect(url_for('finalizo'))  # Redirigir a resultados1.html cuando se llega al final
-        elif 'prev' in request.form:
-            if current_index > 0:
-                current_index -= 1
-
-    pregunta_actual = competencias[current_index]
-    return render_template('competenciastransversales.html', item=pregunta_actual, current_index=current_index)
-
 @app.route('/resultadoscompetenciastransversales', methods = ['GET', 'POST'])
 def get_resultadoscompetenciastransversales():
     respuestas = session.get('respuestas', [])  # Obtener las respuestas de la sesión
@@ -151,23 +109,47 @@ def get_resultadoscompetenciastransversales():
 
 @app.route('/download_excel')
 def download_excel():
-    # Aquí deberías asegurarte de que estás obteniendo las respuestas correctas
-    respuestas = ["respuesta_seleccionada"]  # Aquí deberías cargar las respuestas reales
- 
+    # Obtener las respuestas reales almacenadas en la sesión
+    respuestas = session.get('respuestas', [])
+    
     # Crear un archivo Excel en memoria
     output = io.BytesIO()
     workbook = xlsxwriter.Workbook(output, {'in_memory': True})
     worksheet = workbook.add_worksheet()
- 
+
+    # Definir estilos
+    header_format = workbook.add_format({
+        'bold': True,
+        'font_size': 14,
+        'bg_color': '#4AF852',
+        'border': 1,
+        'align': 'center',
+        'valign': 'vcenter'
+    })
+    cell_format = workbook.add_format({
+        'font_size': 12,
+        'bg_color': '#EAF2D3',
+        'border': 1,
+        'align': 'left',
+        'valign': 'vcenter'
+    })
+    
+    # Escribir el encabezado con formato
+    worksheet.write('A1', 'Resultados', header_format)
+    
+    # Ajustar el ancho de las columnas
+    worksheet.set_column('A:A', 40)  # Ajusta el ancho de la columna A
+
     # Escribir las respuestas en el archivo Excel
-    worksheet.write('A1', 'Resultados')
     for i, respuesta in enumerate(respuestas, start=1):
-        worksheet.write(f'A{i+1}', respuesta)
- 
+        worksheet.write(f'A{i+1}', respuesta, cell_format)
+    
     workbook.close()
     output.seek(0)
- 
+    
     return send_file(output, download_name="Resultados.xlsx", as_attachment=True)
+
+
 
 @app.route('/resultadoscompetenciasdocentes', methods = ['GET', 'POST'])
 def get_resultadoscompetenciasdocentes():

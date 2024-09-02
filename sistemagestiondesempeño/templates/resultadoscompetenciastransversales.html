@@ -159,6 +159,7 @@
             width: 24px;
             height: 24px;
             margin-right: 50px;
+            object-fit: cover;
             border-radius: 50%;
         }
 
@@ -357,33 +358,13 @@
             margin-top: 20px;
         }
 
-        /*         .action-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-        }
-
-        .action-buttons a {
-            background: #666;
-            border-radius: 8px;
-            color: #fff;
-            padding: 10px 30px;
-            text-align: center;
-            text-transform: uppercase;
-            font-size: 16px;
-            text-decoration: none;
-            display: block;
-            width: 290px;
-            margin-top: 25px;
-            margin-left: 550px;
-        } */
-
         .action-buttons {
             display: flex;
             justify-content: space-between;
             /* Distribuye los botones uniformemente */
             margin-top: 40px;
             /* Añade espacio superior al contenedor de botones */
+            text-align: center;
         }
 
         .action-buttons a {
@@ -416,7 +397,7 @@
         }
 
         .action-buttons a:hover {
-            background: #444;
+            background: #7e7e7e;
             /* Cambia el color de fondo al pasar el cursor */
         }
 
@@ -564,7 +545,7 @@
     <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
-    <script>
+    <!--     <script>
         function downloadExcel() {
             var respuestas = [];
             document.querySelectorAll('.selected-answers ul li').forEach(function(li) {
@@ -581,7 +562,7 @@
             // Descargar el archivo
             XLSX.writeFile(wb, "Resultados.xlsx");
         }
-        </script>
+        </script> -->
 </body>
 
 
