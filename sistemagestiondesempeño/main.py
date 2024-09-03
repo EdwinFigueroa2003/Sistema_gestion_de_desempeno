@@ -28,7 +28,6 @@ from vista.vistadashboard import vistadashboard
 from vista.vistareportesindividual import vistareportesindividual
 from vista.vistareportesgeneral import vistareportesgeneral
 from vista.vistavideos import vistavideos
-from vista.vistaconcertaciondepropositosestrategicos import vistaconcertaciondepropositosestrategicos
 from vista.vistaconcertaciondedisponibilidad import vistaconcertaciondedisponibilidad
 from vista.concertaciondepropositosparalamejoradeprocesos import vistaconcertaciondepropositosparalamejoradeprocesos
 from vista.vistacursos import vistacursos
@@ -46,7 +45,6 @@ app.register_blueprint(menu)
 app.register_blueprint(vistaequipo)
 app.register_blueprint(vistaanalisisorganizacional)
 app.register_blueprint(vistacompetenciastransversales)
-app.register_blueprint(vistaconcertaciondepropositosestrategicos)
 app.register_blueprint(vistaconcertaciondedisponibilidad)
 app.register_blueprint(vistaconcertaciondepropositosparalamejoradeprocesos)
 app.register_blueprint(vistaagregarequipo)
