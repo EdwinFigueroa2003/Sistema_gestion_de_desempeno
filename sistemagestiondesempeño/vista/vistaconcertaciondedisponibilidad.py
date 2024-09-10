@@ -9,4 +9,3 @@ vistaconcertaciondedisponibilidad = Blueprint('idconcertaciondedisponibilidad', 
 @vistaconcertaciondedisponibilidad.route('/concertaciondedisponibilidad', methods=['GET', 'POST'])
 def vista_concertaciondedisponibilidad():
     return render_template('concertaciondedisponibilidad.html')
-

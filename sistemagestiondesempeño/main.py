@@ -2,7 +2,6 @@
 from pprint import pprint
 from flask import Flask, render_template, request, url_for, redirect, session, jsonify, flash, send_file
 import markupsafe, uuid, psycopg2, os, io, xlsxwriter, openpyxl, pandas
-import requests
 from Entidad import Entidad
 from werkzeug.utils import secure_filename
 from control.ControlEntidad import ControlEntidad
@@ -15,13 +14,17 @@ from vista.vistaagregarequipo import vistaagregarequipo
 from vista.vistaconfiguracion import vistaconfiguracion
 from vista.vistagestiondeldesarrollo import vistagestiondeldesarrollo
 from vista.vistainforme import vistainforme
+from vista.vistafactoresclavesdeexito import vistafactoresclavesdeexito
 from vista.vistaconcertaciondepropositos import vistaconcertaciondepropositos
+from vista.vistaconcertaciondepropositospersonales import vistaconcertaciondepropositospersonales
+from vista.vistacompetenciasdocentes import vistacompetenciasdocentes
 from vista.vistagestiondeldesempeno import vistagestiondeldesempeno
 from vista.vistaotrascontribuciones import vistaotrascontribuciones
 from vista.vistaareportes import vistareportes
 from vista.vistareportesanalisisorganizacional import vistareportesanalisisorganizacional
 from vista.vistareportesimpulsandoelcrecimiento import vistareportesimpulsandoelcrecimiento
 from vista.vistaproyectos import vistaproyectos
+from vista.vistainfoproyectos import vistainfoproyectos
 from vista.vistaevaluaciondecompetencias import vistaevaluaciondecompetencias
 from vista.vistaresultados import vistaresultados
 from vista.vistadashboard import vistadashboard
@@ -29,7 +32,7 @@ from vista.vistareportesindividual import vistareportesindividual
 from vista.vistareportesgeneral import vistareportesgeneral
 from vista.vistavideos import vistavideos
 from vista.vistaconcertaciondedisponibilidad import vistaconcertaciondedisponibilidad
-from vista.concertaciondepropositosparalamejoradeprocesos import vistaconcertaciondepropositosparalamejoradeprocesos
+from vista.vistaconcertaciondepropositosparalamejoradeprocesos import vistaconcertaciondepropositosparalamejoradeprocesos
 from vista.vistacursos import vistacursos
 from vista.vistapodcast import vistapodcast
 from vista.vistaidentificaciondelideres import vistaidentificaciondelideres
@@ -45,19 +48,23 @@ app.register_blueprint(menu)
 app.register_blueprint(vistaequipo)
 app.register_blueprint(vistaanalisisorganizacional)
 app.register_blueprint(vistacompetenciastransversales)
+app.register_blueprint(vistaconcertaciondepropositos)
+app.register_blueprint(vistafactoresclavesdeexito)
 app.register_blueprint(vistaconcertaciondedisponibilidad)
+app.register_blueprint(vistacompetenciasdocentes)
 app.register_blueprint(vistaconcertaciondepropositosparalamejoradeprocesos)
+app.register_blueprint(vistaconcertaciondepropositospersonales)
 app.register_blueprint(vistaagregarequipo)
 app.register_blueprint(vistaconfiguracion)
 app.register_blueprint(vistagestiondeldesarrollo)
 app.register_blueprint(vistainforme)
-app.register_blueprint(vistaconcertaciondepropositos)
 app.register_blueprint(vistagestiondeldesempeno)
 app.register_blueprint(vistaotrascontribuciones)
 app.register_blueprint(vistareportes)
 app.register_blueprint(vistareportesanalisisorganizacional)
 app.register_blueprint(vistareportesimpulsandoelcrecimiento)
 app.register_blueprint(vistaproyectos)
+app.register_blueprint(vistainfoproyectos)
 app.register_blueprint(vistaevaluaciondecompetencias)
 app.register_blueprint(vistaresultados)
 app.register_blueprint(vistadashboard)
@@ -153,8 +160,6 @@ def download_excel():
     
     return send_file(output, download_name="Resultados.xlsx", as_attachment=True)
 
-
-
 @app.route('/resultadoscompetenciasdocentes', methods = ['GET', 'POST'])
 def get_resultadoscompetenciasdocentes():
     return render_template('resultadoscompetenciasdocentes.html')
@@ -163,72 +168,9 @@ def get_resultadoscompetenciasdocentes():
 def get_resultadosconcertaciondepropositos():
     return render_template('resultadosconcertaciondepropositos.html')
 
-@app.route('/competenciasdocentes', methods = ['GET', 'POST'])
-def get_docentes():
-    response = requests.get('http://190.217.58.246:5184/api/sgd/competencia')
-    try:
-        competencias = response.json()  # Decodificar la respuesta como JSON
-    except requests.exceptions.JSONDecodeError:
-        return "Error: La respuesta no es un JSON válido.", 500
-
-    current_index = int(request.form.get('current_index', 0))
-
-    # Manejo de índice de la pregunta actual
-    if request.method == 'POST':
-        if 'next' in request.form:
-            current_index += 1
-            if current_index >= len(competencias):
-                return redirect(url_for('finalizo'))  # Redirigir a finalizo.html cuando se llega al final
-        elif 'prev' in request.form:
-            if current_index > 0:
-                current_index -= 1
-
-    pregunta_actual = competencias[current_index]
-    return render_template('competenciasdocentes.html', item=pregunta_actual, current_index=current_index)
-
-@app.route('/factoresclavesdeexito', methods = ['GET', 'POST'])
-def get_factoresclavesdeexito():
-    response = requests.get('http://190.217.58.246:5184/api/sgd/competencia')
-    try:
-        competencias = response.json()  # Decodificar la respuesta como JSON
-    except requests.exceptions.JSONDecodeError:
-        return "Error: La respuesta no es un JSON válido.", 500
-
-    current_index = int(request.form.get('current_index', 0))
-
-    # Manejo de índice de la pregunta actual
-    if request.method == 'POST':
-        if 'next' in request.form:
-            current_index += 1
-            if current_index >= len(competencias):
-                return redirect(url_for('finalizo'))  # Redirigir a finalizo.html cuando se llega al final
-        elif 'prev' in request.form:
-            if current_index > 0:
-                current_index -= 1
-
-    pregunta_actual = competencias[current_index]
-    return render_template('factoresclavesdeexito.html', item=pregunta_actual, current_index=current_index)
-
-
 @app.route('/presentacionGDD', methods = ['GET'])
 def get_presentacionGDD():
     return render_template('presentacionGDD.html')
-
-@app.route('/finalizo', methods = ['GET'])
-def finalizo():
-    return render_template('finalizo.html')
-
-@app.route('/concertaciondepropositospersonales', methods = ['GET'])
-def concertaciondepropositospersonales():
-    return render_template('concertaciondepropositospersonales.html')
-
-@app.route('/infoproyectos', methods = ['GET'])
-def get_infoproyectos():
-    return render_template('infoproyectos.html')
-
-@app.route('/tete', methods = ['GET'])
-def tete():
-    return render_template('tete.html')
 
 if __name__ == '__main__':
     # Corre la aplicación en el modo debug, lo que permitirá

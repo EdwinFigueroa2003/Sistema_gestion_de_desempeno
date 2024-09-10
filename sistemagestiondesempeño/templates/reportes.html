@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 
 <html>
 
@@ -492,32 +492,41 @@
         </nav>
     </div>
 
-    <!-- Fin de la barra lateral -->
+ Fin de la barra lateral
 
-    <div class="content">
+    <div class="content"> -->
+
+        {% extends "layout.html" %}
+
+        {% block title %}
+        Reportes
+        {% endblock %}
+        
+        {% block content %}
+
         <h1>Gestión del Desempeño</h1>
         <hr>
         <h1>Resultados de: </h1>
 
         <a href="/reportesimpulsandoelcrecimiento">
-            <div class="rectangle-2100">
-                <h2>Impulsando El Crecimiento</h2>
-                <h3>Descripción que se va a poner de esto.</h3>
+            <div class="rectangle-2106">
+                <h3>Impulsando El Crecimiento</h3>
+                <p>Descripción que se va a poner de esto.</p>
             </div>
         </a>
 
         <a href="/reportesanalisisorganizacional">
-            <div class="rectangle-2101">
-                <h2>Análisis Organizacional</h2>
-                <h3>Descripción que se va a poner de esto.</h3>
+            <div class="rectangle-2107">
+                <h3>Análisis Organizacional</h3>
+                <p>Descripción que se va a poner de esto.</p>
             </div>
         </a>
 
         <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
         <img src="{{ url_for('static', filename='img/icon-user-friends-icon0.jpg')}}" class="usuarios" />
 
-    </div>
-    <!-- Scripts al final del cuerpo -->
+<!--     </div>
+     Scripts al final del cuerpo 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
@@ -536,6 +545,8 @@
             content.classList.toggle('collapsed');
         }
     </script>
-</body>
+</body> 
 
-</html>
+</html> -->
+
+{% endblock %}

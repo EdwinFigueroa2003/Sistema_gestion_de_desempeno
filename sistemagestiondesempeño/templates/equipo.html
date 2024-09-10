@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -20,29 +20,6 @@
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
-        }
-
-        .nav-link h5,
-        .nav-link-cerrar h5 {
-            border-radius: 25px;
-            border: 1px solid #EA5C10;
-            padding: 10px;
-            color: rgb(0, 0, 0);
-            font-size: 16px;
-            text-decoration: none;
-            /* Ajuste para evitar subrayado en h5 */
-        }
-
-        .nav-link-cerrar h5 {
-            background-color: #ffffff;
-            color: rgb(0, 0, 0);
-            font-size: 14px;
-            padding: 8px 12px;
-        }
-
-        .nav-link-cerrar h5:hover {
-            background-color: #EA5C10;
-            border-color: #EA5C10;
         }
 
         .btn-group {
@@ -297,7 +274,7 @@
 
     <div class="sidebar">
         <div class="user-profile">
-            <!-- <img src="profile.png" alt="User Image" class="user-img"> -->
+            
             <img src="{{ url_for('static', filename='img/image copy.png')}}" class="user-img">
             <h4 class="user-name">James Bonb</h4>
             <p class="user-title">Director de Programa</p>
@@ -362,130 +339,133 @@
         </nav>
     </div>
 
-    <!--content-->
-    <div class="content">
-        <h1>Equipo</h1>
-        <hr>
-        <div class="busqueda">
-            <p>Búsqueda de colaborador por nombre:</p>
-            <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Ingresa el nombre" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-            </form>
-        </div>
 
-        <div class="busqueda-equipo">
-            <h2>MI EQUIPO</h2>
-            <p>Busqueda de colaborador</p>
-        </div>
+    <div class="content"> -->
 
-        <div class="svg-button">
-            <a href="/informe">
-                <svg version="1.1" width="200" height="150" viewBox="0 0 250 150">
-                    <rect x="20" y="20" width="210" height="100" rx="30" ry="30" fill="white" stroke="black"
-                        stroke-width="2" />
-                    <text x="125" y="70" font-family="Arial" font-size="20" fill="black" text-anchor="middle"
-                        alignment-baseline="central">
-                        Fransisco
-                    </text>
-                </svg>
-            </a>
-        </div>
+{% extends "layout.html" %}
 
-        <div class="svg-button">
-            <a href="/presentacionGDD">
-                <svg version="1.1" width="200" height="150" viewBox="0 0 250 150">
-                    <rect x="20" y="20" width="210" height="100" rx="30" ry="30" fill="white" stroke="black"
-                        stroke-width="2" />
-                    <text x="125" y="70" font-family="Arial" font-size="20" fill="black" text-anchor="middle"
-                        alignment-baseline="central">
-                        Juan
-                    </text>
-                </svg>
-            </a>
-        </div>
+{% block title %}
+Equipo
+{% endblock %}
 
-        <div class="svg-button">
-            <a href="/agregarequipo">
-                <svg version="1.1" width="200" height="150" viewBox="0 0 250 150">
-                    <rect x="20" y="20" width="210" height="100" rx="30" ry="30" fill="white" stroke="black"
-                        stroke-width="2" />
-                    <text x="125" y="70" font-family="Arial" font-size="20" fill="black" text-anchor="middle"
-                        alignment-baseline="central">
-                        Agregar miembro
-                    </text>
-                </svg>
-            </a>
-        </div>
+{% block content %}
+<h1>EQUIPO</h1>
+<hr>
+<div class="busqueda">
+    <p>Búsqueda de colaborador por nombre:</p>
+    <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="Ingresa el nombre" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+    </form>
+</div>
 
-        <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
-        <img src="{{ url_for('static', filename='img/icon-user-friends-icon0.jpg')}}" class="usuarios" />
+<div class="busqueda-equipo">
+    <h2>Mi Equipo</h2>
+    <p>Busqueda de colaborador</p>
+</div>
 
-    </div>
+<div class="svg-button">
+    <a href="/informe">
+        <svg version="1.1" width="200" height="150" viewBox="0 0 250 150">
+            <rect x="20" y="20" width="210" height="100" rx="30" ry="30" fill="white" stroke="black" stroke-width="2" />
+            <text x="125" y="70" font-family="Arial" font-size="20" fill="black" text-anchor="middle"
+                alignment-baseline="central">
+                Fransisco
+            </text>
+        </svg>
+    </a>
+</div>
 
-    <!-- Scripts al final del cuerpo -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
-        integrity="sha384-dq3gms3U00/GRxUOAvFXTvDN+qkdOqcqTT8HqG+oqm4xU49TclE3i9ezZs4CwBf3"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
-        integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
-        crossorigin="anonymous"></script>
+<div class="svg-button">
+    <a href="/presentacionGDD">
+        <svg version="1.1" width="200" height="150" viewBox="0 0 250 150">
+            <rect x="20" y="20" width="210" height="100" rx="30" ry="30" fill="white" stroke="black" stroke-width="2" />
+            <text x="125" y="70" font-family="Arial" font-size="20" fill="black" text-anchor="middle"
+                alignment-baseline="central">
+                Juan
+            </text>
+        </svg>
+    </a>
+</div>
 
-    <script>
+<div class="svg-button">
+    <a href="/agregarequipo">
+        <svg version="1.1" width="200" height="150" viewBox="0 0 250 150">
+            <rect x="20" y="20" width="210" height="100" rx="30" ry="30" fill="white" stroke="black" stroke-width="2" />
+            <text x="125" y="70" font-family="Arial" font-size="20" fill="black" text-anchor="middle"
+                alignment-baseline="central">
+                Agregar miembro
+            </text>
+        </svg>
+    </a>
+</div>
 
-        function toggleSidebar() {
-            var sidebar = document.querySelector('.sidebar');
-            var content = document.querySelector('.content');
-            sidebar.classList.toggle('collapsed');
-            content.classList.toggle('collapsed');
-        }
+<img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+<img src="{{ url_for('static', filename='img/icon-user-friends-icon0.jpg')}}" class="usuarios" />
 
-        function descargarCSV() {
-            // Obtener la tabla
-            var table = document.querySelector('.table');
+<!--</div>
 
-            // Crear un arreglo para almacenar los datos
-            var data = [];
+ Scripts al final del cuerpo -->
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+    integrity="sha384-dq3gms3U00/GRxUOAvFXTvDN+qkdOqcqTT8HqG+oqm4xU49TclE3i9ezZs4CwBf3"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
+    integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
+    crossorigin="anonymous"></script>
 
-            // Obtener los encabezados de columna
-            var headers = [];
-            table.querySelectorAll('th').forEach(function (header) {
-                headers.push(header.innerText);
+<script>
+
+    function toggleSidebar() {
+        var sidebar = document.querySelector('.sidebar');
+        var content = document.querySelector('.content');
+        sidebar.classList.toggle('collapsed');
+        content.classList.toggle('collapsed');
+    }
+
+    function descargarCSV() {
+        // Obtener la tabla
+        var table = document.querySelector('.table');
+
+        // Crear un arreglo para almacenar los datos
+        var data = [];
+
+        // Obtener los encabezados de columna
+        var headers = [];
+        table.querySelectorAll('th').forEach(function (header) {
+            headers.push(header.innerText);
+        });
+        data.push(headers.join(','));
+
+        // Recorrer las filas de la tabla
+        table.querySelectorAll('tr').forEach(function (row) {
+            var rowData = [];
+            row.querySelectorAll('td').forEach(function (cell) {
+                rowData.push(cell.innerText);
             });
-            data.push(headers.join(','));
+            data.push(rowData.join(','));
+        });
 
-            // Recorrer las filas de la tabla
-            table.querySelectorAll('tr').forEach(function (row) {
-                var rowData = [];
-                row.querySelectorAll('td').forEach(function (cell) {
-                    rowData.push(cell.innerText);
-                });
-                data.push(rowData.join(','));
-            });
+        // Crear un blob de texto con los datos
+        var csv = data.join('\n');
+        var blob = new Blob([csv], { type: 'text/csv' });
 
-            // Crear un blob de texto con los datos
-            var csv = data.join('\n');
-            var blob = new Blob([csv], { type: 'text/csv' });
+        // Crear una URL para el blob
+        var url = window.URL.createObjectURL(blob);
 
-            // Crear una URL para el blob
-            var url = window.URL.createObjectURL(blob);
+        // Crear un enlace para descargar el archivo
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'Usuario.csv';
+        document.body.appendChild(a);
+        a.click();
 
-            // Crear un enlace para descargar el archivo
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = 'Usuario.csv';
-            document.body.appendChild(a);
-            a.click();
+        // Limpiar la URL creada
+        window.URL.revokeObjectURL(url);
+    }
 
-            // Limpiar la URL creada
-            window.URL.revokeObjectURL(url);
-        }
+</script> -->
 
-    </script>
-
-</body>
-
-</html>
+{% endblock %}
