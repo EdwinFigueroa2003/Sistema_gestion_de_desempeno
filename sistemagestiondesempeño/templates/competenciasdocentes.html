@@ -663,34 +663,7 @@
         </div>
 
         <div class="centro">
-            <div class="pregunta">
-                <h6>{{ item.nombre_comp }}</h6>
-            </div>
-            <div class="cuadro-respuestas">
-                <form method="POST"></form>
-                <p>{{ item.definicion_comp }}</p>
-
-                <input type="hidden" name="current_index" value="{{ current_index }}">
-
-                <div class="btn">
-                    <div class="medium-filled">
-                        <a href="/informe" class="volver">VOLVER</a>
-                    </div>
-                </div>
-
-                <div class="btn">
-                    <button type="submit" name="prev" class="boton-atras" {% if current_index==0 %}disabled{% endif %}>
-                        <span class="atras">Atrás</span>
-                    </button>
-                </div>
-
-                <div class="btn">
-                    <button type="submit" name="next" class="boton-siguiente">
-                        <span class="siguiente">Siguiente</span>
-                    </button>
-                </div>
-
-                </form>
+            
             </div>
 
 

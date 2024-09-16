@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 
 <html>
 
@@ -561,7 +561,7 @@
 <body>
     <div class="sidebar">
         <div class="user-profile">
-            <!-- <img src="profile.png" alt="User Image" class="user-img"> -->
+            <!-- <img src="profile.png" alt="User Image" class="user-img">
             <img src="{{ url_for('static', filename='img/image copy.png')}}" class="user-img">
             <h4 class="user-name">James Bonb</h4>
             <p class="user-title">Director de Programa</p>
@@ -626,80 +626,53 @@
         </nav>
     </div>
 
-    <!-- Fin de la barra lateral -->
 
-    <div class="content">
+
+    <div class="content"> -->
+
+        {% extends "layout.html" %}
+
+        {% block title %}
+        Competencias Transversales
+        {% endblock %}
+        
+        {% block content %}
+        
         <h1>GESTIÓN DEL DESEMPEÑO</h1>
         <hr>
-
-        <div class="rectangle-2101">
+        
+        <div class="rectangle-2111">
             <div class="circle-wrapper">
                 <div class="circle"></div>
             </div>
-            <h4>Francisco</h4>
+            <nombre>Francisco</nombre>
         </div>
-
+        
         <div class="titulo-dimension">
             <h3>COMPETENCIAS TRANSVERSALES</h3>
-
         </div>
-
+        
         <div class="centro">
             <div class="pregunta">
-                <h6>{{ item.preg_eval_comp }}</h6>
-            </div>
-            <div class="cuadro-respuestas">
-                <form method="POST">
-                    <input type="hidden" name="current_index" value="{{ current_index }}">
-
-                    <label class="custom-radio">
-                        <input type="radio" name="respuesta" value="{{ item.definicion_comp }}">
-                        <span class="radio-label">{{ item.definicion_comp }}</span>
-                    </label>
-                    <br>
-                    <label class="custom-radio">
-                        <input type="radio" name="respuesta" value="{{ item.definicion_comp }}">
-                        <span class="radio-label">{{ item.definicion_comp }}</span>
-                    </label>
-                    <br>
-                    <label class="custom-radio">
-                        <input type="radio" name="respuesta" value="{{ item.definicion_comp }}">
-                        <span class="radio-label">{{ item.definicion_comp }}</span>
-                    </label>
-                    <br>
-                    <div class="btn">
-                        <a href="informe" class="volver">Volver</a>
-                    </div>
-
-                    <div class="btn">
-                        <button type="submit" name="prev" class="boton-atras" {% if current_index==0 %}disabled{% endif
-                            %}>
-                            <span class="atras">Atrás</span>
-                        </button>
-                    </div>
-
-                    <div class="btn">
-                        <button type="submit" name="next" class="boton-siguiente">
-                            <span class="siguiente">Siguiente</span>
-                        </button>
-                    </div>
+                <form method="POST" action="">
+                    {% for pregunta in preguntas %}
+                        <fieldset>
+                            <legend>{{ pregunta.texto_pregunta }}</legend>
+                            {% for respuesta in pregunta.respuestas %}
+                                <label>
+                                    <input type="radio" name="{{ pregunta.id_pregunta }}" value="{{ respuesta.id_respuesta }}">
+                                    {{ respuesta.texto_respuesta }}
+                                </label><br>
+                            {% endfor %}
+                        </fieldset>
+                    {% endfor %}
+                    <button type="submit">Enviar Respuestas</button>
                 </form>
             </div>
-
+        
             <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
             <img src="{{ url_for('static', filename='img/competencias-transversales.jpeg')}}" class="usuarios" />
         </div>
-
-        <!-- Scripts al final del cuerpo -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-            crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
-            integrity="sha384-dq3gms3U00/GRxUOAvFXTvDN+qkdOqcqTT8HqG+oqm4xU49TclE3i9ezZs4CwBf3"
-            crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
-            integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
-            crossorigin="anonymous"></script>
-</body>
-
-</html>
+        
+        {% endblock %}
+        

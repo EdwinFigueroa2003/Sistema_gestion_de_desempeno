@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 
 <html>
 
@@ -364,10 +364,8 @@
 </head>
 
 <body>
-    <!--Inicio de la barra lateral-->
     <div class="sidebar">
         <div class="user-profile">
-            <!-- <img src="profile.png" alt="User Image" class="user-img"> -->
             <img src="{{ url_for('static', filename='img/image copy.png')}}" class="user-img">
             <h4 class="user-name">James Bonb</h4>
             <p class="user-title">Director de Programa</p>
@@ -431,35 +429,43 @@
                 </ul>
         </nav>
     </div>
-    <!--Fin de la barra lateral-->
 
-    <div class="content">
+    <div class="content"> -->
+
+        {% extends "layout.html" %}
+
+        {% block title %}
+        Gestión del Desarrollo
+        {% endblock %}
+        
+        {% block content %}
+
         <h1>Gestión del Desempeño</h1>
         <hr>
 
         <a href="/equipo">
-            <div class="rectangle-2100">
-                <h2>Impulsando El <br> Crecimiento</h2>
-                <h3> Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
-                    malesuada rutrum diam, sed sollicitudin sed sed.</h3>
+            <div class="rectangle-2116">
+                <h3>Impulsando El <br> Crecimiento</h3>
+                <p> Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
+                    malesuada rutrum diam, sed sollicitudin sed sed.</p>
                 <img src="{{ url_for('static', filename='img/potencia0.png')}}" class="potencia" />
             </div>
         </a>
 
         <a href="/analisisorganizacional">
-            <div class="rectangle-2101">
-                <h2>Análisis <br>Organizacional</h2>
-                <h3> Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
-                    malesuada rutrum diam, sed sollicitudin sed sed.</h3>
+            <div class="rectangle-2117">
+                <h3>Análisis <br>Organizacional</h3>
+                <p> Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
+                    malesuada rutrum diam, sed sollicitudin sed sed.</p>
                 <img src="{{ url_for('static', filename='img/organizacion0.png')}}" class="organizacion" />
             </div>
         </a>
 
         <a href="/reportes">
-            <div class="rectangle-2102">
-                <h2>Dashboard /<br> Reportes</h2>
-                <h3> Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
-                    malesuada rutrum diam, sed sollicitudin sed sed.</h3>
+            <div class="rectangle-2118">
+                <h3>Dashboard /<br> Reportes</h3>
+                <p> Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
+                    malesuada rutrum diam, sed sollicitudin sed sed.</p>
                 <img src="{{ url_for('static', filename='img/reporte0.png')}}" class="reporte" />
             </div>
         </a>
@@ -468,7 +474,7 @@
 
     </div>
     <!-- Scripts al final del cuerpo -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
@@ -488,4 +494,6 @@
     </script>
 </body>
 
-</html>
+</html> -->
+
+{% endblock %}

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 
 <html>
 
@@ -442,7 +442,7 @@
 <body>
     <div class="sidebar">
         <div class="user-profile">
-            <!-- <img src="profile.png" alt="User Image" class="user-img"> -->
+           
             <img src="{{ url_for('static', filename='img/image copy.png')}}" class="user-img">
             <h4 class="user-name">James Bonb</h4>
             <p class="user-title">Director de Programa</p>
@@ -507,69 +507,77 @@
         </nav>
     </div>
 
-    <!-- Fin de la barra lateral -->
 
-    <div class="content">
-        <h1>GESTIÓN DEL DESEMPEÑO</h1>
-        <hr>
 
-        <div class="titulo">
-            <h4>DASHBOARD / REPORTES</h4>
-            <h4>RESULTADOS DE:</h4>
+    <div class="content"> -->
+
+{% extends "layout.html" %}
+
+{% block title %}
+Resultados
+{% endblock %}
+
+{% block content %}
+<h1>GESTIÓN DEL DESEMPEÑO</h1>
+<hr>
+
+<div class="titulo">
+    <h4>DASHBOARD / REPORTES</h4>
+    <h4>RESULTADOS DE:</h4>
+</div>
+
+<div class="container">
+
+    <div class="rectangle-2110">
+        <div class="circle-wrapper">
+            <div class="circle"></div>
         </div>
+        <text>Francisco</text>
+    </div>
 
-        <div class="container">
-
-            <div class="rectangle-2101">
-                <div class="circle-wrapper">
-                    <div class="circle"></div>
-                </div>
-                <h2>Francisco</h2>
-            </div>
-
-            <div class="rectangle-group">
-                <div class="rectangle-2070">
-                    <a href="resultadoscompetenciastransversales" style="display:  /* resultadoscompetenciastransversales */
+    <div class="rectangle-group">
+        <div class="rectangle-2070">
+            <a href="resultadoscompetenciastransversales" style="display:  /* resultadoscompetenciastransversales */
                 flex; align-items: center; justify-content: space-between;">
-                        <h6><span>Competencias transversales</span></h6>
-                        <img src="{{ url_for('static', filename='img/competencias-transversales.jpeg')}}"
-                            class="imagenes" style="float: right; margin-top: -10px;" />
-                    </a>
-                </div>
-
-                <div class="rectangle-2071">
-                    <a href="resultadoscompetenciasdocentes" style="display: 
-                flex; align-items: center; justify-content: space-between;">
-                        <h6><span>Competencias docentes</span> </h6>
-                        <img src="{{ url_for('static', filename='img/ensenar0.png')}}" class="imagenes"
-                            style="float: right; margin-top: -10px;" />
-                    </a>
-                </div>
-
-                <div class="rectangle-2072">
-                    <a href="resultadosconcertaciondepropositos" style="display: 
-                flex; align-items: center; justify-content: space-between;">
-                        <h6> <span>Concertación de propósitos </span> </h6>
-                        <img src="{{ url_for('static', filename='img/concertación-de-propósitos.jpeg')}}"
-                            class="imagenes" style="float: right; margin-top: -10px;" />
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="btn">
-            <a href="/informe" class="volver">
-                <div class="medium-filled">
-                    VOLVER
-                </div>
+                <h5><span>Competencias transversales</span></h5>
+                <img src="{{ url_for('static', filename='img/competencias-transversales.jpeg')}}" class="imagenes"
+                    style="float: right; margin-top: -10px;" />
             </a>
         </div>
 
-        <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
-        <img src="{{ url_for('static', filename='img/reporte0.png')}}" class="usuarios" />
+        <div class="rectangle-2071">
+            <a href="resultadoscompetenciasdocentes" style="display: 
+                flex; align-items: center; justify-content: space-between;">
+                <h5><span>Competencias docentes</span> </h5>
+                <img src="{{ url_for('static', filename='img/ensenar0.png')}}" class="imagenes"
+                    style="float: right; margin-top: -10px;" />
+            </a>
+        </div>
 
+        <div class="rectangle-2072">
+            <a href="resultadosconcertaciondepropositos" style="display: 
+                flex; align-items: center; justify-content: space-between;">
+                <h5> <span>Concertación de propósitos </span> </h5>
+                <img src="{{ url_for('static', filename='img/concertación-de-propósitos.jpeg')}}" class="imagenes"
+                    style="float: right; margin-top: -10px;" />
+            </a>
+        </div>
     </div>
-    <!-- Scripts al final del cuerpo -->
+</div>
+
+<div class="btn">
+    <a href="/informe" class="volver">
+        <div class="medium-filled">
+            VOLVER
+        </div>
+    </a>
+</div>
+
+<img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+<img src="{{ url_for('static', filename='img/reporte0.png')}}" class="usuarios" />
+
+
+<!--    
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
@@ -581,4 +589,6 @@
         crossorigin="anonymous"></script>
 </body>
 
-</html>
+</html> -->
+
+{% endblock %}

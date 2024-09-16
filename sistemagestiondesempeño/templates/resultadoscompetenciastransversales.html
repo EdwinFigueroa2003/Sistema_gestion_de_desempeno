@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -436,10 +436,10 @@
 </head>
 
 <body>
-    <!-- Barra Lateral -->
+
     <div class="sidebar">
         <div class="user-profile">
-            <!-- <img src="profile.png" alt="User Image" class="user-img"> -->
+
             <img src="{{ url_for('static', filename='img/image copy.png')}}" class="user-img">
             <h4 class="user-name">James Bonb</h4>
             <p class="user-title">Director de Programa</p>
@@ -505,10 +505,18 @@
     </div>
 
 
-    <!-- Contenido Principal -->
-    <div class="contenido-principal">
+
+ -->
+
+ {% extends "layout.html" %}
+
+{% block title %}
+Resultados Competencias Transversales
+{% endblock %}
+
+{% block content %}
         <h1>Gestión del Desempeño</h1>
-        <!-- <p class="breadcrumb">Inicio / Gestión del Desempeño / Análisis Organizacional</p> -->
+        
         <hr>
         <div class="dashboard">
             <div class="avatar">
@@ -525,7 +533,7 @@
 
                 <div class="chart-container">
                     <div class="chart-title">
-                        <h2>Resultados</h2>
+                        <resultado-a>Resultados</resultado-a>
                         <ul>
                             {% for respuesta in respuestas %}
                             <li>{{ respuesta }}</li>
@@ -562,8 +570,10 @@
             // Descargar el archivo
             XLSX.writeFile(wb, "Resultados.xlsx");
         }
-        </script> -->
-</body>
+        </script> 
+    </body>
 
 
-</html>
+</html> -->
+
+{% endblock %}

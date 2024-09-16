@@ -1,15 +1,15 @@
 # main.py
 from pprint import pprint
 from flask import Flask, render_template, request, url_for, redirect, session, jsonify, flash, send_file
-import markupsafe, uuid, psycopg2, os, io, xlsxwriter, openpyxl, pandas
+import markupsafe, uuid, psycopg2, os, io, xlsxwriter, openpyxl, pandas, requests
 from Entidad import Entidad
 from werkzeug.utils import secure_filename
+from datetime import datetime
 from control.ControlEntidad import ControlEntidad
 
 
 from menu import menu
 from vista.vistaequipo import vistaequipo
-from vista.vistacompetenciastransversales import vistacompetenciastransversales
 from vista.vistaagregarequipo import vistaagregarequipo
 from vista.vistaconfiguracion import vistaconfiguracion
 from vista.vistagestiondeldesarrollo import vistagestiondeldesarrollo
@@ -27,7 +27,10 @@ from vista.vistaproyectos import vistaproyectos
 from vista.vistainfoproyectos import vistainfoproyectos
 from vista.vistaevaluaciondecompetencias import vistaevaluaciondecompetencias
 from vista.vistaresultados import vistaresultados
-from vista.vistadashboard import vistadashboard
+from vista.vistacompetenciastransversales import vistacompetenciastransversales
+from vista.vistaresultadoscompetenciastransversales import vistaresultadoscompetenciastransversales
+""" from vista.vistaresultadoscompetenciasdocentes import vistaresultadoscompetenciasdocentes"""
+from vista.vistadashboard import vistadashboard 
 from vista.vistareportesindividual import vistareportesindividual
 from vista.vistareportesgeneral import vistareportesgeneral
 from vista.vistavideos import vistavideos
@@ -43,15 +46,17 @@ from vista.vistaanalisisorganizacional import vistaanalisisorganizacional
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
+API_URL = 'http://190.217.58.246:5184/api/sgd'
+
 
 app.register_blueprint(menu)
 app.register_blueprint(vistaequipo)
 app.register_blueprint(vistaanalisisorganizacional)
-app.register_blueprint(vistacompetenciastransversales)
 app.register_blueprint(vistaconcertaciondepropositos)
 app.register_blueprint(vistafactoresclavesdeexito)
 app.register_blueprint(vistaconcertaciondedisponibilidad)
 app.register_blueprint(vistacompetenciasdocentes)
+app.register_blueprint(vistacompetenciastransversales)
 app.register_blueprint(vistaconcertaciondepropositosparalamejoradeprocesos)
 app.register_blueprint(vistaconcertaciondepropositospersonales)
 app.register_blueprint(vistaagregarequipo)
@@ -67,6 +72,8 @@ app.register_blueprint(vistaproyectos)
 app.register_blueprint(vistainfoproyectos)
 app.register_blueprint(vistaevaluaciondecompetencias)
 app.register_blueprint(vistaresultados)
+app.register_blueprint(vistaresultadoscompetenciastransversales)
+""" app.register_blueprint(vistaresultadoscompetenciasdocentes) """
 app.register_blueprint(vistadashboard)
 app.register_blueprint(vistareportesindividual)
 app.register_blueprint(vistareportesgeneral)
@@ -77,6 +84,8 @@ app.register_blueprint(vistaidentificaciondelideres)
  
 # Establecer la ruta base si es necesario, por defecto es '/'
 #breakpoint();
+
+""" API_URL = 'http://190.217.58.246:5184/api/sgd' """
 
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/inicio', methods = ['GET', 'POST'])
@@ -110,13 +119,10 @@ def inicio():
 
 @app.route('/cerrarSesion')
 def cerrarSesion():
-    #session.clear()
+    session.clear() # Limpiar la sesión
     return redirect('inicio.html')
 
-@app.route('/resultadoscompetenciastransversales', methods = ['GET', 'POST'])
-def get_resultadoscompetenciastransversales():
-    respuestas = session.get('respuestas', [])  # Obtener las respuestas de la sesión
-    return render_template('resultadoscompetenciastransversales.html', respuestas=respuestas)
+
 
 @app.route('/download_excel')
 def download_excel():
@@ -164,6 +170,32 @@ def download_excel():
 def get_resultadoscompetenciasdocentes():
     return render_template('resultadoscompetenciasdocentes.html')
 
+@app.route('/api/sgd/usuario_respuesta', methods=['POST'])
+def agregar_usuario_respuesta():
+    try:
+        data = request.json
+        id_usuario = data.get('id_usuario')
+        id_pregunta = data.get('id_pregunta')
+        id_respuesta = data.get('id_respuesta')
+        fecha_respuesta = data.get('fecha_respuesta')
+
+        # Verifica que todos los datos estén presentes
+        if not (id_usuario and id_pregunta and id_respuesta and fecha_respuesta):
+            return jsonify({'error': 'Datos incompletos'}), 400
+
+        # Aquí podrías agregar lógica para insertar los datos en la base de datos
+
+        return jsonify({'message': 'Respuesta guardada correctamente'}), 200
+    except Exception as e:
+        print(f"Error al procesar la solicitud: {e}")
+        return jsonify({'error': 'Error interno del servidor'}), 500
+
+@app.route('/finalizo', methods=['GET'])
+def finalizo():
+    usuario_id = request.args.get('usuario_id')  # Obtener el usuario_id de la consulta
+    return render_template('finalizo.html', usuario_id=usuario_id)
+
+
 @app.route('/resultadosconcertaciondepropositos', methods = ['GET', 'POST'])
 def get_resultadosconcertaciondepropositos():
     return render_template('resultadosconcertaciondepropositos.html')
@@ -171,6 +203,8 @@ def get_resultadosconcertaciondepropositos():
 @app.route('/presentacionGDD', methods = ['GET'])
 def get_presentacionGDD():
     return render_template('presentacionGDD.html')
+
+
 
 if __name__ == '__main__':
     # Corre la aplicación en el modo debug, lo que permitirá

@@ -2,42 +2,60 @@ from pprint import pprint
 from flask import Blueprint, request, render_template, redirect, url_for, session
 from Entidad import Entidad
 import requests
+from datetime import datetime
 from control.ControlEntidad import ControlEntidad
  
+API_URL = 'http://190.217.58.246:5184/api/sgd'
+
 # Crear un Blueprint
 vistacompetenciastransversales = Blueprint('idcompetenciastransversales', __name__, template_folder='templates')
 
 @vistacompetenciastransversales.route('/competenciastransversales', methods=['GET', 'POST'])
-def get_competencias():
-    response = requests.get('http://190.217.58.246:5184/api/sgd/competencia')
+def vista_competenciastransversales():
+    id_apartado = 1  # Cambia este valor si fuera necesario
+
     try:
-        competencias = response.json()  # Decodificar la respuesta como JSON
-    except requests.exceptions.JSONDecodeError:
-        return "Error: La respuesta no es un JSON válido.", 500
+        # Obtener las preguntas para el apartado
+        response_preguntas = requests.get(f'{API_URL}/pregunta/id_apartado/{id_apartado}', timeout=10)
+        response_preguntas.raise_for_status()
+        preguntas = response_preguntas.json()
 
-    current_index = int(request.form.get('current_index', 0))
+        # Obtener respuestas para cada pregunta
+        for pregunta in preguntas:
+            id_pregunta = pregunta['id_pregunta']
+            response_respuestas = requests.get(f'{API_URL}/respuesta/id_pregunta/{id_pregunta}', timeout=10)
+            response_respuestas.raise_for_status()
+            pregunta['respuestas'] = response_respuestas.json()
 
-    # Manejo de índice de la pregunta actual
+    except requests.RequestException as e:
+        preguntas = []
+        print(f"Error al obtener datos: {e}")
+
     if request.method == 'POST':
-        respuesta_seleccionada = request.form.get('respuesta', None)
-        print(f"Respuesta seleccionada: {respuesta_seleccionada}")  # Debugging
-        if respuesta_seleccionada:
-            # Guardar respuesta en la sesión
-            if 'respuestas' not in session:
-                session['respuestas'] = []
-            session['respuestas'].append(respuesta_seleccionada)
-            session.modified = True
+        user_id = 1  # Cambia esto según sea necesario
+        for id_pregunta, id_respuesta in request.form.items():
+            data = {
+                'id_usuario': user_id,
+                'id_pregunta': id_pregunta,
+                'id_respuesta': id_respuesta,
+                'fecha_respuesta': datetime.now().strftime('%Y-%m-%d %H:%M:%S')  # Campo corregido
+            }
+            print("Payload:", data)  # Imprime el payload para depuración
 
-            """ print("Respuesta seleccionada:", respuesta_seleccionada)
-            print("Respuestas hasta ahora:", session['respuestas']) """
+            headers = {
+                        'Content-Type': 'application/json'
+                        }                   
 
-        if 'next' in request.form:
-            current_index += 1
-            if current_index >= len(competencias):
-                return redirect(url_for('finalizo'))  # Redirigir a resultados1.html cuando se llega al final
-        elif 'prev' in request.form:
-            if current_index > 0:
-                current_index -= 1
+            try:
+                response = requests.post(f'{API_URL}/usuario_respuesta', json=data, headers=headers)
+                print("Status Code:", response.status_code)  # Imprime el código de estado HTTP
+                print("Response Text:", response.text)  # Imprime el contenido de la respuesta
+                response.raise_for_status()  # Levanta una excepción si la respuesta tiene un error HTTP
+                response_json = response.json()  # Intenta decodificar la respuesta como JSON
+            except requests.RequestException as e:
+                print(f"Error al enviar respuesta: {e}")
+            except ValueError as e:
+                print(f"Error al decodificar JSON: {e}")
+        return redirect(url_for('finalizo', usuario_id=user_id))
 
-    pregunta_actual = competencias[current_index]
-    return render_template('competenciastransversales.html', item=pregunta_actual, current_index=current_index)
+    return render_template('competenciastransversales.html', preguntas=preguntas)

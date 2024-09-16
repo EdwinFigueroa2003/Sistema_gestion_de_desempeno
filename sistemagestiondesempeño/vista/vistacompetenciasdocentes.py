@@ -10,7 +10,7 @@ vistacompetenciasdocentes = Blueprint('idcompetenciasdocentes', __name__, templa
 @vistacompetenciasdocentes.route('/competenciasdocentes', methods=['GET', 'POST'])
 def vista_competenciasdocentes():
 
-    response = requests.get('http://190.217.58.246:5184/api/sgd/competencia')
+    """ response = requests.get('http://190.217.58.246:5184/api/sgd/competencia')
     try:
         competencias = response.json()  # Decodificar la respuesta como JSON
     except requests.exceptions.JSONDecodeError:
@@ -30,3 +30,5 @@ def vista_competenciasdocentes():
 
     pregunta_actual = competencias[current_index]
     return render_template('competenciasdocentes.html', item=pregunta_actual, current_index=current_index)
+ """
+    return render_template('competenciasdocentes.html')

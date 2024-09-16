@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 
 <html>
 
@@ -472,67 +472,75 @@
         </nav>
     </div>
 
-    <!-- Fin de la barra lateral -->
-
-    <div class="content">
-        <h1>Proyectos</h1>
-        <hr>
-
-        <a href="/infoproyectos">
-            <div class="rectangle-2100">
-                <h2>Proyecto 1</h2>
-                <h3>Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
-                    malesuada rutrum diam, sed sollicitudin sed sed.</h3>
-            </div>
-        </a>
-
-        <a href="/infoproyectos">
-            <div class="rectangle-2100">
-                <h2>Proyecto 2</h2>
-                <h3>Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
-                    malesuada rutrum diam, sed sollicitudin sed sed.</h3>
-            </div>
-        </a>
-
-        <a href="/infoproyectos">
-            <div class="rectangle-2100">
-                <h2>Proyecto 3</h2>
-                <h3>Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
-                    malesuada rutrum diam, sed sollicitudin sed sed.</h3>
-            </div>
-        </a>
-
-        <a href="/infoproyectos">
-            <div class="rectangle-2100">
-                <h2>Proyecto 4</h2>
-                <h3>Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
-                    malesuada rutrum diam, sed sollicitudin sed sed.</h3>
-            </div>
-        </a>
-
-        <a href="/infoproyectos">
-            <div class="rectangle-2100">
-                <h2>Proyecto 5</h2>
-                <h3>Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
-                    malesuada rutrum diam, sed sollicitudin sed sed.</h3>
-            </div>
-        </a>
-
-        <a href="/infoproyectos">
-            <div class="rectangle-2100">
-                <h2>Proyecto 6</h2>
-                <h3>Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
-                    malesuada rutrum diam, sed sollicitudin sed sed.</h3>
-            </div>
-        </a>
-
-        <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
-        <img src="{{ url_for('static', filename='img/proyecto-10.png')}}" class="usuarios" />
 
 
+    <div class="content"> -->
+
+{% extends "layout.html" %}
+
+{% block title %}
+Proyectos
+{% endblock %}
+
+{% block content %}
+<h1>Proyectos</h1>
+<hr>
+
+<a href="/infoproyectos">
+    <div class="rectangle-2112">
+        <h3>Proyecto 1</h3>
+        <p>Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
+            malesuada rutrum diam, sed sollicitudin sed sed.</p>
     </div>
-    <!-- Scripts al final del cuerpo -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+</a>
+
+<a href="/infoproyectos">
+    <div class="rectangle-2112">
+        <h3>Proyecto 2</h3>
+        <p>Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
+            malesuada rutrum diam, sed sollicitudin sed sed.</p>
+    </div>
+</a>
+
+<a href="/infoproyectos">
+    <div class="rectangle-2112">
+        <h3>Proyecto 3</h3>
+        <p>Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
+            malesuada rutrum diam, sed sollicitudin sed sed.</p>
+    </div>
+</a>
+
+<a href="/infoproyectos">
+    <div class="rectangle-2112">
+        <h3>Proyecto 4</h3>
+        <p>Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
+            malesuada rutrum diam, sed sollicitudin sed sed.</p>
+    </div>
+</a>
+
+<a href="/infoproyectos">
+    <div class="rectangle-2112">
+        <h3>Proyecto 5</h3>
+        <p>Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
+            malesuada rutrum diam, sed sollicitudin sed sed.</p>
+    </div>
+</a>
+
+<a href="/infoproyectos">
+    <div class="rectangle-2112">
+        <h3>Proyecto 6</h3>
+        <p>Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
+            malesuada rutrum diam, sed sollicitudin sed sed.</p>
+    </div>
+</a>
+
+<img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+<img src="{{ url_for('static', filename='img/proyecto-10.png')}}" class="usuarios" />
+
+
+<!--     </div> -->
+<!-- Scripts al final del cuerpo -->
+<!--     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
@@ -552,4 +560,6 @@
     </script>
 </body>
 
-</html>
+</html> -->
+
+{% endblock %}
