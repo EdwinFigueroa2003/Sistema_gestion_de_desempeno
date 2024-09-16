@@ -1,7 +1,7 @@
 serv="localhost"
 usua="postgres"
 passw="figueroa2345"
-bdat= "db_desempeno"
+bdat= "bddesempeno"
 port=5432
 
 """ serv="190.217.58.246"

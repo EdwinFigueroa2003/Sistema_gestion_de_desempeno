@@ -630,49 +630,61 @@
 
     <div class="content"> -->
 
-        {% extends "layout.html" %}
+{% extends "layout.html" %}
 
-        {% block title %}
-        Competencias Transversales
-        {% endblock %}
-        
-        {% block content %}
-        
-        <h1>GESTIÓN DEL DESEMPEÑO</h1>
-        <hr>
-        
-        <div class="rectangle-2111">
-            <div class="circle-wrapper">
-                <div class="circle"></div>
+{% block title %}
+Competencias Transversales
+{% endblock %}
+
+{% block content %}
+<h1>GESTIÓN DEL DESEMPEÑO</h1>
+<hr>
+
+<div class="rectangle-2111">
+    <div class="circle-wrapper">
+        <div class="circle"></div>
+    </div>
+    <nombre>Francisco</nombre>
+</div>
+
+<div class="titulo-dimension">
+    <h3>COMPETENCIAS TRANSVERSALES</h3>
+</div>
+
+<div class="pregunta">
+    <div class="cuadro-respuestas">
+        <form method="POST" action="">
+            <input type="hidden" name="current_index" value="{{ current_index }}">
+            <input type="hidden" name="pregunta_id" value="{{ pregunta.id_pregunta }}">
+
+            <fieldset>
+                <legend>{{ pregunta.texto_pregunta }}</legend>
+                {% for respuesta in pregunta.respuestas %}
+                <label>
+                    <input type="radio" name="respuesta_seleccionada" value="{{ respuesta.id_respuesta }}" {% if
+                        respuesta.id_respuesta==(session['respuestas'][pregunta.id_pregunta] if pregunta.id_pregunta in
+                        session['respuestas'] else '' ) %}checked{% endif %}>
+                    {{ respuesta.texto_respuesta }}
+                </label><br>
+                {% endfor %}
+            </fieldset>
+
+            <div class="btn">
+                <a href="informe" class="volver1">Volver</a>
             </div>
-            <nombre>Francisco</nombre>
-        </div>
-        
-        <div class="titulo-dimension">
-            <h3>COMPETENCIAS TRANSVERSALES</h3>
-        </div>
-        
-        <div class="centro">
-            <div class="pregunta">
-                <form method="POST" action="">
-                    {% for pregunta in preguntas %}
-                        <fieldset>
-                            <legend>{{ pregunta.texto_pregunta }}</legend>
-                            {% for respuesta in pregunta.respuestas %}
-                                <label>
-                                    <input type="radio" name="{{ pregunta.id_pregunta }}" value="{{ respuesta.id_respuesta }}">
-                                    {{ respuesta.texto_respuesta }}
-                                </label><br>
-                            {% endfor %}
-                        </fieldset>
-                    {% endfor %}
-                    <button type="submit">Enviar Respuestas</button>
-                </form>
+
+            <div class="btn">
+                <button type="submit" name="prev" class="boton-atras" {% if current_index==0 %}disabled{% endif %}>
+                    <span class="atras">Atrás</span>
+                </button>
             </div>
-        
-            <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
-            <img src="{{ url_for('static', filename='img/competencias-transversales.jpeg')}}" class="usuarios" />
-        </div>
-        
-        {% endblock %}
-        
+
+            <button type="submit" name="next">Siguiente</button>
+        </form>
+    </div>
+
+    <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+    <img src="{{ url_for('static', filename='img/competencias-transversales.jpeg')}}" class="usuarios" />
+</div>
+
+{% endblock %}

@@ -27,8 +27,8 @@ from vista.vistaproyectos import vistaproyectos
 from vista.vistainfoproyectos import vistainfoproyectos
 from vista.vistaevaluaciondecompetencias import vistaevaluaciondecompetencias
 from vista.vistaresultados import vistaresultados
-from vista.vistacompetenciastransversales import vistacompetenciastransversales
-from vista.vistaresultadoscompetenciastransversales import vistaresultadoscompetenciastransversales
+""" from vista.vistacompetenciastransversales import vistacompetenciastransversales """
+""" from vista.vistaresultadoscompetenciastransversales import vistaresultadoscompetenciastransversales """
 """ from vista.vistaresultadoscompetenciasdocentes import vistaresultadoscompetenciasdocentes"""
 from vista.vistadashboard import vistadashboard 
 from vista.vistareportesindividual import vistareportesindividual
@@ -56,7 +56,7 @@ app.register_blueprint(vistaconcertaciondepropositos)
 app.register_blueprint(vistafactoresclavesdeexito)
 app.register_blueprint(vistaconcertaciondedisponibilidad)
 app.register_blueprint(vistacompetenciasdocentes)
-app.register_blueprint(vistacompetenciastransversales)
+""" app.register_blueprint(vistacompetenciastransversales) """
 app.register_blueprint(vistaconcertaciondepropositosparalamejoradeprocesos)
 app.register_blueprint(vistaconcertaciondepropositospersonales)
 app.register_blueprint(vistaagregarequipo)
@@ -72,7 +72,7 @@ app.register_blueprint(vistaproyectos)
 app.register_blueprint(vistainfoproyectos)
 app.register_blueprint(vistaevaluaciondecompetencias)
 app.register_blueprint(vistaresultados)
-app.register_blueprint(vistaresultadoscompetenciastransversales)
+""" app.register_blueprint(vistaresultadoscompetenciastransversales) """
 """ app.register_blueprint(vistaresultadoscompetenciasdocentes) """
 app.register_blueprint(vistadashboard)
 app.register_blueprint(vistareportesindividual)
@@ -85,7 +85,7 @@ app.register_blueprint(vistaidentificaciondelideres)
 # Establecer la ruta base si es necesario, por defecto es '/'
 #breakpoint();
 
-""" API_URL = 'http://190.217.58.246:5184/api/sgd' """
+API_URL = 'http://190.217.58.246:5184/api/sgd'
 
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/inicio', methods = ['GET', 'POST'])
@@ -122,7 +122,113 @@ def cerrarSesion():
     session.clear() # Limpiar la sesión
     return redirect('inicio.html')
 
+@app.route('/competenciastransversales', methods=['GET', 'POST'])
+def vista_competenciastransversales():
+    id_apartado = 1  # Cambia este valor si fuera necesario
+    user_id = 1  # Cambia esto según sea necesario
 
+    if request.method == 'POST':
+        # Manejar los datos del formulario y la navegación entre preguntas
+        current_index = int(request.form.get('current_index', 0))
+        respuestas = session.get('respuestas', {})
+
+        # Guardar la respuesta seleccionada para la pregunta actual
+        if 'respuesta_seleccionada' in request.form:
+            pregunta_id = request.form.get('pregunta_id')
+            respuestas[pregunta_id] = request.form.get('respuesta_seleccionada')
+            session['respuestas'] = respuestas
+
+        if 'next' in request.form:
+            current_index += 1
+        elif 'prev' in request.form:
+            current_index -= 1
+
+        # Obtener la lista de preguntas
+        try:
+            response_preguntas = requests.get(f'{API_URL}/pregunta/id_apartado/{id_apartado}', timeout=10)
+            response_preguntas.raise_for_status()
+            preguntas = response_preguntas.json()
+
+            # Asegúrate de que la pregunta actual esté disponible
+            if current_index < 0:
+                current_index = 0
+            if current_index >= len(preguntas):
+                return redirect(url_for('finalizo'))
+
+            pregunta_actual = preguntas[current_index]
+            id_pregunta = pregunta_actual['id_pregunta']
+            response_respuestas = requests.get(f'{API_URL}/respuesta/id_pregunta/{id_pregunta}', timeout=10)
+            response_respuestas.raise_for_status()
+            pregunta_actual['respuestas'] = response_respuestas.json()
+
+            return render_template('competenciastransversales.html', pregunta=pregunta_actual, preguntas=preguntas,
+                                   current_index=current_index, total_preguntas=len(preguntas))
+        except requests.RequestException as e:
+            print(f"Error al obtener datos: {e}")
+            return render_template('competenciastransversales.html', pregunta=None, preguntas=[])
+
+    # Inicializa el índice de la pregunta actual en GET
+    current_index = 0
+    try:
+        response_preguntas = requests.get(f'{API_URL}/pregunta/id_apartado/{id_apartado}', timeout=10)
+        response_preguntas.raise_for_status()
+        preguntas = response_preguntas.json()
+
+        if preguntas:
+            pregunta_actual = preguntas[current_index]
+            id_pregunta = pregunta_actual['id_pregunta']
+            response_respuestas = requests.get(f'{API_URL}/respuesta/id_pregunta/{id_pregunta}', timeout=10)
+            response_respuestas.raise_for_status()
+            pregunta_actual['respuestas'] = response_respuestas.json()
+            
+            return render_template('competenciastransversales.html', pregunta=pregunta_actual, preguntas=preguntas,
+                                   current_index=current_index, total_preguntas=len(preguntas))
+    except requests.RequestException as e:
+        print(f"Error al obtener datos: {e}")
+        return render_template('competenciastransversales.html', pregunta=None, preguntas=[])
+
+
+@app.route('/resultadoscompetenciastransversales', methods=['GET'])
+def resultadoscompetenciastransversales():
+    respuestas = session.get('respuestas', {})
+    
+    preguntas_respuestas = []
+    for id_pregunta, id_respuesta in respuestas.items():
+        try:
+            # Verifica que el endpoint para obtener preguntas por ID sea correcto
+            response_pregunta = requests.get(f'{API_URL}/pregunta/id_pregunta/{id_pregunta}', timeout=10)
+            response_pregunta.raise_for_status()
+            pregunta = response_pregunta.json()
+
+            # Imprimir la respuesta de la API para depuración
+            print(f"Respuesta de pregunta: {pregunta}")
+
+            # Si es una lista, accede al primer elemento
+            if isinstance(pregunta, list) and len(pregunta) > 0:
+                pregunta = pregunta[0]
+            
+            # Verifica que el endpoint para obtener respuestas por ID sea correcto
+            response_respuesta = requests.get(f'{API_URL}/respuesta/id_respuesta/{id_respuesta}', timeout=10)
+            response_respuesta.raise_for_status()
+            respuesta = response_respuesta.json()
+
+            # Imprimir la respuesta de la API para depuración
+            print(f"Respuesta de respuesta: {respuesta}")
+
+            # Si es una lista, accede al primer elemento
+            if isinstance(respuesta, list) and len(respuesta) > 0:
+                respuesta = respuesta[0]
+
+            preguntas_respuestas.append({
+                'texto_pregunta': pregunta.get('texto_pregunta', 'Pregunta no disponible'),
+                'texto_respuesta': respuesta.get('texto_respuesta', 'Respuesta no disponible'),
+                'valor_respuesta': respuesta.get('valor_respuesta', 'valor no disponible')
+            })
+
+        except requests.RequestException as e:
+            print(f"Error al obtener datos: {e}")
+
+    return render_template('resultadoscompetenciastransversales.html', respuestas=preguntas_respuestas)
 
 @app.route('/download_excel')
 def download_excel():
