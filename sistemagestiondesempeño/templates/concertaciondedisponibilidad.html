@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 
 <head>
@@ -543,10 +543,8 @@
 </head>
 
 <body>
-    <!-- Inicio de la barra lateral -->
     <div class="sidebar">
         <div class="user-profile">
-            <!-- <img src="profile.png" alt="User Image" class="user-img"> -->
             <img src="{{ url_for('static', filename='img/image copy.png')}}" class="user-img">
             <h4 class="user-name">James Bonb</h4>
             <p class="user-title">Director de Programa</p>
@@ -610,21 +608,29 @@
                 </ul>
         </nav>
     </div>
-    <!-- Fin de la barra lateral -->
 
-    <div class="content">
+    <div class="content"> -->
+
+        {% extends "layout.html" %}
+
+        {% block title %}
+        Concertación de Disponibilidad
+        {% endblock %}
+        
+        {% block content %}
+
         <h1>GESTIÓN DEL DESEMPEÑO</h1>
         <hr>
-        <div class="circle-wrapper1">
-            <div class="circle1"></div>
-            <h5>CONCERTACIÓN DE DISPONIBILIDAD</h5>
+        <div class="circle-wrapper">
+            <div class="circle"></div>
+            <h3>CONCERTACIÓN DE DISPONIBILIDAD</h3>
         </div>
 
         <div style="position: relative; display: inline-block;">
-            <textarea class="cuadro-de-texto" name="nombredelacaja" id="nombredelacaja"
-                placeholder="Especifique los horarios del colaborador" aria-label="Caja de texto para nombre" rows="4"
-                cols="50" style="resize: none;"></textarea>
-            <button class="enviar">Enviar</button>
+            <textarea class="cuadro-de-texto" name="proposito" id="proposito"
+                placeholder="Especifique la disponibilidad manifestada por el colaborador" aria-label="Caja de texto para nombre"
+                rows="4" cols="50" style="resize: none;"></textarea>
+            <button class="enviar" onclick="enviarPropositos()">Enviar</button>
         </div>
 
 
@@ -637,8 +643,39 @@
 
         <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
         <img src="{{ url_for('static', filename='img/objetivo-10.png')}}" class="usuarios" />
-    </div>
+<!--     </div>
 </body>
 
 
-</html>
+</html> -->
+
+<script>
+    function enviarPropositos() {
+        const proposito = document.getElementById('proposito').value;
+        /* const nuevo_prposito = document.getElementById('nuevo_prposito').value; */
+
+        fetch('/concertaciondepropositospersonales', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                proposito: proposito,
+                /* nuevo_prposito: nuevo_prposito, */
+                id_categoria: 4, // Puedes obtenerlo dinámicamente si es necesario
+                id_cargo: 1 // Puedes obtenerlo dinámicamente si es necesario
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Propositos guardados exitosamente');
+                } else {
+                    alert('Error al guardar los propositos');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
+
+{% endblock %}

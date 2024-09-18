@@ -1,11 +1,14 @@
 # main.py
 from pprint import pprint
-from flask import Flask, render_template, request, url_for, redirect, session, jsonify, flash, send_file
-import markupsafe, uuid, psycopg2, os, io, xlsxwriter, openpyxl, pandas, requests
+from flask import Flask, render_template, request, url_for, redirect, session, jsonify, flash, send_file, send_file
+import markupsafe, uuid, psycopg2, os, io, xlsxwriter, openpyxl, pandas, requests, base64 
 from Entidad import Entidad
+from matplotlib.figure import Figure
 from werkzeug.utils import secure_filename
-from datetime import datetime
+
+from PIL import Image
 from control.ControlEntidad import ControlEntidad
+from configBd import API_URL
 
 
 from menu import menu
@@ -16,6 +19,7 @@ from vista.vistagestiondeldesarrollo import vistagestiondeldesarrollo
 from vista.vistainforme import vistainforme
 from vista.vistafactoresclavesdeexito import vistafactoresclavesdeexito
 from vista.vistaconcertaciondepropositos import vistaconcertaciondepropositos
+from vista.vistaresultadodeconcertaciondepropositos import vistaresultadosconcertaciondepropositos
 from vista.vistaconcertaciondepropositospersonales import vistaconcertaciondepropositospersonales
 from vista.vistacompetenciasdocentes import vistacompetenciasdocentes
 from vista.vistagestiondeldesempeno import vistagestiondeldesempeno
@@ -27,9 +31,9 @@ from vista.vistaproyectos import vistaproyectos
 from vista.vistainfoproyectos import vistainfoproyectos
 from vista.vistaevaluaciondecompetencias import vistaevaluaciondecompetencias
 from vista.vistaresultados import vistaresultados
-""" from vista.vistacompetenciastransversales import vistacompetenciastransversales """
-""" from vista.vistaresultadoscompetenciastransversales import vistaresultadoscompetenciastransversales """
-""" from vista.vistaresultadoscompetenciasdocentes import vistaresultadoscompetenciasdocentes"""
+from vista.vistacompetenciastransversales import vistacompetenciastransversales
+from vista.vistaresultadoscompetenciastransversales import vistaresultadoscompetenciastransversales
+from vista.vistaresultadoscompetenciasdocentes import vistaresultadoscompetenciasdocentes
 from vista.vistadashboard import vistadashboard 
 from vista.vistareportesindividual import vistareportesindividual
 from vista.vistareportesgeneral import vistareportesgeneral
@@ -46,7 +50,6 @@ from vista.vistaanalisisorganizacional import vistaanalisisorganizacional
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
-API_URL = 'http://190.217.58.246:5184/api/sgd'
 
 
 app.register_blueprint(menu)
@@ -56,7 +59,7 @@ app.register_blueprint(vistaconcertaciondepropositos)
 app.register_blueprint(vistafactoresclavesdeexito)
 app.register_blueprint(vistaconcertaciondedisponibilidad)
 app.register_blueprint(vistacompetenciasdocentes)
-""" app.register_blueprint(vistacompetenciastransversales) """
+app.register_blueprint(vistacompetenciastransversales)
 app.register_blueprint(vistaconcertaciondepropositosparalamejoradeprocesos)
 app.register_blueprint(vistaconcertaciondepropositospersonales)
 app.register_blueprint(vistaagregarequipo)
@@ -72,8 +75,9 @@ app.register_blueprint(vistaproyectos)
 app.register_blueprint(vistainfoproyectos)
 app.register_blueprint(vistaevaluaciondecompetencias)
 app.register_blueprint(vistaresultados)
-""" app.register_blueprint(vistaresultadoscompetenciastransversales) """
-""" app.register_blueprint(vistaresultadoscompetenciasdocentes) """
+app.register_blueprint(vistaresultadoscompetenciastransversales)
+app.register_blueprint(vistaresultadoscompetenciasdocentes)
+app.register_blueprint(vistaresultadosconcertaciondepropositos)
 app.register_blueprint(vistadashboard)
 app.register_blueprint(vistareportesindividual)
 app.register_blueprint(vistareportesgeneral)
@@ -85,7 +89,6 @@ app.register_blueprint(vistaidentificaciondelideres)
 # Establecer la ruta base si es necesario, por defecto es '/'
 #breakpoint();
 
-API_URL = 'http://190.217.58.246:5184/api/sgd'
 
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/inicio', methods = ['GET', 'POST'])
@@ -122,113 +125,307 @@ def cerrarSesion():
     session.clear() # Limpiar la sesión
     return redirect('inicio.html')
 
-@app.route('/competenciastransversales', methods=['GET', 'POST'])
-def vista_competenciastransversales():
-    id_apartado = 1  # Cambia este valor si fuera necesario
-    user_id = 1  # Cambia esto según sea necesario
+@app.route('/download_excel')
+def download_excel():
+    tipo = request.args.get('tipo', 'datos')
 
-    if request.method == 'POST':
-        # Manejar los datos del formulario y la navegación entre preguntas
-        current_index = int(request.form.get('current_index', 0))
+    if tipo == 'grafica':
+        # Generar la gráfica usando matplotlib
+        fig = Figure()
+        ax = fig.subplots()
+
+        # Obtener las respuestas almacenadas en la sesión
         respuestas = session.get('respuestas', {})
 
-        # Guardar la respuesta seleccionada para la pregunta actual
-        if 'respuesta_seleccionada' in request.form:
-            pregunta_id = request.form.get('pregunta_id')
-            respuestas[pregunta_id] = request.form.get('respuesta_seleccionada')
-            session['respuestas'] = respuestas
+        # Preparar los datos para la gráfica
+        xValues = list(range(1, len(respuestas) + 1))
+        yValues = [float(respuesta) for respuesta in respuestas.values()]
 
-        if 'next' in request.form:
-            current_index += 1
-        elif 'prev' in request.form:
-            current_index -= 1
+        # Graficar los datos
+        ax.plot(xValues, yValues, marker='o', linestyle='-', color='b')
+        ax.set_title('Valores de Respuestas')
+        ax.set_xlabel('Índice')
+        ax.set_ylabel('Valor')
 
-        # Obtener la lista de preguntas
-        try:
-            response_preguntas = requests.get(f'{API_URL}/pregunta/id_apartado/{id_apartado}', timeout=10)
-            response_preguntas.raise_for_status()
-            preguntas = response_preguntas.json()
+        # Guardar la gráfica en un archivo de imagen en memoria
+        output = io.BytesIO()
+        fig.savefig(output, format='png')
+        output.seek(0)
 
-            # Asegúrate de que la pregunta actual esté disponible
-            if current_index < 0:
-                current_index = 0
-            if current_index >= len(preguntas):
-                return redirect(url_for('finalizo'))
+        # Devolver la imagen como una descarga
+        return send_file(output, download_name="grafica.png", as_attachment=True, mimetype='image/png')
 
-            pregunta_actual = preguntas[current_index]
-            id_pregunta = pregunta_actual['id_pregunta']
-            response_respuestas = requests.get(f'{API_URL}/respuesta/id_pregunta/{id_pregunta}', timeout=10)
-            response_respuestas.raise_for_status()
-            pregunta_actual['respuestas'] = response_respuestas.json()
+    else:
+        # Código existente para descargar los datos en Excel
+        respuestas = session.get('respuestas', {})
 
-            return render_template('competenciastransversales.html', pregunta=pregunta_actual, preguntas=preguntas,
-                                   current_index=current_index, total_preguntas=len(preguntas))
-        except requests.RequestException as e:
-            print(f"Error al obtener datos: {e}")
-            return render_template('competenciastransversales.html', pregunta=None, preguntas=[])
+        # Crear un archivo Excel en memoria
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        worksheet = workbook.add_worksheet()
 
-    # Inicializa el índice de la pregunta actual en GET
-    current_index = 0
-    try:
-        response_preguntas = requests.get(f'{API_URL}/pregunta/id_apartado/{id_apartado}', timeout=10)
-        response_preguntas.raise_for_status()
-        preguntas = response_preguntas.json()
+        # Definir estilos
+        header_format = workbook.add_format({
+            'bold': True,
+            'font_size': 14,
+            'bg_color': '#4AF852',
+            'border': 1,
+            'align': 'center',
+            'valign': 'vcenter'
+        })
+        cell_format = workbook.add_format({
+            'font_size': 12,
+            'bg_color': '#EAF2D3',
+            'border': 1,
+            'align': 'left',
+            'valign': 'vcenter'
+        })
 
-        if preguntas:
-            pregunta_actual = preguntas[current_index]
-            id_pregunta = pregunta_actual['id_pregunta']
-            response_respuestas = requests.get(f'{API_URL}/respuesta/id_pregunta/{id_pregunta}', timeout=10)
-            response_respuestas.raise_for_status()
-            pregunta_actual['respuestas'] = response_respuestas.json()
-            
-            return render_template('competenciastransversales.html', pregunta=pregunta_actual, preguntas=preguntas,
-                                   current_index=current_index, total_preguntas=len(preguntas))
-    except requests.RequestException as e:
-        print(f"Error al obtener datos: {e}")
-        return render_template('competenciastransversales.html', pregunta=None, preguntas=[])
+        # Escribir el encabezado con formato
+        worksheet.write('A1', 'Pregunta', header_format)
+        worksheet.write('B1', 'Respuesta', header_format)
+        worksheet.write('C1', 'Valor', header_format)
 
+        # Ajustar el ancho de las columnas
+        worksheet.set_column('A:A', 40)  # Ajusta el ancho de la columna A
+        worksheet.set_column('B:B', 40)  # Ajusta el ancho de la columna B
+        worksheet.set_column('C:C', 10)  # Ajusta el ancho de la columna C
 
-@app.route('/resultadoscompetenciastransversales', methods=['GET'])
-def resultadoscompetenciastransversales():
+        preguntas_respuestas = []
+
+        # Iterar sobre el diccionario de respuestas almacenadas en sesión
+        for id_pregunta, id_respuesta in respuestas.items():
+            try:
+                response_pregunta = requests.get(f'{API_URL}/pregunta/id_pregunta/{id_pregunta}', timeout=10)
+                response_pregunta.raise_for_status()
+                pregunta = response_pregunta.json()
+
+                if isinstance(pregunta, list) and len(pregunta) > 0:
+                    pregunta = pregunta[0]
+
+                response_respuesta = requests.get(f'{API_URL}/respuesta/id_respuesta/{id_respuesta}', timeout=10)
+                response_respuesta.raise_for_status()
+                respuesta = response_respuesta.json()
+
+                if isinstance(respuesta, list) and len(respuesta) > 0:
+                    respuesta = respuesta[0]
+
+                preguntas_respuestas.append({
+                    'texto_pregunta': pregunta.get('texto_pregunta', 'Pregunta no disponible'),
+                    'texto_respuesta': respuesta.get('texto_respuesta', 'Respuesta no disponible'),
+                    'valor_respuesta': respuesta.get('valor_respuesta', 'Valor no disponible')
+                })
+
+            except requests.RequestException as e:
+                print(f"Error al obtener datos: {e}")
+
+        # Escribir los datos en el archivo Excel
+        for i, respuesta in enumerate(preguntas_respuestas, start=1):
+            worksheet.write(f'A{i+1}', respuesta['texto_pregunta'], cell_format)
+            worksheet.write(f'B{i+1}', respuesta['texto_respuesta'], cell_format)
+            worksheet.write(f'C{i+1}', respuesta['valor_respuesta'], cell_format)
+
+        workbook.close()
+        output.seek(0)
+
+        return send_file(output, download_name="Resultados.xlsx", as_attachment=True)
+
+"""@app.route('/download_excel')
+def download_excel():
+    # Obtener las respuestas guardadas en la sesión
     respuestas = session.get('respuestas', {})
-    
+
+    # Crear un archivo Excel en memoria
+    output = io.BytesIO()
+    workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+    worksheet = workbook.add_worksheet()
+
+    # Definir estilos
+    header_format = workbook.add_format({
+        'bold': True,
+        'font_size': 14,
+        'bg_color': '#4AF852',
+        'border': 1,
+        'align': 'center',
+        'valign': 'vcenter'
+    })
+    cell_format = workbook.add_format({
+        'font_size': 12,
+        'bg_color': '#EAF2D3',
+        'border': 1,
+        'align': 'left',
+        'valign': 'vcenter'
+    })
+
+    # Escribir el encabezado con formato
+    worksheet.write('A1', 'Pregunta', header_format)
+    worksheet.write('B1', 'Respuesta', header_format)
+    worksheet.write('C1', 'Valor', header_format)
+
+    # Ajustar el ancho de las columnas
+    worksheet.set_column('A:A', 40)  # Ajusta el ancho de la columna A
+    worksheet.set_column('B:B', 40)  # Ajusta el ancho de la columna B
+    worksheet.set_column('C:C', 10)  # Ajusta el ancho de la columna C
+
+    # Preparar la lista para almacenar las preguntas y respuestas
     preguntas_respuestas = []
+
+    # Iterar sobre el diccionario de respuestas almacenadas en sesión
     for id_pregunta, id_respuesta in respuestas.items():
         try:
-            # Verifica que el endpoint para obtener preguntas por ID sea correcto
+            # Llamada a la API para obtener el texto de la pregunta
             response_pregunta = requests.get(f'{API_URL}/pregunta/id_pregunta/{id_pregunta}', timeout=10)
             response_pregunta.raise_for_status()
             pregunta = response_pregunta.json()
 
-            # Imprimir la respuesta de la API para depuración
-            print(f"Respuesta de pregunta: {pregunta}")
-
-            # Si es una lista, accede al primer elemento
+            # Asegúrate de que el resultado sea una lista y accede al primer elemento
             if isinstance(pregunta, list) and len(pregunta) > 0:
                 pregunta = pregunta[0]
-            
-            # Verifica que el endpoint para obtener respuestas por ID sea correcto
+
+            # Llamada a la API para obtener el texto de la respuesta
             response_respuesta = requests.get(f'{API_URL}/respuesta/id_respuesta/{id_respuesta}', timeout=10)
             response_respuesta.raise_for_status()
             respuesta = response_respuesta.json()
 
-            # Imprimir la respuesta de la API para depuración
-            print(f"Respuesta de respuesta: {respuesta}")
-
-            # Si es una lista, accede al primer elemento
+            # Asegúrate de que el resultado sea una lista y accede al primer elemento
             if isinstance(respuesta, list) and len(respuesta) > 0:
                 respuesta = respuesta[0]
 
+            # Agregar la pregunta y respuesta a la lista para exportarla
             preguntas_respuestas.append({
                 'texto_pregunta': pregunta.get('texto_pregunta', 'Pregunta no disponible'),
                 'texto_respuesta': respuesta.get('texto_respuesta', 'Respuesta no disponible'),
-                'valor_respuesta': respuesta.get('valor_respuesta', 'valor no disponible')
+                'valor_respuesta': respuesta.get('valor_respuesta', 'Valor no disponible')
             })
 
         except requests.RequestException as e:
             print(f"Error al obtener datos: {e}")
 
-    return render_template('resultadoscompetenciastransversales.html', respuestas=preguntas_respuestas)
+    # Escribir los datos en el archivo Excel
+    for i, respuesta in enumerate(preguntas_respuestas, start=1):
+        worksheet.write(f'A{i+1}', respuesta['texto_pregunta'], cell_format)
+        worksheet.write(f'B{i+1}', respuesta['texto_respuesta'], cell_format)
+        worksheet.write(f'C{i+1}', respuesta['valor_respuesta'], cell_format)
+
+    workbook.close()
+    output.seek(0)
+
+    return send_file(output, download_name="Resultados.xlsx", as_attachment=True)
+
+
+@app.route('/download_excel')
+def download_excel():
+    # Obtener las respuestas reales almacenadas en la sesión
+    respuestas = session.get('respuestas', [])
+
+    # Depuración: Imprimir las respuestas para verificar su estructura
+    print("Respuestas:", respuestas)
+    
+    # Crear un archivo Excel en memoria
+    output = io.BytesIO()
+    workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+    worksheet = workbook.add_worksheet()
+
+    # Definir estilos
+    header_format = workbook.add_format({
+        'bold': True,
+        'font_size': 14,
+        'bg_color': '#4AF852',
+        'border': 1,
+        'align': 'center',
+        'valign': 'vcenter'
+    })
+    cell_format = workbook.add_format({
+        'font_size': 12,
+        'bg_color': '#EAF2D3',
+        'border': 1,
+        'align': 'left',
+        'valign': 'vcenter'
+    })
+    
+    # Escribir el encabezado con formato
+    worksheet.write('A1', 'Resultados', header_format)
+    
+    # Ajustar el ancho de las columnas
+    worksheet.set_column('A:A', 40)  # Ajusta el ancho de la columna A
+
+    # Asegúrate de que `respuestas` sea una lista de diccionarios
+    for i, respuesta in enumerate(respuestas, start=1):
+        if isinstance(respuesta, dict):  # Verifica si la respuesta es un diccionario
+            worksheet.write(f'A{i+1}', respuesta.get('texto_pregunta', 'Pregunta no disponible'), cell_format)
+            worksheet.write(f'B{i+1}', respuesta.get('texto_respuesta', 'Respuesta no disponible'), cell_format)
+            worksheet.write(f'C{i+1}', respuesta.get('valor_respuesta', 'Valor no disponible'), cell_format)
+        else:
+            # Si no es un diccionario, imprime un mensaje de error para depuración
+            print(f"Respuesta en índice {i} no es un diccionario:", respuesta)
+
+    workbook.close()
+    output.seek(0)
+
+    return send_file(output, download_name="Resultados.xlsx", as_attachment=True)
+
+
+@app.route('/download_excel')
+def download_excel():
+    # Obtener las respuestas reales almacenadas en la sesión
+    respuestas = session.get('respuestas', [])
+
+    # Crear un archivo Excel en memoria
+    output = io.BytesIO()
+    workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+    worksheet = workbook.add_worksheet()
+
+    # Definir estilos
+    header_format = workbook.add_format({
+        'bold': True,
+        'font_size': 14,
+        'bg_color': '#4AF852',
+        'border': 1,
+        'align': 'center',
+        'valign': 'vcenter'
+    })
+    cell_format = workbook.add_format({
+        'font_size': 12,
+        'bg_color': '#EAF2D3',
+        'border': 1,
+        'align': 'left',
+        'valign': 'vcenter'
+    })
+    
+    # Escribir el encabezado con formato
+    worksheet.write('A1', 'Resultados', header_format)
+    
+    # Ajustar el ancho de las columnas
+    worksheet.set_column('A:A', 40)  # Ajusta el ancho de la columna A
+
+    # Escribir las respuestas en el archivo Excel
+    for i, respuesta in enumerate(respuestas, start=1):
+        worksheet.write(f'A{i+1}', respuesta['texto_pregunta'], cell_format)
+        worksheet.write(f'B{i+1}', respuesta['texto_respuesta'], cell_format)
+        worksheet.write(f'C{i+1}', respuesta['valor_respuesta'], cell_format)
+
+    # Si se está en la vista de la gráfica, incluir la gráfica en el Excel
+    if request.args.get('incluir_grafica') == 'true':
+        # Generar la gráfica como una imagen usando Plotly
+        x_values = [i + 1 for i in range(len(respuestas))]
+        y_values = [float(respuesta['valor_respuesta']) for respuesta in respuestas]
+
+        trace = go.Scatter(x=x_values, y=y_values, mode='lines+markers')
+        layout = go.Layout(title='Valores de Respuestas', xaxis=dict(title='Índice'), yaxis=dict(title='Valor', range=[1, 4]))
+        fig = go.Figure(data=[trace], layout=layout)
+
+        # Guardar la gráfica como imagen en formato PNG
+        image_bytes = io.BytesIO()
+        fig.write_image(image_bytes, format='png')
+        image_bytes.seek(0)
+
+        # Insertar la imagen en el archivo Excel
+        worksheet.insert_image('E1', 'grafica.png', {'image_data': image_bytes})
+
+    workbook.close()
+    output.seek(0)
+
+    return send_file(output, download_name="Resultados.xlsx", as_attachment=True)
 
 @app.route('/download_excel')
 def download_excel():
@@ -271,10 +468,7 @@ def download_excel():
     output.seek(0)
     
     return send_file(output, download_name="Resultados.xlsx", as_attachment=True)
-
-@app.route('/resultadoscompetenciasdocentes', methods = ['GET', 'POST'])
-def get_resultadoscompetenciasdocentes():
-    return render_template('resultadoscompetenciasdocentes.html')
+ """
 
 @app.route('/api/sgd/usuario_respuesta', methods=['POST'])
 def agregar_usuario_respuesta():
@@ -302,9 +496,7 @@ def finalizo():
     return render_template('finalizo.html', usuario_id=usuario_id)
 
 
-@app.route('/resultadosconcertaciondepropositos', methods = ['GET', 'POST'])
-def get_resultadosconcertaciondepropositos():
-    return render_template('resultadosconcertaciondepropositos.html')
+
 
 @app.route('/presentacionGDD', methods = ['GET'])
 def get_presentacionGDD():

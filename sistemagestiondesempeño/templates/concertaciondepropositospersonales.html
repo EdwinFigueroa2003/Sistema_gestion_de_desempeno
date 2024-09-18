@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 
 <head>
@@ -543,10 +543,8 @@
 </head>
 
 <body>
-    <!-- Inicio de la barra lateral -->
     <div class="sidebar">
         <div class="user-profile">
-            <!-- <img src="profile.png" alt="User Image" class="user-img"> -->
             <img src="{{ url_for('static', filename='img/image copy.png')}}" class="user-img">
             <h4 class="user-name">James Bonb</h4>
             <p class="user-title">Director de Programa</p>
@@ -610,41 +608,75 @@
                 </ul>
         </nav>
     </div>
-    <!-- Fin de la barra lateral -->
 
-    <div class="content">
-        <h1>GESTIÓN DEL DESEMPEÑO</h1>
-        <hr>
-        <div class="circle-wrapper1">
-            <div class="circle1"></div>
-            <h5>CONCERTACIÓN DE PROPÓSITOS
-                <br>
-                PERSONALES
-            </h5>
-        </div>
 
-        <div style="position: relative; display: inline-block;">
-            <textarea class="cuadro-de-texto" name="nombredelacaja" id="nombredelacaja"
-                placeholder="Especifique propósito manifestado por el colaborador"
-                aria-label="Caja de texto para nombre" rows="4" cols="50" style="resize: none;"></textarea>
-            <button class="enviar">Enviar</button>
-        </div>
-        
-        <textarea type="text" class="cuadro-de-texto-proposito" name="nombredelacaja1" id="nombredelacaja1"
-            placeholder="Agregar nuevo propósito" aria-label="Caja de texto para nombre" rows="4" cols="50"
-            style="resize: none;"></textarea>
-        
+    <div class="content"> -->
 
-        <div class="btn">
-            <div class="medium-filled">
-                <a href="/concertaciondepropositos" class="texto1">VOLVER</a>
-            </div>
-        </div>
+{% extends "layout.html" %}
 
-        <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
-        <img src="{{ url_for('static', filename='img/objetivo-10.png')}}" class="usuarios" />
+{% block title %}
+Concertación de Propositos Personales
+{% endblock %}
+
+{% block content %}
+
+<h1>GESTIÓN DEL DESEMPEÑO</h1>
+<hr>
+<div class="circle-wrapper">
+    <div class="circle"></div>
+    <h3>CONCERTACIÓN DE PROPÓSITOS
+        <br>
+        PERSONALES
+    </h3>
+</div>
+
+<div style="position: relative; display: inline-block;">
+    <textarea class="cuadro-de-texto" name="proposito" id="proposito"
+        placeholder="Especifique propósito manifestado por el colaborador" aria-label="Caja de texto para nombre"
+        rows="4" cols="50" style="resize: none;"></textarea>
+    <button class="enviar" onclick="enviarPropositos()">Enviar</button>
+</div>
+
+<textarea type="text" class="cuadro-de-texto-proposito" name="nuevo_proposito" id="nuevo_proposito"
+    placeholder="Agregar nuevo propósito" aria-label="Caja de texto para nombre" rows="4" cols="50"
+    style="resize: none;"></textarea>
+
+<div class="btn">
+    <div class="medium-filled">
+        <a href="/concertaciondepropositos" class="texto1">VOLVER</a>
     </div>
-</body>
+</div>
 
+<img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+<img src="{{ url_for('static', filename='img/objetivo-10.png')}}" class="usuarios" />
 
-</html>
+<script>
+    function enviarPropositos() {
+        const proposito = document.getElementById('proposito').value;
+        const nuevo_proposito = document.getElementById('nuevo_proposito').value;
+
+        fetch('/concertaciondepropositospersonales', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                proposito: proposito,
+                nuevo_proposito: nuevo_proposito,
+                id_categoria: 2, // Puedes obtenerlo dinámicamente si es necesario
+                id_cargo: 1 // Puedes obtenerlo dinámicamente si es necesario
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Propositos guardados exitosamente');
+                } else {
+                    alert('Error al guardar los propositos');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
+
+{% endblock %}

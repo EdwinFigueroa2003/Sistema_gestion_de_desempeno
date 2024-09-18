@@ -16,36 +16,45 @@ Resultados Competencias Transversales
         <p>Fransisco</p>
     </div>
     <div class="dashboard-content">
-        <div class="reporte-item">
-            Competencias Transversales <img src="{{ url_for('static', filename='img/competencias-transversales.jpeg')}}"
-                class="icon" />
-        </div>
-
-        <div class="chart-container">
+        <!-- Sección de respuestas -->
+        <div id="respuestas-section">
             <div class="chart-title">
-                <resultado-a>Resultados</resultado-a>
+                <h1>Resultados</h1>
                 <ul>
                     {% for respuesta in respuestas %}
                     <li>
                         <span class="label">Pregunta:</span> {{ respuesta.texto_pregunta }}<br>
                         <span class="label">Respuesta Seleccionada:</span> {{ respuesta.texto_respuesta }}<br>
-                        <!--<span class="label">Valor:</span> {{ respuesta.valor_respuesta }} <!-- Asegúrate de incluir el valor en las respuestas -->
                     </li>
                     {% endfor %}
                 </ul>
             </div>
+        </div>
 
+        <!-- Sección de la gráfica, inicialmente oculta -->
+        <div id="grafica-section" style="display:none;">
+            <h1><div class="chart-title">Gráfica de Resultados</div></h1>
             <div id="plotly-chart" style="width: 900px; height: 500px;"></div>
         </div>
     </div>
 </div>
 
-<div class="action-buttons">
+<!-- <div class="action-buttons">
+    <a href="#" onclick="toggleView()">Ver Gráfica</a>
     <a href="#" onclick="window.print();">Imprimir Gráfica e Informe</a>
     <a href="{{ url_for('download_excel') }}">Descargar Excel</a>
     <a href="/resultados">Volver</a>
+</div> -->
+
+<div class="action-buttons">
+    <a href="#" id="toggleButton" onclick="toggleView()">Ver Gráfica</a>
+    <a href="#" onclick="window.print();">Imprimir Gráfica e Informe</a>
+    <a href="{{ url_for('download_excel', incluir_grafica='true') }}" id="downloadButton">Descargar Excel</a>
+    <!-- Pasa el parámetro -->
+    <a href="/resultados">Volver</a>
 </div>
-</div>
+
+
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
 <img src="{{ url_for('static', filename='img/competencias-transversales.jpeg')}}" class="usuarios" />
 
@@ -53,35 +62,73 @@ Resultados Competencias Transversales
 <script>
     var respuestas = JSON.parse('{{ respuestas|tojson|safe }}');
 
-    console.log("Respuestas en JavaScript:", respuestas);
+    // Inicializa la gráfica
+    function renderGrafica() {
+        var xValues = [];
+        var yValues = [];
 
-    var xValues = [];
-    var yValues = [];
+        respuestas.forEach(function (respuesta, index) {
+            xValues.push(index + 1); // Usa índices como etiquetas del eje X
+            yValues.push(parseFloat(respuesta.valor_respuesta)); // Usa valor_respuesta para el eje Y
+        });
 
-    respuestas.forEach(function(respuesta, index) {
-        xValues.push(index + 1); // Usa índices como etiquetas del eje X
-        yValues.push(parseFloat(respuesta.valor_respuesta)); // Usa valor_respuesta para el eje Y y asegúrate de convertirlo a número
-    });
+        var trace = {
+            x: xValues,
+            y: yValues,
+            mode: 'lines+markers',
+            type: 'scatter',
+            marker: { size: 8 }
+        };
 
-    console.log("xValues:", xValues);
-    console.log("yValues:", yValues);
+        var data = [trace];
+        var layout = {
+            title: 'Valores de Respuestas',
+            xaxis: { title: 'Índice' },
+            yaxis: { title: 'Valor', range: [1, 4] }
+        };
 
-    var trace = {
-        x: xValues,
-        y: yValues,
-        mode: 'lines+markers',
-        type: 'scatter',
-        marker: { size: 8 }
-    };
+        Plotly.newPlot('plotly-chart', data, layout);
+    }
 
-    var data = [trace];
-    var layout = {
-        title: 'Valores de Respuestas',
-        xaxis: { title: 'Índice' },
-        yaxis: { title: 'Valor', range: [1, 4] }
-    };
+    // Alternar entre la vista de respuestas y la gráfica
+    /*     function toggleView() {
+            var respuestasSection = document.getElementById('respuestas-section');
+            var graficaSection = document.getElementById('grafica-section');
+    
+            if (graficaSection.style.display === "none") {
+                respuestasSection.style.display = "none";
+                graficaSection.style.display = "block";
+                renderGrafica(); // Renderiza la gráfica cuando se muestra la sección
+            } else {
+                graficaSection.style.display = "none";
+                respuestasSection.style.display = "block";
+                toggleButton.textContent = "Ver Gráfica"; // Cambia el texto del botón
+            } 
+    
+        } */
 
-    Plotly.newPlot('plotly-chart', data, layout);
+    function toggleView() {
+        var respuestasSection = document.getElementById('respuestas-section');
+        var graficaSection = document.getElementById('grafica-section');
+        var toggleButton = document.getElementById('toggleButton');
+        var downloadButton = document.getElementById('downloadButton'); // Referencia al botón de descarga
+
+        if (graficaSection.style.display === "none") {
+            respuestasSection.style.display = "none";
+            graficaSection.style.display = "block";
+            toggleButton.textContent = "Ver Resultados";
+            downloadButton.href = "{{ url_for('download_excel', incluir_grafica='true') }}"; // Cambia a la descarga con gráfica
+            renderGrafica(); // Renderiza la gráfica cuando se muestra la sección
+        } else {
+            graficaSection.style.display = "none";
+            respuestasSection.style.display = "block";
+            toggleButton.textContent = "Ver Gráfica";
+            downloadButton.href = "{{ url_for('download_excel') }}"; // Cambia a la descarga sin gráfica
+        }
+    }
+
+
+
 </script>
 
 {% endblock %}

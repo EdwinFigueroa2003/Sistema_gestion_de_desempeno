@@ -60,6 +60,35 @@
             margin-left: 30px;
             top: 10px;
             bottom: 10px;
+            /* overflow-x: auto; */
+            /* Habilita el desplazamiento horizontal */
+            overflow-y: auto;
+            /* Habilita el desplazamiento vertical */
+            scrollbar-width: thin;
+            /* Estilo de la barra de desplazamiento en Firefox */
+            scrollbar-color: #EA5C10 #EAEAEA;
+            /* Color de la barra y el fondo en Firefox */
+            z-index: 1000;
+        }
+
+        /* Estilo de la barra de desplazamiento para navegadores basados en WebKit (Chrome, Safari, Edge) */
+        .sidebar::-webkit-scrollbar {
+            width: 10px;
+            /* Ancho de la barra de desplazamiento vertical */
+            height: 10px;
+            /* Altura de la barra de desplazamiento horizontal */
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background-color: #EA5C10;
+            /* Color de la barra de desplazamiento */
+            border-radius: 10px;
+            /* Bordes redondeados */
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background-color: #EAEAEA;
+            /* Color de fondo de la barra de desplazamiento */
         }
 
         .user-profile {
@@ -95,24 +124,31 @@
             position: relative;
         }
 
+
         .nav-link {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px;
+            padding: 12px !important;
+            /* Aumenta el padding para que no quede tan pegado */
             border-radius: 10px;
             text-decoration: none;
             color: #ffffff;
-
             font-weight: bold;
             transition: background 0.3s ease;
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            font-family: 'fontfabric', sans-serif;
+            /* Asegúrate de usar la fuente correcta */
+            font-size: 16px;
+            /* Ajusta el tamaño de la fuente */
         }
 
         .nav-link img.icon {
-            width: 24px;
-            height: 24px;
-            margin-right: 50px;
+            width: 30px;
+            /* Aumenta el tamaño del ícono para hacerlo más visible */
+            height: 30px;
+            margin-left: 20px;
+            /* Ajusta la posición del ícono a la derecha */
         }
 
         .dropdown-toggle {
@@ -149,43 +185,53 @@
 
         .gestion-desempeno {
             background-color: #C35E23;
+            color: #ffffff;
 
         }
 
         .gestion-desempeno:hover {
             background-color: #b45120;
+            color: #ffffff;
         }
 
         .gestion-desarrollo {
             background-color: #BF0B3B;
+            color: #ffffff;
         }
 
         .gestion-desarrollo:hover {
             background-color: #a10933;
+            color: #ffffff;
         }
 
         .equipo {
             background-color: #29A3CC;
+            color: #ffffff;
         }
 
         .equipo:hover {
             background-color: #2385a6;
+            color: #ffffff;
         }
 
         .configuracion {
             background-color: #16594D;
+            color: #ffffff;
         }
 
         .configuracion:hover {
             background-color: #12483e;
+            color: #ffffff;
         }
 
         .inicio {
             background-color: #525252;
+            color: #ffffff;
         }
 
         .inicio:hover {
             background-color: #3e3e3e;
+            color: #ffffff;
         }
 
         .content {

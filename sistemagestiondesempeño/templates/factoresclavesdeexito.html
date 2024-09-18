@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 
 <html>
 
@@ -691,15 +691,23 @@
                 </div>
             </ul>
         </nav>
-    </div>
+    </div> 
 
-    <!-- Fin de la barra lateral -->
 
-    <div class="content">
+
+    <div class="content">--> 
+
+        {% extends "layout.html" %}
+
+{% block title %}
+Factores Claves de Éxito
+{% endblock %}
+
+{% block content %}
         <h1>GESTIÓN DEL DESEMPEÑO</h1>
         <hr>
 
-        <div class="rectangle-2101">
+        <div class="rectangle-2119">
             <div class="circle-wrapper">
                 <div class="circle"></div>
             </div>
@@ -712,34 +720,7 @@
         </div>
 
         <div class="centro">
-            <div class="pregunta">
-                <h6>{{ item.nombre_comp }}</h6>
-            </div>
-            <div class="cuadro-respuestas">
-                <p>{{ item.definicion_comp }}</p>
-            </div>
 
-            <form method="POST">
-                <input type="hidden" name="current_index" value="{{ current_index }}">
-
-                <div class="btn">
-                    <button type="submit" name="prev" class="boton-atras" {% if current_index==0 %}disabled{% endif %}>
-                        <span class="atras">Atrás</span>
-                    </button>
-                </div>
-
-                <div class="btn">
-                    <button type="submit" name="next" class="boton-siguiente">
-                        <span class="siguiente">Siguiente</span>
-                    </button>
-                </div>
-
-                <div class="btn">
-                    <div class="medium-filled">
-                        <a href="/informe" class="volver">VOLVER</a>
-                    </div>
-                </div>
-            </form>
 
             <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
             <img src="{{ url_for('static', filename='img/exito0.png')}}" class="usuarios" />
@@ -747,7 +728,7 @@
         </div>
 
         <!-- Scripts al final del cuerpo -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
             crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
@@ -767,4 +748,6 @@
         </script>
 </body>
 
-</html>
+</html> -->
+
+{% endblock %}

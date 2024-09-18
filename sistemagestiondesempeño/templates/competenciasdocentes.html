@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 
 <html>
 
@@ -580,7 +580,6 @@
 <body>
     <div class="sidebar">
         <div class="user-profile">
-            <!-- <img src="profile.png" alt="User Image" class="user-img"> -->
             <img src="{{ url_for('static', filename='img/image copy.png')}}" class="user-img">
             <h4 class="user-name">James Bonb</h4>
             <p class="user-title">Director de Programa</p>
@@ -645,35 +644,44 @@
         </nav>
     </div>
 
-    <!-- Fin de la barra lateral -->
-
-    <div class="content">
-        <h1>GESTIÓN DEL DESEMPEÑO</h1>
-        <hr>
-
-        <div class="rectangle-2101">
-            <div class="circle-wrapper">
-                <div class="circle"></div>
-            </div>
-            <h4>Francisco</h4>
-        </div>
-
-        <div class="titulo-dimension">
-            <h3>COMPETENCIAS DOCENTES</h3>
-        </div>
-
-        <div class="centro">
-            
-            </div>
 
 
-            <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
-            <img src="{{ url_for('static', filename='img/ensenar0.png')}}" class="usuarios" />
+    <div class="content"> -->
+
+{% extends "layout.html" %}
+
+{% block title %}
+Competencias Docentes
+{% endblock %}
+
+{% block content %}
+
+<h1>GESTIÓN DEL DESEMPEÑO</h1>
+<hr>
+
+<div class="rectangle-2119">
+    <div class="circle-wrapper">
+        <div class="circle"></div>
+    </div>
+    <h4>Francisco</h4>
+</div>
+
+<div class="titulo-dimension">
+    <h3>COMPETENCIAS DOCENTES</h3>
+</div>
+
+<div class="centro">
+
+</div>
 
 
-        </div>
-        <!-- Scripts al final del cuerpo -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+<img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+<img src="{{ url_for('static', filename='img/ensenar0.png')}}" class="usuarios" />
+
+
+</div>
+<!-- Scripts al final del cuerpo -->
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
             crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
@@ -693,4 +701,6 @@
         </script>
 </body>
 
-</html>
+</html> -->
+
+{% endblock %}
