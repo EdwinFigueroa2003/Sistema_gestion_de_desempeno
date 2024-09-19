@@ -8,15 +8,14 @@ Proyectos
 <h1>Proyectos</h1>
 <hr>
 
-
 {% if proyectos %}
 <ul>
     {% for proyecto in proyectos %}
-    <a href="/infoproyectos">
-    <div class="rectangle-2112">
-        <h3>{{ proyecto['nombre_proyecto'] }}</h3>
-        <p>{{ proyecto['descripcion_proyecto'] }}</p>
-    </div>
+    <a href="/proyecto/{{ proyecto['id_proyecto'] }}/microproyectos">
+        <div class="rectangle-2112">
+            <h3>{{ proyecto['nombre_proyecto'] }}</h3>
+            <p>{{ proyecto['descripcion_proyecto'] }}</p>
+        </div>
     </a>
     {% endfor %}
 </ul>

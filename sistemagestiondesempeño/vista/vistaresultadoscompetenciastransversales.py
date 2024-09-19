@@ -3,7 +3,7 @@ from flask import Blueprint, request, render_template, redirect, url_for, sessio
 from Entidad import Entidad
 import requests
 from control.ControlEntidad import ControlEntidad
-from vista.vistacompetenciastransversales import API_URL
+from configBd import API_URL
  
 # Crear un Blueprint
 vistaresultadoscompetenciastransversales = Blueprint('idresultadoscompetenciastransversales', __name__, template_folder='templates')

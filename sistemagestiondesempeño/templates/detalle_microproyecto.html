@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Detalle del Microproyecto
+{% endblock %}
+
+{% block content %}
+<h1>Detalle del Microproyecto</h1>
+<hr>
+
+<!-- Sección de Actividades Clave -->
+<div class="seccion">
+        <h3>Actividades Clave</h3>
+        <ul>
+                {% if actividades_clave %}
+                {% for actividad in actividades_clave %}
+                <li>{{ actividad['descripcion_actividad'] }}</li>
+                {% endfor %}
+                {% else %}
+                <p>No hay actividades clave disponibles para este microproyecto.</p>
+                {% endif %}
+        </ul>
+</div>
+
+<!-- Sección de Aportes de Valor -->
+<div class="seccion">
+        <h3>Aportes de Valor</h3>
+        <ul>
+                {% if aportes_valor %}
+                {% for aporte in aportes_valor %}
+                <li>{{ aporte['descripcion_aporte'] }}</li>
+                {% endfor %}
+                {% else %}
+                <p>No hay aportes de valor disponibles para este microproyecto.</p>
+                {% endif %}
+        </ul>
+</div>
+
+<!-- Sección de Indicadores -->
+<div class="seccion">
+        <h3>Indicadores</h3>
+        <ul>
+                {% if indicadores %}
+                {% for indicador in indicadores %}
+                <li>{{ indicador['valor_indicador'] }}</li>
+                {% endfor %}
+                {% else %}
+                <p>No hay indicadores disponibles para este microproyecto.</p>
+                {% endif %}
+        </ul>
+</div>
+
+<!-- Botón para volver -->
+<a href="{{ url_for('idinfoproyectos.get_infoproyectos', id_proyecto=1) }}" class="volver-btn">Volver</a>
+
+{% endblock %}
+
+<style>
+        .seccion {
+                background-color: #f4f4f4;
+                padding: 15px;
+                margin-bottom: 20px;
+                border-radius: 8px;
+        }
+
+        .volver-btn {
+                display: block;
+                margin-top: 30px;
+                padding: 10px 20px;
+                background-color: #444;
+                color: #fff;
+                text-decoration: none;
+                border-radius: 5px;
+                text-align: center;
+        }
+</style>

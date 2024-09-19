@@ -15,6 +15,7 @@ from menu import menu
 from vista.vistaequipo import vistaequipo
 from vista.vistaagregarequipo import vistaagregarequipo
 from vista.vistaconfiguracion import vistaconfiguracion
+from vista.vistadetallemicroproyecto import vistadetallemicroproyecto
 from vista.vistagestiondeldesarrollo import vistagestiondeldesarrollo
 from vista.vistainforme import vistainforme
 from vista.vistafactoresclavesdeexito import vistafactoresclavesdeexito
@@ -56,6 +57,7 @@ app.register_blueprint(menu)
 app.register_blueprint(vistaequipo)
 app.register_blueprint(vistaanalisisorganizacional)
 app.register_blueprint(vistaconcertaciondepropositos)
+app.register_blueprint(vistadetallemicroproyecto)
 app.register_blueprint(vistafactoresclavesdeexito)
 app.register_blueprint(vistaconcertaciondedisponibilidad)
 app.register_blueprint(vistacompetenciasdocentes)
