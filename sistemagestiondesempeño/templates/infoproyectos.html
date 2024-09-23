@@ -8,17 +8,21 @@ Microproyectos
 <h1>Microproyectos Asociados</h1>
 <hr>
 
+
 {% if microproyectos %}
 <ul>
     {% for microproyecto in microproyectos %}
-    <a href="/microproyecto/{{ microproyecto['id_micro_proyecto'] }}">
-        <div class="rectangle-2112">
-            <h3>{{ microproyecto['nombre_micro_proyecto'] }}</h3>
-            <p>{{ microproyecto['descripcion_micro_proyecto'] }}</p>
-            <!-- Puedes agregar más detalles si es necesario -->
+
+        <div class="rectangle-2114">
+            <a href="/microproyecto/{{ microproyecto['id_micro_proyecto'] }}">
+                <!-- <div class="rectangle-2112"> -->
+                <h3>{{ microproyecto['nombre_micro_proyecto'] | e }}</h3>
+                <p>{{ microproyecto['descripcion_micro_proyecto'] | e }}</p>
+                <!-- Puedes agregar más detalles si es necesario -->
+            </a>
         </div>
-    </a>
-    {% endfor %}
+
+        {% endfor %}
 </ul>
 {% else %}
 <p>No hay microproyectos disponibles para este proyecto.</p>

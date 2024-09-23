@@ -39,21 +39,17 @@ Resultados Competencias Transversales
     </div>
 </div>
 
-<!-- <div class="action-buttons">
-    <a href="#" onclick="toggleView()">Ver Gráfica</a>
-    <a href="#" onclick="window.print();">Imprimir Gráfica e Informe</a>
-    <a href="{{ url_for('download_excel') }}">Descargar Excel</a>
-    <a href="/resultados">Volver</a>
-</div> -->
-
 <div class="action-buttons">
     <a href="#" id="toggleButton" onclick="toggleView()">Ver Gráfica</a>
     <a href="#" onclick="window.print();">Imprimir Gráfica e Informe</a>
     <a href="{{ url_for('download_excel', incluir_grafica='true') }}" id="downloadButton">Descargar Excel</a>
     <!-- Pasa el parámetro -->
-    <a href="/resultados">Volver</a>
+    <br>
 </div>
 
+<div class="action-buttons">
+    <a href="/resultados">Volver</a>
+</div>
 
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
 <img src="{{ url_for('static', filename='img/competencias-transversales.jpeg')}}" class="usuarios" />
@@ -89,23 +85,6 @@ Resultados Competencias Transversales
 
         Plotly.newPlot('plotly-chart', data, layout);
     }
-
-    // Alternar entre la vista de respuestas y la gráfica
-    /*     function toggleView() {
-            var respuestasSection = document.getElementById('respuestas-section');
-            var graficaSection = document.getElementById('grafica-section');
-    
-            if (graficaSection.style.display === "none") {
-                respuestasSection.style.display = "none";
-                graficaSection.style.display = "block";
-                renderGrafica(); // Renderiza la gráfica cuando se muestra la sección
-            } else {
-                graficaSection.style.display = "none";
-                respuestasSection.style.display = "block";
-                toggleButton.textContent = "Ver Gráfica"; // Cambia el texto del botón
-            } 
-    
-        } */
 
     function toggleView() {
         var respuestasSection = document.getElementById('respuestas-section');

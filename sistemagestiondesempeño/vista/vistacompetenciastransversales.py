@@ -1,11 +1,11 @@
+import random
 from pprint import pprint
 from flask import Blueprint, request, render_template, redirect, url_for, session
 from Entidad import Entidad
 import requests
 from datetime import datetime
 from control.ControlEntidad import ControlEntidad
-from configBd import API_URL 
-
+from configBd import API_URL
 
 # Crear un Blueprint
 vistacompetenciastransversales = Blueprint('idcompetenciastransversales', __name__, template_folder='templates')
@@ -47,7 +47,11 @@ def vista_competenciastransversales():
             id_pregunta = pregunta_actual['id_pregunta']
             response_respuestas = requests.get(f'{API_URL}/respuesta/id_pregunta/{id_pregunta}', timeout=10)
             response_respuestas.raise_for_status()
-            pregunta_actual['respuestas'] = response_respuestas.json()
+            respuestas_list = response_respuestas.json()
+
+            # Barajar las respuestas
+            random.shuffle(respuestas_list)
+            pregunta_actual['respuestas'] = respuestas_list
 
             return render_template('competenciastransversales.html', pregunta=pregunta_actual, preguntas=preguntas,
                                    current_index=current_index, total_preguntas=len(preguntas))
@@ -67,45 +71,14 @@ def vista_competenciastransversales():
             id_pregunta = pregunta_actual['id_pregunta']
             response_respuestas = requests.get(f'{API_URL}/respuesta/id_pregunta/{id_pregunta}', timeout=10)
             response_respuestas.raise_for_status()
-            pregunta_actual['respuestas'] = response_respuestas.json()
-            
+            respuestas_list = response_respuestas.json()
+
+            # Barajar las respuestas
+            random.shuffle(respuestas_list)
+            pregunta_actual['respuestas'] = respuestas_list
+
             return render_template('competenciastransversales.html', pregunta=pregunta_actual, preguntas=preguntas,
                                    current_index=current_index, total_preguntas=len(preguntas))
     except requests.RequestException as e:
         print(f"Error al obtener datos: {e}")
         return render_template('competenciastransversales.html', pregunta=None, preguntas=[])
-
-
-""" def vista_competenciastransversales():
-    id_apartado = 1  # Cambia este valor si fuera necesario
-    user_id = 1  # Cambia esto según sea necesario
-
-    if request.method == 'POST':
-        respuestas = {}
-        for id_pregunta, id_respuesta in request.form.items():
-            respuestas[id_pregunta] = id_respuesta
-
-        # Guardar las respuestas en la sesión o en una estructura temporal
-        session['respuestas'] = respuestas
-
-        return redirect(url_for('finalizo'))
-
-    try:
-         # Obtener las preguntas para el apartado
-        response_preguntas = requests.get(f'{API_URL}/pregunta/id_apartado/{id_apartado}', timeout=10)
-        response_preguntas.raise_for_status()
-        preguntas = response_preguntas.json()
-
-        # Obtener respuestas para cada pregunta
-        for pregunta in preguntas:
-            id_pregunta = pregunta['id_pregunta']
-            response_respuestas = requests.get(f'{API_URL}/respuesta/id_pregunta/{id_pregunta}', timeout=10)
-            response_respuestas.raise_for_status()
-            pregunta['respuestas'] = response_respuestas.json()
-
-    except requests.RequestException as e:
-        preguntas = []
-        print(f"Error al obtener datos: {e}")
-
-    return render_template('competenciastransversales.html', preguntas=preguntas) """
-

@@ -1,5 +1,9 @@
-from flask import Blueprint, request, render_template
+from pprint import pprint
+from flask import Blueprint, request, render_template, redirect, url_for, session
+from Entidad import Entidad
 import requests
+from control.ControlEntidad import ControlEntidad
+from configBd import API_URL
  
 vistaresultadosconcertaciondepropositos = Blueprint('idresultadosconcertaciondepropositos', __name__, template_folder='templates')
  
@@ -10,9 +14,9 @@ def vista_resultadosconcertaciondepropositos():
     try:
         # Usar la URL correcta con el formato especificado
         if categoria:
-            response = requests.get(f'http://127.0.0.1:5184/api/sgd/proposito/id_categoria/{categoria}')
+            response = requests.get(f'{API_URL}/proposito/id_categoria/{categoria}')
         else:
-            response = requests.get(f'http://127.0.0.1:5184/api/sgd/proposito')
+            response = requests.get(f'{API_URL}/proposito')
  
         response.raise_for_status()  # Lanza una excepción si hay un error
         propositos = response.json()  # Parsear la respuesta JSON

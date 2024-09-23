@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template
 import requests
 from configBd import API_URL
+from vista.vistaproyectos import vista_proyectos 
  
 # Crear un nuevo Blueprint para los microproyectos asociados a un proyecto
 vistainfoproyectos = Blueprint('idinfoproyectos', __name__, template_folder='templates')
@@ -9,7 +10,8 @@ vistainfoproyectos = Blueprint('idinfoproyectos', __name__, template_folder='tem
 def get_infoproyectos(id_proyecto):
     try:
         # Realizar la solicitud a la API para obtener los microproyectos asociados a este proyecto
-        api_url = f'{API_URL}/micro_proyecto?id_proyecto={id_proyecto}'
+        api_url = f'{API_URL}/micro_proyecto/id_proyecto/{id_proyecto}'
+        #api_url = f'{API_URL}/micro_proyecto?id_proyecto={id_proyecto}' #Se borra por si algos
         print(f"Haciendo solicitud a la API: {api_url}")  # Depuración: Verificar la URL
         response = requests.get(api_url, timeout=10)
  

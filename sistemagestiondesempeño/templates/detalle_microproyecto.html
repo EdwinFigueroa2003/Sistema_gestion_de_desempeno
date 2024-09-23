@@ -9,12 +9,13 @@ Detalle del Microproyecto
 <hr>
 
 <!-- Sección de Actividades Clave -->
+
 <div class="seccion">
         <h3>Actividades Clave</h3>
         <ul>
                 {% if actividades_clave %}
                 {% for actividad in actividades_clave %}
-                <li>{{ actividad['descripcion_actividad'] }}</li>
+                {{ actividad['descripcion_actividad'] }}
                 {% endfor %}
                 {% else %}
                 <p>No hay actividades clave disponibles para este microproyecto.</p>
@@ -28,7 +29,7 @@ Detalle del Microproyecto
         <ul>
                 {% if aportes_valor %}
                 {% for aporte in aportes_valor %}
-                <li>{{ aporte['descripcion_aporte'] }}</li>
+                {{ aporte['descripcion_aporte'] }}
                 {% endfor %}
                 {% else %}
                 <p>No hay aportes de valor disponibles para este microproyecto.</p>
@@ -42,7 +43,7 @@ Detalle del Microproyecto
         <ul>
                 {% if indicadores %}
                 {% for indicador in indicadores %}
-                <li>{{ indicador['valor_indicador'] }}</li>
+                {{ indicador['valor_indicador'] }}
                 {% endfor %}
                 {% else %}
                 <p>No hay indicadores disponibles para este microproyecto.</p>
@@ -50,27 +51,17 @@ Detalle del Microproyecto
         </ul>
 </div>
 
+<img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+<!-- <img src="{{ url_for('static', filename='img/icon-user-friends-icon0.jpg')}}" class="usuarios" /> -->
+
+
 <!-- Botón para volver -->
-<a href="{{ url_for('idinfoproyectos.get_infoproyectos', id_proyecto=1) }}" class="volver-btn">Volver</a>
+<div class="btn">
+        <a href="{{ url_for('idinfoproyectos.get_infoproyectos', id_proyecto=1) }}" class="volver">
+                <div class="medium-filled">
+                        Volver
+                </div>
+        </a>
+</div>
 
 {% endblock %}
-
-<style>
-        .seccion {
-                background-color: #f4f4f4;
-                padding: 15px;
-                margin-bottom: 20px;
-                border-radius: 8px;
-        }
-
-        .volver-btn {
-                display: block;
-                margin-top: 30px;
-                padding: 10px 20px;
-                background-color: #444;
-                color: #fff;
-                text-decoration: none;
-                border-radius: 5px;
-                text-align: center;
-        }
-</style>
