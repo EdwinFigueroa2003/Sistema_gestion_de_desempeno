@@ -12,33 +12,25 @@ Informe
     <div class="circle-wrapper">
         <div class="circle"></div>
     </div>
-
-    {% if usuario %}
-
-    <h5><span class="label">Nombre:</span>{{ usuario.nombre or 'Nombre no disponible' }}</h5>
-    <h5><span class="label">Facultad de programa:</span>{{ usuario.facultad or 'Facultad no disponible' }}</h5>
-    <h5><span class="label">Cargo:</span>{{ usuario.fk_cargo_usu or 'Cargo no disponible' }}</h5>
-    <h5><span class="label">Correo electrónico:</span>{{ usuario.email or 'Correo no disponible' }}</h5>
-    <h5><span class="label">Nivel de contribución:</span>{{ usuario.fk_nivel_de_contribucion or 'Nivel no disponible' }}
-    </h5>
-
-
-    {% else %}
-    <p>No se encontraron datos del usuario.</p>
-    {% endif %}
+    <h5><span class="label">Nombre:</span>Menganito</h5>
+    <h5><span class="label">Facultad de programa:</span>Ingeniería</h5>
+    <h5><span class="label">Cargo:</span>Docente de cálculo</h5>
+    <!-- <h5><span class="label">Número de contacto:</span>3168113679</h5> -->
+    <h5><span class="label">Correo electrónico: <br></span>Menganito.el.matematico@hotmail.com</h5>
+    <h5><span class="label">Nivel de contribución: </span>3</h5>
 
     <!--Eliminar integrante-->
-    <div class="rectangle-2060">
-        <a href="#"> <!--Agregar link hacia algun lugar-->
+<!--     <div class="rectangle-2060">
+        <a href="#">
             <h3>Eliminar</h3>
             <img src="{{ url_for('static', filename='img/vector0.jpg')}}" class="vector" />
         </a>
-    </div>
+    </div> -->
     <!--Eliminar integrante-->
 
 </div>
 
-<div class="opciones-usuario">
+<!-- <div class="">
 
     <div class="rectangle-2070">
         <a href="/competenciastransversales" style="display: 
@@ -93,19 +85,21 @@ Informe
             <img src="{{ url_for('static', filename='img/ocurrencia-10.png')}}" class="imagenes"
                 style="float: right; margin-top: -10px;" />
         </a>
-    </div>
+    </div> -->
 
+    <!-- Botón para volver -->
 
 </div>
-
-<!-- Botón para volver -->
 <div class="btn">
     <a href="/equipo" class="volver">
-        <div class="medium-filled">Volver</div>
+            <div class="medium-filled">
+                    Volver
+            </div>
     </a>
 </div>
-
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
 <img src="{{ url_for('static', filename='img/icon-user-friends-icon0.jpg')}}" class="usuarios" />
+
+
 
 {% endblock %}

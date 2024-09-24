@@ -242,6 +242,18 @@ def finalizo():
 def get_presentacionGDD():
     return render_template('presentacionGDD.html')
 
+@app.route('/prueba1', methods = ['GET'])
+def get_prueba1():
+    return render_template('prueba1.html')
+
+@app.route('/prueba2', methods = ['GET'])
+def get_prueba2():
+    return render_template('prueba2.html')
+
+@app.route('/prueba3', methods = ['GET'])
+def get_prueba3():
+    return render_template('prueba3.html')
+
 
 if __name__ == '__main__':
     # Corre la aplicación en el modo debug, lo que permitirá

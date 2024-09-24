@@ -28,6 +28,15 @@ Microproyectos
 <p>No hay microproyectos disponibles para este proyecto.</p>
 {% endif %}
 
+<!-- Botón para volver -->
+<div class="btn">
+    <a href="{{ url_for('idproyectos.vista_proyectos', id_proyecto=1) }}" class="volver">
+            <div class="medium-filled">
+                    Volver
+            </div>
+    </a>
+</div>
+
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
 <img src="{{ url_for('static', filename='img/proyecto-10.png')}}" class="usuarios" />
 

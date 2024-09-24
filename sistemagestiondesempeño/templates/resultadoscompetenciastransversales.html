@@ -40,16 +40,17 @@ Resultados Competencias Transversales
 </div>
 
 <div class="action-buttons">
-    <a href="#" id="toggleButton" onclick="toggleView()">Ver Gráfica</a>
+    <!-- <a href="#" id="toggleButton" onclick="toggleView()">Ver Gráfica</a> -->
     <a href="#" onclick="window.print();">Imprimir Gráfica e Informe</a>
     <a href="{{ url_for('download_excel', incluir_grafica='true') }}" id="downloadButton">Descargar Excel</a>
+    <a href="/resultados">Volver</a>
     <!-- Pasa el parámetro -->
     <br>
 </div>
 
-<div class="action-buttons">
+<!-- <div class="action-buttons">
     <a href="/resultados">Volver</a>
-</div>
+</div> -->
 
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
 <img src="{{ url_for('static', filename='img/competencias-transversales.jpeg')}}" class="usuarios" />
