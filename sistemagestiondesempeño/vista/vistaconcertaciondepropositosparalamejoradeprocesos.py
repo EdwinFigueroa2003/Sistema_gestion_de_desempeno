@@ -5,9 +5,6 @@ import requests
 from control.ControlEntidad import ControlEntidad
 from datetime import datetime
 from configBd import API_URL
- 
-#API_URL = 'http://127.0.0.1:5184/api/sgd' #Respaldo
-#API_URL = 'http://190.217.58.246:5184/api/sgd' #Original
 
 # Crear un Blueprint
 vistaconcertaciondepropositosparalamejoradeprocesos = Blueprint('idconcertaciondepropositosparalamejoradeprocesos', __name__, template_folder='templates')
@@ -21,12 +18,14 @@ def vista_concertaciondepropositosparalamejoradeprocesos():
         print("Datos enviados a la API:", data)
 
         proposito_data = {
-            'id_categoria': data.get('id_categoria', 3),  # Default values can be adjusted
+            'id_categoria': data.get('id_categoria', 3),
             'id_cargo': data.get('id_cargo', 1),
             'proposito': data.get('proposito', ''),
             'nuevo_prposito': data.get('nuevo_prposito', ''),
             'fecha_creacion': datetime.now().strftime('%Y-%m-%d')
         }
+
+        print("Nuevo propósito recibido:", proposito_data.get('nuevo_prposito', ''))
 
         try:
             response = requests.post(f'{API_URL}/proposito', json=proposito_data)

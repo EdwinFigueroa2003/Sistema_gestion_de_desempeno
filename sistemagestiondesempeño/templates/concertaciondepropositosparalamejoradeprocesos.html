@@ -23,7 +23,7 @@ Concertación de Propositos para la Mejora de Procesos
     <button class="enviar" onclick="enviarPropositos()">Enviar</button>
 </div>
 
-<textarea type="text" class="cuadro-de-texto-proposito" name="nuevo_prposito" id="nuevo_prposito"
+<textarea type="text" class="cuadro-de-texto-proposito" name="nuevo_proposito" id="nuevo_proposito"
     placeholder="Agregar nuevo propósito" aria-label="Caja de texto para nombre" rows="4" cols="50"
     style="resize: none;"></textarea>
     
@@ -41,7 +41,7 @@ Concertación de Propositos para la Mejora de Procesos
 <script>
     function enviarPropositos() {
         const proposito = document.getElementById('proposito').value;
-        const nuevo_prposito = document.getElementById('nuevo_prposito').value;
+        const nuevo_proposito = document.getElementById('nuevo_proposito').value;
 
         fetch('/concertaciondepropositospersonales', {
             method: 'POST',
@@ -50,7 +50,7 @@ Concertación de Propositos para la Mejora de Procesos
             },
             body: JSON.stringify({
                 proposito: proposito,
-                nuevo_prposito: nuevo_prposito,
+                nuevo_proposito: nuevo_proposito,
                 id_categoria: 3, // Puedes obtenerlo dinámicamente si es necesario
                 id_cargo: 1 // Puedes obtenerlo dinámicamente si es necesario
             })

@@ -1,59 +1,61 @@
-    {% extends "layout.html" %}
+{% extends "layout.html" %}
 
-    {% block title %}
-    Resultados Concertación de Propósitos
-    {% endblock %}
-    
-    {% block content %}
-
-    <h1>Resultados Concertación de Propósitos</h1>
-    <hr>
-
-    <div class="container-proposito">
-
-        <!-- Botones para filtrar por categoría -->
-        <div class="buttons">
-            <button onclick="filtrarPorCategoria(2)">Propósitos Personales</button>
-            <button onclick="filtrarPorCategoria(3)">Mejora de Procesos</button>
-            <button onclick="filtrarPorCategoria(4)">Disponibilidad</button>
-        </div>
-
-        <!-- Tabla de resultados -->
-        <table>
-            <thead>
-                <tr>
-                    <th>Propósito</th>
-                    <th>Nuevo Propósito</th>
-                    <!-- <th>Fecha de Creación</th> -->
-                </tr>
-            </thead>
-            <tbody id="resultados">
-                <!-- Los resultados se llenarán aquí -->
-                {% if propositos %}
-                {% for proposito in propositos %}
-                <tr>
-                    <td>{{ proposito.proposito }}</td>
-                    <td>{{ proposito.nuevo_proposito }}</td>
-                </tr>
-                {% endfor %}
-                {% else %}
-                <tr>
-                    <td colspan="6" style="text-align: center;">No se encontraron propósitos.</td>
-                </tr>
-                {% endif %}
-            </tbody>
-        </table>
-
-
-    </div>
-
-    <div class="btn">
-        <a href="/resultados" class="volver">
-                <div class="medium-filled">
-                        Volver
-                </div>
-        </a>
-    </div>
-
+{% block title %}
+Resultados Concertación de Propósitos
 {% endblock %}
 
+{% block content %}
+
+<h1>Resultados Concertación de
+    <br>
+    Propósitos</h1>
+<hr>
+
+<div class="container-proposito">
+
+    <!-- Botones para filtrar por categoría -->
+    <div class="buttons">
+        <button onclick="filtrarPorCategoria(2)">Propósitos Personales</button>
+        <button onclick="filtrarPorCategoria(3)">Mejora de Procesos</button>
+        <button onclick="filtrarPorCategoria(4)">Disponibilidad</button>
+    </div>
+
+    <!-- Tabla de resultados -->
+    <table>
+        <thead>
+            <tr>
+                <th>Propósito</th>
+                <th>Nuevo Propósito</th>
+                <!-- <th>Fecha de Creación</th> -->
+            </tr>
+        </thead>
+        <tbody id="resultados">
+            <!-- Los resultados se llenarán aquí -->
+            {% if propositos %}
+            {% for proposito in propositos %}
+            <tr>
+                <td>{{ proposito.proposito }}</td>
+                <td>{{ proposito.nuevo_proposito }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="6" style="text-align: center;">No se encontraron propósitos.</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <!--<img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+    <img src="{{ url_for('static', filename='img/competencias-transversales.jpeg')}}" class="usuarios" />-->
+</div>
+
+<div class="btn">
+    <a href="/resultados" class="volver">
+        <div class="medium-filled">
+            Volver
+        </div>
+    </a>
+</div>
+
+{% endblock %}

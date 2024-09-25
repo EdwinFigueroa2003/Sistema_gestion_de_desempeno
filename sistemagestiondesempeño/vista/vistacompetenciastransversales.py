@@ -12,73 +12,58 @@ vistacompetenciastransversales = Blueprint('idcompetenciastransversales', __name
 
 @vistacompetenciastransversales.route('/competenciastransversales', methods=['GET', 'POST'])
 def vista_competenciastransversales():
-    id_apartado = 1  # Cambia este valor si fuera necesario
-    user_id = 1  # Cambia esto según sea necesario
+    # Obtener fk_nivel_de_contribucion desde la sesión
+    fk_nivel_de_contribucion = session.get('fk_nivel_de_contribucion')
 
-    if request.method == 'POST':
-        # Manejar los datos del formulario y la navegación entre preguntas
-        current_index = int(request.form.get('current_index', 0))
-        respuestas = session.get('respuestas', {})
+    # Inicializar el índice de la pregunta
+    current_index = 0 if request.method == 'GET' else int(request.form.get('current_index', 0))
+    respuestas = session.get('respuestas', {})
 
-        # Guardar la respuesta seleccionada para la pregunta actual
-        if 'respuesta_seleccionada' in request.form:
-            pregunta_id = request.form.get('pregunta_id')
-            respuestas[pregunta_id] = request.form.get('respuesta_seleccionada')
-            session['respuestas'] = respuestas
+    # Manejar las respuestas enviadas por el usuario
+    if request.method == 'POST' and 'respuesta_seleccionada' in request.form:
+        pregunta_id = request.form.get('pregunta_id')
+        respuestas[pregunta_id] = request.form.get('respuesta_seleccionada')
+        session['respuestas'] = respuestas
 
         if 'next' in request.form:
             current_index += 1
         elif 'prev' in request.form:
             current_index -= 1
 
-        # Obtener la lista de preguntas
-        try:
-            response_preguntas = requests.get(f'{API_URL}/pregunta/id_apartado/{id_apartado}', timeout=10)
-            response_preguntas.raise_for_status()
-            preguntas = response_preguntas.json()
-
-            # Asegúrate de que la pregunta actual esté disponible
-            if current_index < 0:
-                current_index = 0
-            if current_index >= len(preguntas):
-                return redirect(url_for('finalizo'))
-
-            pregunta_actual = preguntas[current_index]
-            id_pregunta = pregunta_actual['id_pregunta']
-            response_respuestas = requests.get(f'{API_URL}/respuesta/id_pregunta/{id_pregunta}', timeout=10)
-            response_respuestas.raise_for_status()
-            respuestas_list = response_respuestas.json()
-
-            # Barajar las respuestas
-            random.shuffle(respuestas_list)
-            pregunta_actual['respuestas'] = respuestas_list
-
-            return render_template('competenciastransversales.html', pregunta=pregunta_actual, preguntas=preguntas,
-                                   current_index=current_index, total_preguntas=len(preguntas))
-        except requests.RequestException as e:
-            print(f"Error al obtener datos: {e}")
-            return render_template('competenciastransversales.html', pregunta=None, preguntas=[])
-
-    # Inicializa el índice de la pregunta actual en GET
-    current_index = 0
+    # Obtener preguntas filtradas por fk_nivel_de_contribucion
     try:
-        response_preguntas = requests.get(f'{API_URL}/pregunta/id_apartado/{id_apartado}', timeout=10)
+        response_preguntas = requests.get(f'{API_URL}/pregunta/fk_nivel_de_contribucion/1', timeout=10) #filtra las pregutas
+        #response_preguntas = requests.get(f'{API_URL}/pregunta?fk_nivel_de_contribucion={fk_nivel_de_contribucion}', timeout=10) #Todas las preguntas sin filtro
         response_preguntas.raise_for_status()
         preguntas = response_preguntas.json()
 
-        if preguntas:
-            pregunta_actual = preguntas[current_index]
-            id_pregunta = pregunta_actual['id_pregunta']
-            response_respuestas = requests.get(f'{API_URL}/respuesta/id_pregunta/{id_pregunta}', timeout=10)
-            response_respuestas.raise_for_status()
-            respuestas_list = response_respuestas.json()
+        if current_index < 0:
+            current_index = 0
+        if current_index >= len(preguntas):
+            return redirect(url_for('finalizo'))
 
-            # Barajar las respuestas
-            random.shuffle(respuestas_list)
-            pregunta_actual['respuestas'] = respuestas_list
+        pregunta_actual = preguntas[current_index]
+        id_pregunta = pregunta_actual['id_pregunta']
 
-            return render_template('competenciastransversales.html', pregunta=pregunta_actual, preguntas=preguntas,
-                                   current_index=current_index, total_preguntas=len(preguntas))
+        # Obtener respuestas para la pregunta actual
+        response_respuestas = requests.get(f'{API_URL}/respuesta/id_pregunta/{id_pregunta}', timeout=10)
+        response_respuestas.raise_for_status()
+        respuestas_list = response_respuestas.json()
+
+        # Mezclar las respuestas aleatoriamente
+        random.shuffle(respuestas_list)
+        pregunta_actual['respuestas'] = respuestas_list
+
+        return render_template('competenciastransversales.html', 
+                               pregunta=pregunta_actual, 
+                               preguntas=preguntas,
+                               current_index=current_index,  # Asegúrate de que current_index siempre esté presente
+                               total_preguntas=len(preguntas), 
+                               usuario=session.get('usuario'))
     except requests.RequestException as e:
         print(f"Error al obtener datos: {e}")
-        return render_template('competenciastransversales.html', pregunta=None, preguntas=[])
+        # Incluso en caso de error, envía current_index a la plantilla
+        return render_template('competenciastransversales.html', 
+                               pregunta=None, 
+                               preguntas=[], 
+                               current_index=current_index)  # current_index se sigue enviando

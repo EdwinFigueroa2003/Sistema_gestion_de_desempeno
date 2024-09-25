@@ -13,7 +13,7 @@ Resultados Competencias Transversales
         <div class="circle-wrapper">
             <div class="circle"></div>
         </div>
-        <p>Fransisco</p>
+        <text>Edwin Figueroa</text>
     </div>
     <div class="dashboard-content">
         <!-- Sección de respuestas -->
@@ -23,10 +23,11 @@ Resultados Competencias Transversales
                 <ul>
                     {% for respuesta in respuestas %}
                     <li>
-                        <span class="label">Respuesta Seleccionada:</span> {{ respuesta.texto_respuesta }}<br>
+                        <span class="label">Respuesta Seleccionada:</span>{{ respuesta.texto_respuesta }}<br>
                         <span class="label">Nivel:</span> {{ respuesta.valor_respuesta }}<br>
-                        <span class="label">Ruta de desarrollo:</span> {{ respuesta.ruta_de_desarrollo }}<br>
-                        <span class="label">Ruta de autodesarrollo:</span> {{ respuesta.ruta_de_autodesarrollo }}<br>
+                        <span class="label">Ruta de desarrollo:</span>{{ respuesta.ruta_de_desarrollo }}<br>
+
+                        <span class="label">Ruta de autodesarrollo:</span>{{ respuesta.ruta_de_autodesarrollo }}<br>
                     </li>
                     {% endfor %}
                 </ul>
@@ -43,7 +44,7 @@ Resultados Competencias Transversales
 
 <div class="action-buttons">
     <!-- <a href="#" id="toggleButton" onclick="toggleView()">Ver Gráfica</a> -->
-    <a href="#" onclick="window.print();">Imprimir Gráfica e Informe</a>
+    <a href="#" onclick="window.print();">Imprimir Informe</a>
     <a href="{{ url_for('download_excel', incluir_grafica='true') }}" id="downloadButton">Descargar Excel</a>
     <a href="/resultados">Volver</a>
     <!-- Pasa el parámetro -->

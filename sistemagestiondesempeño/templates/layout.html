@@ -234,7 +234,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px;
-            margin: 0;
+            z-index: 1;
         }
 
         h2 {
@@ -321,14 +321,14 @@
             color: #ffffff;
         }
 
-        .titulo-dimension {
+        titulo-dimension {
             color: #1100ff;
             top: 50px;
             font-family: Arial, Helvetica, sans-serif
         }
 
         nombre {
-            font-size: 25px;
+            font-size: 15px;
             /* Tamaño de fuente base */
             margin-left: 30px;
             /* Ajuste del margen a la derecha*/
@@ -744,7 +744,7 @@
             background: #ffffff;
             border-radius: 40px;
             width: 365px;
-            height: 325px;
+            height: 350px;
             margin-left: 19px;
             padding: 10px;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -768,6 +768,7 @@
             width: 270px;
             height: 155px;
             margin-right: 20px;
+            margin-bottom: 30px;
             /* margin-top: 5px; */
             padding: 10px;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -837,7 +838,7 @@
             border-radius: 25px;
             width: 290px;
             height: 190px;
-            margin-right: 20px;
+            /* margin-right: 20px; */
             padding: 10px;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
             position: relative;
@@ -1474,13 +1475,18 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
-            height: 495px;
+            /* height: 495px; */
             row-gap: 0px;
             align-items: flex-start;
             justify-content: flex-start;
             position: relative;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
             margin-top: 15px;
+        }
+
+        .texto-respuesta {
+            font-size: 17px;
+
         }
 
         .boton-siguiente,
@@ -1564,6 +1570,65 @@
             justify-content: flex-start;
         }
 
+        .progress-container {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        progress {
+            width: 100%;
+            /* O ajusta según tus necesidades */
+            height: 20px;
+            /* Ajusta la altura de la barra */
+            margin-left: 10px;
+            /* Espaciado entre la etiqueta y la barra */
+            border-radius: 5px;
+            /* Bordes redondeados */
+            background-color: #ffffff;
+            /* Color de fondo */
+        }
+
+        progress::-webkit-progress-bar {
+            background-color: #f3f3f3;
+            /* Color de fondo de la barra */
+            border-radius: 5px;
+            /* Bordes redondeados de la barra */
+        }
+
+        progress::-webkit-progress-value {
+            background-color: #4caf50;
+            /* Color de la parte completada */
+            border-radius: 5px;
+            /* Bordes redondeados de la parte completada */
+        }
+
+        progress::-moz-progress-bar {
+            background-color: #4caf50;
+            /* Color de la parte completada para Firefox */
+            border-radius: 5px;
+            /* Bordes redondeados de la parte completada */
+        }
+
+        span {
+            margin-left: 10px;
+            /* Espaciado entre la barra y el texto */
+            font-weight: bold;
+            /* Negrita para el texto de progreso */
+        }
+
+        .competencia{
+            font-size: 20px;
+            margin-bottom: 10px;
+            margin-top: -10px;
+        }
+
+        texto-pregunta{
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #000;
+        }
+
         /* Desde aqui */
     </style>
 </head>
@@ -1623,7 +1688,7 @@
                         </li>
                         <li class="nav-item">
                             <!-- <a class="nav-link configuracion" href="/configuracion"> -->
-                                <a class="nav-link configuracion" href="/presentacionGDD">
+                            <a class="nav-link configuracion" href="/presentacionGDD">
                                 CONFIGURACIÓN
                                 <img src="{{ url_for('static', filename='img/configuracion.png')}}" class="icon">
                             </a>
