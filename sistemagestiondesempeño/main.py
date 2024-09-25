@@ -5,7 +5,6 @@ import markupsafe, uuid, psycopg2, os, io, xlsxwriter, openpyxl, pandas, request
 from Entidad import Entidad
 from matplotlib.figure import Figure
 from werkzeug.utils import secure_filename
-
 from PIL import Image
 from control.ControlEntidad import ControlEntidad
 from configBd import API_URL
