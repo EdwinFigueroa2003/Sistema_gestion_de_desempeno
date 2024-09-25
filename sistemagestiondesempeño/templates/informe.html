@@ -14,26 +14,25 @@ Informe
     </div>
 
     {% if usuario %}
-
-    <h5><span class="label">Nombre:</span>{{ usuario.nombre or 'Nombre no disponible' }}</h5>
-    <h5><span class="label">Facultad de programa:</span>{{ usuario.facultad or 'Facultad no disponible' }}</h5>
-    <h5><span class="label">Cargo:</span>{{ usuario.fk_cargo_usu or 'Cargo no disponible' }}</h5>
-    <h5><span class="label">Correo electrónico:</span>{{ usuario.email or 'Correo no disponible' }}</h5>
-    <h5><span class="label">Nivel de contribución:</span>{{ usuario.fk_nivel_de_contribucion or 'Nivel no disponible' }}
-    </h5>
-
-
+    
+        <h5><span class="label">Nombre:</span> {{ usuario.nombre or 'Nombre no disponible' }}</h5>
+        <h5><span class="label">Facultad de programa:</span> {{ usuario.facultad or 'Facultad no disponible' }}</h5>
+        <h5><span class="label">Cargo:</span> {{ usuario.fk_cargo_usu or 'Cargo no disponible' }}</h5>
+        <h5><span class="label">Correo electrónico:</span> {{ usuario.email or 'Correo no disponible' }}</h5>
+        <h5><span class="label">Nivel de contribución:</span> {{ usuario.fk_nivel_de_contribucion or 'Nivel no disponible' }}</h5>
     {% else %}
-    <p>No se encontraron datos del usuario.</p>
+        <p>No se encontraron datos del usuario.</p>
     {% endif %}
 
+    <pre>{{ usuario | tojson }}</pre>
+
     <!--Eliminar integrante-->
-    <div class="rectangle-2060">
-        <a href="#"> <!--Agregar link hacia algun lugar-->
+<!--     <div class="rectangle-2060">
+        <a href="#"> 
             <h3>Eliminar</h3>
             <img src="{{ url_for('static', filename='img/vector0.jpg')}}" class="vector" />
         </a>
-    </div>
+    </div> -->
     <!--Eliminar integrante-->
 
 </div>
@@ -77,7 +76,7 @@ Informe
     </div>
 
     <div class="rectangle-2074">
-        <a href="#" style="display: 
+        <a href="/mediciondepotencial" style="display: 
                 flex; align-items: center; justify-content: space-between;">
             <h5> <span>Medición de potencial</span> </h5>
             <img src="{{ url_for('static', filename='img/proyecto-10.png')}}" class="imagenes"

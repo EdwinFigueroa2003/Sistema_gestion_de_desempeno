@@ -302,11 +302,11 @@
         }
 
         text {
-            font-size: 25px;
-            align-items: center;
+            font-size: 18px;
+            align-items: end;
             text-align: center;
             color: #000000;
-            margin-left: 50px;
+            margin-left: 40px;
         }
 
         .texto {
@@ -327,10 +327,10 @@
             font-family: Arial, Helvetica, sans-serif
         }
 
-        .nombre {
-            font-size: 17px;
+        nombre {
+            font-size: 25px;
             /* Tamaño de fuente base */
-            margin-right: 20px;
+            margin-left: 30px;
             /* Ajuste del margen a la derecha*/
             text-align: center;
         }
@@ -420,13 +420,8 @@
             border-color: rgb(0, 0, 0);
         }
 
-        .busqueda {
-            margin-bottom: -75px;
-            /* margin-top: 55px; */
-        }
-
         .busqueda-equipo {
-            margin-top: 150px;
+            margin-top: 50px;
             margin-right: 300px;
         }
 
@@ -1627,7 +1622,8 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link configuracion" href="/configuracion">
+                            <!-- <a class="nav-link configuracion" href="/configuracion"> -->
+                                <a class="nav-link configuracion" href="/presentacionGDD">
                                 CONFIGURACIÓN
                                 <img src="{{ url_for('static', filename='img/configuracion.png')}}" class="icon">
                             </a>

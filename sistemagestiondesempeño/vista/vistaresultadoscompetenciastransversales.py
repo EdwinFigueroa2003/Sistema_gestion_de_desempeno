@@ -40,9 +40,11 @@ def resultadoscompetenciastransversales():
                 respuesta = respuesta[0]
 
             preguntas_respuestas.append({
-                'texto_pregunta': pregunta.get('texto_pregunta', 'Pregunta no disponible'),
+                #'texto_pregunta': pregunta.get('texto_pregunta', 'Pregunta no disponible'),
                 'texto_respuesta': respuesta.get('texto_respuesta', 'Respuesta no disponible'),
-                'valor_respuesta': respuesta.get('valor_respuesta', 'valor no disponible')
+                'valor_respuesta': respuesta.get('valor_respuesta', 'valor no disponible'),
+                'ruta_de_desarrollo': respuesta.get('ruta_de_desarrollo', 'ruta de desarrollo no disponible'),
+                'ruta_de_autodesarrollo': respuesta.get('ruta_de_autodesarrollo', 'ruta de autodesarrollo no disponible'),
             })
 
         except requests.RequestException as e:

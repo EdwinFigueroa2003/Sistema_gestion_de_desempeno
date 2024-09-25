@@ -16,8 +16,6 @@ def vista_equipo():
     try:
         response = requests.get(f'{API_URL}/usuario', timeout=10)
 
-        #response_respuestas = requests.get(f'{API_URL}/respuesta/id_pregunta/{id_pregunta}', timeout=10)
-
         if response.status_code == 200:
             usuarios = response.json()  # Parsear la respuesta en JSON
         else:
@@ -26,5 +24,12 @@ def vista_equipo():
         print(f"Error al conectar con la API: {e}")
         usuarios = []
 
+    # Si se ha enviado un formulario de búsqueda
+    if request.method == 'POST':
+        nombre_colaborador = request.form.get('nombre_colaborador', '').strip().lower()
+        # Filtrar los usuarios según el nombre ingresado
+        usuarios = [usuario for usuario in usuarios if nombre_colaborador in usuario['nombre'].lower()]
+
     # Renderizar la plantilla 'equipo.html' con los usuarios obtenidos
     return render_template('equipo.html', usuarios=usuarios)
+

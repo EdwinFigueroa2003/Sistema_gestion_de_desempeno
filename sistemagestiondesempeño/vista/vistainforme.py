@@ -10,23 +10,24 @@ from configBd import API_URL
 # Crear un Blueprint
 vistainforme = Blueprint('idinforme', __name__, template_folder='templates')
 
-@vistainforme.route('/informe/<int:id_usuario>', methods=['GET'])
-def vista_informe(id_usuario):
+@vistainforme.route('/informe/<string:email>', methods=['GET'])
+def vista_informe(email):
+    usuario = None  # Inicializa usuario
+
     try:
-        response = requests.get(f'{API_URL}/usuario/id_usuario/{id_usuario}', timeout=10)
+        response = requests.get(f'{API_URL}/usuario/email/{email}', timeout=10)
 
         if response.status_code == 200:
             usuario = response.json()
-            print("Datos del usuario:", usuario)
-            print("Tipo de datos del usuario:", type(usuario))
+            print("Datos del usuario:", usuario)  # Debug: muestra los datos del usuario
+            print("Datos del usuario antes de renderizar:", usuario)
             if isinstance(usuario, dict):
-                print("Claves en el diccionario usuario:", usuario.keys())
+                print("Claves en el diccionario usuario:", usuario.keys())  # Debug: claves
         else:
             usuario = None
             print(f"Error en la solicitud: {response.status_code}")
-    
+
     except requests.exceptions.RequestException as e:
-        usuario = None
         print(f"Excepción en la solicitud: {e}")
-    
+
     return render_template('informe.html', usuario=usuario)

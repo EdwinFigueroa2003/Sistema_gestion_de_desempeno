@@ -19,6 +19,7 @@ from vista.vistadetallemicroproyecto import vistadetallemicroproyecto
 from vista.vistagestiondeldesarrollo import vistagestiondeldesarrollo
 from vista.vistainforme import vistainforme
 from vista.vistafactoresclavesdeexito import vistafactoresclavesdeexito
+from vista.vistamediciondepotencial import vistamediciondepotencial
 from vista.vistaconcertaciondepropositos import vistaconcertaciondepropositos
 from vista.vistaresultadodeconcertaciondepropositos import vistaresultadosconcertaciondepropositos
 from vista.vistaconcertaciondepropositospersonales import vistaconcertaciondepropositospersonales
@@ -59,6 +60,7 @@ app.register_blueprint(vistaanalisisorganizacional)
 app.register_blueprint(vistaconcertaciondepropositos)
 app.register_blueprint(vistadetallemicroproyecto)
 app.register_blueprint(vistafactoresclavesdeexito)
+app.register_blueprint(vistamediciondepotencial)
 app.register_blueprint(vistaconcertaciondedisponibilidad)
 app.register_blueprint(vistacompetenciasdocentes)
 app.register_blueprint(vistacompetenciastransversales)
@@ -180,19 +182,25 @@ def download_excel():
             'font_size': 12,
             'bg_color': '#EAF2D3',
             'border': 1,
-            'align': 'left',
-            'valign': 'vcenter'
+            'align': 'left',  # Alineación horizontal
+            'valign': 'top',  # Alineación vertical
+            'text_wrap': True  # Ajustar texto
         })
 
         # Escribir el encabezado con formato
-        worksheet.write('A1', 'Pregunta', header_format)
-        worksheet.write('B1', 'Respuesta', header_format)
-        worksheet.write('C1', 'Valor', header_format)
+        
+        worksheet.write('A1', 'Respuesta', header_format)
+        worksheet.write('B1', 'Valor', header_format)
+        worksheet.write('C1', 'ruta de desarrollo', header_format)
+        worksheet.write('D1', 'ruta de autodesarrollo', header_format)
+
+
 
         # Ajustar el ancho de las columnas
         worksheet.set_column('A:A', 40)  # Ajusta el ancho de la columna A
-        worksheet.set_column('B:B', 40)  # Ajusta el ancho de la columna B
-        worksheet.set_column('C:C', 10)  # Ajusta el ancho de la columna C
+        worksheet.set_column('B:B', 10)  # Ajusta el ancho de la columna B
+        worksheet.set_column('C:C', 40)  # Ajusta el ancho de la columna C
+        worksheet.set_column('D:D', 40)  # Ajusta el ancho de la columna D
 
         preguntas_respuestas = []
 
@@ -214,19 +222,27 @@ def download_excel():
                     respuesta = respuesta[0]
 
                 preguntas_respuestas.append({
-                    'texto_pregunta': pregunta.get('texto_pregunta', 'Pregunta no disponible'),
                     'texto_respuesta': respuesta.get('texto_respuesta', 'Respuesta no disponible'),
-                    'valor_respuesta': respuesta.get('valor_respuesta', 'Valor no disponible')
+                    'valor_respuesta': respuesta.get('valor_respuesta', 'valor no disponible'),
+                    'ruta_de_desarrollo': respuesta.get('ruta_de_desarrollo', 'ruta de desarrollo no disponible'),
+                    'ruta_de_autodesarrollo': respuesta.get('ruta_de_autodesarrollo', 'ruta de autodesarrollo no disponible')
                 })
+
+                
 
             except requests.RequestException as e:
                 print(f"Error al obtener datos: {e}")
 
         # Escribir los datos en el archivo Excel
         for i, respuesta in enumerate(preguntas_respuestas, start=1):
-            worksheet.write(f'A{i+1}', respuesta['texto_pregunta'], cell_format)
-            worksheet.write(f'B{i+1}', respuesta['texto_respuesta'], cell_format)
-            worksheet.write(f'C{i+1}', respuesta['valor_respuesta'], cell_format)
+            worksheet.write(f'A{i+1}', respuesta['texto_respuesta'], cell_format)
+            worksheet.write(f'B{i+1}', respuesta['valor_respuesta'], cell_format)
+            worksheet.write(f'C{i+1}', respuesta['ruta_de_desarrollo'], cell_format)
+            worksheet.write(f'D{i+1}', respuesta['ruta_de_autodesarrollo'], cell_format)
+
+                # Ajustar el alto de las filas (por ejemplo, 20)
+        for i in range(len(preguntas_respuestas) + 1):  # +1 para incluir la fila del encabezado
+            worksheet.set_row(i, 141.75)  # Ajusta la altura de la fila a 20 unidades
 
         workbook.close()
         output.seek(0)
@@ -241,18 +257,6 @@ def finalizo():
 @app.route('/presentacionGDD', methods = ['GET'])
 def get_presentacionGDD():
     return render_template('presentacionGDD.html')
-
-@app.route('/prueba1', methods = ['GET'])
-def get_prueba1():
-    return render_template('prueba1.html')
-
-@app.route('/prueba2', methods = ['GET'])
-def get_prueba2():
-    return render_template('prueba2.html')
-
-@app.route('/prueba3', methods = ['GET'])
-def get_prueba3():
-    return render_template('prueba3.html')
 
 
 if __name__ == '__main__':
