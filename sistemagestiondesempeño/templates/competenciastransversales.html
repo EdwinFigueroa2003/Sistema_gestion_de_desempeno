@@ -38,7 +38,7 @@ Competencias Transversales
             <input type="hidden" name="pregunta_id" value="{{ pregunta.id_pregunta }}">
             {% for respuesta in pregunta.respuestas %}
             <div class="texto-respuesta">
-                <input type="radio" name="respuesta_seleccionada" value="{{ respuesta.id_respuesta }}">
+                <input type="radio" name="respuesta_seleccionada" value="{{ respuesta.id_respuesta }}" required>
                 {{ respuesta.texto_respuesta }}
             </div>
             {% endfor %}

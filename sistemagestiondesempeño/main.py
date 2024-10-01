@@ -257,7 +257,6 @@ def finalizo():
 def get_presentacionGDD():
     return render_template('presentacionGDD.html')
 
-
 if __name__ == '__main__':
     # Corre la aplicación en el modo debug, lo que permitirá
     # la recarga automática del servidor cuando se detecten cambios en los archivos.

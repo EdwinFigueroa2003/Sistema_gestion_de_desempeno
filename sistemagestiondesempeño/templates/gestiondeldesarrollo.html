@@ -5,46 +5,53 @@ Gestión del Desarrollo
 {% endblock %}
 
 {% block content %}
-<h1>Gestión del Desarrollo</h1>
+<h1>Gestión Del Desarrollo</h1>
 <hr>
-<a href="/reportes">
-    <div class="rectangle-2103">
-        <h3>Dashboard/
-            <br>
-            Reportes
-        </h3>
-        <p> Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
-            malesuada rutrum diam, sed sollicitudin sed sed.</p>
-        <img src="{{ url_for('static', filename='img/reporte0.png')}}" class="reporte" />
-    </div>
-</a>
 
-<a href="/cursos">
-    <div class="rectangle-2100">
-        <h3>Cursos</h3>
-        <p> Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
-            malesuada rutrum diam, sed sollicitudin sed sed.</p>
-        <img src="{{ url_for('static', filename='img/curso0.jpeg')}}" class="curso" />
-    </div>
-</a>
+<div class="bienvenido">
+    <h2>BIENVENIDO COLABORADOR</h2>
+</div>
+<texto2>Aquí encontrarás todas las herramientas y recursos necesarios para tu crecimiento profesional. Nuestro objetivo es
+    impulsar tu desarrollo, brindándote acceso a contenido valioso que potenciará tus habilidades y te mantendrá al
+    tanto de las mejores prácticas.</texto2>
 
-<a href="/videos">
-    <div class="rectangle-2101">
-        <h3>Videos</h3>
-        <p> Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
-            malesuada rutrum diam, sed sollicitudin sed sed.</p>
-        <img src="{{ url_for('static', filename='img/video0.png')}}" class="video" />
-    </div>
-</a>
+<div class="rectangles-container">
+    <a href="/reportes">
+        <div class="rectangle-2103">
+            <h3>Dashboard/
+                <br>
+                Reportes
+            </h3>
+            <p>Accede a informes personalizados y monitorea tu progreso con datos en tiempo real que te ayudarán a tomar decisiones más informadas.</p>
+            <img src="{{ url_for('static', filename='img/reporte0.png')}}" class="reporte" />
+        </div>
+    </a>
 
-<a href="/podcast">
-    <div class="rectangle-2102">
-        <h3>Podcast</h3>
-        <p> Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
-            malesuada rutrum diam, sed sollicitudin sed sed.</p>
-        <img src="{{ url_for('static', filename='img/casete0.png')}}" class="casete" />
-    </div>
-</a>
+    <a href="/cursos">
+        <div class="rectangle-2100">
+            <h3>Cursos</h3>
+            <p>Capacítate con nuestros cursos especializados que cubren las últimas tendencias y habilidades necesarias para tu desarrollo profesional.</p>
+            <img src="{{ url_for('static', filename='img/curso0.jpeg')}}" class="curso" />
+        </div>
+    </a>
+
+
+    <a href="/videos">
+        <div class="rectangle-2101">
+            <h3>Videos</h3>
+            <p>Aprende de manera dinámica a través de nuestros videos instructivos, diseñados para mejorar tu experiencia de aprendizaje.</p>
+            <img src="{{ url_for('static', filename='img/video0.png')}}" class="video" />
+        </div>
+    </a>
+</div>
+    <a href="/podcast">
+        <div class="rectangle-2102">
+            <h3>Podcast</h3>
+            <p>Escucha a expertos de la industria y mantente actualizado con los últimos debates y novedades en el mundo profesional.</p>
+            <img src="{{ url_for('static', filename='img/casete0.png')}}" class="casete" />
+        </div>
+    </a>
+
 
 <img src="{{ url_for('static', filename='img/cohete0.png')}}" class="usuarios" />
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />

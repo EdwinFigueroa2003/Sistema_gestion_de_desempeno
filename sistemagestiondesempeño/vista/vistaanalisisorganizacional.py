@@ -1,23 +1,54 @@
+from flask import Blueprint, render_template
+from configBd import API_URL
 from pprint import pprint
-from flask import Blueprint, request, render_template, redirect, url_for
+from flask import Blueprint, request, render_template, redirect, url_for, session
 from Entidad import Entidad
 import requests
+from datetime import datetime
 from control.ControlEntidad import ControlEntidad
- 
-# Crear un Blueprint
-vistaanalisisorganizacional = Blueprint('idanalisisorganizacional', __name__, template_folder='templates')
- 
-""" @vistareportes.route('/analisisorganizacional', methods=['GET', 'POST'])
-def vista_reportes():
-    return render_template('reportes.html') """
 
-@vistaanalisisorganizacional.route('/analisisorganizacional', methods = ['GET', 'POST'])
+vistaanalisisorganizacional = Blueprint('idanalisisorganizacional', __name__, template_folder='templates')
+
+@vistaanalisisorganizacional.route('/analisisorganizacional', methods=['GET', 'POST'])
 def get_dimensiones():
-    
-    response = requests.get('http://190.217.58.246:5184/api/sgd/dimension')
-    try:
-        data = response.json()  # Intenta decodificar la respuesta como JSON
-    except requests.exceptions.JSONDecodeError:
-        return "Error: La respuesta no es un JSON válido.", 500
-    # Aquí puedes pasar 'data' a la plantilla HTML que desees renderizar.
-    return render_template('analisisorganizacional.html', data=data)
+    # Obtener las dimensiones
+    dimensiones = requests.get(f"{API_URL}/dimension").json()
+
+    # Inicialmente no cargamos preguntas ni respuestas, solo las dimensiones
+    return render_template('analisisorganizacional.html', dimensiones=dimensiones)
+
+@vistaanalisisorganizacional.route('/analisisorganizacional/<int:id_dimension>', methods=['GET', 'POST'])
+def get_preguntas_respuestas(id_dimension):
+    # Obtener todas las preguntas para la dimensión seleccionada
+    preguntas = requests.get(f"{API_URL}/dimension_pregunta/id_dimension/{id_dimension}").json()
+
+    # Controlar el índice de la pregunta actual
+    current_index = int(request.form.get('current_index', 0))  # Índice de la pregunta actual, por defecto la primera
+
+    total_preguntas = len(preguntas)
+
+    # Si el índice excede el número de preguntas, redirigimos a la pantalla de finalización
+    if current_index >= total_preguntas:
+        return redirect(url_for('idanalisisorganizacional.finalizo'))
+
+    # Obtener la pregunta actual
+    pregunta_actual = preguntas[current_index]
+
+    # Obtener las respuestas para la pregunta actual
+    respuestas = requests.get(f"{API_URL}/dimension_respuesta/id_dimension_pregunta/{pregunta_actual['id_dimension_pregunta']}").json()
+
+    # Renderizar la plantilla con la pregunta actual y las respuestas
+    return render_template(
+        'analisisorganizacional.html',
+        preguntas=preguntas,
+        pregunta_actual=pregunta_actual,
+        respuestas=respuestas,
+        current_index=current_index,
+        total_preguntas=total_preguntas,
+        dimension_id=id_dimension
+    )
+
+@vistaanalisisorganizacional.route('/finalizo', methods=['GET'])
+def finalizo():
+    # Mostrar la pantalla de finalización
+    return render_template('finalizo1.html')
