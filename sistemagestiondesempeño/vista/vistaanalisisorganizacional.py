@@ -43,7 +43,7 @@ def get_preguntas_respuestas(id_dimension):
         return redirect(url_for('idanalisisorganizacional.finalizo'))
 
     # Obtener la pregunta actual
-    pregunta_actual = preguntas[current_index]
+    pregunta_actual = preguntas[current_index] 
     respuestas = requests.get(f"{API_URL}/dimension_respuesta/id_dimension_pregunta/{pregunta_actual['id_dimension_pregunta']}").json()
 
     return render_template(
