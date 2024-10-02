@@ -19,14 +19,38 @@ Medición de Potencial
 <div class="titulo-dimension">
     <h3>MEDICIÓN DE POTENCIAL</h3>
 </div>
-<div class="pregunta">
-    <div class="cuadro-respuestas">
+<h2>Dimensiones</h2>
+{% if pregunta %}
+<h2>Pregunta {{ current_index + 1 }} de {{ total_preguntas }}</h2>
+<p>{{ pregunta.texto }}</p>
 
+<form method="POST">
+    <input type="hidden" name="pregunta_id" value="{{ pregunta.id_pregunta }}">
+    <input type="hidden" name="current_index" value="{{ current_index }}">
 
+    {% for respuesta in pregunta.respuestas %}
+    <div>
+        <input type="radio" id="respuesta_{{ respuesta.id_respuesta }}" name="respuesta_seleccionada"
+            value="{{ respuesta.id_respuesta }}" {% if
+            session.respuestas_usuario.get(pregunta.id_pregunta|string)==respuesta.id_respuesta|string %}checked{% endif
+            %}>
+        <label for="respuesta_{{ respuesta.id_respuesta }}">{{ respuesta.texto }}</label>
     </div>
-</div>
+    {% endfor %}
 
+    <button type="submit" name="prev" {% if current_index==0 %}disabled{% endif %}>Anterior</button>
+    <button type="submit" name="next">Siguiente</button>
+</form>
+{% else %}
+<p>No se pudo cargar la pregunta. Por favor, intente más tarde.</p>
+{% endif %}
 
+<h2>Dimensiones</h2>
+<ul>
+    {% for dimension in dimensiones %}
+    <li>{{ dimension.nombre }}</li>
+    {% endfor %}
+</ul>
 
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
 <img src="{{ url_for('static', filename='img/ensenar0.png')}}" class="usuarios" />

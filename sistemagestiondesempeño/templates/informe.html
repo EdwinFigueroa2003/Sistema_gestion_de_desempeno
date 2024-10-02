@@ -14,17 +14,18 @@ Informe
     </div>
 
     {% if usuario %}
-    
-        <h5><span class="label">Nombre:</span> {{ usuario.nombre or 'Nombre no disponible' }}</h5>
-        <h5><span class="label">Facultad de programa:</span> {{ usuario.facultad or 'Facultad no disponible' }}</h5>
-        <h5><span class="label">Cargo:</span> {{ usuario.fk_cargo_usu or 'Cargo no disponible' }}</h5>
-        <h5><span class="label">Correo electrónico:</span> {{ usuario.email or 'Correo no disponible' }}</h5>
-        <h5><span class="label">Nivel de contribución:</span> {{ usuario.fk_nivel_de_contribucion or 'Nivel no disponible' }}</h5>
+        {% set user_data = usuario[0] if usuario is iterable and usuario is not string else usuario %}
+        
+        <h5><span class="label">Nombre:</span> {{ user_data['nombre'] if user_data is mapping and 'nombre' in user_data else 'Nombre no disponible' }}</h5>
+        <h5><span class="label">Facultad de programa:</span> {{ user_data['facultad'] if user_data is mapping and 'facultad' in user_data else 'Facultad no disponible' }}</h5>
+        <h5><span class="label">Cargo:</span> {{ user_data['fk_cargo_usu'] if user_data is mapping and 'fk_cargo_usu' in user_data else 'Cargo no disponible' }}</h5>
+        <h5><span class="label">Correo electrónico:</span> {{ user_data['email'] if user_data is mapping and 'email' in user_data else 'Correo no disponible' }}</h5>
+        <h5><span class="label">Nivel de contribución:</span> {{ user_data['fk_nivel_de_contribucion'] if user_data is mapping and 'fk_nivel_de_contribucion' in user_data else 'Nivel no disponible' }}</h5>
     {% else %}
         <p>No se encontraron datos del usuario.</p>
     {% endif %}
 
-    <pre>{{ usuario | tojson }}</pre>
+    <!-- <pre>{{ usuario | tojson }}</pre> -->
 
     <!--Eliminar integrante-->
 <!--     <div class="rectangle-2060">
