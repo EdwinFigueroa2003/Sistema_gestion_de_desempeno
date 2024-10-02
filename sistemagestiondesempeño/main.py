@@ -253,6 +253,11 @@ def finalizo():
     usuario_id = request.args.get('usuario_id')  # Obtener el usuario_id de la consulta
     return render_template('finalizo.html', usuario_id=usuario_id)
 
+@app.route('/finalizo1', methods=['GET'])
+def finalizo1():
+    # Redirigir a la pantalla de finalización
+    return render_template('finalizo1.html')
+
 @app.route('/presentacionGDD', methods = ['GET'])
 def get_presentacionGDD():
     return render_template('presentacionGDD.html')

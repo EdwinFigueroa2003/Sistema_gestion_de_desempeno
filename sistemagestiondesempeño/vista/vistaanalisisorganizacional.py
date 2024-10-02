@@ -14,30 +14,38 @@ def get_dimensiones():
     # Obtener las dimensiones
     dimensiones = requests.get(f"{API_URL}/dimension").json()
 
+    # Ordenar las dimensiones por el campo 'id_dimension'
+    dimensiones_ordenadas = sorted(dimensiones, key=lambda x: x['id_dimension'])
+
     # Inicialmente no cargamos preguntas ni respuestas, solo las dimensiones
-    return render_template('analisisorganizacional.html', dimensiones=dimensiones)
+    return render_template('analisisorganizacional.html', dimensiones=dimensiones_ordenadas)
 
 @vistaanalisisorganizacional.route('/analisisorganizacional/<int:id_dimension>', methods=['GET', 'POST'])
 def get_preguntas_respuestas(id_dimension):
-    # Obtener todas las preguntas para la dimensión seleccionada
     preguntas = requests.get(f"{API_URL}/dimension_pregunta/id_dimension/{id_dimension}").json()
-
-    # Controlar el índice de la pregunta actual
-    current_index = int(request.form.get('current_index', 0))  # Índice de la pregunta actual, por defecto la primera
-
+    current_index = int(request.form.get('current_index', 0))
     total_preguntas = len(preguntas)
 
-    # Si el índice excede el número de preguntas, redirigimos a la pantalla de finalización
-    if current_index >= total_preguntas:
+    # Guardar la respuesta seleccionada en la sesión
+    if request.method == 'POST':
+        respuesta_seleccionada = request.form.get('respuesta')
+        if 'respuestas' not in session:
+            session['respuestas'] = {}
+        if id_dimension not in session['respuestas']:
+            session['respuestas'][id_dimension] = []
+        session['respuestas'][id_dimension].append({
+            'pregunta': preguntas[current_index]['pregunta'],
+            'respuesta_id': respuesta_seleccionada
+        })
+
+    # Si el índice excede el número de preguntas, redirigir a la pantalla final
+    if current_index >= total_preguntas - 1:
         return redirect(url_for('idanalisisorganizacional.finalizo'))
 
     # Obtener la pregunta actual
     pregunta_actual = preguntas[current_index]
-
-    # Obtener las respuestas para la pregunta actual
     respuestas = requests.get(f"{API_URL}/dimension_respuesta/id_dimension_pregunta/{pregunta_actual['id_dimension_pregunta']}").json()
 
-    # Renderizar la plantilla con la pregunta actual y las respuestas
     return render_template(
         'analisisorganizacional.html',
         preguntas=preguntas,

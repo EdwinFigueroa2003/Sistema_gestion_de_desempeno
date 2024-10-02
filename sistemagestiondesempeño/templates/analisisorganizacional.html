@@ -18,9 +18,10 @@ Análisis Organizacional
         {% for dimension in dimensiones %}
         <div id="tab{{ dimension.id_dimension }}" class="tab">
             <div class="frame-2337">
-                <a
-                    href="{{ url_for('idanalisisorganizacional.get_preguntas_respuestas', id_dimension=dimension.id_dimension) }}">
+                <a href="{{ url_for('idanalisisorganizacional.get_preguntas_respuestas', id_dimension=dimension.id_dimension) }}"
+                    class="tooltip-dimension">
                     {{ dimension.nombre_dimension }}
+                    <span class="tooltip-text">{{ dimension.definicion_dimension }}</span>
                 </a>
             </div>
         </div>
