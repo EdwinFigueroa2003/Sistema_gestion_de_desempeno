@@ -10,7 +10,7 @@ from control.ControlEntidad import ControlEntidad
 vistaanalisisorganizacional = Blueprint('idanalisisorganizacional', __name__, template_folder='templates')
 
 @vistaanalisisorganizacional.route('/analisisorganizacional', methods=['GET', 'POST'])
-def get_dimensiones(id_dimension):
+def get_dimensiones():
     # Obtener las dimensiones
     dimensiones = requests.get(f"{API_URL}/dimension").json()
 
@@ -107,8 +107,9 @@ def get_preguntas_respuestas(id_dimension):
     random.shuffle(respuestas)
     pregunta_actual['respuestas'] = respuestas
 
-    # Implementa la función para obtener la dimensión actual
-    dimension_actual = get_dimensiones(id_dimension)  # Implementa esta función
+    # Obtener la dimensión actual
+    dimensiones = requests.get(f"{API_URL}/dimension").json()
+    dimension_actual = next((d for d in dimensiones if d['id_dimension'] == id_dimension), None)
     print("Dimensión actual:", dimension_actual)  # Añade esta línea
 
     return render_template(

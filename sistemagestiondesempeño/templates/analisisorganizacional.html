@@ -58,7 +58,10 @@ Análisis Organizacional
             <div class="opcion-respuesta">
                 <input type="radio" id="respuesta{{ respuesta['id_dimension_respuesta'] }}" name="respuesta"
                     value="{{ respuesta['id_dimension_respuesta'] }}" required>
-                <label for="respuesta{{ respuesta['id_dimension_respuesta'] }}">{{ respuesta['respuesta'] }}</label>
+                <label for="respuesta{{ respuesta['id_dimension_respuesta'] }}">
+                    <span class="custom-radio"></span>
+                    {{ respuesta['respuesta'] }}
+                </label>
             </div>
             {% endfor %}
 

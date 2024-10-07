@@ -44,44 +44,5 @@ Resultado de Análisis Organizacional
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
 <img src="{{ url_for('static', filename='img/organizacion0.png')}}" class="usuarios" />
 
-<style>
-    .semaforo {
-        width: 30px;
-        height: 80px;
-        background-color: #333;
-        border-radius: 5px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-        padding: 3px;
-        margin-left: 33px;
-    }
-
-    .luz {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        opacity: 0.3;
-        transition: opacity 0.3s ease-in-out;
-    }
-
-    .rojo {
-        background-color: red;
-    }
-
-    .amarillo {
-        background-color: yellow;
-    }
-
-    .verde {
-        background-color: green;
-    }
-
-    .encendido {
-        opacity: 1;
-        box-shadow: 0 0 10px 5px rgba(153, 153, 153, 0.7);
-    }
-</style>
 
 {% endblock %}
