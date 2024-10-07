@@ -3,14 +3,14 @@ from configBd import API_URL
 from pprint import pprint
 from flask import Blueprint, request, render_template, redirect, url_for, session
 from Entidad import Entidad
-import requests
+import requests, random
 from datetime import datetime
 from control.ControlEntidad import ControlEntidad
 
 vistaanalisisorganizacional = Blueprint('idanalisisorganizacional', __name__, template_folder='templates')
 
 @vistaanalisisorganizacional.route('/analisisorganizacional', methods=['GET', 'POST'])
-def get_dimensiones():
+def get_dimensiones(id_dimension):
     # Obtener las dimensiones
     dimensiones = requests.get(f"{API_URL}/dimension").json()
 
@@ -30,33 +30,35 @@ def get_preguntas_respuestas(id_dimension):
 
     if request.method == 'POST':
         respuesta_seleccionada_id = request.form.get('respuesta')
+        print(f"Respuesta seleccionada ID: {respuesta_seleccionada_id}")  # Nuevo print
 
         if respuesta_seleccionada_id:
             # Hacer la solicitud a la API usando la URL correcta
-            respuesta_seleccionada = requests.get(f"http://190.217.58.246:5184/api/sgd/dimension_respuesta/id_dimension_respuesta/{respuesta_seleccionada_id}")
+            try:
+                respuesta_seleccionada = requests.get(f"{API_URL}/dimension_respuesta/id_dimension_respuesta/{respuesta_seleccionada_id}")
+                print(f"Respuesta de la API: {respuesta_seleccionada.status_code}")  # Nuevo print
+                print(f"Contenido de la respuesta: {respuesta_seleccionada.text}")  # Nuevo print
 
-            # Verificar si la respuesta es válida y si tiene contenido
-            if respuesta_seleccionada.status_code == 200 and respuesta_seleccionada.text:
-                try:
-                    respuesta_seleccionada_json = respuesta_seleccionada.json()
+                respuesta_seleccionada.raise_for_status()  # Esto lanzará una excepción para códigos de estado 4xx y 5xx
 
-                    # Verifica si la respuesta es una lista
-                    if isinstance(respuesta_seleccionada_json, list):
-                        # Accede al primer elemento de la lista si existe
-                        if len(respuesta_seleccionada_json) > 0:
-                            respuesta_texto = respuesta_seleccionada_json[0].get('respuesta', 'Sin respuesta')
-                        else:
-                            respuesta_texto = 'Sin respuesta'
+                respuesta_seleccionada_json = respuesta_seleccionada.json()
+
+                # Verifica si la respuesta es una lista
+                if isinstance(respuesta_seleccionada_json, list):
+                    if len(respuesta_seleccionada_json) > 0:
+                        respuesta_texto = respuesta_seleccionada_json[0].get('respuesta', 'Sin respuesta')
+                        semaforizacion = respuesta_seleccionada_json[0].get('semaforizacion', 'No determinado')  # Obtener semaforizacion
                     else:
-                        # Si no es una lista, trata como un diccionario
-                        respuesta_texto = respuesta_seleccionada_json.get('respuesta', 'Sin respuesta')
+                        respuesta_texto = 'Sin respuesta'
+                        semaforizacion = 'No determinado'
+                else:
+                    respuesta_texto = respuesta_seleccionada_json.get('respuesta', 'Sin respuesta')
+                    semaforizacion = respuesta_seleccionada_json.get('semaforizacion', 'No determinado')
 
-                except ValueError:
-                    print("Error: La respuesta de la API no es un JSON válido")
-                    respuesta_texto = 'Error al obtener la respuesta'
-            else:
-                print(f"Error: La API devolvió el estado {respuesta_seleccionada.status_code} o no tiene contenido")
-                respuesta_texto = 'Sin respuesta'
+            except requests.exceptions.RequestException as e:
+                print(f"Error al hacer la solicitud a la API: {e}")
+                respuesta_texto = 'Error al obtener la respuesta'
+                semaforizacion = 'No determinado'
 
             # Convertir id_dimension a cadena
             id_dimension_str = str(id_dimension)
@@ -72,12 +74,14 @@ def get_preguntas_respuestas(id_dimension):
             if id_dimension_str not in session['respuestas']:
                 session['respuestas'][id_dimension_str] = {}
 
-            # Guardar la respuesta asociada a la pregunta
+            # Guardar la respuesta asociada a la pregunta incluyendo semaforizacion
             session['respuestas'][id_dimension_str][id_pregunta_str] = {
                 'pregunta': preguntas[current_index]['pregunta'],
                 'respuesta_id': respuesta_seleccionada_id,
-                'respuesta_texto': respuesta_texto
+                'respuesta_texto': respuesta_texto,
+                'semaforizacion': semaforizacion  # Guardar semaforizacion aquí
             }
+            print(f"Respuesta guardada en la sesión: {session['respuestas'][id_dimension_str][id_pregunta_str]}")  # Nuevo print
 
             # Guardar los cambios en la sesión
             session.modified = True
@@ -98,6 +102,14 @@ def get_preguntas_respuestas(id_dimension):
     # Obtener la pregunta actual y las posibles respuestas
     pregunta_actual = preguntas[current_index]
     respuestas = requests.get(f"{API_URL}/dimension_respuesta/id_dimension_pregunta/{pregunta_actual['id_dimension_pregunta']}").json()
+    
+    # Mezclar las respuestas aleatoriamente
+    random.shuffle(respuestas)
+    pregunta_actual['respuestas'] = respuestas
+
+    # Implementa la función para obtener la dimensión actual
+    dimension_actual = get_dimensiones(id_dimension)  # Implementa esta función
+    print("Dimensión actual:", dimension_actual)  # Añade esta línea
 
     return render_template(
         'analisisorganizacional.html',
@@ -106,7 +118,8 @@ def get_preguntas_respuestas(id_dimension):
         respuestas=respuestas,
         current_index=current_index,
         total_preguntas=total_preguntas,
-        dimension_id=id_dimension
+        dimension_id=id_dimension,
+        dimension_actual=dimension_actual
     )
 
 

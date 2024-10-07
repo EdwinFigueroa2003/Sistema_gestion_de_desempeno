@@ -20,26 +20,22 @@ def mostrar_reporte():
     # Obtener las respuestas guardadas en la sesión
     respuestas_guardadas = session.get('respuestas', {})
 
-    # Imprimir el contenido de la sesión para verificar todas las respuestas
     print("Respuestas guardadas en la sesión:", respuestas_guardadas)
 
     reporte = []
     for dimension in dimensiones_ordenadas:
-        # Convertir el id_dimension a cadena para que coincida con las claves de la sesión
         id_dimension_str = str(dimension['id_dimension'])
         
         if id_dimension_str in respuestas_guardadas:
             preguntas_respuestas = respuestas_guardadas[id_dimension_str]
             
-            # Iterar sobre los valores (respuestas) en lugar de las claves
             for pr in preguntas_respuestas.values():
-                # Añadir cada pregunta y respuesta al reporte
                 reporte.append({
                     'pregunta': pr['pregunta'],
-                    'respuesta': pr['respuesta_texto']  # Usamos el texto de la respuesta guardado en la sesión
+                    'respuesta': pr['respuesta_texto'],
+                    'semaforizacion': pr.get('semaforizacion', 'No disponible')
                 })
 
-    # Imprime el reporte para depuración
     print("Reporte generado:", reporte)
 
     return render_template('reportesanalisisorganizacional.html', reporte=reporte)

@@ -35,7 +35,16 @@ Análisis Organizacional
     <form method="POST"
         action="{{ url_for('idanalisisorganizacional.get_preguntas_respuestas', id_dimension=dimension_id, current_index=current_index) }}">
 
-        <p class="texto-pregunta">{{ pregunta_actual['pregunta'] }}</p>
+        <div class="pregunta-dimension">
+
+            {% if dimension_actual %}
+            <span class="dimension-label">Dimensión: {{ dimension_actual.nombre_dimension }}</span>
+            {% else %}
+            <span class="dimension-label">Dimensión no disponible</span>
+            {% endif %}
+            <br>
+            <texto-pregunta>{{ pregunta_actual['pregunta'] }}</texto-pregunta>
+        </div>
 
         <!-- Barra de progreso -->
         <div class="progress-container">
@@ -47,23 +56,32 @@ Análisis Organizacional
         <div class="cuadro-respuestas">
             {% for respuesta in respuestas %}
             <div class="opcion-respuesta">
-                <input type="radio" id="respuesta{{ respuesta['id_dimension_respuesta'] }}" name="respuesta" value="{{ respuesta['id_dimension_respuesta'] }}" required>
+                <input type="radio" id="respuesta{{ respuesta['id_dimension_respuesta'] }}" name="respuesta"
+                    value="{{ respuesta['id_dimension_respuesta'] }}" required>
                 <label for="respuesta{{ respuesta['id_dimension_respuesta'] }}">{{ respuesta['respuesta'] }}</label>
             </div>
             {% endfor %}
-        </div>
 
-        <!-- Botones de navegación -->
-        <div class="navegacion">
-            <a href="/analisisorganizacional" class="btn volver">VOLVER</a>
+            <!-- Botones de navegación -->
+            <div class="navegacion">
 
-            <button type="submit" name="previous" class="btn boton-atras">
-                <span class="atras">Atrás</span>
-            </button>
+                <div class="btn">
+                    <a href="/analisisorganizacional" class="volver1">VOLVER</a>
+                </div>
 
-            <button type="submit" name="next" class="btn boton-siguiente">
-                <span class="siguiente">Siguiente</span>
-            </button>
+                <div class="btn">
+                    <button type="submit" name="previous" class="btn boton-atras">
+                        <span class="atras">Atrás</span>
+                    </button>
+                </div>
+
+                <div class="btn">
+                    <button type="submit" name="next" class="btn boton-siguiente">
+                        <span class="siguiente">Siguiente</span>
+                    </button>
+                </div>
+            </div>
+
         </div>
 
         <input type="hidden" name="current_index" value="{{ current_index + 1 }}">
