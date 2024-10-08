@@ -21,24 +21,23 @@ def vista_medicion_potencial():
     
     if request.method == 'POST':
         respuesta_seleccionada_id = request.form.get('respuesta')
-        respuesta_seleccionada_id = int(respuesta_seleccionada_id)  # Asegúrate de que es un entero
-
-        print(f"Respuesta seleccionada ID: {respuesta_seleccionada_id}")
-        
-        # Proceso de guardar la respuesta seleccionada
-        if 'respuestas' not in session:
-            session['respuestas'] = []  # Asegúrate de que sea una lista
-        session['respuestas'].append(respuesta_seleccionada_id)  # Usar .append() en lugar de + para listas
-        session.modified = True
-        
-        # Incrementar el índice actual para la siguiente pregunta
-        current_index += 1
-        
-        # Redirigir a la siguiente pregunta o terminar
-        if current_index < len(preguntas):
-            return redirect(url_for('idmediciondepotencial.vista_medicion_potencial', current_index=current_index))
-        else:
-            return redirect(url_for('idmediciondepotencial.finalizo'))
+    
+        if respuesta_seleccionada_id:
+            respuesta_seleccionada_id = int(respuesta_seleccionada_id)  # Asegúrate de que es un entero
+            
+            if 'respuestas' not in session:
+                session['respuestas'] = []  # Inicializa como lista
+            session['respuestas'].append(respuesta_seleccionada_id)  # Usa .append()
+            session.modified = True
+            
+            # Incrementar el índice actual para la siguiente pregunta
+            current_index += 1
+            
+            # Redirigir a la siguiente pregunta o terminar
+            if current_index < len(preguntas):
+                return redirect(url_for('idmediciondepotencial.vista_medicion_potencial', current_index=current_index))
+            else:
+                return redirect(url_for('idmediciondepotencial.finalizo'))
 
     # Si el índice excede el número de preguntas, finalizar
     if current_index >= len(preguntas):
