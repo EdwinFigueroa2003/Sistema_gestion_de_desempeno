@@ -13,6 +13,9 @@ vistamediciondepotencial = Blueprint('idmediciondepotencial', __name__, template
 
 @vistamediciondepotencial.route('/mediciondepotencial', methods=['GET', 'POST'])
 def vista_medicion_potencial():
+    # Limpiar la sesión para empezar de nuevo
+    #session.pop('respuestas', None)  # Eliminar respuestas anteriores, si existen
+
     # Obtener las preguntas de la dimensión
     preguntas = requests.get(f"{API_URL}/dimension_mp_pregunta").json()
     
@@ -21,13 +24,15 @@ def vista_medicion_potencial():
     
     if request.method == 'POST':
         respuesta_seleccionada_id = request.form.get('respuesta')
-    
+        print(f"Respuesta seleccionada: {respuesta_seleccionada_id}")  # Depuración
+        
         if respuesta_seleccionada_id:
             respuesta_seleccionada_id = int(respuesta_seleccionada_id)  # Asegúrate de que es un entero
             
             if 'respuestas' not in session:
                 session['respuestas'] = []  # Inicializa como lista
             session['respuestas'].append(respuesta_seleccionada_id)  # Usa .append()
+            print(f"Respuestas en la sesión: {session['respuestas']}")  # Depuración
             session.modified = True
             
             # Incrementar el índice actual para la siguiente pregunta
@@ -59,6 +64,7 @@ def vista_medicion_potencial():
         current_index=current_index,
         total_preguntas=len(preguntas)
     )
+
 
 
 @vistamediciondepotencial.route('/finalizo', methods=['GET'])
