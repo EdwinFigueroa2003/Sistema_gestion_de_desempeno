@@ -1,33 +1,47 @@
 # main.py
 from pprint import pprint
-from flask import Flask, render_template, request, url_for, redirect, session, jsonify, flash, send_file
-import markupsafe, uuid, psycopg2, os, io, xlsxwriter, openpyxl, pandas
-import requests
+from flask import Flask, render_template, request, url_for, redirect, session, jsonify, flash, send_file, send_file
+import markupsafe, uuid, psycopg2, os, io, xlsxwriter, openpyxl, pandas, requests, base64 
 from Entidad import Entidad
+from matplotlib.figure import Figure
 from werkzeug.utils import secure_filename
+from PIL import Image
 from control.ControlEntidad import ControlEntidad
+from configBd import API_URL
 
 
 from menu import menu
 from vista.vistaequipo import vistaequipo
-from vista.vistacompetenciastransversales import vistacompetenciastransversales
 from vista.vistaagregarequipo import vistaagregarequipo
 from vista.vistaconfiguracion import vistaconfiguracion
+from vista.vistadetallemicroproyecto import vistadetallemicroproyecto
 from vista.vistagestiondeldesarrollo import vistagestiondeldesarrollo
 from vista.vistainforme import vistainforme
+from vista.vistafactoresclavesdeexito import vistafactoresclavesdeexito
+from vista.vistamediciondepotencial import vistamediciondepotencial
+from vista.vistaresultadosmediciondepotencial import vistaresultadosmediciondepotencial
 from vista.vistaconcertaciondepropositos import vistaconcertaciondepropositos
+from vista.vistaresultadodeconcertaciondepropositos import vistaresultadosconcertaciondepropositos
+from vista.vistaconcertaciondepropositospersonales import vistaconcertaciondepropositospersonales
+from vista.vistacompetenciasdocentes import vistacompetenciasdocentes
 from vista.vistagestiondeldesempeno import vistagestiondeldesempeno
 from vista.vistaotrascontribuciones import vistaotrascontribuciones
 from vista.vistaareportes import vistareportes
 from vista.vistareportesanalisisorganizacional import vistareportesanalisisorganizacional
 from vista.vistareportesimpulsandoelcrecimiento import vistareportesimpulsandoelcrecimiento
 from vista.vistaproyectos import vistaproyectos
+from vista.vistainfoproyectos import vistainfoproyectos
 from vista.vistaevaluaciondecompetencias import vistaevaluaciondecompetencias
 from vista.vistaresultados import vistaresultados
-from vista.vistadashboard import vistadashboard
+from vista.vistacompetenciastransversales import vistacompetenciastransversales
+from vista.vistaresultadoscompetenciastransversales import vistaresultadoscompetenciastransversales
+from vista.vistaresultadoscompetenciasdocentes import vistaresultadoscompetenciasdocentes
+from vista.vistadashboard import vistadashboard 
 from vista.vistareportesindividual import vistareportesindividual
 from vista.vistareportesgeneral import vistareportesgeneral
 from vista.vistavideos import vistavideos
+from vista.vistaconcertaciondedisponibilidad import vistaconcertaciondedisponibilidad
+from vista.vistaconcertaciondepropositosparalamejoradeprocesos import vistaconcertaciondepropositosparalamejoradeprocesos
 from vista.vistacursos import vistacursos
 from vista.vistapodcast import vistapodcast
 from vista.vistaidentificaciondelideres import vistaidentificaciondelideres
@@ -39,23 +53,36 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 
+
 app.register_blueprint(menu)
 app.register_blueprint(vistaequipo)
 app.register_blueprint(vistaanalisisorganizacional)
+app.register_blueprint(vistaconcertaciondepropositos)
+app.register_blueprint(vistadetallemicroproyecto)
+app.register_blueprint(vistafactoresclavesdeexito)
+app.register_blueprint(vistamediciondepotencial)
+app.register_blueprint(vistaresultadosmediciondepotencial)
+app.register_blueprint(vistaconcertaciondedisponibilidad)
+app.register_blueprint(vistacompetenciasdocentes)
 app.register_blueprint(vistacompetenciastransversales)
+app.register_blueprint(vistaconcertaciondepropositosparalamejoradeprocesos)
+app.register_blueprint(vistaconcertaciondepropositospersonales)
 app.register_blueprint(vistaagregarequipo)
 app.register_blueprint(vistaconfiguracion)
 app.register_blueprint(vistagestiondeldesarrollo)
 app.register_blueprint(vistainforme)
-app.register_blueprint(vistaconcertaciondepropositos)
 app.register_blueprint(vistagestiondeldesempeno)
 app.register_blueprint(vistaotrascontribuciones)
 app.register_blueprint(vistareportes)
 app.register_blueprint(vistareportesanalisisorganizacional)
 app.register_blueprint(vistareportesimpulsandoelcrecimiento)
 app.register_blueprint(vistaproyectos)
+app.register_blueprint(vistainfoproyectos)
 app.register_blueprint(vistaevaluaciondecompetencias)
 app.register_blueprint(vistaresultados)
+app.register_blueprint(vistaresultadoscompetenciastransversales)
+app.register_blueprint(vistaresultadoscompetenciasdocentes)
+app.register_blueprint(vistaresultadosconcertaciondepropositos)
 app.register_blueprint(vistadashboard)
 app.register_blueprint(vistareportesindividual)
 app.register_blueprint(vistareportesgeneral)
@@ -67,7 +94,9 @@ app.register_blueprint(vistaidentificaciondelideres)
 # Establecer la ruta base si es necesario, por defecto es '/'
 #breakpoint();
 
+
 @app.route('/', methods = ['GET', 'POST'])
+
 @app.route('/inicio', methods = ['GET', 'POST'])
 def inicio():
     email=""
@@ -99,132 +128,141 @@ def inicio():
 
 @app.route('/cerrarSesion')
 def cerrarSesion():
-    #session.clear()
+    session.clear() # Limpiar la sesión
     return redirect('inicio.html')
-
-@app.route('/resultadoscompetenciastransversales', methods = ['GET', 'POST'])
-def get_resultadoscompetenciastransversales():
-    respuestas = session.get('respuestas', [])  # Obtener las respuestas de la sesión
-    return render_template('resultadoscompetenciastransversales.html', respuestas=respuestas)
 
 @app.route('/download_excel')
 def download_excel():
-    # Obtener las respuestas reales almacenadas en la sesión
-    respuestas = session.get('respuestas', [])
-    
-    # Crear un archivo Excel en memoria
-    output = io.BytesIO()
-    workbook = xlsxwriter.Workbook(output, {'in_memory': True})
-    worksheet = workbook.add_worksheet()
+    tipo = request.args.get('tipo', 'datos')
 
-    # Definir estilos
-    header_format = workbook.add_format({
-        'bold': True,
-        'font_size': 14,
-        'bg_color': '#4AF852',
-        'border': 1,
-        'align': 'center',
-        'valign': 'vcenter'
-    })
-    cell_format = workbook.add_format({
-        'font_size': 12,
-        'bg_color': '#EAF2D3',
-        'border': 1,
-        'align': 'left',
-        'valign': 'vcenter'
-    })
-    
-    # Escribir el encabezado con formato
-    worksheet.write('A1', 'Resultados', header_format)
-    
-    # Ajustar el ancho de las columnas
-    worksheet.set_column('A:A', 40)  # Ajusta el ancho de la columna A
+    if tipo == 'grafica':
+        # Generar la gráfica usando matplotlib
+        fig = Figure()
+        ax = fig.subplots()
 
-    # Escribir las respuestas en el archivo Excel
-    for i, respuesta in enumerate(respuestas, start=1):
-        worksheet.write(f'A{i+1}', respuesta, cell_format)
-    
-    workbook.close()
-    output.seek(0)
-    
-    return send_file(output, download_name="Resultados.xlsx", as_attachment=True)
+        # Obtener las respuestas almacenadas en la sesión
+        respuestas = session.get('respuestas', {})
+
+        # Preparar los datos para la gráfica
+        xValues = list(range(1, len(respuestas) + 1))
+        yValues = [float(respuesta) for respuesta in respuestas.values()]
+
+        # Graficar los datos
+        ax.plot(xValues, yValues, marker='o', linestyle='-', color='b')
+        ax.set_title('Valores de Respuestas')
+        ax.set_xlabel('Índice')
+        ax.set_ylabel('Valor')
+
+        # Guardar la gráfica en un archivo de imagen en memoria
+        output = io.BytesIO()
+        fig.savefig(output, format='png')
+        output.seek(0)
+
+        # Devolver la imagen como una descarga
+        return send_file(output, download_name="grafica.png", as_attachment=True, mimetype='image/png')
+
+    else:
+        # Código existente para descargar los datos en Excel
+        respuestas = session.get('respuestas', {})
+
+        # Crear un archivo Excel en memoria
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        worksheet = workbook.add_worksheet()
+
+        # Definir estilos
+        header_format = workbook.add_format({
+            'bold': True,
+            'font_size': 14,
+            'bg_color': '#4AF852',
+            'border': 1,
+            'align': 'center',
+            'valign': 'vcenter'
+        })
+        cell_format = workbook.add_format({
+            'font_size': 12,
+            'bg_color': '#EAF2D3',
+            'border': 1,
+            'align': 'left',  # Alineación horizontal
+            'valign': 'top',  # Alineación vertical
+            'text_wrap': True  # Ajustar texto
+        })
+
+        # Escribir el encabezado con formato
+        
+        worksheet.write('A1', 'Respuesta', header_format)
+        worksheet.write('B1', 'Valor', header_format)
+        worksheet.write('C1', 'ruta de desarrollo', header_format)
+        worksheet.write('D1', 'ruta de autodesarrollo', header_format)
 
 
 
-@app.route('/resultadoscompetenciasdocentes', methods = ['GET', 'POST'])
-def get_resultadoscompetenciasdocentes():
-    return render_template('resultadoscompetenciasdocentes.html')
+        # Ajustar el ancho de las columnas
+        worksheet.set_column('A:A', 40)  # Ajusta el ancho de la columna A
+        worksheet.set_column('B:B', 10)  # Ajusta el ancho de la columna B
+        worksheet.set_column('C:C', 40)  # Ajusta el ancho de la columna C
+        worksheet.set_column('D:D', 40)  # Ajusta el ancho de la columna D
 
-@app.route('/resultadosconcertaciondepropositos', methods = ['GET', 'POST'])
-def get_resultadosconcertaciondepropositos():
-    return render_template('resultadosconcertaciondepropositos.html')
+        preguntas_respuestas = []
 
-@app.route('/competenciasdocentes', methods = ['GET', 'POST'])
-def get_docentes():
-    response = requests.get('http://190.217.58.246:5184/api/sgd/competencia')
-    try:
-        competencias = response.json()  # Decodificar la respuesta como JSON
-    except requests.exceptions.JSONDecodeError:
-        return "Error: La respuesta no es un JSON válido.", 500
+        # Iterar sobre el diccionario de respuestas almacenadas en sesión
+        for id_pregunta, id_respuesta in respuestas.items():
+            try:
+                response_pregunta = requests.get(f'{API_URL}/pregunta/id_pregunta/{id_pregunta}', timeout=10)
+                response_pregunta.raise_for_status()
+                pregunta = response_pregunta.json()
 
-    current_index = int(request.form.get('current_index', 0))
+                if isinstance(pregunta, list) and len(pregunta) > 0:
+                    pregunta = pregunta[0]
 
-    # Manejo de índice de la pregunta actual
-    if request.method == 'POST':
-        if 'next' in request.form:
-            current_index += 1
-            if current_index >= len(competencias):
-                return redirect(url_for('finalizo'))  # Redirigir a finalizo.html cuando se llega al final
-        elif 'prev' in request.form:
-            if current_index > 0:
-                current_index -= 1
+                response_respuesta = requests.get(f'{API_URL}/respuesta/id_respuesta/{id_respuesta}', timeout=10)
+                response_respuesta.raise_for_status()
+                respuesta = response_respuesta.json()
 
-    pregunta_actual = competencias[current_index]
-    return render_template('competenciasdocentes.html', item=pregunta_actual, current_index=current_index)
+                if isinstance(respuesta, list) and len(respuesta) > 0:
+                    respuesta = respuesta[0]
 
-@app.route('/factoresclavesdeexito', methods = ['GET', 'POST'])
-def get_factoresclavesdeexito():
-    response = requests.get('http://190.217.58.246:5184/api/sgd/competencia')
-    try:
-        competencias = response.json()  # Decodificar la respuesta como JSON
-    except requests.exceptions.JSONDecodeError:
-        return "Error: La respuesta no es un JSON válido.", 500
+                preguntas_respuestas.append({
+                    'texto_respuesta': respuesta.get('texto_respuesta', 'Respuesta no disponible'),
+                    'valor_respuesta': respuesta.get('valor_respuesta', 'valor no disponible'),
+                    'ruta_de_desarrollo': respuesta.get('ruta_de_desarrollo', 'ruta de desarrollo no disponible'),
+                    'ruta_de_autodesarrollo': respuesta.get('ruta_de_autodesarrollo', 'ruta de autodesarrollo no disponible')
+                })
 
-    current_index = int(request.form.get('current_index', 0))
+                
 
-    # Manejo de índice de la pregunta actual
-    if request.method == 'POST':
-        if 'next' in request.form:
-            current_index += 1
-            if current_index >= len(competencias):
-                return redirect(url_for('finalizo'))  # Redirigir a finalizo.html cuando se llega al final
-        elif 'prev' in request.form:
-            if current_index > 0:
-                current_index -= 1
+            except requests.RequestException as e:
+                print(f"Error al obtener datos: {e}")
 
-    pregunta_actual = competencias[current_index]
-    return render_template('factoresclavesdeexito.html', item=pregunta_actual, current_index=current_index)
+        # Escribir los datos en el archivo Excel
+        for i, respuesta in enumerate(preguntas_respuestas, start=1):
+            worksheet.write(f'A{i+1}', respuesta['texto_respuesta'], cell_format)
+            worksheet.write(f'B{i+1}', respuesta['valor_respuesta'], cell_format)
+            worksheet.write(f'C{i+1}', respuesta['ruta_de_desarrollo'], cell_format)
+            worksheet.write(f'D{i+1}', respuesta['ruta_de_autodesarrollo'], cell_format)
 
+                # Ajustar el alto de las filas (por ejemplo, 20)
+        for i in range(len(preguntas_respuestas) + 1):  # +1 para incluir la fila del encabezado
+            worksheet.set_row(i, 141.75)  # Ajusta la altura de la fila a 20 unidades
+
+        workbook.close()
+        output.seek(0)
+
+        return send_file(output, download_name="Resultados.xlsx", as_attachment=True)
+
+@app.route('/finalizo', methods=['GET'])
+def finalizo():
+    usuario_id = request.args.get('usuario_id')  # Obtener el usuario_id de la consulta
+    return render_template('finalizo.html', usuario_id=usuario_id)
+
+@app.route('/finalizo1', methods=['GET'])
+def finalizo1():
+    # Redirigir a la pantalla de finalización
+    return render_template('finalizo1.html')
 
 @app.route('/presentacionGDD', methods = ['GET'])
 def get_presentacionGDD():
     return render_template('presentacionGDD.html')
-
-@app.route('/finalizo', methods = ['GET'])
-def finalizo():
-    return render_template('finalizo.html')
-
-@app.route('/concertaciondepropositospersonales', methods = ['GET'])
-def concertaciondepropositospersonales():
-    return render_template('concertaciondepropositospersonales.html')
-
-@app.route('/infoproyectos', methods = ['GET'])
-def get_infoproyectos():
-    return render_template('infoproyectos.html')
-
-@app.route('/tete', methods = ['GET'])
-def tete():
-    return render_template('tete.html')
 
 if __name__ == '__main__':
     # Corre la aplicación en el modo debug, lo que permitirá

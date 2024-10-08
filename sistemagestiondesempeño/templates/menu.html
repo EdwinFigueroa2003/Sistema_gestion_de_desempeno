@@ -22,31 +22,6 @@
             overflow: hidden;
         }
 
-        .nav-link h5,
-        .nav-link-cerrar h5 {
-            border-radius: 25px;
-            border: 1px solid #EA5C10;
-            padding: 10px;
-            font-size: 16px;
-            text-decoration: none;
-            /* Ajuste para evitar subrayado en h5 */
-        }
-
-        .nav-link-cerrar h5 {
-            background-color: #ffffff;
-            color: rgb(0, 0, 0);
-            font-size: 14px;
-            padding: 8px 12px;
-            margin-top: 5px;
-
-        }
-
-        .nav-link-cerrar h5:hover { 
-            background-color: #EA5C10;
-            border-color: #EA5C10;
-        }
-
-
         .btn-group {
             margin-left: 10px;
         }
@@ -64,6 +39,35 @@
             margin-left: 30px;
             top: 10px;
             bottom: 10px;
+            /* overflow-x: auto; */
+            /* Habilita el desplazamiento horizontal */
+            overflow-y: auto;
+            /* Habilita el desplazamiento vertical */
+            scrollbar-width: thin;
+            /* Estilo de la barra de desplazamiento en Firefox */
+            scrollbar-color: #EA5C10 #EAEAEA;
+            /* Color de la barra y el fondo en Firefox */
+            z-index: 1000;
+        }
+
+        /* Estilo de la barra de desplazamiento para navegadores basados en WebKit (Chrome, Safari, Edge) */
+        .sidebar::-webkit-scrollbar {
+            width: 10px;
+            /* Ancho de la barra de desplazamiento vertical */
+            height: 10px;
+            /* Altura de la barra de desplazamiento horizontal */
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background-color: #EA5C10;
+            /* Color de la barra de desplazamiento */
+            border-radius: 10px;
+            /* Bordes redondeados */
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background-color: #EAEAEA;
+            /* Color de fondo de la barra de desplazamiento */
         }
 
         .user-profile {
@@ -103,20 +107,26 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px;
+            padding: 12px !important;
+            /* Aumenta el padding para que no quede tan pegado */
             border-radius: 10px;
             text-decoration: none;
             color: #ffffff;
-            
             font-weight: bold;
             transition: background 0.3s ease;
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            font-family: 'fontfabric', sans-serif;
+            /* Asegúrate de usar la fuente correcta */
+            font-size: 16px;
+            /* Ajusta el tamaño de la fuente */
         }
 
         .nav-link img.icon {
-            width: 24px;
-            height: 24px;
-            margin-right: 50px;
+            width: 30px;
+            /* Aumenta el tamaño del ícono para hacerlo más visible */
+            height: 30px;
+            margin-left: 20px;
+            /* Ajusta la posición del ícono a la derecha */
         }
 
         .dropdown-toggle {
@@ -192,26 +202,6 @@
             background-color: #3e3e3e;
         }
 
-
-        .circle1 {
-            background-color: rgb(0, 0, 0);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-        }
-
-        .circle-wrapper1 {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: -30px;
-        }
-
-        h1 {
-            font-size: 13px;
-            margin-top: 1px;
-            margin-bottom: -1px;
-        }
     </style>
 </head>
 
@@ -303,15 +293,6 @@
         crossorigin="anonymous"></script>
 
     <script>
-        function toggleSidebar() {
-            var sidebar = document.querySelector('.sidebar');
-            var content = document.querySelector('.content');
-            sidebar.classList.toggle('collapsed');
-            content.classList.toggle('collapsed');
-        }
-    </script>
-
-    <script>
         const canvas = document.getElementById('myCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -401,25 +382,27 @@
 
         // DESEMPEÑO
         ctx.font = '15px Arial'; // Cambia el tamaño y el tipo de fuente
-        ctx.fillText('Lorem ipsum dolor se sienta amet, consectetur adipiscing elit.', 380, 178);
-        ctx.fillText('Nullam malesuada rutrum diam, sed sollicitudin sed sed.', 380, 200);
-        ctx.fillText('Lorem ipsum dolor se sienta amet', 380, 222);
+        ctx.fillText('Impulsamos la excelencia educativa a través de la', 380, 178);
+        ctx.fillText('evaluación y mejora continua de nuestro equipo.', 380, 200);
+        ctx.fillText('Fomentamos el crecimiento profesional y alineamos', 380, 222);
+        ctx.fillText('esfuerzos para alcanzar los más altos estándares en el', 380, 244);
+        ctx.fillText('proceso educativo.', 380, 266);
 
 
         // EQUIPO
         ctx.font = '15px Arial'; // Cambia el tamaño y el tipo de fuente
-        ctx.fillText('Lorem ipsum dolor se sienta amet ', 380, 520);
-        ctx.fillText('Consectetur adipiscing elit.', 380, 544);
-        ctx.fillText('Nullam malesuada rutrum diam, sed sollicitudin sed sed.', 380, 566);
-        ctx.fillText('Lorem ipsum dolor se sienta amet', 380, 588);
+        ctx.fillText('Nuestro éxito se construye con la colaboración', 380, 520);
+        ctx.fillText('de equipos comprometidos donde', 380, 544);
+        ctx.fillText('cada miembro aporta talento y visión', 380, 566);
+        ctx.fillText('para alcanzar metas comunes.', 380, 588);
 
 
         // DESARROLLO
         ctx.font = '15px Arial'; // Cambia el tamaño y el tipo de fuente
-        ctx.fillText('Lorem ipsum dolor se sienta amet,', 900, 400);
-        ctx.fillText('Lorem ipsum dolor se sienta amet, consectetur adipiscing elit.', 900, 420);
-        ctx.fillText('Nullam malesuada rutrum diam, sed sollicitudin sed sed.', 900, 440);
-        ctx.fillText('Lorem ipsum dolor se sienta amet', 900, 460);
+        ctx.fillText('Potenciamos el crecimiento institucional mediante', 900, 400);
+        ctx.fillText('estrategias innovadoras que impulsan el ', 900, 420);
+        ctx.fillText('talento y garantizan un progreso sostenible.', 900, 440);
+        //ctx.fillText('Lorem ipsum dolor se sienta amet', 900, 460);
 
         //elipses
 

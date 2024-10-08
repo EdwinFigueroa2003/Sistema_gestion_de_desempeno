@@ -1,606 +1,102 @@
-<!DOCTYPE html>
-<html lang="es">
+{% extends "layout.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Análisis Organizacional</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+{% block title %}
+Análisis Organizacional
+{% endblock %}
 
-    <style>
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            background-color: #EAEAEA;
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-        }
+{% block content %}
 
-        .nav-link h5,
-        .nav-link-cerrar h5 {
-            border-radius: 25px;
-            border: 1px solid #EA5C10;
-            padding: 10px;
-            color: rgb(0, 173, 253);
-            font-size: 16px;
-            text-decoration: none;
-            /* Ajuste para evitar subrayado en h5 */
-        }
+<h1>Gestión del Desempeño</h1>
+<hr>
+<div class="titulo-dimension">
+    <h3>Análisis Organizacional</h3>
+</div>
 
-        .nav-link-cerrar h5 {
-            background-color: #ffffff;
-            color: rgb(0, 0, 0);
-            font-size: 14px;
-            padding: 8px 12px;
-        }
-
-        .nav-link-cerrar h5:hover {
-            background-color: #EA5C10;
-            border-color: #EA5C10;
-        }
-
-        .btn-group {
-            margin-left: 10px;
-        }
-
-        .sidebar {
-            width: 340px;
-            height: 100%;
-            background-color: #ffffff;
-            color: white;
-            transition: width 0.4s ease;
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            z-index: 1000;
-            overflow-y: auto;
-            border-radius: 10px;
-            /* Bordes redondeados de 10px */
-            box-shadow: 0px 16px 16px 4px rgba(0, 0, 0, 0.25);
-            /* lo ultimo que de agrego */
-            /*width: 277px;
-            height: 640px;*/
-            margin-top: 10px;
-            /* Margen superior externo */
-            margin-right: 15px;
-            /* Margen derecho externo */
-            margin-bottom: 0 px;
-            /* Margen inferior externo */
-            margin-left: 15px;
-            /* Margen izquierdo externo */
-        }
-
-        .sidebar.collapsed {
-            width: 50px;
-        }
-
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .sidebar ul li {
-            padding: 10px;
-        }
-
-        .sidebar ul li a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .content {
-            flex: 1;
-            padding: 20px;
-            transition: margin-left 0.3s ease;
-            /* Agregamos transición para un cambio suave */
-            margin-left: 345px;
-            /* Ancho inicial de la barra lateral */
-        }
-
-        .content.collapsed {
-            margin-left: 50px;
-            /* Ancho de la barra lateral colapsada */
-        }
-
-        /* Estilo para el título y botones de acción */
-        h1 {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            margin: 0;
-        }
-
-        /* Estilos específicos para los botones dentro del título */
-        .btn-title {
-            margin-left: 10px;
-        }
-
-        .svg-button {
-            cursor: pointer;
-            /* Cambia el color al pasar sobre el botón */
-            display: inline-block;
-        }
-
-        .svg-button svg rect {
-            transition: fill 0.3s;
-            /* Añade una transición suave al cambiar el color de fondo */
-        }
-
-        .svg-button:hover svg rect {
-            fill: rgb(233, 10, 10);
-            /* Cambia el color de fondo al pasar sobre el botón */
-        }
-
-        .btn-group {
-            margin-left: 10px;
-        }
-
-        h1 {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            margin: 0;
-        }
-
-        .btn-title {
-            margin-left: 10px;
-        }
-
-        .gestion-desempeno {
-            background-color: #C35E23;
-            /* Elige el color de fondo que desees */
-            color: #000;
-            /* Asegúrate de que el texto sea legible sobre el fondo */
-            padding: 10px;
-            /* Añade algo de relleno para que el texto no esté pegado al borde */
-            border-radius: 5px;
-            /* Opcional: añade bordes redondeados */
-        }
-
-        .gestion-desempeno:hover {
-            background-image: linear-gradient(to right, #C35E23, #FFC700);
-            /* Degradado al pasar el cursor */
-            color: #000;
-        }
-
-        .gestion-desarrollo {
-            background-color: #BF0B3B;
-            /* Elige el color de fondo que desees */
-            color: #000;
-            /* Asegúrate de que el texto sea legible sobre el fondo */
-            padding: 10px;
-            /* Añade algo de relleno para que el texto no esté pegado al borde */
-            border-radius: 5px;
-            /* Opcional: añade bordes redondeados */
-        }
-
-        .gestion-desarrollo:hover {
-            background-image: linear-gradient(to right, #BF0B3B, #FFC700);
-            /* Degradado al pasar el cursor */
-            color: #000;
-        }
-
-        .dropdown-container {
-            position: relative;
-            /* Ajusta otros estilos según sea necesario */
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            right: 0;
-            /* Alinea el menú al lado derecho */
-            background-color: rgb(97, 97, 97);
-            /* Color del texto de los elementos del menú */
-            top: 100%;
-            /* Fondo del menú */
-            width: 250px;
-            /* Ajusta el ancho del menú según sea necesario */
-        }
-
-        .dropdown-item {
-            color: rgb(255, 0, 0);
-            text-align: center;
-
-            padding: 10px;
-            /* Ajusta el relleno según sea necesario */
-            display: block;
-            /* Asegúrate de que los elementos se comporten como bloques */
-        }
-
-        .mi-equipo {
-            background-color: #29A3CC;
-            /* Elige el color de fondo que desees */
-            color: #000;
-            /* Asegúrate de que el texto sea legible sobre el fondo */
-            padding: 10px;
-            /* Añade algo de relleno para que el texto no esté pegado al borde */
-            border-radius: 5px;
-            /* Opcional: añade bordes redondeados */
-        }
-
-        .mi-equipo:hover {
-            background-image: linear-gradient(to right, #29A3CC, #FFC700);
-            /* Degradado al pasar el cursor */
-            color: #000;
-        }
-
-        .configuracion {
-            background-color: #16594D;
-            /* Elige el color de fondo que desees */
-            color: #000;
-            /* Asegúrate de que el texto sea legible sobre el fondo */
-            padding: 10px;
-            /* Añade algo de relleno para que el texto no esté pegado al borde */
-            border-radius: 5px;
-            /* Opcional: añade bordes redondeados */
-        }
-
-        .configuracion:hover {
-            background-image: linear-gradient(to right, #16594D, #FFC700);
-            /* Degradado al pasar el cursor */
-            color: #000;
-        }
-
-        .inicio {
-            background-color: #525252;
-            /* Elige el color de fondo que desees */
-            color: #000;
-            /* Asegúrate de que el texto sea legible sobre el fondo */
-            padding: 10px;
-            /* Añade algo de relleno para que el texto no esté pegado al borde */
-            border-radius: 5px;
-            /* Opcional: añade bordes redondeados */
-        }
-
-        .medium-filled,
-        .volver {
-            background: linear-gradient(90deg,
-                    rgba(89, 238, 254, 1) 0%,
-                    rgba(40, 128, 242, 1) 100%);
-            color: white;
-            border-radius: 8px;
-            padding: 9px 32px 9px 32px;
-            display: flex;
-            flex-direction: column;
-            gap: 0px;
-            align-items: center;
-            justify-content: center;
-            width: 228px;
-            position: relative;
-        }
-
-        .volver {
-            text-align: center;
-            font-family: "Roboto-SemiBold", sans-serif;
-            font-size: 14px;
-            /* Ajustado el tamaño del texto */
-            line-height: 32px;
-            /* Ajustado el alto del botón */
-            font-weight: 600;
-            padding: 0 20px;
-            /* Espaciado interno horizontal */
-            background-color: #EA5C10;
-            /* Color de fondo */
-            border: none;
-            /* Quitamos el borde */
-            border-radius: 5px;
-            /* Borde redondeado */
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            /* Transición suave para el cambio de color de fondo */
-        }
-
-        .volver:hover {
-            background: linear-gradient(90deg,
-                    rgba(89, 238, 254, 1) 0%,
-                    rgba(40, 128, 242, 1) 100%);
-            /* Color de fondo al pasar el ratón */
-        }
-
-        .inicio:hover {
-            background-image: linear-gradient(to right, #525252, #FFC700);
-            /* Degradado al pasar el cursor */
-            color: #525252;
-        }
-
-        hr {
-            width: 102%;
-            height: 30px;
-            margin-right: auto;
-            margin-left: auto;
-            margin-top: 1 px;
-            margin-bottom: 5px;
-            border-width: 2px;
-            border-color: rgb(0, 0, 0);
-        }
-
-        .inicio-png {
-            flex-shrink: 0;
-            width: 30px;
-            height: 30px;
-            left: 85px;
-            position: relative;
-            object-fit: cover;
-        }
-
-        .configuracion-png {
-            flex-shrink: 0;
-            width: 30px;
-            height: 30px;
-            left: 45px;
-            position: relative;
-            object-fit: cover;
-        }
-
-        .equipo-png {
-            flex-shrink: 0;
-            width: 30px;
-            height: 30px;
-            left: 70px;
-            position: relative;
-            object-fit: cover;
-        }
-
-        .BGDesarrollo-png {
-            flex-shrink: 0;
-            width: 30px;
-            height: 30px;
-            position: relative;
-            object-fit: cover;
-        }
-
-        .BGDesempeño-png {
-            flex-shrink: 0;
-            width: 30px;
-            height: 30px;
-            position: relative;
-            object-fit: cover;
-        }
-
-        .frame-2337 {
-            background: #d9d9d9;
-            border-radius: 16px 0px 0px 16px;
-            padding: 8px 40px 8px 40px;
-            display: flex;
-            flex-direction: row;
-            gap: 16px;
-            align-items: center;
-            justify-content: flex-start;
-            flex-shrink: 0;
-            width: 222px;
-            height: 50px;
-            position: relative;
-            box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, 0.25);
-            cursor: pointer;
-            /* Cambia el cursor para indicar que es clickeable */
-        }
-
-        thead th {
-            background-color: #f4f4f4;
-            text-align: left;
-            padding: 8px;
-        }
-
-
-        tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
-            /* Color alternante para las filas */
-        }
-
-        tbody tr:hover {
-            background-color: #eaeaea;
-            /* Color de fondo cuando se pasa el ratón sobre la fila */
-        }
-
-        tbody td {
-            padding: 8px;
-            border: 1px solid #ddd;
-            background: #d9d9d9;
-            border-radius: 16px 0px 0px 16px;
-            padding: 16px 40px 16px 40px;
-            display: flex;
-            flex-direction: row;
-            gap: 16px;
-            align-items: center;
-            justify-content: flex-start;
-            flex-shrink: 0;
-            width: 222px;
-            height: 50px;
-            position: relative;
-            box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, 0.25);
-        }
-
-        .cuadro-texto {
-            display: none;
-            position: fixed;
-            right: 0;
-            top: 0;
-            width: 300px;
-            /* Ajusta el ancho según sea necesario */
-            height: 100vh;
-            /* Ajusta la altura según sea necesario */
-            background-color: #fff;
-            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            overflow-y: auto;
-            z-index: 1000;
-            /* Asegura que el cuadro esté por encima de otros elementos */
-        }
-
-        .cuadro-texto.active {
-            display: block;
-        }
-
-        .btn-close {
-            cursor: pointer;
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            font-size: 20px;
-        }
-    </style>
-</head>
-
-<body>
-
-    <div class="sidebar">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light flex-column">
-            <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
-            <ul>
-                <a class="navbar-brand" href="#">Colocar imagen del usuario</a>
-                <br>
-                <a class="navbar-brand" href="#">Nombre del usuario</a>
-
-
-                <a href="/cerrarSesion" class="text-white ml-3 nav-link-cerrar">
-                    <h5>Cerrar Sesión</h5>
+<div class="tabs">
+    <div class="tab-container">
+        <!-- Cargar las dimensiones desde el servidor -->
+        {% for dimension in dimensiones %}
+        <div id="tab{{ dimension.id_dimension }}" class="tab">
+            <div class="frame-2337">
+                <a href="{{ url_for('idanalisisorganizacional.get_preguntas_respuestas', id_dimension=dimension.id_dimension) }}"
+                    class="tooltip-dimension">
+                    {{ dimension.nombre_dimension }}
+                    <span class="tooltip-text">{{ dimension.definicion_dimension }}</span>
                 </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
+{% if pregunta_actual %}
+<div class="questionnaire-container">
 
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav flex-column">
+    <form method="POST"
+        action="{{ url_for('idanalisisorganizacional.get_preguntas_respuestas', id_dimension=dimension_id, current_index=current_index) }}">
 
-                        <li class="nav-item dropdown active">
-                            <div class="btn-group">
-                                <a class="nav-link gestion-desempeno btn btn-warning" href="/gestiondeldesempeno"
-                                    role="button">
-                                    GESTIÓN DEL DESEMPEÑO
-                                    <img src="{{ url_for('static', filename='img/BGDesempeño.png')}}" />
+        <div class="pregunta-dimension">
 
-                                </a>
-                                <button
-                                    class="btn btn-secondary dropdown-toggle dropdown-toggle-split gestion-desempeno"
-                                    type="button" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <span class="sr-only ">Toggle Dropdown</span>
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="/proyectos">Proyectos</a>
-                                    <a class="dropdown-item" href="/analisisorganizacional">Análisis Organizacional</a>
-                                    <a class="dropdown-item" href="/evaluaciondecompetencias">Evaluación de
-                                        Competencias</a>
-                                    <a class="dropdown-item" href="/concertaciondepropositos">Concertación de
-                                        propositos</a>
-                                    <a class="dropdown-item" href="/identificaciondelideres">Identificación de
-                                        Lideres</a>
-                                    <a class="dropdown-item" href="/factoresclavesdeexito">Factores Claves de exito</a>
-                                </div>
-                            </div>
-                        </li>
+            {% if dimension_actual %}
+            <span class="dimension-label">Dimensión: {{ dimension_actual.nombre_dimension }}</span>
+            {% else %}
+            <span class="dimension-label">Dimensión no disponible</span>
+            {% endif %}
+            <br>
+            <texto-pregunta>{{ pregunta_actual.pregunta }}</texto-pregunta>
+        </div>
 
-                        <li class="nav-item dropdown active">
-                            <div class="btn-group">
-                                <a class="nav-link gestion-desarrollo btn btn-warning" href="/gestiondeldesarrollo"
-                                    role="button">
-                                    GESTIÓN DEL DESARROLLO
-                                    <img src="{{ url_for('static', filename='img/BGDesarrollo.png')}}" />
-                                </a>
-                                <button
-                                    class="btn btn-secondary dropdown-toggle dropdown-toggle-split gestion-desarrollo"
-                                    type="button" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <span class="sr-only">Toggle Dropdown</span>
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="/reportes">Reportes</a>
-                                    <a class="dropdown-item" href="/cursos">Cursos</a>
-                                    <a class="dropdown-item" href="/podcast">Podcast</a>
-                                    <a class="dropdown-item" href="/videos">Videos</a>
-                                </div>
-                            </div>
-                        </li>
+        <!-- Barra de progreso -->
+        <div class="progress-container">
+            <label for="progress">Progreso:</label>
+            <progress id="progress" value="{{ current_index + 1 }}" max="{{ total_preguntas }}"></progress>
+            <span>{{ current_index + 1 }} de {{ total_preguntas }}</span>
+        </div>
 
+        <div class="cuadro-respuestas">
+            {% for respuesta in respuestas %}
+            <div class="opcion-respuesta">
+                <input type="radio" id="respuesta{{ respuesta['id_dimension_respuesta'] }}" name="respuesta"
+                    value="{{ respuesta['id_dimension_respuesta'] }}" required>
+                <label for="respuesta{{ respuesta['id_dimension_respuesta'] }}">
+                    <span class="custom-radio"></span>
+                    {{ respuesta['respuesta'] }}
+                </label>
+            </div>
+            {% endfor %}
 
-                        <li class="nav-item active">
-                            <a class="nav-link mi-equipo btn btn-primary" href="/equipo">
-                                MI EQUIPO
-                                <img src="{{ url_for('static', filename='img/equipo.png')}}" class="equipo-png" />
-                            </a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link configuracion btn btn-success" href="/configuracion">
-                                CONFIGURACIÓN
-                                <img src="{{ url_for('static', filename='img/configuracion.png')}}" />
-                            </a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link inicio btn btn-dark" href="/inicio">
-                                INICIO
-                                <img src="{{ url_for('static', filename='img/inicio.png')}}" class="inicio-png" />
-                            </a>
-                        </li>
-                    </ul>
+            <!-- Botones de navegación -->
+            <div class="navegacion">
+
+                <div class="btn">
+                    <a href="/analisisorganizacional" class="volver1">VOLVER</a>
                 </div>
-            </ul>
-        </nav>
-    </div>
-    <!--Fin de barra lateral-->
 
-    <div class="content">
-        <h1>Análisis organizacional</h1>
-        <hr>
+                <div class="btn">
+                    <button type="submit" name="previous" class="btn boton-atras">
+                        <span class="atras">Atrás</span>
+                    </button>
+                </div>
 
-        {% if data %}
-        <div class="frame-2332">
-            <table>
-                <tbody>
-                    {% for item in data %}
-                    <tr>
-                        <td><a href="#"
-                                onclick="mostrarCuadroTexto('{{ item.nombre_dimen }}', '{{ item.texto_personalizado }}')">{{
-                                item.nombre_dimen }}</a></td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                <div class="btn">
+                    <button type="submit" name="next" class="btn boton-siguiente">
+                        <span class="siguiente">Siguiente</span>
+                    </button>
+                </div>
+            </div>
+
         </div>
-        {% else %}
-        <p>No se encontraron datos.</p>
-        {% endif %}
 
-        <div class="medium-filled">
-            <a href="/otrascontribuciones" class="volver">Volver</a>
-        </div>
-    </div>
+        <input type="hidden" name="current_index" value="{{ current_index + 1 }}">
 
-    <div id="cuadroTexto" class="cuadro-texto">
-        <span class="btn-close" onclick="cerrarCuadroTexto()">&times;</span>
-        <div id="textoContenido"></div>
-    </div>
+    </form>
 
-    <script>
-        function mostrarCuadroTexto(nombre, textoPersonalizado) {
-            var texto = 'Nombre: ' + nombre + '<br>Detalles: ' + textoPersonalizado;
-            document.getElementById('textoContenido').innerHTML = texto;
-            document.getElementById('cuadroTexto').classList.add('active');
-        }
+</div>
+{% else %}
+<!-- No mostrar preguntas si no existen -->
+{% endif %}
 
-        function cerrarCuadroTexto() {
-            document.getElementById('cuadroTexto').classList.remove('active');
-        }
-    </script>
+<img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+<img src="{{ url_for('static', filename='img/organizacion0.png')}}" class="usuarios" />
 
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK3A4E2f3P2Q4Y2K2Zx1W9zQ9xW0xO5W0hR2mZVqD8S7ZV2"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UOa1zB2uW8dV6/Z2W7o4dE8z6uhJS6EZ9WujhI4OFenD2wB7mHbWdpF7x98FHZ9W"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-fn4oN3jF9T5ZzDeyYzR+Ppj3+7E6k0a3M2bb2EXkX8dfy/jq4x5lT06BcC5tTr7H"
-        crossorigin="anonymous"></script>
-
-
-</body>
-
-</html>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Detalle del Microproyecto
+{% endblock %}
+
+{% block content %}
+<h1>Detalle del Microproyecto</h1>
+<hr>
+
+<!-- Sección de Actividades Clave -->
+
+<div class="seccion">
+        <h3>Actividades Clave</h3>
+        <ul>
+                {% if actividades_clave %}
+                {% for actividad in actividades_clave %}
+                {{ actividad['descripcion_actividad'] }}
+                {% endfor %}
+                {% else %}
+                <p>No hay actividades clave disponibles para este microproyecto.</p>
+                {% endif %}
+        </ul>
+</div>
+
+<!-- Sección de Aportes de Valor -->
+<div class="seccion">
+        <h3>Aportes de Valor</h3>
+        <ul>
+                {% if aportes_valor %}
+                {% for aporte in aportes_valor %}
+                {{ aporte['descripcion_aporte'] }}
+                {% endfor %}
+                {% else %}
+                <p>No hay aportes de valor disponibles para este microproyecto.</p>
+                {% endif %}
+        </ul>
+</div>
+
+<!-- Sección de Indicadores -->
+<div class="seccion">
+        <h3>Indicadores</h3>
+        <ul>
+                {% if indicadores %}
+                {% for indicador in indicadores %}
+                {{ indicador['valor_indicador'] }}
+                {% endfor %}
+                {% else %}
+                <p>No hay indicadores disponibles para este microproyecto.</p>
+                {% endif %}
+        </ul>
+</div>
+
+<img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+<!-- <img src="{{ url_for('static', filename='img/icon-user-friends-icon0.jpg')}}" class="usuarios" /> -->
+
+
+<!-- Botón para volver -->
+<div class="btn">
+        <a href="{{ url_for('idinfoproyectos.get_infoproyectos', id_proyecto=1) }}" class="volver">
+                <div class="medium-filled">
+                        Volver
+                </div>
+        </a>
+</div>
+
+{% endblock %}

@@ -1,19 +1,70 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
-</head>
+{% block title %}
+Concertación de Propositos Personales
+{% endblock %}
 
-<body>
-    <h1>zeta</h1>
+{% block content %}
 
-    <script src="" async defer></script>
-</body>
+<h1>GESTIÓN DEL DESEMPEÑO</h1>
+<hr>
+<div class="circle-wrapper">
+    <div class="circle"></div>
+    <h3>CONCERTACIÓN DE PROPÓSITOS
+        <br>
+        PERSONALES
+    </h3>
+</div>
 
-</html>
+<div style="position: relative; display: inline-block;">
+    <textarea class="cuadro-de-texto" name="proposito" id="proposito"
+        placeholder="Especifique propósito manifestado por el colaborador" aria-label="Caja de texto para nombre"
+        rows="4" cols="50" style="resize: none;"></textarea>
+    <button class="enviar" onclick="enviarPropositos()">Enviar</button>
+</div>
+
+<textarea type="text" class="cuadro-de-texto-proposito" name="nuevo_proposito" id="nuevo_proposito"
+    placeholder="Agregar nuevo propósito" aria-label="Caja de texto para nombre" rows="4" cols="50"
+    style="resize: none;"></textarea>
+
+<div class="btn">
+    <a href="/concertaciondepropositos" class="volver">
+        <div class="medium-filled">
+            VOLVER
+        </div>
+    </a>
+</div>
+
+<img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+<img src="{{ url_for('static', filename='img/objetivo-10.png')}}" class="usuarios" />
+
+<script>
+    function enviarPropositos() {
+        const proposito = document.getElementById('proposito').value;
+        const nuevo_proposito = document.getElementById('nuevo_proposito').value;
+
+        fetch('/concertaciondepropositospersonales', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                proposito: proposito,
+                nuevo_proposito: nuevo_proposito,
+                id_categoria: 2, // Puedes obtenerlo dinámicamente si es necesario
+                id_cargo: 1 // Puedes obtenerlo dinámicamente si es necesario
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Propositos guardados exitosamente');
+                } else {
+                    alert('Error al guardar los propositos');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
+
+{% endblock %}

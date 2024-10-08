@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 
 <head>
@@ -417,7 +417,7 @@
         }
     </style>
 </head>
-<!--Fin de la barra lateral-->
+
 <div class="sidebar">
     <nav class="navbar navbar-expand-lg navbar-light bg-light flex-column">
         <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
@@ -506,7 +506,16 @@
     </nav>
 </div>
 
-<div class="content">
+<div class="content"> -->
+
+    {% extends "layout.html" %}
+
+    {% block title %}
+    Videos
+    {% endblock %}
+    
+    {% block content %}
+
     <h1>Videos</h1>
     <hr>
     <p>Búsqueda de videos por nombre: <br> </p>
@@ -517,27 +526,27 @@
     </form>
     <br>
     <div class="rectangles-container">
-        <div class="rectangle-2101">
+        <div class="rectangle-2108">
             <video controls poster="{{ url_for('static', filename='img/mariposa0.png') }}" width="70%">
                 <source src="{{ url_for('static', filename='videos/Dancing triangle video.mp4') }}" type="video/mp4">
             </video>
         </div>
 
-        <div class="rectangle-2101">
+        <div class="rectangle-2108">
             <video controls poster="{{ url_for('static', filename='img/mariposa0.png') }}" width="70%">
                 <source src="{{ url_for('static', filename='videos/Dancing triangle video.mp4') }}" type="video/mp4">
             </video>
         </div>
     </div>
     <div class="rectangles-container">
-        <div class="rectangle-2101">
+        <div class="rectangle-2108">
             <video controls poster="{{ url_for('static', filename='img/mariposa0.png') }}" width="70%">
                 <source src="{{ url_for('static', filename='videos/Dancing triangle video.mp4') }}" type="video/mp4">
             </video>
         </div>
 
 
-        <div class="rectangle-2101">
+        <div class="rectangle-2108">
             <video controls poster="{{ url_for('static', filename='img/mariposa0.png') }}" width="70%">
                 <source src="{{ url_for('static', filename='videos/Dancing triangle video.mp4') }}" type="video/mp4">
             </video>
@@ -551,7 +560,7 @@
         </div>
     </div>
 
-</div>
+<!-- </div>
 <script>
     function toggleSidebar() {
         var sidebar = document.querySelector('.sidebar');
@@ -581,4 +590,6 @@
     crossorigin="anonymous"></script>
 </body>
 
-</html>
+</html> -->
+
+{% endblock %}
