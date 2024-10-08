@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Resultados Medición de Potencial 
+{% endblock %}
+
+{% block content %}
+<h1>Resultados Medición de Potencial</h1>
+<hr>
+
+<div class="resultados-container">
+    <h2>Respuestas Seleccionadas</h2>
+    <!-- Agregamos una verificación para ver si 'respuestas' está vacío -->
+    {% if respuestas %}
+        <ul>
+            {% for respuesta_grupo in respuestas %}
+                {% for respuesta in respuesta_grupo %}
+                <li>
+                    <strong>Pregunta {{ respuesta['id_dimension_mp_pregunta'] }}:</strong><br>
+                    <!-- ID Respuesta: {{ respuesta['id_dimension_mp_respuesta'] }}<br> -->
+                    Respuesta: {{ respuesta['respuesta_mp'] }}
+                </li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No se encontraron respuestas.</p>
+    {% endif %}
+</div>
+
+<!-- Agregamos un bloque para depuración -->
+<!-- <div class="debug-info">
+    <h3>Información de depuración:</h3>
+    <pre>{{ respuestas|pprint }}</pre>
+</div> -->
+
+<div class="btn">
+    <a href="/resultados" class="volver">
+        <div class="medium-filled">
+            VOLVER
+        </div>
+    </a>
+</div>
+
+<img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+<img src="{{ url_for('static', filename='img/proyecto-10.png')}}" class="usuarios" />
+
+{% endblock %}
