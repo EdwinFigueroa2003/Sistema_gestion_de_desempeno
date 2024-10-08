@@ -32,10 +32,13 @@ def vista_competenciastransversales():
 
     # Obtener preguntas filtradas por fk_nivel_de_contribucion
     try:
-        response_preguntas = requests.get(f'{API_URL}/pregunta/fk_nivel_de_contribucion/1', timeout=10) #filtra las pregutas
+        response_preguntas = requests.get(f'{API_URL}/pregunta/fk_nivel_de_contribucion/1', timeout=10)
         #response_preguntas = requests.get(f'{API_URL}/pregunta?fk_nivel_de_contribucion={fk_nivel_de_contribucion}', timeout=10) #Todas las preguntas sin filtro
         response_preguntas.raise_for_status()
         preguntas = response_preguntas.json()
+
+        if not isinstance(preguntas, list):
+            raise ValueError("La respuesta de la API no es una lista de preguntas")
 
         if current_index < 0:
             current_index = 0
@@ -43,12 +46,20 @@ def vista_competenciastransversales():
             return redirect(url_for('finalizo'))
 
         pregunta_actual = preguntas[current_index]
-        id_pregunta = pregunta_actual['id_pregunta']
+        if not isinstance(pregunta_actual, dict):
+            raise ValueError(f"La pregunta en el índice {current_index} no es un diccionario")
+
+        id_pregunta = pregunta_actual.get('id_pregunta')
+        if id_pregunta is None:
+            raise ValueError(f"La pregunta en el índice {current_index} no tiene 'id_pregunta'")
 
         # Obtener respuestas para la pregunta actual
         response_respuestas = requests.get(f'{API_URL}/respuesta/id_pregunta/{id_pregunta}', timeout=10)
         response_respuestas.raise_for_status()
         respuestas_list = response_respuestas.json()
+
+        if not isinstance(respuestas_list, list):
+            raise ValueError("La respuesta de la API para las respuestas no es una lista")
 
         # Mezclar las respuestas aleatoriamente
         random.shuffle(respuestas_list)
@@ -57,13 +68,13 @@ def vista_competenciastransversales():
         return render_template('competenciastransversales.html', 
                                pregunta=pregunta_actual, 
                                preguntas=preguntas,
-                               current_index=current_index,  # Asegúrate de que current_index siempre esté presente
+                               current_index=current_index,
                                total_preguntas=len(preguntas), 
                                usuario=session.get('usuario'))
-    except requests.RequestException as e:
-        print(f"Error al obtener datos: {e}")
-        # Incluso en caso de error, envía current_index a la plantilla
+    except (requests.RequestException, ValueError) as e:
+        print(f"Error al obtener o procesar datos: {e}")
         return render_template('competenciastransversales.html', 
                                pregunta=None, 
                                preguntas=[], 
-                               current_index=current_index)  # current_index se sigue enviando
+                               current_index=current_index,
+                               error_message=str(e))  # current_index se sigue enviando

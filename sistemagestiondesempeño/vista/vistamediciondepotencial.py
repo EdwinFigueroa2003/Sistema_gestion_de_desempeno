@@ -26,7 +26,7 @@ def vista_medicion_potencial():
         # Proceso de guardar la respuesta seleccionada
         if 'respuestas' not in session:
             session['respuestas'] = []
-        session['respuestas'].append(respuesta_seleccionada_id)
+        session['respuestas'] = session['respuestas'] + [respuesta_seleccionada_id]
         session.modified = True
         
         # Incrementar el índice actual para la siguiente pregunta
