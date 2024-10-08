@@ -21,12 +21,14 @@ def vista_medicion_potencial():
     
     if request.method == 'POST':
         respuesta_seleccionada_id = request.form.get('respuesta')
+        respuesta_seleccionada_id = int(respuesta_seleccionada_id)  # Asegúrate de que es un entero
+
         print(f"Respuesta seleccionada ID: {respuesta_seleccionada_id}")
         
         # Proceso de guardar la respuesta seleccionada
         if 'respuestas' not in session:
-            session['respuestas'] = []
-        session['respuestas'] = session['respuestas'] + [respuesta_seleccionada_id]
+            session['respuestas'] = []  # Asegúrate de que sea una lista
+        session['respuestas'].append(respuesta_seleccionada_id)  # Usar .append() en lugar de + para listas
         session.modified = True
         
         # Incrementar el índice actual para la siguiente pregunta
@@ -59,10 +61,8 @@ def vista_medicion_potencial():
         total_preguntas=len(preguntas)
     )
 
+
 @vistamediciondepotencial.route('/finalizo', methods=['GET'])
 def finalizo():
     # Aquí se mostrará un mensaje de finalización
     return render_template('finalizo.html')
-
-
-

@@ -14,8 +14,8 @@ def get_dimensiones():
     # Obtener las dimensiones
     dimensiones = requests.get(f"{API_URL}/dimension").json()
 
-    # Ordenar las dimensiones por el campo 'id_dimension'
-    dimensiones_ordenadas = sorted(dimensiones, key=lambda x: x['id_dimension'])
+    # Asegurarte de que todos los 'id_dimension' sean enteros antes de ordenar
+    dimensiones_ordenadas = sorted(dimensiones, key=lambda x: int(x['id_dimension']))
 
     return render_template('analisisorganizacional.html', dimensiones=dimensiones_ordenadas)
 
@@ -30,14 +30,14 @@ def get_preguntas_respuestas(id_dimension):
 
     if request.method == 'POST':
         respuesta_seleccionada_id = request.form.get('respuesta')
-        print(f"Respuesta seleccionada ID: {respuesta_seleccionada_id}")  # Nuevo print
+        print(f"Respuesta seleccionada ID: {respuesta_seleccionada_id}")
 
         if respuesta_seleccionada_id:
             # Hacer la solicitud a la API usando la URL correcta
             try:
                 respuesta_seleccionada = requests.get(f"{API_URL}/dimension_respuesta/id_dimension_respuesta/{respuesta_seleccionada_id}")
-                print(f"Respuesta de la API: {respuesta_seleccionada.status_code}")  # Nuevo print
-                print(f"Contenido de la respuesta: {respuesta_seleccionada.text}")  # Nuevo print
+                print(f"Respuesta de la API: {respuesta_seleccionada.status_code}")
+                print(f"Contenido de la respuesta: {respuesta_seleccionada.text}")
 
                 respuesta_seleccionada.raise_for_status()  # Esto lanzará una excepción para códigos de estado 4xx y 5xx
 
@@ -63,8 +63,8 @@ def get_preguntas_respuestas(id_dimension):
             # Convertir id_dimension a cadena
             id_dimension_str = str(id_dimension)
 
-            # Usar la clave correcta de la pregunta
-            id_pregunta_str = str(preguntas[current_index]['id_dimension_pregunta'])
+            # Usar la clave correcta de la pregunta, asegurándose de que sea un entero
+            id_pregunta = int(preguntas[current_index]['id_dimension_pregunta'])
 
             # Inicializar el diccionario de respuestas si no existe
             if 'respuestas' not in session:
@@ -74,24 +74,26 @@ def get_preguntas_respuestas(id_dimension):
             if id_dimension_str not in session['respuestas']:
                 session['respuestas'][id_dimension_str] = {}
 
-            # Guardar la respuesta asociada a la pregunta incluyendo semaforizacion
-            session['respuestas'][id_dimension_str][id_pregunta_str] = {
+            # Guardar la respuesta asociada a la pregunta, incluyendo semaforizacion
+            session['respuestas'][id_dimension_str][id_pregunta] = {
                 'pregunta': preguntas[current_index]['pregunta'],
                 'respuesta_id': respuesta_seleccionada_id,
                 'respuesta_texto': respuesta_texto,
                 'semaforizacion': semaforizacion  # Guardar semaforizacion aquí
-            }
-            print(f"Respuesta guardada en la sesión: {session['respuestas'][id_dimension_str][id_pregunta_str]}")  # Nuevo print
+                }
+            print(f"Respuesta guardada en la sesión: {session['respuestas'][id_dimension_str][id_pregunta]}")
 
             # Guardar los cambios en la sesión
             session.modified = True
 
-            # Incrementar el índice actual
+            # Incrementar el índice después de procesar la respuesta
             current_index += 1
 
-            # Redirigir a la siguiente pregunta o a la pantalla de finalización
+            # Redirigir a la siguiente pregunta o a la página de finalización
             if current_index < total_preguntas:
-                return redirect(url_for('idanalisisorganizacional.get_preguntas_respuestas', id_dimension=id_dimension, current_index=current_index))
+                return redirect(url_for('idanalisisorganizacional.get_preguntas_respuestas', 
+                                        id_dimension=id_dimension, 
+                                        current_index=current_index))
             else:
                 return redirect(url_for('idanalisisorganizacional.finalizo'))
 
@@ -100,12 +102,15 @@ def get_preguntas_respuestas(id_dimension):
         return redirect(url_for('idanalisisorganizacional.finalizo'))
 
     # Obtener la pregunta actual y las posibles respuestas
-    pregunta_actual = preguntas[current_index]
-    respuestas = requests.get(f"{API_URL}/dimension_respuesta/id_dimension_pregunta/{pregunta_actual['id_dimension_pregunta']}").json()
+    if current_index < len(preguntas):
+        pregunta_actual = preguntas[current_index]
+        respuestas = requests.get(f"{API_URL}/dimension_respuesta/id_dimension_pregunta/{pregunta_actual['id_dimension_pregunta']}").json()
     
-    # Mezclar las respuestas aleatoriamente
-    random.shuffle(respuestas)
-    pregunta_actual['respuestas'] = respuestas
+        # Mezclar las respuestas aleatoriamente
+        random.shuffle(respuestas)
+    else:
+        # Manejar el caso cuando no hay más preguntas
+        return redirect(url_for('idanalisisorganizacional.finalizo'))
 
     # Obtener la dimensión actual
     dimensiones = requests.get(f"{API_URL}/dimension").json()
@@ -114,7 +119,6 @@ def get_preguntas_respuestas(id_dimension):
 
     return render_template(
         'analisisorganizacional.html',
-        preguntas=preguntas,
         pregunta_actual=pregunta_actual,
         respuestas=respuestas,
         current_index=current_index,

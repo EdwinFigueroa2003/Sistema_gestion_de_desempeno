@@ -10,36 +10,41 @@ Resultados Medición de Potencial
 
 <div class="resultados-container">
     <h2>Respuestas Seleccionadas</h2>
-    <!-- Agregamos una verificación para ver si 'respuestas' está vacío -->
-    {% if respuestas %}
-        <ul>
-            {% for respuesta_grupo in respuestas %}
-                {% for respuesta in respuesta_grupo %}
-                <li>
-                    <strong>Pregunta {{ respuesta['id_dimension_mp_pregunta'] }}:</strong><br>
-                    <!-- ID Respuesta: {{ respuesta['id_dimension_mp_respuesta'] }}<br> -->
-                    Respuesta: {{ respuesta['respuesta_mp'] }}
-                </li>
+    <table>
+        <thead>
+            <tr>
+                <th>Dimensión</th>
+                <th>Pregunta</th>
+                <th>Respuesta</th>
+            </tr>
+        </thead>
+        <tbody id="resultados">
+            {% if respuestas %}
+                {% for detalle in respuestas %}
+                    <tr>
+                        <td>{{ detalle['dimension'] }}</td> <!-- Mostrar la dimensión -->
+                        <td>{{ detalle['pregunta'] }}</td> <!-- Mostrar la pregunta -->
+                        <td>{{ detalle['respuesta'] }}</td> <!-- Mostrar la respuesta -->
+                    </tr>
                 {% endfor %}
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No se encontraron respuestas.</p>
-    {% endif %}
+            {% else %}
+                <tr>
+                    <td colspan="3" style="text-align: center;">No se encontraron respuestas.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
 </div>
 
-<!-- Agregamos un bloque para depuración -->
-<!-- <div class="debug-info">
-    <h3>Información de depuración:</h3>
-    <pre>{{ respuestas|pprint }}</pre>
-</div> -->
 
-<div class="btn">
-    <a href="/resultados" class="volver">
-        <div class="medium-filled">
-            VOLVER
-        </div>
-    </a>
+<div class="action-buttons">
+    <!-- <a href="#" id="toggleButton" onclick="toggleView()">Ver Gráfica</a> -->
+    <a href="#" onclick="window.print();">Imprimir Informe</a>
+    <!-- <a href="{{ url_for('download_excel', incluir_grafica='true') }}" id="downloadButton">Descargar Excel</a> -->
+    <a href="/resultados">Volver</a>
+    <!-- Pasa el parámetro -->
+    <br>
 </div>
 
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
