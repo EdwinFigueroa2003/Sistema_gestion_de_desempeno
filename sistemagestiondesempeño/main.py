@@ -18,6 +18,7 @@ from vista.vistadetallemicroproyecto import vistadetallemicroproyecto
 from vista.vistagestiondeldesarrollo import vistagestiondeldesarrollo
 from vista.vistainforme import vistainforme
 from vista.vistafactoresclavesdeexito import vistafactoresclavesdeexito
+from vista.vistaresultadosfactoresclavesdeexito import vistaresultadosfactoresclavesdeexito
 from vista.vistamediciondepotencial import vistamediciondepotencial
 from vista.vistaresultadosmediciondepotencial import vistaresultadosmediciondepotencial
 from vista.vistaconcertaciondepropositos import vistaconcertaciondepropositos
@@ -60,6 +61,7 @@ app.register_blueprint(vistaanalisisorganizacional)
 app.register_blueprint(vistaconcertaciondepropositos)
 app.register_blueprint(vistadetallemicroproyecto)
 app.register_blueprint(vistafactoresclavesdeexito)
+app.register_blueprint(vistaresultadosfactoresclavesdeexito)
 app.register_blueprint(vistamediciondepotencial)
 app.register_blueprint(vistaresultadosmediciondepotencial)
 app.register_blueprint(vistaconcertaciondedisponibilidad)
