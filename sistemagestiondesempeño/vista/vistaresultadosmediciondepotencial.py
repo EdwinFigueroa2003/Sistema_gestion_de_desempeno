@@ -10,86 +10,135 @@ from control.ControlEntidad import ControlEntidad
 # Crear un Blueprint
 vistaresultadosmediciondepotencial = Blueprint('idresultadosmediciondepotencial', __name__, template_folder='templates')
 
-@vistaresultadosmediciondepotencial.route('/resultadosmediciondepotencial', methods=['GET', 'POST'])
+@vistaresultadosmediciondepotencial.route('/resultadosmediciondepotencial', methods=['GET'])
 def vista_resultados_medicion_de_potencial():
-    # Acceder a las respuestas almacenadas en la sesión
-    respuestas = session.get('respuestas', [])
+    try:
+        # Obtener todas las respuestas guardadas
+        url_respuestas_guardadas = f"{API_URL}/dimension_mp_respuesta_guardada"
+        response_respuestas = requests.get(url_respuestas_guardadas)
+        response_respuestas.raise_for_status()
+        respuestas_guardadas = response_respuestas.json()
 
-    # Inicializar una lista para almacenar los detalles de las respuestas
-    detalles_respuestas = []
+        # Inicializar una lista para almacenar los detalles de las respuestas
+        detalles_respuestas = []
 
-    for id_dimension_mp_respuesta in respuestas:
-        try:
-            # Obtener los detalles de la respuesta
-            url_respuesta = f"{API_URL}/dimension_mp_respuesta/id_dimension_mp_respuesta/{id_dimension_mp_respuesta}"
-            response_respuesta = requests.get(url_respuesta)
-            print(f"Solicitando URL: {url_respuesta}")
+        for respuesta_guardada in respuestas_guardadas:
+            try:
+                # Obtener detalles de la dimensión
+                url_dimension = f"{API_URL}/dimension_mp/id_dimension_mp/{respuesta_guardada['id_dimension_mp']}"
+                print(f"Solicitando dimensión: {url_dimension}")
+                response_dimension = requests.get(url_dimension)
+                response_dimension.raise_for_status()
+                dimension_detalle = response_dimension.json()[0]  # Tomar el primer elemento de la lista
+                print(f"Respuesta dimensión: {dimension_detalle}")
 
-            if response_respuesta.status_code == 200:
-                try:
-                    respuesta_detalle = response_respuesta.json()
+                # Obtener detalles de la pregunta
+                url_pregunta = f"{API_URL}/dimension_mp_pregunta/id_dimension_mp_pregunta/{respuesta_guardada['id_dimension_mp_pregunta']}"
+                print(f"Solicitando pregunta: {url_pregunta}")
+                response_pregunta = requests.get(url_pregunta)
+                response_pregunta.raise_for_status()
+                pregunta_detalle = response_pregunta.json()[0]  # Tomar el primer elemento de la lista
+                print(f"Respuesta pregunta: {pregunta_detalle}")
 
-                    # Verificar si la respuesta es una lista
-                    if isinstance(respuesta_detalle, list):
-                        respuesta_detalle = respuesta_detalle[0]  # Obtener el primer elemento de la lista
+                # Obtener detalles de la respuesta
+                url_respuesta = f"{API_URL}/dimension_mp_respuesta/id_dimension_mp_respuesta/{respuesta_guardada['id_dimension_mp_respuesta']}"
+                print(f"Solicitando respuesta: {url_respuesta}")
+                response_respuesta = requests.get(url_respuesta)
+                response_respuesta.raise_for_status()
+                respuesta_detalle = response_respuesta.json()[0]  # Tomar el primer elemento de la lista
+                print(f"Respuesta respuesta: {respuesta_detalle}")
 
-                    # Obtener el id de la pregunta asociada a la respuesta
-                    id_dimension_mp_pregunta = respuesta_detalle['id_dimension_mp_pregunta']
+                # Crear un diccionario con los detalles
+                detalle = {
+                    'dimension': dimension_detalle['nombre'],
+                    'pregunta': pregunta_detalle['pregunta'],
+                    'respuesta': respuesta_detalle['respuesta_mp'],
+                    'fecha_respuesta': respuesta_guardada['fecha_respuesta']
+                }
+                
+                detalles_respuestas.append(detalle)
+            except Exception as e:
+                print(f"Error al procesar una respuesta: {e}")
+                detalles_respuestas.append({
+                    'dimension': 'Error',
+                    'pregunta': 'Error al obtener detalles',
+                    'respuesta': str(e),
+                    'fecha_respuesta': respuesta_guardada['fecha_respuesta']
+                })
 
-                    # Ahora obtener los detalles de la pregunta
-                    url_pregunta = f"{API_URL}/dimension_mp_pregunta/id_dimension_mp_pregunta/{id_dimension_mp_pregunta}"
-                    response_pregunta = requests.get(url_pregunta)
-                    print(f"Solicitando URL de la pregunta: {url_pregunta}")
+        return render_template('resultadosmediciondepotencial.html', respuestas=detalles_respuestas)
 
-                    if response_pregunta.status_code == 200:
-                        pregunta_detalle = response_pregunta.json()
+    except requests.RequestException as e:
+        print(f"Error al obtener los datos: {e}")
+        return render_template('resultadosmediciondepotencial.html', respuestas=[])
 
-                        # Verificar si la pregunta es una lista
-                        if isinstance(pregunta_detalle, list):
-                            pregunta_detalle = pregunta_detalle[0]  # Obtener el primer elemento de la lista
+""" @vistaresultadosmediciondepotencial.route('/exportar_excel', methods=['GET'])
+def exportar_excel():
+    try:
+        # Obtener todas las respuestas guardadas
+        url_respuestas_guardadas = f"{API_URL}/dimension_mp_respuesta_guardada"
+        response_respuestas = requests.get(url_respuestas_guardadas)
+        response_respuestas.raise_for_status()
+        respuestas_guardadas = response_respuestas.json()
 
-                        # Obtener el id de la dimensión asociada a la pregunta
-                        id_dimension_mp = pregunta_detalle['id_dimension_mp']
+        # Crear un nuevo libro de trabajo de Excel
+        wb = Workbook()
+        ws = wb.active
+        ws.title = "Resultados Medición de Potencial"
 
-                        # Ahora obtener los detalles de la dimensión
-                        url_dimension = f"{API_URL}/dimension_mp/id_dimension_mp/{id_dimension_mp}"
-                        response_dimension = requests.get(url_dimension)
-                        print(f"Solicitando URL de la dimensión: {url_dimension}")
+        # Agregar encabezados
+        ws.append(["Dimensión", "Pregunta", "Respuesta", "Fecha de Respuesta"])
 
-                        if response_dimension.status_code == 200:
-                            dimension_detalle = response_dimension.json()
+        # Agregar datos
+        for respuesta_guardada in respuestas_guardadas:
+            try:
+                # Obtener detalles de la dimensión
+                url_dimension = f"{API_URL}/dimension_mp/id_dimension_mp/{respuesta_guardada['id_dimension_mp']}"
+                response_dimension = requests.get(url_dimension)
+                response_dimension.raise_for_status()
+                dimension_detalle = response_dimension.json()[0]
 
-                            # Verificar si la dimensión es una lista
-                            if isinstance(dimension_detalle, list):
-                                dimension_detalle = dimension_detalle[0]  # Obtener el primer elemento de la lista
+                # Obtener detalles de la pregunta
+                url_pregunta = f"{API_URL}/dimension_mp_pregunta/id_dimension_mp_pregunta/{respuesta_guardada['id_dimension_mp_pregunta']}"
+                response_pregunta = requests.get(url_pregunta)
+                response_pregunta.raise_for_status()
+                pregunta_detalle = response_pregunta.json()[0]
 
-                            # Crear un nuevo diccionario para cada respuesta
-                            detalle = {
-                                'pregunta': pregunta_detalle['pregunta'],
-                                'respuesta': respuesta_detalle['respuesta_mp'],
-                                'dimension': dimension_detalle['nombre']
-                            }
-                            
-                            # Agregar el diccionario a la lista
-                            detalles_respuestas.append(detalle)
+                # Obtener detalles de la respuesta
+                url_respuesta = f"{API_URL}/dimension_mp_respuesta/id_dimension_mp_respuesta/{respuesta_guardada['id_dimension_mp_respuesta']}"
+                response_respuesta = requests.get(url_respuesta)
+                response_respuesta.raise_for_status()
+                respuesta_detalle = response_respuesta.json()[0]
 
-                        else:
-                            print(f"Error al obtener la dimensión: {response_dimension.status_code}")
-                    else:
-                        print(f"Error al obtener la pregunta: {response_pregunta.status_code}")
-                except requests.exceptions.JSONDecodeError:
-                    print(f"Error al decodificar la respuesta para ID: {id_dimension_mp_respuesta}")
-                    continue
-            else:
-                print(f"Error en la solicitud para ID: {id_dimension_mp_respuesta}, status code: {response_respuesta.status_code}")
-                print(f"Contenido de la respuesta: {response_respuesta.text}")
-                continue
-        except requests.exceptions.RequestException as e:
-            print(f"Error al hacer la solicitud para ID: {id_dimension_mp_respuesta}: {e}")
-            continue
+                # Agregar fila al Excel
+                ws.append([
+                    dimension_detalle['nombre'],
+                    pregunta_detalle['pregunta'],
+                    respuesta_detalle['respuesta_mp'],
+                    respuesta_guardada['fecha_respuesta']
+                ])
+            except Exception as e:
+                print(f"Error al procesar una respuesta para Excel: {e}")
+                ws.append(["Error", "Error al obtener detalles", str(e), respuesta_guardada['fecha_respuesta']])
 
-    # Asegurarse de que detalles_respuestas sea una lista antes de pasarlo a render_template
-    if not isinstance(detalles_respuestas, list):
-        detalles_respuestas = [detalles_respuestas]
+        # Guardar el archivo Excel en memoria
+        excel_file = BytesIO()
+        wb.save(excel_file)
+        excel_file.seek(0)
 
-    return render_template('resultadosmediciondepotencial.html', respuestas=detalles_respuestas)
+        # Generar un nombre de archivo con la fecha actual
+        fecha_actual = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"Resultados_Medicion_Potencial_{fecha_actual}.xlsx"
+
+        # Enviar el archivo Excel como respuesta
+        return send_file(
+            excel_file,
+            as_attachment=True,
+            download_name=filename,
+            mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+
+    except Exception as e:
+        print(f"Error al generar el archivo Excel: {e}")
+        return "Error al generar el archivo Excel", 500
+ """

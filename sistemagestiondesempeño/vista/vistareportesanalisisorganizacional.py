@@ -10,32 +10,30 @@ from control.ControlEntidad import ControlEntidad
 # Crear un Blueprint
 vistareportesanalisisorganizacional = Blueprint('idreportesanalisisorganizacional', __name__, template_folder='templates')
 
-# Ruta para mostrar los resultados al finalizar el cuestionario
-@vistareportesanalisisorganizacional.route('/reportesanalisisorganizacional', methods=['GET', 'POST'])
+@vistareportesanalisisorganizacional.route('/reportesanalisisorganizacional', methods=['GET'])
 def mostrar_reporte():
-    # Obtener todas las dimensiones
-    dimensiones = requests.get(f"{API_URL}/dimension").json()
-    dimensiones_ordenadas = sorted(dimensiones, key=lambda x: x['id_dimension'])
+    try:
+        # Obtener todas las respuestas guardadas a través de la API
+        respuestas = requests.get(f"{API_URL}/dimension_respuesta_guardada").json()
 
-    # Obtener las respuestas guardadas en la sesión
-    respuestas_guardadas = session.get('respuestas', {})
-
-    print("Respuestas guardadas en la sesión:", respuestas_guardadas)
-
-    reporte = []
-    for dimension in dimensiones_ordenadas:
-        id_dimension_str = str(dimension['id_dimension'])
-        
-        if id_dimension_str in respuestas_guardadas:
-            preguntas_respuestas = respuestas_guardadas[id_dimension_str]
+        reporte = []
+        for respuesta in respuestas:
+            # Obtener detalles de la pregunta
+            pregunta = requests.get(f"{API_URL}/dimension_pregunta/{respuesta['id_dimension_pregunta']}").json()
             
-            for pr in preguntas_respuestas.values():
-                reporte.append({
-                    'pregunta': pr['pregunta'],
-                    'respuesta': pr['respuesta_texto'],
-                    'semaforizacion': pr.get('semaforizacion', 'No disponible')
-                })
+            # Obtener detalles de la respuesta
+            respuesta_detalle = requests.get(f"{API_URL}/dimension_respuesta/{respuesta['id_dimension_respuesta']}").json()
 
-    print("Reporte generado:", reporte)
+            reporte.append({
+                'pregunta': pregunta['pregunta'],
+                'respuesta': respuesta_detalle['respuesta'],
+                'semaforizacion': respuesta_detalle['semaforizacion']
+            })
 
-    return render_template('reportesanalisisorganizacional.html', reporte=reporte)
+        return render_template('reportesanalisisorganizacional.html', reporte=reporte)
+    
+    except requests.exceptions.RequestException as e:
+        print(f"Error al hacer la solicitud a la API: {e}")
+        return render_template('error.html', mensaje="Error al obtener el reporte")
+    
+

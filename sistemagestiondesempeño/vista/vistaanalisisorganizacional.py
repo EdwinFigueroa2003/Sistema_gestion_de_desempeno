@@ -28,6 +28,7 @@ def get_preguntas_respuestas(id_dimension):
 
         if respuesta_seleccionada_id:
             try:
+                # Obtener la respuesta
                 respuesta_seleccionada = requests.get(f"{API_URL}/dimension_respuesta/id_dimension_respuesta/{respuesta_seleccionada_id}")
                 print(f"Respuesta de la API: {respuesta_seleccionada.status_code}")
                 print(f"Contenido de la respuesta: {respuesta_seleccionada.text}")
@@ -35,39 +36,15 @@ def get_preguntas_respuestas(id_dimension):
                 respuesta_seleccionada.raise_for_status()
                 respuesta_seleccionada_json = respuesta_seleccionada.json()
 
-                # Procesar la respuesta
-                if isinstance(respuesta_seleccionada_json, list):
-                    if len(respuesta_seleccionada_json) > 0:
-                        respuesta_texto = respuesta_seleccionada_json[0].get('respuesta', 'Sin respuesta')
-                        semaforizacion = respuesta_seleccionada_json[0].get('semaforizacion', 'No determinado')
-                    else:
-                        respuesta_texto = 'Sin respuesta'
-                        semaforizacion = 'No determinado'
-                else:
-                    respuesta_texto = respuesta_seleccionada_json.get('respuesta', 'Sin respuesta')
-                    semaforizacion = respuesta_seleccionada_json.get('semaforizacion', 'No determinado')
-
-                # Asegurarse de que todas las claves sean strings
-                id_dimension_str = str(id_dimension)
-                id_pregunta_str = str(preguntas[current_index]['id_dimension_pregunta'])
-
-                # Inicializar la estructura de la sesión si no existe
-                if 'respuestas' not in session:
-                    session['respuestas'] = {}
-
-                if id_dimension_str not in session['respuestas']:
-                    session['respuestas'][id_dimension_str] = {}
-
-                # Guardar la respuesta usando strings como claves
-                session['respuestas'][id_dimension_str][id_pregunta_str] = {
-                    'pregunta': preguntas[current_index]['pregunta'],
-                    'respuesta_id': str(respuesta_seleccionada_id),  # Convertir a string
-                    'respuesta_texto': respuesta_texto,
-                    'semaforizacion': semaforizacion
+                # Guardar la respuesta en la base de datos a través de la API
+                respuesta_guardada_data = {
+                    "id_dimension": id_dimension,
+                    "id_dimension_pregunta": preguntas[current_index]['id_dimension_pregunta'],
+                    "id_dimension_respuesta": int(respuesta_seleccionada_id)
                 }
-
-                # Asegurarse de que los cambios se guarden
-                session.modified = True
+                
+                guardar_respuesta = requests.post(f"{API_URL}/dimension_respuesta_guardada", json=respuesta_guardada_data)
+                guardar_respuesta.raise_for_status()
 
                 # Incrementar el índice
                 current_index += 1

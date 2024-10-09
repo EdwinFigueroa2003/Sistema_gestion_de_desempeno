@@ -11,11 +11,23 @@ from control.ControlEntidad import ControlEntidad
 # Crear un Blueprint
 vistamediciondepotencial = Blueprint('idmediciondepotencial', __name__, template_folder='templates')
 
+# Función para guardar la respuesta a través de la API
+def guardar_respuesta(id_dimension_mp, id_dimension_mp_pregunta, id_dimension_mp_respuesta):
+    try:
+        data = {
+            "id_dimension_mp": id_dimension_mp,
+            "id_dimension_mp_pregunta": id_dimension_mp_pregunta,
+            "id_dimension_mp_respuesta": id_dimension_mp_respuesta
+        }
+        response = requests.post(f"{API_URL}/dimension_mp_respuesta_guardada", json=data)
+        response.raise_for_status()  # Esto lanzará una excepción para códigos de estado HTTP no exitosos
+        print("Respuesta guardada exitosamente")
+    except requests.RequestException as e:
+        print(f"Error al guardar la respuesta: {e}")
+
+
 @vistamediciondepotencial.route('/mediciondepotencial', methods=['GET', 'POST'])
 def vista_medicion_potencial():
-    # Limpiar la sesión para empezar de nuevo
-    #session.pop('respuestas', None)  # Eliminar respuestas anteriores, si existen
-
     # Obtener las preguntas de la dimensión
     preguntas = requests.get(f"{API_URL}/dimension_mp_pregunta").json()
     
@@ -24,16 +36,17 @@ def vista_medicion_potencial():
     
     if request.method == 'POST':
         respuesta_seleccionada_id = request.form.get('respuesta')
-        print(f"Respuesta seleccionada: {respuesta_seleccionada_id}")  # Depuración
         
         if respuesta_seleccionada_id:
-            respuesta_seleccionada_id = int(respuesta_seleccionada_id)  # Asegúrate de que es un entero
+            respuesta_seleccionada_id = int(respuesta_seleccionada_id)
+            pregunta_actual = preguntas[current_index]
             
-            if 'respuestas' not in session:
-                session['respuestas'] = []  # Inicializa como lista
-            session['respuestas'].append(respuesta_seleccionada_id)  # Usa .append()
-            print(f"Respuestas en la sesión: {session['respuestas']}")  # Depuración
-            session.modified = True
+            # Guardar la respuesta a través de la API
+            guardar_respuesta(
+                pregunta_actual['id_dimension_mp'],
+                pregunta_actual['id_dimension_mp_pregunta'],
+                respuesta_seleccionada_id
+            )
             
             # Incrementar el índice actual para la siguiente pregunta
             current_index += 1
@@ -64,8 +77,6 @@ def vista_medicion_potencial():
         current_index=current_index,
         total_preguntas=len(preguntas)
     )
-
-
 
 @vistamediciondepotencial.route('/finalizo', methods=['GET'])
 def finalizo():
