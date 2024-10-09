@@ -11,9 +11,16 @@ Resultado de Análisis Organizacional
 
 <body>
     <h1>Reporte de Análisis Organizacional</h1>
+    
+    {% if mensaje %}
+    <p>{{ mensaje }}</p>
+    {% endif %}
+
+    {% if reporte %}
     <table>
         <thead>
             <tr>
+                <th>Dimensión</th>  <!-- Nueva columna -->
                 <th>Pregunta</th>
                 <th>Respuesta</th>
                 <th>Semaforización</th>
@@ -22,6 +29,7 @@ Resultado de Análisis Organizacional
         <tbody>
             {% for item in reporte %}
             <tr>
+                <td>{{ item.dimension }}</td>  <!-- Mostrar la dimensión -->
                 <td>{{ item.pregunta }}</td>
                 <td>{{ item.respuesta }}</td>
                 <td>
@@ -35,6 +43,8 @@ Resultado de Análisis Organizacional
             {% endfor %}
         </tbody>
     </table>
+    {% endif %}
+    
 </body>
 
 <div class="btn">
