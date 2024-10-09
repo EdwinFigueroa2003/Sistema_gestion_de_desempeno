@@ -68,7 +68,8 @@ Resultados Competencias Transversales
 
         respuestas.forEach(function (respuesta, index) {
             xValues.push(index + 1); // Usa índices como etiquetas del eje X
-            yValues.push(parseFloat(respuesta.valor_respuesta)); // Usa valor_respuesta para el eje Y
+            var valor = parseFloat(respuesta.valor_respuesta);
+            yValues.push(isNaN(valor) ? 0 : valor); // Usa 0 si no es un número válido
         });
 
         var trace = {
@@ -83,7 +84,7 @@ Resultados Competencias Transversales
         var layout = {
             title: 'Valores de Respuestas',
             xaxis: { title: 'Índice' },
-            yaxis: { title: 'Valor', range: [1, 4] }
+            yaxis: { title: 'Valor', range: [0, 5] }  // Ajustado el rango para incluir 0
         };
 
         Plotly.newPlot('plotly-chart', data, layout);

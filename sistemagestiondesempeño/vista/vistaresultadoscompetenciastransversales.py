@@ -1,5 +1,5 @@
 from pprint import pprint
-from flask import Blueprint, request, render_template, redirect, url_for, session
+from flask import Blueprint, render_template, jsonify
 from Entidad import Entidad
 import requests
 from control.ControlEntidad import ControlEntidad
@@ -7,47 +7,43 @@ from configBd import API_URL
  
 # Crear un Blueprint
 vistaresultadoscompetenciastransversales = Blueprint('idresultadoscompetenciastransversales', __name__, template_folder='templates')
- 
-@vistaresultadoscompetenciastransversales.route('/resultadoscompetenciastransversales', methods=['GET', 'POST'])
+
+@vistaresultadoscompetenciastransversales.route('/resultadoscompetenciastransversales', methods=['GET'])
 def resultadoscompetenciastransversales():
-    respuestas = session.get('respuestas', {})
+    resultados = []
     
-    preguntas_respuestas = []
-    for id_pregunta, id_respuesta in respuestas.items():
-        try:
-            # Verifica que el endpoint para obtener preguntas por ID sea correcto
-            response_pregunta = requests.get(f'{API_URL}/pregunta/id_pregunta/{id_pregunta}', timeout=10)
-            response_pregunta.raise_for_status()
-            pregunta = response_pregunta.json()
+    try:
+        # Obtener todas las respuestas de usuario
+        response_respuestas = requests.get(f'{API_URL}/usuario_respuesta', timeout=10)
+        response_respuestas.raise_for_status()
+        respuestas_usuario = response_respuestas.json()
 
-            # Imprimir la respuesta de la API para depuración
-            print(f"Respuesta de pregunta: {pregunta}")
+        # Obtener todas las preguntas
+        response_preguntas = requests.get(f'{API_URL}/pregunta', timeout=10)
+        response_preguntas.raise_for_status()
+        preguntas = {p['id_pregunta']: p for p in response_preguntas.json()}
 
-            # Si es una lista, accede al primer elemento
-            if isinstance(pregunta, list) and len(pregunta) > 0:
-                pregunta = pregunta[0]
+        # Obtener todas las respuestas
+        response_respuestas_detalle = requests.get(f'{API_URL}/respuesta', timeout=10)
+        response_respuestas_detalle.raise_for_status()
+        respuestas_detalle = {r['id_respuesta']: r for r in response_respuestas_detalle.json()}
+
+        for respuesta in respuestas_usuario:
+            pregunta = preguntas.get(respuesta['id_pregunta'], {})
+            detalle_respuesta = respuestas_detalle.get(respuesta['id_respuesta'], {})
             
-            # Verifica que el endpoint para obtener respuestas por ID sea correcto
-            response_respuesta = requests.get(f'{API_URL}/respuesta/id_respuesta/{id_respuesta}', timeout=10)
-            response_respuesta.raise_for_status()
-            respuesta = response_respuesta.json()
-
-            # Imprimir la respuesta de la API para depuración
-            print(f"Respuesta de respuesta: {respuesta}")
-
-            # Si es una lista, accede al primer elemento
-            if isinstance(respuesta, list) and len(respuesta) > 0:
-                respuesta = respuesta[0]
-
-            preguntas_respuestas.append({
-                #'texto_pregunta': pregunta.get('texto_pregunta', 'Pregunta no disponible'),
-                'texto_respuesta': respuesta.get('texto_respuesta', 'Respuesta no disponible'),
-                'valor_respuesta': respuesta.get('valor_respuesta', 'valor no disponible'),
-                'ruta_de_desarrollo': respuesta.get('ruta_de_desarrollo', 'ruta de desarrollo no disponible'),
-                'ruta_de_autodesarrollo': respuesta.get('ruta_de_autodesarrollo', 'ruta de autodesarrollo no disponible'),
+            resultados.append({
+                'id_usuario_respuesta': respuesta['id_usuario_respuesta'],
+                'texto_pregunta': pregunta.get('texto_pregunta', 'Pregunta no disponible'),
+                'texto_respuesta': detalle_respuesta.get('texto_respuesta', 'Respuesta no disponible'),
+                'valor_respuesta': detalle_respuesta.get('valor_respuesta', 'Valor no disponible'),
+                'ruta_de_desarrollo': detalle_respuesta.get('ruta_de_desarrollo', 'Ruta de desarrollo no disponible'),
+                'ruta_de_autodesarrollo': detalle_respuesta.get('ruta_de_autodesarrollo', 'Ruta de autodesarrollo no disponible'),
+                'fecha_respuesta': respuesta.get('fecha_respuesta', 'Fecha no disponible')
             })
 
-        except requests.RequestException as e:
-            print(f"Error al obtener datos: {e}")
+    except requests.RequestException as e:
+        print(f"Error al obtener datos: {e}")
+        return "Error al obtener los resultados", 500
 
-    return render_template('resultadoscompetenciastransversales.html', respuestas=preguntas_respuestas)
+    return render_template('resultadoscompetenciastransversales.html', respuestas=resultados)

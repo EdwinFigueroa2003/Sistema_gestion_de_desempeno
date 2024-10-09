@@ -22,8 +22,28 @@ def vista_competenciastransversales():
     # Manejar las respuestas enviadas por el usuario
     if request.method == 'POST' and 'respuesta_seleccionada' in request.form:
         pregunta_id = request.form.get('pregunta_id')
-        respuestas[pregunta_id] = request.form.get('respuesta_seleccionada')
-        session['respuestas'] = respuestas
+        respuesta_id = request.form.get('respuesta_seleccionada')
+        
+        # Crear un diccionario con los datos de la respuesta
+        datos_respuesta = {
+            'id_pregunta': int(pregunta_id),
+            'id_respuesta': int(respuesta_id),
+        }
+        
+        print(f"Datos a enviar a la API: {datos_respuesta}")  # Añadir esta línea
+        
+        # Enviar la respuesta a la API
+        try:
+            response = requests.post('http://127.0.0.1:5184/api/sgd/usuario_respuesta', json=datos_respuesta, timeout=10)
+            print(f"Respuesta de la API: {response.status_code}, {response.text}")  # Añadir esta línea
+            response.raise_for_status()
+            # Si la respuesta se guardó correctamente, actualizar la sesión
+            respuestas = session.get('respuestas', {})
+            respuestas[pregunta_id] = respuesta_id
+            session['respuestas'] = respuestas
+        except requests.RequestException as e:
+            print(f"Error al guardar la respuesta en la API: {e}")
+            print(f"Detalles de la respuesta: {e.response.text if e.response else 'No hay detalles'}")  # Añadir esta línea
 
         if 'next' in request.form:
             current_index += 1
