@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Detalles del Curso
+{% endblock %}
+
+{% block content %}
+<h1>Cursos</h1>
+<hr>
+
+<div class="container">
+    {% if curso %}
+        <div class="curso-detalle">
+            <div class="curso-info">
+                <p><strong>ID: </strong>{{ curso.id }}</p>
+                <p><strong>Título: </strong>{{ curso.titulo }}</p>
+                <p><strong>Descripción: </strong>{{ curso.descripcion }}</p>
+                <p><strong>Categoría: </strong>{{ curso.categoria }}</p>
+                <p><strong>Duración: </strong>{{ curso.duracion }} horas</p>
+                <p><strong>Nivel: </strong>{{ curso.nivel }}</p>
+                <p><strong>Fecha límite de inscripción: </strong>{{ curso.fecha_limite_inscripcion }}</p>
+                <p><strong>Fecha de inicio: </strong>{{ curso.fecha_inicio }}</p>
+                <p><strong>Fecha de finalización: </strong>{{ curso.fecha_fin }}</p>
+                <p><strong>Miniatura URL: </strong>{{ curso.miniatura_url or 'No disponible' }}</p>
+                <p><strong>Plan de estudios URL: </strong>{{ curso.plan_estudios_url or 'No disponible' }}</p>
+                <p><strong>Certificado: </strong>{{ 'Sí' if curso.certificado else 'No' }}</p>
+                <p><strong>Inscripción actual: </strong>{{ curso.inscripcion_actual }}</p>
+                <p><strong>Calificación: </strong>{{ curso.calificacion }}</p>
+                <p><strong>Número de reseñas: </strong>{{ curso.numero_resenas }}</p>
+                <p><strong>Estado: </strong>{{ curso.estado }}</p>
+                <p><strong>Fecha de creación: </strong>{{ curso.fecha_creacion }}</p>
+                <p><strong>Fecha de actualización: </strong>{{ curso.fecha_actualizacion }}</p>
+                <p><strong>ID de rol: </strong>{{ curso.id_rol }}</p>
+                <p><strong>ID de tipo de curso: </strong>{{ curso.id_tipo_curso }}</p>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-warning">
+            <p>No se encontró información del curso.</p>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Botón de volver -->
+<div class="rectangles-container">
+    <div class="medium-filled">
+        <a href="{{ url_for('idcursos.vista_cursos') }}" class="volver">VOLVER</a>
+    </div>
+</div>
+
+<!-- Imágenes -->
+<img src="{{ url_for('static', filename='img/mariposa0.png') }}" class="mariposa" />
+<img src="{{ url_for('static', filename='img/curso0.jpeg') }}" class="usuarios" />
+
+{% endblock %}

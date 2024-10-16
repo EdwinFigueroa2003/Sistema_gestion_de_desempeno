@@ -235,6 +235,7 @@
             align-items: center;
             padding: 20px;
             z-index: 1;
+            /* margin-bottom: -55px; */  
         }
 
         h2 {
@@ -276,6 +277,26 @@
             text-align: left;
             padding: 20px;
             font-size: 26px;
+            margin: 10px;
+            width: 370px;
+            height: 230px;
+            justify-content: flex-start;
+        }
+
+        gestion_desempeno_descripcion {
+            color: #000000;
+            font-family: var(--titulo-secundario-font-family,
+                    "NexaLight-Regular",
+                    sans-serif);
+            font-size: var(--titulo-secundario-font-size, 40px);
+            font-weight: var(--titulo-secundario-font-weight, 400);
+            text-transform: uppercase;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: left;
+            padding: 20px;
+            font-size: 20px;
             margin: 10px;
             width: 370px;
             height: 230px;
@@ -417,11 +438,9 @@
         hr {
             width: 102%;
             height: 30px;
-            /*background-color: red;*/
-            margin-right: auto;
+            margin-top: -20px;
             margin-left: auto;
             margin-top: 1 px;
-            margin-bottom: 5px;
             border-width: 2px;
             border-color: rgb(0, 0, 0);
         }
@@ -700,7 +719,7 @@
             width: 345px;
             height: 265px;
             margin-right: 25px;
-            /* margin-top: -50px; */
+            margin-top: -100px;
             padding: 10px;
             z-index: 1;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -713,9 +732,21 @@
             width: 345px;
             height: 265px;
             padding: 10px;
+            margin-top: -100px;
             z-index: 1;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
         }
+
+        .curso-imagen {
+        width: 100px;
+        /* Ancho fijo */
+        height: 100px;
+        /* Alto fijo */
+        object-fit: cover;
+        /* Mantiene la proporción de la imagen */
+        margin-bottom: 10px;
+        border-radius: 4px;
+    }
 
         .rectangle-2106 {
             /* reportesimpulsandoelcrecimiento */
@@ -745,8 +776,8 @@
             /* Videos para seleccionar en la seccion videos */
             background: #ffffff;
             border-radius: 40px;
-            width: 350px;
-            height: 250px;
+            width: 150px;
+            height: 150px;
             text-align: center;
             margin-right: 20px;
             margin-top: 20px;
@@ -1001,6 +1032,7 @@
             /* Alinea los rectángulos al inicio vertical */
             margin-left: 250px;
             margin-top: 25px;
+            z-index: 10;
         }
 
         .contenedor-proyecto {
@@ -1044,20 +1076,6 @@
         .svg-button {
             display: inline-block;
             margin: 10px;
-        }
-
-
-        .rectangle-link {
-            /* Esto va en cursos */
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .rectangle-link:hover,
-        .rectangle {
-            /* Esto va en cursos */
-            background-color: #f0f0f0;
-            /* Cambia el color de fondo al pasar el ratón, si lo deseas */
         }
 
         .info-podcast {
@@ -1158,20 +1176,6 @@
             margin-right: auto;
             margin-left: auto;
             position: static;
-        }
-
-        .rectangle {
-            width: 350px;
-            height: 150px;
-            margin: 5 px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: #ECE9E9;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
         }
 
         .rectangle-2070 {
@@ -1310,36 +1314,6 @@
             object-fit: cover;
             border-radius: 10%;
         }
-
-        /*         .curso {
-            width: 50px;
-            height: 50px;
-            position: absolute;
-            margin-left: 225px;
-            top: 170px;
-            object-fit: cover;
-            border-radius: 10%;
-        } 
-
-        .video {
-            width: 50px;
-            height: 50px;
-            position: absolute;
-            margin-left: 225px;
-            top: 170px;
-            object-fit: cover;
-            border-radius: 10%;
-        }
-
-        .casete {
-            width: 50px;
-            height: 50px;
-            position: absolute;
-            margin-left: 225px;
-            top: 170px;
-            object-fit: cover;
-            border-radius: 10%;
-        }*/
 
         .vector {
             width: 30px;

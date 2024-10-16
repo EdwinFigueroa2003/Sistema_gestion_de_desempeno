@@ -1,478 +1,3 @@
-<!-- <!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Cursos</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
-
-    <style>
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            background-color: #EAEAEA;
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .nav-link h5,
-        .nav-link-cerrar h5 {
-            border-radius: 25px;
-            border: 1px solid #EA5C10;
-            padding: 10px;
-            color: rgb(0, 173, 253);
-            font-size: 16px;
-            text-decoration: none;
-            /* Ajuste para evitar subrayado en h5 */
-        }
-
-        .nav-link-cerrar h5 {
-            background-color: #ffffff;
-            color: rgb(0, 0, 0);
-            font-size: 14px;
-            padding: 8px 12px;
-        }
-
-        .nav-link-cerrar h5:hover {
-            background-color: #EA5C10;
-            border-color: #EA5C10;
-        }
-
-        .sidebar {
-            width: 340px;
-            height: 100%;
-            background-color: #ffffff;
-            color: white;
-            transition: width 0.3s ease;
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            z-index: 1000;
-            overflow-y: auto;
-            border-radius: 10px;
-            /* Bordes redondeados de 10px */
-            box-shadow: 0px 16px 16px 4px rgba(0, 0, 0, 0.25);
-            /* lo ultimo que de agrego */
-            /*width: 277px;
-            height: 640px;*/
-            margin-top: 10px;
-            /* Margen superior externo */
-            margin-right: 15px;
-            /* Margen derecho externo */
-            margin-bottom: 0 px;
-            /* Margen inferior externo */
-            margin-left: 15px;
-            /* Margen izquierdo externo */
-        }
-
-        .sidebar.collapsed {
-            width: 50px;
-        }
-
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .sidebar ul li {
-            padding: 10px;
-        }
-
-        .sidebar ul li a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .content {
-            flex: 1;
-            padding: 20px;
-            transition: margin-left 0.3s ease;
-            /* Agregamos transición para un cambio suave */
-            margin-left: 345px;
-            /* Ancho inicial de la barra lateral */
-            flex-wrap: wrap;
-            /* Permite que los elementos se envuelvan cuando no hay suficiente espacio */
-            justify-content: flex-start;
-            /* Alinea los elementos al inicio del contenedor */
-            display: flex;
-            /* Utilizamos flexbox para alinear los elementos */
-            align-items: flex-start;
-            /* Alinea los elementos al inicio del contenedor */
-        }
-
-        .content.collapsed {
-            margin-left: 50px;
-            /* Ancho de la barra lateral colapsada */
-        }
-
-        /* Estilo para el título y botones de acción */
-        h1 {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            margin: 0;
-        }
-
-        .btn-group {
-            margin-left: 10px;
-        }
-
-        .gestion-desempeno {
-            background-color: #C35E23;
-            /* Elige el color de fondo que desees */
-            color: #000;
-            /* Asegúrate de que el texto sea legible sobre el fondo */
-            padding: 10px;
-            /* Añade algo de relleno para que el texto no esté pegado al borde */
-            border-radius: 5px;
-            /* Opcional: añade bordes redondeados */
-        }
-
-        .gestion-desempeno:hover {
-            background-image: linear-gradient(to right, #C35E23, #FFC700);
-            /* Degradado al pasar el cursor */
-            color: #000;
-        }
-
-        .gestion-desarrollo {
-            background-color: #BF0B3B;
-            /* Elige el color de fondo que desees */
-            color: #000;
-            /* Asegúrate de que el texto sea legible sobre el fondo */
-            padding: 10px;
-            /* Añade algo de relleno para que el texto no esté pegado al borde */
-            border-radius: 5px;
-            /* Opcional: añade bordes redondeados */
-        }
-
-        .gestion-desarrollo:hover {
-            background-image: linear-gradient(to right, #BF0B3B, #FFC700);
-            /* Degradado al pasar el cursor */
-            color: #000;
-        }
-
-        .dropdown-container {
-            position: relative;
-            /* Ajusta otros estilos según sea necesario */
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            right: 0;
-            /* Alinea el menú al lado derecho */
-            background-color: rgb(97, 97, 97);
-            /* Color del texto de los elementos del menú */
-            top: 100%;
-            /* Fondo del menú */
-            width: 250px;
-            /* Ajusta el ancho del menú según sea necesario */
-        }
-
-        .dropdown-item {
-            color: rgb(255, 0, 0);
-            text-align: center;
-
-            padding: 10px;
-            /* Ajusta el relleno según sea necesario */
-            display: block;
-            /* Asegúrate de que los elementos se comporten como bloques */
-        }
-
-        .mi-equipo {
-            background-color: #29A3CC;
-            /* Elige el color de fondo que desees */
-            color: #000;
-            /* Asegúrate de que el texto sea legible sobre el fondo */
-            padding: 10px;
-            /* Añade algo de relleno para que el texto no esté pegado al borde */
-            border-radius: 5px;
-            /* Opcional: añade bordes redondeados */
-        }
-
-        .mi-equipo:hover {
-            background-image: linear-gradient(to right, #29A3CC, #FFC700);
-            /* Degradado al pasar el cursor */
-            color: #000;
-        }
-
-        .configuracion {
-            background-color: #16594D;
-            /* Elige el color de fondo que desees */
-            color: #000;
-            /* Asegúrate de que el texto sea legible sobre el fondo */
-            padding: 10px;
-            /* Añade algo de relleno para que el texto no esté pegado al borde */
-            border-radius: 5px;
-            /* Opcional: añade bordes redondeados */
-        }
-
-        .configuracion:hover {
-            background-image: linear-gradient(to right, #16594D, #FFC700);
-            /* Degradado al pasar el cursor */
-            color: #000;
-        }
-
-        .inicio {
-            background-color: #525252;
-            /* Elige el color de fondo que desees */
-            color: #000;
-            /* Asegúrate de que el texto sea legible sobre el fondo */
-            padding: 10px;
-            /* Añade algo de relleno para que el texto no esté pegado al borde */
-            border-radius: 5px;
-            /* Opcional: añade bordes redondeados */
-        }
-
-        .inicio:hover {
-            background-image: linear-gradient(to right, #525252, #FFC700);
-            /* Degradado al pasar el cursor */
-            color: #525252;
-        }
-
-        hr {
-            width: 102%;
-            height: 30px;
-            /*background-color: red;*/
-            margin-right: auto;
-            margin-left: auto;
-            margin-top: 1 px;
-            margin-bottom: 5px;
-            border-width: 2px;
-            border-color: rgb(0, 0, 0);
-        }
-
-        .rectangle {
-            width: 350px;
-            height: 150px;
-            margin: 5 px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: #ECE9E9;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .rectangles-container {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
-        }
-
-        .rectangle-link {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .rectangle-link:hover,
-        .rectangle {
-            background-color: #f0f0f0;
-            /* Cambia el color de fondo al pasar el ratón, si lo deseas */
-        }
-
-        .medium-filled,
-        .medium-filled * {
-            box-sizing: border-box;
-        }
-
-        .medium-filled,
-        .volver {
-            background: linear-gradient(90deg,
-                    rgba(89, 238, 254, 1) 0%,
-                    rgba(40, 128, 242, 1) 100%);
-            color: white;
-            border-radius: 8px;
-            padding: 9px 32px 9px 32px;
-            display: flex;
-            flex-direction: column;
-            gap: 0px;
-            align-items: center;
-            justify-content: center;
-            width: 228px;
-            position: relative;
-        }
-
-        .volver {
-            text-align: center;
-            font-family: "Roboto-SemiBold", sans-serif;
-            font-size: 14px;
-            /* Ajustado el tamaño del texto */
-            line-height: 32px;
-            /* Ajustado el alto del botón */
-            font-weight: 600;
-            padding: 0 20px;
-            /* Espaciado interno horizontal */
-            background-color: #EA5C10;
-            /* Color de fondo */
-            border: none;
-            /* Quitamos el borde */
-            border-radius: 5px;
-            /* Borde redondeado */
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            /* Transición suave para el cambio de color de fondo */
-        }
-
-        .volver:hover {
-            background: linear-gradient(90deg,
-                    rgba(89, 238, 254, 1) 0%,
-                    rgba(40, 128, 242, 1) 100%);
-            /* Color de fondo al pasar el ratón */
-        }
-
-        .inicio-png {
-            flex-shrink: 0;
-            width: 30px;
-            height: 30px;
-            left: 85px;
-            position: relative;
-            object-fit: cover;
-        }
-
-        .configuracion-png {
-            flex-shrink: 0;
-            width: 30px;
-            height: 30px;
-            left: 45px;
-            position: relative;
-            object-fit: cover;
-        }
-
-        .equipo-png {
-            flex-shrink: 0;
-            width: 30px;
-            height: 30px;
-            left: 70px;
-            position: relative;
-            object-fit: cover;
-        }
-
-        .BGDesarrollo-png {
-            flex-shrink: 0;
-            width: 30px;
-            height: 30px;
-            position: relative;
-            object-fit: cover;
-        }
-
-        .BGDesempeño-png {
-            flex-shrink: 0;
-            width: 30px;
-            height: 30px;
-            position: relative;
-            object-fit: cover;
-        }
-
-    </style>
-</head>
-
-<body>
-    <div class="sidebar">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light flex-column">
-            <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
-            <ul>
-                <a class="navbar-brand" href="#">Colocar imagen del usuario</a>
-                <br>
-                <a class="navbar-brand" href="#">Nombre del usuario</a>
-
-
-                <a href="/cerrarSesion" class="text-white ml-3 nav-link-cerrar">
-                    <h5>Cerrar Sesión</h5>
-                </a>
-
-
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav flex-column">
-
-                        <li class="nav-item dropdown active">
-                            <div class="btn-group">
-                                <a class="nav-link gestion-desempeno btn btn-warning" href="/gestiondeldesempeno"
-                                    role="button">
-                                    GESTIÓN DEL DESEMPEÑO
-                                    <img src="{{ url_for('static', filename='img/BGDesempeño.png')}}" />
-
-                                </a>
-                                <button
-                                    class="btn btn-secondary dropdown-toggle dropdown-toggle-split gestion-desempeno"
-                                    type="button" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <span class="sr-only ">Toggle Dropdown</span>
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="/proyectos">Proyectos</a>
-                                    <a class="dropdown-item" href="/analisisorganizacional">Análisis Organizacional</a>
-                                    <a class="dropdown-item" href="/evaluaciondecompetencias">Evaluación de Competencias</a>
-                                    <a class="dropdown-item" href="/concertaciondepropositos">Concertación de propositos</a>
-                                    <a class="dropdown-item" href="/identificaciondelideres">Identificación de Lideres</a>
-                                    <a class="dropdown-item" href="/factoresclavesdeexito">Factores Claves de exito</a>
-                                </div>
-                            </div>
-                        </li>
-
-                        <li class="nav-item dropdown active">
-                            <div class="btn-group">
-                                <a class="nav-link gestion-desarrollo btn btn-warning" href="/gestiondeldesarrollo"
-                                    role="button">
-                                    GESTIÓN DEL DESARROLLO
-                                    <img src="{{ url_for('static', filename='img/BGDesarrollo.png')}}" />
-                                </a>
-                                <button
-                                    class="btn btn-secondary dropdown-toggle dropdown-toggle-split gestion-desarrollo"
-                                    type="button" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <span class="sr-only">Toggle Dropdown</span>
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="/reportes">Reportes</a>
-                                    <a class="dropdown-item" href="/cursos">Cursos</a>
-                                    <a class="dropdown-item" href="/podcast">Podcast</a>
-                                    <a class="dropdown-item" href="/videos">Videos</a>
-                                </div>
-                            </div>
-                        </li>
-
-
-                        <li class="nav-item active">
-                            <a class="nav-link mi-equipo btn btn-primary" href="/equipo">
-                                MI EQUIPO
-                                <img src="{{ url_for('static', filename='img/equipo.png')}}" class="equipo-png" />
-                            </a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link configuracion btn btn-success" href="/configuracion">
-                                CONFIGURACIÓN
-                                <img src="{{ url_for('static', filename='img/configuracion.png')}}" />
-                            </a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link inicio btn btn-dark" href="/inicio">
-                                INICIO
-                                <img src="{{ url_for('static', filename='img/inicio.png')}}" class="inicio-png" />
-                            </a>
-
-                        </li>
-                    </ul>
-                </div>
-            </ul>
-        </nav>
-    </div>
-
-
-
-    <div class="content"> -->
-
-
 {% extends "layout.html" %}
 
 {% block title %}
@@ -483,88 +8,101 @@ Cursos
 
 <h1>Cursos</h1>
 <hr>
-<p>Búsqueda de curso por nombre</p>
-<form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Ingresa el nombre" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+<p>Búsqueda de tipo de curso por nombre</p>
+<form class="form-inline" onsubmit="return false;">
+    <input class="form-control mr-sm-2" type="search" placeholder="Ingresa el nombre" aria-label="Search"
+        id="searchInput">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="buscarCursos()">Buscar</button>
 </form>
 
-
-<div class="rectangles-container">
-
-    <a href="#" class="rectangle-link">
-        <div class="rectangle">
-            <h3>Figma</h3>
-            <p class="text"> Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
-                malesuada rutrum diam, sed sollicitudin sed sed.</p>
-        </div>
-    </a>
-
-    <a href="#" class="rectangle-link">
-        <div class="rectangle">
-            <h3>Otro curso</h3>
-            <p class="text"> Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
-                malesuada rutrum diam, sed sollicitudin sed sed.
-            </p>
-        </div>
-    </a>
-
-
-</div>
-
-<div class="rectangles-container">
-    <a href="#" class="rectangle-link">
-        <div class="rectangle">
-            <h3>IA</h3>
-            <p class="text"> Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
-                malesuada rutrum diam, sed sollicitudin sed sed.
-            </p>
-        </div>
-    </a>
-    <a href="#" class="rectangle-link">
-        <div class="rectangle">
-            <h3>Otro curso</h3>
-            <p class="text"> Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
-                malesuada rutrum diam, sed sollicitudin sed sed. </p>
-        </div>
-    </a>
-</div>
-<!--         <div class="rectangles">
-            <div class="medium-filled">
-                <a href="/gestiondeldesarrollo" class="volver">VOLVER</a>
+<div id="cursosContainer" class="row">
+    {% for curso in cursos %}
+    <div class="col-md-4 curso-item">
+        <a href="{{ url_for('idvercurso.vista_ver_curso', curso_id=curso.id_tipo_curso) }}" class="rectangle-link">
+            <div class="rectangle">
+                <img src="{{ curso.imagen }}" alt="{{ curso.nombre_tipo }}" class="curso-imagen">
+                <h3>{{ curso.nombre_tipo }}</h3>
             </div>
-        </div> -->
-
-<div class="btn">
-    <a href="/gestiondeldesarrollo" class="volver">
-        <div class="medium-filled">
-            VOLVER
-        </div>
-    </a>
-</div>
-
+        </a>
+    </div>
+    {% if loop.index0 % 3 == 2 and not loop.last %}
 
 </div>
-<!-- Scripts al final del cuerpo -->
-<!--     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
-        integrity="sha384-dq3gms3U00/GRxUOAvFXTvDN+qkdOqcqTT8HqG+oqm4xU49TclE3i9ezZs4CwBf3"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
-        integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
-        crossorigin="anonymous"></script>
+<div class="row">
+    {% endif %}
+    {% endfor %}
+</div>
 
-    <script>
-        function toggleSidebar() {
-            var sidebar = document.querySelector('.sidebar');
-            var content = document.querySelector('.content');
-            sidebar.classList.toggle('collapsed');
-            content.classList.toggle('collapsed');
-        }
-    </script>
-</body>
-</html> -->
+<button onclick="location.href='/vercurso'" class="volver">VOLVER</button>
+
+<div class="rectangles-container">
+    <div class="medium-filled">
+        <a href="/gestiondeldesarrollo" class="volver">VOLVER</a>
+    </div>
+</div>
+
+<img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+<img src="{{ url_for('static', filename='img/curso0.jpeg')}}" class="usuarios" />
+
+<script>
+    function buscarCursos() {
+        var input = document.getElementById('searchInput').value.toUpperCase();
+        var cursos = document.querySelectorAll('#cursosContainer .curso-item');
+
+        cursos.forEach(function (curso) {
+            var nombre = curso.querySelector('h3').innerText.toUpperCase();
+            if (nombre.indexOf(input) > -1) {
+                curso.style.display = "";
+            } else {
+                curso.style.display = "none";
+            }
+        });
+    }
+
+</script>
+
+<style>
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+
+    .col-md-4 {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
+    .rectangle {
+        margin-bottom: 30px;
+        text-align: center;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+
+    .curso-imagen {
+        width: 100px;
+        /* Ancho fijo */
+        height: 100px;
+        /* Alto fijo */
+        object-fit: cover;
+        /* Mantiene la proporción de la imagen */
+        margin-bottom: 10px;
+        border-radius: 4px;
+    }
+
+    .rectangle-link {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .rectangle-link:hover .rectangle {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+</style>
 
 {% endblock %}

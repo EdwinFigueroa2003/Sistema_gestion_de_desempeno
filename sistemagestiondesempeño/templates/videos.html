@@ -10,38 +10,24 @@ Videos
 <hr>
 <p>Búsqueda de videos por nombre: <br> </p>
 
-<form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Ingresa el nombre" aria-label="Search">
+<form class="form-inline" method="GET" action="{{ url_for('idvideos.vista_videos') }}">
+    <input class="form-control mr-sm-2" type="search" name="search" placeholder="Ingresa el nombre" aria-label="Search">
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
 </form>
-<br>
-<div class="rectangles-container">
-    <div class="rectangle-2108">
-        <video controls poster="{{ url_for('static', filename='img/mariposa0.png') }}" width="70%">
-            <source src="{{ url_for('static', filename='videos/Dancing triangle video.mp4') }}" type="video/mp4">
-        </video>
-    </div>
 
-    <div class="rectangle-2108">
-        <video controls poster="{{ url_for('static', filename='img/mariposa0.png') }}" width="70%">
-            <source src="{{ url_for('static', filename='videos/Dancing triangle video.mp4') }}" type="video/mp4">
-        </video>
-    </div>
+<div class="rectangles-container">
+    {% for video in videos %}
+    <a href="{{ url_for('idvervideo.vista_ver_video', tipo_video_id=video.id_tipo_video) }}" class="video-link">
+        <div class="rectangle-2108">
+            <p>{{ video.nombre }}</p>
+            <img src="{{ video.logo }}" alt="{{ video.nombre }}" class="curso-imagen">
+        </div>
+    </a>
+    {% if loop.index0 % 3 == 2 and not loop.last %}
 </div>
 <div class="rectangles-container">
-    <div class="rectangle-2108">
-        <video controls poster="{{ url_for('static', filename='img/mariposa0.png') }}" width="70%">
-            <source src="{{ url_for('static', filename='videos/Dancing triangle video.mp4') }}" type="video/mp4">
-        </video>
-    </div>
-
-
-    <div class="rectangle-2108">
-        <video controls poster="{{ url_for('static', filename='img/mariposa0.png') }}" width="70%">
-            <source src="{{ url_for('static', filename='videos/Dancing triangle video.mp4') }}" type="video/mp4">
-        </video>
-
-    </div>
+    {% endif %}
+    {% endfor %}
 </div>
 
 <div class="rectangles-container">
@@ -49,5 +35,8 @@ Videos
         <a href="/gestiondeldesarrollo" class="volver">VOLVER</a>
     </div>
 </div>
+
+<img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+<img src="{{ url_for('static', filename='img/video0.png')}}" class="usuarios" />
 
 {% endblock %}

@@ -45,8 +45,12 @@ from vista.vistaconcertaciondedisponibilidad import vistaconcertaciondedisponibi
 from vista.vistaconcertaciondepropositosparalamejoradeprocesos import vistaconcertaciondepropositosparalamejoradeprocesos
 from vista.vistacursos import vistacursos
 from vista.vistapodcast import vistapodcast
+from vista.vistacatalogopodcasts import vistacatalogopodcasts
 from vista.vistaidentificaciondelideres import vistaidentificaciondelideres
 from vista.vistaanalisisorganizacional import vistaanalisisorganizacional
+from vista.vistavervideo import vistavervideo
+from vista.vistavercurso import vistavercurso
+from vista.vistaverpodcast import vistaverpodcast
 
 
 
@@ -91,7 +95,11 @@ app.register_blueprint(vistareportesgeneral)
 app.register_blueprint(vistavideos)
 app.register_blueprint(vistacursos)
 app.register_blueprint(vistapodcast)
+app.register_blueprint(vistacatalogopodcasts)
 app.register_blueprint(vistaidentificaciondelideres)
+app.register_blueprint(vistavervideo)
+app.register_blueprint(vistavercurso)
+app.register_blueprint(vistaverpodcast)
  
 # Establecer la ruta base si es necesario, por defecto es '/'
 #breakpoint();

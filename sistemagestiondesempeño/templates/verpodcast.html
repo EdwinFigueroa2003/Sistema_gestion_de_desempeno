@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Podcast
+{% endblock %}
+
+{% block content %}
+
+<h1>Ver podcast</h1>
+
+<hr>
+
+<titulo_podcast>Episodios</titulo_podcast>
+<div class="episodios-container">
+    {% for episodio in episodios %}
+    <div class="episodio-item">
+        <h3>{{ episodio.titulo }}</h3>
+        <p>Descripción: {{ episodio.descripcion }}</p>
+        <p>Temporada: {{ episodio.numero_temporada }}, Episodio: {{ episodio.numero_episodio }}</p>
+        <!--<p>Fecha de lanzamiento: {{ episodio.fecha_lanzamiento }}</p>
+        <p>Reproducciones: {{ episodio.reproducciones }}</p> -->
+        <a href="{{ episodio.url }}" target="_blank">Escuchar en YouTube</a>
+        <!-- <img src="{{ url_for('static', filename='img/microfono.png')}}" class="microfono" alt=""> -->
+    </div>
+    {% else %}
+    <p>No hay episodios disponibles para esta serie.</p>
+    {% endfor %}
+</div>
+
+<div class="rectangles-container">
+    <div class="medium-filled">
+        <a href="{{ url_for('idcatalogopodcasts.vista_catalogopodcasts') }}" class="volver">VOLVER AL CATALOGO</a>
+    </div>
+</div>
+
+<!-- Imágenes decorativas -->
+
+<img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" alt="Mariposa">
+<img src="{{ url_for('static', filename='img/casete0.png')}}" class="usuarios" alt="Casete">
+
+
+<style>
+    .episodios-container {
+        margin-top: 20px;
+    }
+
+    .episodio-item {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+    }
+
+    titulo_podcast {
+        color: #000000;
+        font-size: 30px;
+        /* margin-bottom: 50px; */
+        /* margin-top: 600px; */
+        /* margin-right: 300px; */
+    }
+</style>
+
+{% endblock %}

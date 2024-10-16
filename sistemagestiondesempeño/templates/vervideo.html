@@ -1,0 +1,115 @@
+{% extends "layout.html" %}
+
+{% block title %}Ver Video{% endblock %}
+
+{% block content %}
+<h1>Videos Relacionados</h1>
+
+<hr>
+
+<!--<p>Búsqueda de videos por nombre: <br> </p>
+<form class="form-inline" method="GET" action="{{ url_for('idvideos.vista_videos') }}">
+    <input class="form-control mr-sm-2" type="search" name="search" placeholder="Ingresa el nombre" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+</form> -->
+
+
+{% if video_seleccionado %}
+<titulo_video>{{ video_seleccionado.titulo }}</titulo_video>
+<div class="video-container">
+    <iframe width="560" height="315" src="{{ video_seleccionado.url | replace('watch?v=', 'embed/') }}" frameborder="0"
+        allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div>
+<descripcion>{{ video_seleccionado.descripcion }}</descripcion>
+<!-- <p>Vistas: {{ video_seleccionado.vistas }} </p> <br>
+<p>Me gusta: {{ video_seleccionado.me_gusta }} | No me gusta: {{ video_seleccionado.no_me_gusta }}</p> -->
+<!-- <p>Categoría: {{ video_seleccionado.categoria }}</p> -->
+<!-- <p>Fecha de subida: {{ video_seleccionado.fecha_subida.split('T')[0] }}</p> -->
+{% endif %}
+
+<div class="video-list">
+    <otros_videos>Más videos:</otros_videos>
+    {% for video in videos %}
+    {% if not video_seleccionado or video.id != video_seleccionado.id %}
+    <div class="video-item">
+        <a href="{{ url_for('idvervideo.vista_ver_video', tipo_video_id=tipo_video_id, video_id=video.id) }}">
+            <h4>{{ video.titulo }}</h4>
+            <img src="{{ video.miniatura_url }}" alt="{{ video.titulo }}" width="50">
+        </a>
+        <!-- <p>Vistas: {{ video.vistas }}</p> -->
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+
+<div class="rectangles-container">
+    <div class="medium-filled">
+        <a href="{{ url_for('idvideos.vista_videos') }}" class="volver">VOLVER</a>
+    </div>
+</div>
+
+<img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+<img src="{{ url_for('static', filename='img/video0.png')}}" class="usuarios" />
+
+<style>
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        /* 16:9 aspect ratio */
+        height: 0;
+        margin-bottom: -70px;
+    }
+
+    titulo_video {
+        color: #000;
+        font-size: 25px;
+        font-weight: 700;
+        line-height: normal;
+        z-index: 1000;
+        margin-bottom: 10px;
+        /* background-color: #ffffff; */
+    }
+
+    otros_videos {
+        color: #000;
+        font-size: 25px;
+        font-weight: 700;
+        line-height: normal;
+        z-index: 1000;
+        margin-top: 20px;
+        /* background-color: #ffffff; */
+    }
+
+    descripcion {
+        color: #000;
+        font-size: 15px;
+        font-weight: 10;
+        line-height: normal;
+        z-index: 1000;
+        margin-top: -100px;
+        /* background-color: #ffffff; */
+    }
+
+    /* Estilos adicionales para el buscador */
+/*     .form-inline {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+    }
+
+    .form-inline .form-control {
+        vertical-align: middle;
+        margin: 5px 10px 5px 0;
+        padding: 10px;
+    }
+
+    .form-inline button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        border: 1px solid #007bff;
+        color: white;
+    } */
+</style>
+
+
+{% endblock %}

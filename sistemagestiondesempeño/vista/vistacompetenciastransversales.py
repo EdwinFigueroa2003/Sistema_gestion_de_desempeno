@@ -34,7 +34,7 @@ def vista_competenciastransversales():
         
         # Enviar la respuesta a la API
         try:
-            response = requests.post('http://127.0.0.1:5184/api/sgd/usuario_respuesta', json=datos_respuesta, timeout=10)
+            response = requests.post(f"{API_URL}/usuario_respuesta", json=datos_respuesta, timeout=10)
             print(f"Respuesta de la API: {response.status_code}, {response.text}")  # Añadir esta línea
             response.raise_for_status()
             # Si la respuesta se guardó correctamente, actualizar la sesión
