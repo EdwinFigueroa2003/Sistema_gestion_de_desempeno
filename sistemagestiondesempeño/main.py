@@ -51,6 +51,7 @@ from vista.vistaanalisisorganizacional import vistaanalisisorganizacional
 from vista.vistavervideo import vistavervideo
 from vista.vistavercurso import vistavercurso
 from vista.vistaverpodcast import vistaverpodcast
+from vista.vistalogin import vistalogin
 
 
 
@@ -100,6 +101,7 @@ app.register_blueprint(vistaidentificaciondelideres)
 app.register_blueprint(vistavervideo)
 app.register_blueprint(vistavercurso)
 app.register_blueprint(vistaverpodcast)
+app.register_blueprint(vistalogin)
  
 # Establecer la ruta base si es necesario, por defecto es '/'
 #breakpoint();
@@ -107,7 +109,12 @@ app.register_blueprint(vistaverpodcast)
 
 @app.route('/', methods = ['GET', 'POST'])
 
-@app.route('/inicio', methods = ['GET', 'POST'])
+@app.route('/inicio', methods=['GET', 'POST'])
+def get_presentacionGDD():
+
+    return render_template('presentacionGDD.html')
+
+""" @app.route('/inicio', methods = ['GET', 'POST'])
 def inicio():
     email=""
     contrasena=""
@@ -134,7 +141,7 @@ def inicio():
         else:
             return render_template('/inicio.html')
     else:
-        return render_template('/inicio.html')
+        return render_template('/inicio.html') """
 
 @app.route('/cerrarSesion')
 def cerrarSesion():
@@ -270,9 +277,9 @@ def finalizo1():
     # Redirigir a la pantalla de finalización
     return render_template('finalizo1.html')
 
-@app.route('/presentacionGDD', methods = ['GET'])
+""" @app.route('/presentacionGDD', methods = ['GET'])
 def get_presentacionGDD():
-    return render_template('presentacionGDD.html')
+    return render_template('presentacionGDD.html') """
 
 if __name__ == '__main__':
     # Corre la aplicación en el modo debug, lo que permitirá
