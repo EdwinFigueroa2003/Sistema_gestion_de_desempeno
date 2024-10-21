@@ -2,11 +2,8 @@ from flask import Blueprint, render_template, request
 from configBd import API_URL
 from pprint import pprint
 from flask import Blueprint, request, render_template, redirect, url_for, session
-from Entidad import Entidad
-import requests, random
-from datetime import datetime
-from control.ControlEntidad import ControlEntidad
- 
+import requests
+
 # Crear un Blueprint
 vistacursos = Blueprint('idcursos', __name__, template_folder='templates')
 

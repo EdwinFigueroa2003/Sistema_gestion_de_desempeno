@@ -2,13 +2,10 @@ from flask import Blueprint, render_template
 from configBd import API_URL
 from pprint import pprint
 from flask import Blueprint, request, render_template, redirect, url_for, session
-from Entidad import Entidad
 import requests
-from datetime import datetime
-from control.ControlEntidad import ControlEntidad
 import logging
 
-# Crear un Blueprint
+# Crear un Blueprint|   
 vistareportesanalisisorganizacional = Blueprint('idreportesanalisisorganizacional', __name__, template_folder='templates')
 
 @vistareportesanalisisorganizacional.route('/reportesanalisisorganizacional', methods=['GET'])
@@ -16,6 +13,13 @@ def mostrar_reporte():
     try:
         # Obtener todas las respuestas guardadas a través de la API
         respuestas_guardadas = requests.get(f"{API_URL}/dimension_respuesta_guardada")
+
+        # Agregar la obtención de dimensiones si es necesario
+        dimensiones = requests.get(f"{API_URL}/dimension").json() 
+
+        # Filtrar solo el nombre de la dimensión
+        nombres_dimensiones = [{'nombre_dimension': d['nombre_dimension']} for d in dimensiones]
+
         
         if respuestas_guardadas.status_code != 200:
             raise ValueError(f"Error en la solicitud a la API: {respuestas_guardadas.status_code}")
@@ -80,10 +84,12 @@ def mostrar_reporte():
 
             # Agregar los datos al reporte
             reporte.append({
+                'dimension': dimensiones[respuesta_guardada['id_dimension'] - 1]['nombre_dimension'],  # Cargar solo la dimensión asociada
                 'pregunta': pregunta['pregunta'],
                 'respuesta': respuesta_detalle['respuesta'],
                 'semaforizacion': respuesta_detalle['semaforizacion']
             })
+            print("respuesta_guardada", respuesta_guardada)
 
         mensaje = None
         if preguntas_no_encontradas:
@@ -91,9 +97,9 @@ def mostrar_reporte():
         
         if not reporte:
             mensaje = (mensaje or "") + "No se encontraron datos válidos para el reporte."
-            return render_template('reportesanalisisorganizacional.html', reporte=[], mensaje=mensaje)
+            return render_template('reportesanalisisorganizacional.html', reporte=reporte, mensaje=mensaje, dimensiones=nombres_dimensiones)  # Pasar dimensiones a la plantilla
 
-        return render_template('reportesanalisisorganizacional.html', reporte=reporte, mensaje=mensaje)
+        return render_template('reportesanalisisorganizacional.html', reporte=reporte, mensaje=mensaje, dimensiones=nombres_dimensiones)  # Pasar solo nombres a la plantilla
     
     except requests.exceptions.RequestException as e:
         logging.error(f"Error al hacer la solicitud a la API: {e}")

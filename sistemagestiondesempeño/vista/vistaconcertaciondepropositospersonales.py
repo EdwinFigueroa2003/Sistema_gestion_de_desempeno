@@ -1,8 +1,6 @@
 from pprint import pprint
 from flask import Blueprint, request, render_template, redirect, url_for, flash, jsonify
-from Entidad import Entidad
 import requests
-from control.ControlEntidad import ControlEntidad
 from datetime import datetime
 from configBd import API_URL
 

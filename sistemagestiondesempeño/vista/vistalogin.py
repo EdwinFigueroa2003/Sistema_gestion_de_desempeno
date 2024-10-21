@@ -2,14 +2,6 @@ from flask import Blueprint, render_template
 from configBd import API_URL
 from pprint import pprint
 from flask import request, redirect, url_for, session
-from Entidad import Entidad
-import markupsafe
-from control.ControlEntidad import ControlEntidad
-
-# Crear un Blueprint
-vistalogin = Blueprint('idvistalogin', __name__, template_folder='templates')
-
-from flask import Blueprint, render_template, request, redirect, url_for, session
 import markupsafe
 import requests
 

@@ -1,50 +1,160 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Resultados Medición de Potencial 
+Resultados Medición de Potencial
 {% endblock %}
 
 {% block content %}
 <h1>Resultados Medición de Potencial</h1>
 <hr>
 
-<div class="resultados-container">
-    <h2>Respuestas Seleccionadas</h2>
+<!-- Botón para alternar entre gráfica y tabla -->
+<div style="margin-bottom: 20px;">
+    <button id="toggle-view" style="
+        padding: 10px 20px; 
+        background-color: #666;
+        border-color: #666;
+        color: white; 
+        border-radius: 5px;
+        cursor: pointer;">Mostrar Tabla de Resultados</button>
+</div>
+
+<div style="background-color: #ffffff; margin-top: 30px; margin-bottom: -45px; padding: 20px; border-radius: 10px;">
+    <div>
+        <h3>Nivel Promedio: {{nivel_detalle['id_nivel']}}</h3>
+        <p><strong>{{ nivel_detalle['nombre'] }} </strong>
+    </div>
+    <div>
+        <strong>Recomendaciones para el lider: </strong>{{ nivel_detalle['descripcion'] }}
+    </div>
+</div>
+
+<div class="resultados-container" style="display: flex; align-items: flex-start;">
+    <!-- Gráfico de araña que está visible inicialmente -->
+    <div id="grafico-container" style="flex: 2;">
+        <grafico>Gráfico de Resultados</grafico>
+        <div>
+            {{ grafico|safe }}
+        </div>
+    </div>
+
+
+    <!-- Información adicional que también será visible inicialmente -->
+    <div id="informacion-adicional" class="informacion-adicional" style="flex: 1; padding: 20px;">
+        <h3>Detalles</h3>
+        <!-- <p>En esta sección puedes incluir información relevante para el usuario sobre los resultados del gráfico.</p> -->
+        <ul>
+            <li><strong>Desempeño sólido (1):</strong> Desempeño bueno / potencial limitado</li>
+            <li><strong>Miembro Clave (2):</strong> Desempeño bueno / potencial medio</li>
+            <li><strong>Listo para nuevas oportunidades (3):</strong> Desempeño bueno / alto potencial</li>
+            <li><strong>Desempeño sobresaliente (4):</strong> Desempeño sobresaliente / potencial limitado</li>
+            <li><strong>Líder emergente (5):</strong> Desempeño sobresaliente / potencial</li>
+            <li><strong>Top talent (6):</strong> Desempeño sobresaliente / alto potencial</li>
+        </ul>
+    </div>
+
+    
+</div>
+
+<!-- Sección de tabla que está oculta inicialmente -->
+<div class="tabla-resultados" id="tabla-resultados" style="display: none; margin-top: 20px;">
+    <h3 style="color: #000;">Respuestas Seleccionadas</h3>
     <table>
         <thead>
             <tr>
                 <th>Dimensión</th>
-                <th>Pregunta</th>
                 <th>Respuesta</th>
-                <th>Fecha de Respuesta</th>
+                <th>Nivel</th>
             </tr>
         </thead>
         <tbody id="resultados">
             {% if respuestas %}
-                {% for detalle in respuestas %}
-                    <tr>
-                        <td>{{ detalle['dimension'] }}</td>
-                        <td>{{ detalle['pregunta'] }}</td>
-                        <td>{{ detalle['respuesta'] }}</td>
-                        <td>{{ detalle['fecha_respuesta'] }}</td>
-                    </tr>
-                {% endfor %}
+            {% for detalle in respuestas %}
+            <tr>
+                <td>{{ detalle['dimension'] }}</td>
+                <td>{{ detalle['respuesta'] }}</td>
+                <td>{{ detalle['nivel'] }}</td>
+            </tr>
+            {% endfor %}
             {% else %}
-                <tr>
-                    <td colspan="4" style="text-align: center;">No se encontraron respuestas.</td>
-                </tr>
+            <tr>
+                <td colspan="4" style="text-align: center;">No se encontraron respuestas.</td>
+            </tr>
             {% endif %}
         </tbody>
     </table>
 </div>
 
-<div class="action-buttons">
-    <!-- <a href="#" id="toggleButton" onclick="toggleView()">Ver Gráfica</a> -->
-    <a href="#" onclick="window.print();">Imprimir Informe</a>
-    <a href="/resultados">Volver</a>
-</div>
-
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
 <img src="{{ url_for('static', filename='img/proyecto-10.png')}}" class="usuarios" />
+
+<style>
+    .resultados-container {
+        display: flex;
+        align-items: stretch;
+        background-color: #ffffff;
+        margin-bottom: 20px;
+        position: relative;
+        /* Para el posicionamiento de la línea */
+    }
+
+    .informacion-adicional {
+        margin-top: 32.5px;
+        background-color: #ffffff;
+        position: relative;
+        /* Para el posicionamiento de la línea */
+        height: 100%;
+        min-height: 400px;
+        margin-bottom: 0;
+        padding-bottom: 20px;
+    }
+
+    .informacion-adicional::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: -32.5px;
+        /* Para compensar el margin-top */
+        height: calc(100% + 32.5px);
+        /* Altura total incluyendo el margin-top */
+        width: 1px;
+        background-color: #838383;
+    }
+
+    #grafico-container {
+        background-color: #ffffff;
+        padding-bottom: 20px;
+    }
+
+    grafico {
+        margin-bottom: 20px;
+        margin-left: 20px;
+        font-size: 30px;
+        color: #000;
+    }
+</style>
+
+<script>
+    // JavaScript para alternar entre la gráfica, la información adicional y la tabla
+    document.getElementById('toggle-view').addEventListener('click', function () {
+        var tabla = document.getElementById('tabla-resultados');
+        var grafico = document.getElementById('grafico-container');
+        var infoAdicional = document.getElementById('informacion-adicional');
+
+        if (tabla.style.display === "none") {
+            // Muestra la tabla y oculta el gráfico e información adicional
+            tabla.style.display = "block";
+            grafico.style.display = "none";
+            infoAdicional.style.display = "none";
+            this.textContent = "Mostrar Gráfico de Resultados";
+        } else {
+            // Muestra el gráfico y la información adicional, oculta la tabla
+            tabla.style.display = "none";
+            grafico.style.display = "block";
+            infoAdicional.style.display = "block";
+            this.textContent = "Mostrar Tabla de Resultados";
+        }
+    });
+</script>
 
 {% endblock %}

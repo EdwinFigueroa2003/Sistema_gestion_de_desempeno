@@ -2,10 +2,8 @@ from flask import Blueprint, render_template
 from configBd import API_URL
 from pprint import pprint
 from flask import Blueprint, request, render_template, redirect, url_for, session
-from Entidad import Entidad
-import requests, random
-from datetime import datetime
-from control.ControlEntidad import ControlEntidad
+import requests
+import random
 
 vistaanalisisorganizacional = Blueprint('idanalisisorganizacional', __name__, template_folder='templates')
 
@@ -86,6 +84,6 @@ def get_preguntas_respuestas(id_dimension):
         dimension_actual=dimension_actual
     )
 
-@vistaanalisisorganizacional.route('/finalizo', methods=['GET'])
+@vistaanalisisorganizacional.route('/finalizo1', methods=['GET'])
 def finalizo():
     return render_template('finalizo1.html')

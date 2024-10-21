@@ -2,11 +2,9 @@ from flask import Blueprint, render_template
 from configBd import API_URL
 from pprint import pprint
 from flask import Blueprint, request, render_template, redirect, url_for, session
-from Entidad import Entidad
 import requests, random
 from datetime import datetime
-from control.ControlEntidad import ControlEntidad
- 
+from configBd import API_URL
 # Crear un Blueprint
 vistaresultadosfactoresclavesdeexito = Blueprint('idresultadosfactoresclavesdeexito', __name__, template_folder='templates')
  

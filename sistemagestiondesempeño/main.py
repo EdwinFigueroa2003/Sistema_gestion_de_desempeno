@@ -2,11 +2,9 @@
 from pprint import pprint
 from flask import Flask, render_template, request, url_for, redirect, session, jsonify, flash, send_file, send_file
 import markupsafe, uuid, psycopg2, os, io, xlsxwriter, openpyxl, pandas, requests, base64 
-from Entidad import Entidad
 from matplotlib.figure import Figure
 from werkzeug.utils import secure_filename
 from PIL import Image
-from control.ControlEntidad import ControlEntidad
 from configBd import API_URL
 
 
@@ -113,35 +111,6 @@ app.register_blueprint(vistalogin)
 def get_presentacionGDD():
 
     return render_template('presentacionGDD.html')
-
-""" @app.route('/inicio', methods = ['GET', 'POST'])
-def inicio():
-    email=""
-    contrasena=""
-    bot=""
-    if request.method == 'GET':
-        pass
-    
-    if request.method == 'POST':
-        email=markupsafe.escape(request.form['txtEmail'])
-        contrasena=markupsafe.escape(request.form['txtContrasena'])
-        bot=markupsafe.escape(request.form['btnLogin'])
-        datosEntidad = {'email': email, 'contrasena': contrasena}
-        
-        if bot=='Login':
-            validar=False
-            objEntidad= Entidad(datosEntidad)
-            objControlEntidad=ControlEntidad('usuario')
-            validar=objControlEntidad.validarIngreso('email',email,'contrasena',contrasena)
-
-            if validar:
-                return render_template('/menu.html',ema=email)
-            else:
-                return render_template('/inicio.html', mensaje_error='Credenciales incorrectas')
-        else:
-            return render_template('/inicio.html')
-    else:
-        return render_template('/inicio.html') """
 
 @app.route('/cerrarSesion')
 def cerrarSesion():
@@ -276,10 +245,6 @@ def finalizo():
 def finalizo1():
     # Redirigir a la pantalla de finalización
     return render_template('finalizo1.html')
-
-""" @app.route('/presentacionGDD', methods = ['GET'])
-def get_presentacionGDD():
-    return render_template('presentacionGDD.html') """
 
 if __name__ == '__main__':
     # Corre la aplicación en el modo debug, lo que permitirá

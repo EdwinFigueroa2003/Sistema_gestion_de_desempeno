@@ -1,8 +1,6 @@
 from pprint import pprint
 from flask import Blueprint, render_template, jsonify
-from Entidad import Entidad
 import requests
-from control.ControlEntidad import ControlEntidad
 from configBd import API_URL
  
 # Crear un Blueprint
