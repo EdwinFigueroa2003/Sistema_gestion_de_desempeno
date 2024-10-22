@@ -12,15 +12,18 @@ Resultado de Análisis Organizacional
 <body>
     <h1>Reporte de Análisis Organizacional</h1>
     
-    {% if mensaje %}
-    <p>{{ mensaje }}</p>
-    {% endif %}
-
     {% if reporte %}
+    <!-- Botones para filtrar por dimensión -->
+    <div class="dimension-buttons">
+        {% for dimension in reporte|groupby('dimension') %}
+        <button onclick="filterByDimension('{{ dimension.grouper }}')">{{ dimension.grouper }}</button>
+        {% endfor %}
+    </div>
+
     <table>
         <thead>
             <tr>
-                <th>Dimensión</th>  <!-- Nueva columna -->
+                <th>Dimensión</th>
                 <th>Pregunta</th>
                 <th>Respuesta</th>
                 <th>Semaforización</th>
@@ -28,8 +31,8 @@ Resultado de Análisis Organizacional
         </thead>
         <tbody>
             {% for item in reporte %}
-            <tr>
-                <td>{{ item.dimension }}</td>  <!-- Mostrar la dimensión -->
+            <tr class="dimension-row" data-dimension="{{ item.dimension }}">
+                <td>{{ item.dimension }}</td>
                 <td>{{ item.pregunta }}</td>
                 <td>{{ item.respuesta }}</td>
                 <td>
@@ -38,6 +41,7 @@ Resultado de Análisis Organizacional
                         <div class="luz amarillo {% if item.semaforizacion == 2 %}encendido{% endif %}"></div>
                         <div class="luz verde {% if item.semaforizacion == 1 %}encendido{% endif %}"></div>
                     </div>
+
                 </td>
             </tr>
             {% endfor %}
@@ -54,5 +58,23 @@ Resultado de Análisis Organizacional
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
 <img src="{{ url_for('static', filename='img/organizacion0.png')}}" class="usuarios" />
 
+<style>
+    .dimension-buttons button {
+        margin-top: 50px;
+    }
+</style>
+
+<script>
+    function filterByDimension(dimension) {
+        const rows = document.querySelectorAll('.dimension-row');
+        rows.forEach(row => {
+            if (row.dataset.dimension === dimension || dimension === 'all') {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+</script>
 
 {% endblock %}

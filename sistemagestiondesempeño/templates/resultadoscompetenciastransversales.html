@@ -21,6 +21,16 @@ Resultados Competencias Transversales
             <div class="chart-title">
                 <h1>Resultados</h1>
                 <ul>
+
+
+                <button><img src="{{ url_for('static', filename='img/compromiso de los resultados integrales.png')}}" href="/resultados"></button>
+                <button><img src="{{ url_for('static', filename='img/contribucion a la transformacion.png')}}" href="/resultados"></button>
+                <button><img src="{{ url_for('static', filename='img/cuidado de si del otro y de los procesos.png')}}" href="/resultados"></button>
+                <button><img src="{{ url_for('static', filename='img/planificacion sustantiva.png')}}" href="/resultados"></button>
+                <button><img src="{{ url_for('static', filename='img/sentido de comunidad academica.png')}}" href="/resultados"></button>
+                <button><img src="{{ url_for('static', filename='img/sinergia colaborativa.png')}}" href="/resultados"></button>
+
+
                     {% for respuesta in respuestas %}
                     <li>
                         <span class="label">Respuesta Seleccionada:</span>{{ respuesta.texto_respuesta }}<br>
@@ -35,7 +45,9 @@ Resultados Competencias Transversales
 
         <!-- Sección de la gráfica, inicialmente oculta -->
         <div id="grafica-section" style="display:none;">
-            <h1><div class="chart-title">Gráfica de Resultados</div></h1>
+            <h1>
+                <div class="chart-title">Gráfica de Resultados</div>
+            </h1>
             <div id="plotly-chart" style="width: 900px; height: 500px;"></div>
         </div>
     </div>

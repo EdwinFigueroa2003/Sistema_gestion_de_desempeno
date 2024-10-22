@@ -9,14 +9,29 @@ Resultados Medición de Potencial
 <hr>
 
 <!-- Botón para alternar entre gráfica y tabla -->
-<div style="margin-bottom: 20px;">
+<div class="btn">
     <button id="toggle-view" style="
         padding: 10px 20px; 
         background-color: #666;
         border-color: #666;
         color: white; 
         border-radius: 5px;
-        cursor: pointer;">Mostrar Tabla de Resultados</button>
+        cursor: pointer;
+        border: none; /* Ensure no border for consistency */
+        text-align: center;">Mostrar Tabla de Resultados</button>
+</div>
+
+<div class="btn">
+    <a href="/resultados" class="volver" style="
+        display: inline-block; /* Make the link behave like a button */
+        padding: 10px 20px; 
+        background-color: #666;
+        border-color: #666;
+        color: white; 
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none; /* Remove underline */
+        text-align: center;">Volver</a>
 </div>
 
 <div style="background-color: #ffffff; margin-top: 30px; margin-bottom: -45px; padding: 20px; border-radius: 10px;">
@@ -53,7 +68,7 @@ Resultados Medición de Potencial
         </ul>
     </div>
 
-    
+
 </div>
 
 <!-- Sección de tabla que está oculta inicialmente -->
