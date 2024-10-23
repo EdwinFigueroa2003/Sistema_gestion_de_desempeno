@@ -10,21 +10,33 @@ Resultado de Análisis Organizacional
 <hr>
 
 <body>
-    <h1>Reporte de Análisis Organizacional</h1>
-    
+    <reporte>Reporte de Análisis Organizacional</reporte>
+
     {% if reporte %}
-    <!-- Botones para filtrar por dimensión -->
     <div class="dimension-buttons">
         {% for dimension in reporte|groupby('dimension') %}
         <button onclick="filterByDimension('{{ dimension.grouper }}')">{{ dimension.grouper }}</button>
         {% endfor %}
     </div>
 
+    <!-- Mostrar el promedio de semaforización -->
+    <div id="promedio-semaforo" style="display: none; margin-bottom: 20px;">
+        <descripcion>Promedio de Semaforización:</descripcion>
+        <div class="semaforo">
+            <div class="luz rojo" id="promedio-rojo"></div>
+            <div class="luz amarillo" id="promedio-amarillo"></div>
+            <div class="luz verde" id="promedio-verde"></div>
+        </div>
+        <descripcion>Revisa por qué</descripcion>
+        <br>
+        <descripcion>Valores: 1 = Verde, 2 = Amarillo, 3 = Rojo</descripcion>
+    </div>
+
     <table>
         <thead>
             <tr>
                 <th>Dimensión</th>
-                <th>Pregunta</th>
+                <!-- <th>Pregunta</th> -->
                 <th>Respuesta</th>
                 <th>Semaforización</th>
             </tr>
@@ -33,7 +45,7 @@ Resultado de Análisis Organizacional
             {% for item in reporte %}
             <tr class="dimension-row" data-dimension="{{ item.dimension }}">
                 <td>{{ item.dimension }}</td>
-                <td>{{ item.pregunta }}</td>
+                <!-- <td>{{ item.pregunta }}</td> -->
                 <td>{{ item.respuesta }}</td>
                 <td>
                     <div class="semaforo">
@@ -41,14 +53,12 @@ Resultado de Análisis Organizacional
                         <div class="luz amarillo {% if item.semaforizacion == 2 %}encendido{% endif %}"></div>
                         <div class="luz verde {% if item.semaforizacion == 1 %}encendido{% endif %}"></div>
                     </div>
-
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
     {% endif %}
-    
 </body>
 
 <div class="btn">
@@ -60,11 +70,76 @@ Resultado de Análisis Organizacional
 
 <style>
     .dimension-buttons button {
-        margin-top: 50px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        z-index: 1000;
+        background-color: #838383;
+        border: 1px solid #838383;
+        border-radius: 10px;
+        color: #ffffff;
+        /* width: 175px; */ /* Ancho */
+        height: 50px;  /* Alto */
+    }
+
+    .dimension-buttons button:hover {
+        color: #333333;
+    }
+ 
+    descripcion {
+        margin-bottom: 35px;
+        margin-top: 35px;
+        font-size: 25px;
+        color: #333333;
+    }
+
+    reporte {
+        color: #333333;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        z-index: 1;
+        margin-top: -50px;
+        font-size: 40px;
+    }
+
+    .semaforo {
+        display: flex;
+    }
+
+    .luz {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        margin: 0 5px;
+        background-color: gray;
+    }
+
+    .luz.encendido {
+        background-color: currentColor;
+    }
+
+    .rojo {
+        color: red;
+    }
+
+    .amarillo {
+        color: yellow;
+    }
+
+    .verde {
+        color: green;
     }
 </style>
 
 <script>
+    // Verificar si la variable 'promedios' ya ha sido declarada
+    if (typeof window.promedios === 'undefined') {
+        window.promedios = JSON.parse('{{ promedios|default("[]")|tojson|safe }}');
+    }
+
+    console.log(window.promedios);
+
     function filterByDimension(dimension) {
         const rows = document.querySelectorAll('.dimension-row');
         rows.forEach(row => {
@@ -74,7 +149,28 @@ Resultado de Análisis Organizacional
                 row.style.display = 'none';
             }
         });
+
+        // Verificar si existen promedios antes de usar
+        if (window.promedios && window.promedios[dimension] !== undefined) {
+            const promedio = window.promedios[dimension];
+            document.getElementById('promedio-semaforo').style.display = 'block';
+
+            // Limpiar clases primero
+            document.getElementById('promedio-rojo').classList.remove('encendido');
+            document.getElementById('promedio-amarillo').classList.remove('encendido');
+            document.getElementById('promedio-verde').classList.remove('encendido');
+
+            // Aplicar la clase correspondiente
+            if (promedio >= 2.5) {
+                document.getElementById('promedio-rojo').classList.add('encendido');
+            } else if (promedio >= 1.5) {
+                document.getElementById('promedio-amarillo').classList.add('encendido');
+            } else {
+                document.getElementById('promedio-verde').classList.add('encendido');
+            }
+        }
     }
 </script>
+
 
 {% endblock %}

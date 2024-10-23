@@ -1,125 +1,184 @@
 {% extends "layout.html" %}
-
-{% block title %}
-Resultados Competencias Transversales
-{% endblock %}
-
+{% block title %} Resultados Competencias Transversales {% endblock %}
 {% block content %}
 <h1>Gestión del Desempeño</h1>
 
-<hr>
-<div class="dashboard">
-    <div class="avatar">
-        <div class="circle-wrapper">
-            <div class="circle"></div>
-        </div>
-        <text>Edwin Figueroa</text>
+<hr />
+
+<resultados>Resultados Competencias Transversales</resultados>
+
+<div class="rectangle-2111">
+    <div class="circle-wrapper">
+        <div class="circle"></div>
     </div>
-    <div class="dashboard-content">
-        <!-- Sección de respuestas -->
-        <div id="respuestas-section">
-            <div class="chart-title">
-                <h1>Resultados</h1>
-                <ul>
-
-
-                <button><img src="{{ url_for('static', filename='img/compromiso de los resultados integrales.png')}}" href="/resultados"></button>
-                <button><img src="{{ url_for('static', filename='img/contribucion a la transformacion.png')}}" href="/resultados"></button>
-                <button><img src="{{ url_for('static', filename='img/cuidado de si del otro y de los procesos.png')}}" href="/resultados"></button>
-                <button><img src="{{ url_for('static', filename='img/planificacion sustantiva.png')}}" href="/resultados"></button>
-                <button><img src="{{ url_for('static', filename='img/sentido de comunidad academica.png')}}" href="/resultados"></button>
-                <button><img src="{{ url_for('static', filename='img/sinergia colaborativa.png')}}" href="/resultados"></button>
-
-
-                    {% for respuesta in respuestas %}
-                    <li>
-                        <span class="label">Respuesta Seleccionada:</span>{{ respuesta.texto_respuesta }}<br>
-                        <span class="label">Nivel:</span> {{ respuesta.valor_respuesta }}<br>
-                        <span class="label">Ruta de desarrollo:</span>{{ respuesta.ruta_de_desarrollo }}<br>
-                        <span class="label">Ruta de autodesarrollo:</span>{{ respuesta.ruta_de_autodesarrollo }}<br>
-                    </li>
-                    {% endfor %}
-                </ul>
+    <text>Edwin Figueroa</text>
+</div>
+<!-- sentido_comunidad -->
+<div class="dashboard-buttons">
+    {% set competencias_mostradas = [] %}
+    {% set imagenes = {
+        'Sentido de la comunidad académica': 'video0.png',
+        'Planificación sustantiva': 'planificacion_sustantiva.png', 
+        'Cuidado de sí, del otro y de los procesos': 'cuidado_procesos.png',
+        'Compromiso son los resultados integrales': 'compromiso_resultados.png', 
+        'Contribución a la transformación': 'contribucion_transformacion.png',
+        'Sinergia colaborativa': 'sinergia_colaborativa.png'
+    } %}
+    {% for respuesta in respuestas %}
+        {% if respuesta.competencia not in competencias_mostradas %}
+            {% set competencias_mostradas = competencias_mostradas + [respuesta.competencia] %}
+            <div class="button">
+                <button type="button" onclick="mostrarInformacion({{ loop.index0 }})" class="competencias_transversales_borde">
+                    <img src="{{ url_for('static', filename='img/' ~ imagenes[respuesta.competencia]) }}"
+                        class="competencias_transversales" />
+                    <p>{{ respuesta.competencia }}</p>
+                </button>
             </div>
-        </div>
-
-        <!-- Sección de la gráfica, inicialmente oculta -->
-        <div id="grafica-section" style="display:none;">
-            <h1>
-                <div class="chart-title">Gráfica de Resultados</div>
-            </h1>
-            <div id="plotly-chart" style="width: 900px; height: 500px;"></div>
-        </div>
-    </div>
+        {% endif %}
+    {% endfor %}
 </div>
 
-<div class="action-buttons">
-    <!-- <a href="#" id="toggleButton" onclick="toggleView()">Ver Gráfica</a> -->
-    <a href="#" onclick="window.print();">Imprimir Informe</a>
-    <a href="{{ url_for('download_excel', incluir_grafica='true') }}" id="downloadButton">Descargar Excel</a>
-    <a href="/resultados">Volver</a>
-    <!-- Pasa el parámetro -->
-    <br>
+<div class="btn">
+    <a href="/resultados" class="volver">
+        <div class="medium-filled">
+            Volver
+        </div>
+    </a>
+</div>
+
+<div id="informacion" class="informacion">
+    <!-- Aquí se mostrará la información correspondiente al botón seleccionado -->
 </div>
 
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
 <img src="{{ url_for('static', filename='img/competencias-transversales.jpeg')}}" class="usuarios" />
 
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<style>
+    resultados {
+        color: #333333;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        z-index: 1;
+        margin-top: -50px;
+        font-size: 40px;
+    }
+
+    .dashboard-buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: -20px;
+        z-index: 1;
+        flex-wrap: wrap;
+
+    }
+
+    .competencias_transversales
+
+    /* imagenes */
+        {
+        border-radius: 50px;
+        width: 90px;
+        /* Ancho */
+        height: 90px;
+        /* Alto */
+        z-index: 1;
+
+    }
+
+    .competencias_transversales_borde {
+        border-radius: 50px;
+        border-color: #eaeaea;
+        border: none;
+        /* Elimina el borde */
+        outline: none;
+        /* Elimina el efecto de enfoque */
+        background-color: #eaeaea;
+        position: relative;
+        height: 170px;
+        /* Alto */
+        width: 150px;
+        /* Ancho */
+        z-index: 1;
+    }
+
+    .competencias_transversales_borde:hover {
+        background-color: #9b9b9b;
+    }
+
+    .rectangle-2111 {
+        background: #ffffff;
+        border-radius: 40px;
+        width: 270px;
+        height: 155px;
+        padding: 10px;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    }
+
+    .informacion {
+        margin-top: 60px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+    th {
+        background-color: #f2f2f2;
+        text-align: left;
+    }
+
+</style>
+
 <script>
-    var respuestas = JSON.parse('{{ respuestas|tojson|safe }}');
-
-    // Inicializa la gráfica
-    function renderGrafica() {
-        var xValues = [];
-        var yValues = [];
-
-        respuestas.forEach(function (respuesta, index) {
-            xValues.push(index + 1); // Usa índices como etiquetas del eje X
-            var valor = parseFloat(respuesta.valor_respuesta);
-            yValues.push(isNaN(valor) ? 0 : valor); // Usa 0 si no es un número válido
-        });
-
-        var trace = {
-            x: xValues,
-            y: yValues,
-            mode: 'lines+markers',
-            type: 'scatter',
-            marker: { size: 8 }
-        };
-
-        var data = [trace];
-        var layout = {
-            title: 'Valores de Respuestas',
-            xaxis: { title: 'Índice' },
-            yaxis: { title: 'Valor', range: [0, 5] }  // Ajustado el rango para incluir 0
-        };
-
-        Plotly.newPlot('plotly-chart', data, layout);
+    const informacion = {{ respuestas|tojson }};
+    
+    function mostrarInformacion(index) {
+        const data = informacion[index];
+        const content = `
+            <table>
+                <tr>
+                    <th>Competencia</th>
+                    <td>${data.competencia}</td>
+                </tr>
+                <tr>
+                    <th>Pregunta</th>
+                    <td>${data.texto_pregunta}</td>
+                </tr>
+                <tr>
+                    <th>Respuesta Seleccionada</th>
+                    <td>${data.texto_respuesta}</td>
+                </tr>
+                <tr>
+                    <th>Nivel</th>
+                    <td>${data.valor_respuesta}</td>
+                </tr>
+                <tr>
+                    <th>Ruta de desarrollo</th>
+                    <td>${data.ruta_de_desarrollo}</td>
+                </tr>
+                <tr>
+                    <th>Ruta de autodesarrollo</th>
+                    <td>${data.ruta_de_autodesarrollo}</td>
+                </tr>
+                <tr>
+                    <th>Iluo</th>
+                    <td>${data.iluo}</td>
+                </tr>
+                <tr>
+                    <th>Descripción de la iluo</th>
+                    <td>${data.descripcion_iluo}</td>
+                </tr>
+            </table>
+        `;
+        document.getElementById('informacion').innerHTML = content;
     }
-
-    function toggleView() {
-        var respuestasSection = document.getElementById('respuestas-section');
-        var graficaSection = document.getElementById('grafica-section');
-        var toggleButton = document.getElementById('toggleButton');
-        var downloadButton = document.getElementById('downloadButton'); // Referencia al botón de descarga
-
-        if (graficaSection.style.display === "none") {
-            respuestasSection.style.display = "none";
-            graficaSection.style.display = "block";
-            toggleButton.textContent = "Ver Resultados";
-            downloadButton.href = "{{ url_for('download_excel', incluir_grafica='true') }}"; // Cambia a la descarga con gráfica
-            renderGrafica(); // Renderiza la gráfica cuando se muestra la sección
-        } else {
-            graficaSection.style.display = "none";
-            respuestasSection.style.display = "block";
-            toggleButton.textContent = "Ver Gráfica";
-            downloadButton.href = "{{ url_for('download_excel') }}"; // Cambia a la descarga sin gráfica
-        }
-    }
-
-
-
 </script>
 
 {% endblock %}

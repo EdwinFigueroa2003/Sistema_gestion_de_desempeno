@@ -25,8 +25,12 @@ def vista_competenciastransversales():
         datos_respuesta = {
             'id_pregunta': int(pregunta_id),
             'id_respuesta': int(respuesta_id),
+            #'iluo': request.form.get('iluo', 'Iluo no disponible'),  # Asegúrate de obtener este dato si es necesario
+            #'descripcion_iluo': request.form.get('descripcion_iluo', 'Descripción de la iluo no disponible')  # Asegúrate de obtener este dato si es necesario
         }
         
+        print("Datos a enviar a la API: ", pregunta_id)  # Añadir esta línea
+        print("Datos a enviar a la API: ", respuesta_id)  # Añadir esta línea
         print(f"Datos a enviar a la API: {datos_respuesta}")  # Añadir esta línea
         
         # Enviar la respuesta a la API
@@ -38,9 +42,11 @@ def vista_competenciastransversales():
             respuestas = session.get('respuestas', {})
             respuestas[pregunta_id] = respuesta_id
             session['respuestas'] = respuestas
+            session['mensaje_confirmacion'] = "Respuesta guardada correctamente."  # Añadir esta línea
         except requests.RequestException as e:
             print(f"Error al guardar la respuesta en la API: {e}")
             print(f"Detalles de la respuesta: {e.response.text if e.response else 'No hay detalles'}")  # Añadir esta línea
+            session['mensaje_error'] = "Hubo un error al guardar la respuesta. Inténtalo de nuevo."  # Añadir esta línea
 
         if 'next' in request.form:
             current_index += 1
@@ -87,11 +93,14 @@ def vista_competenciastransversales():
                                preguntas=preguntas,
                                current_index=current_index,
                                total_preguntas=len(preguntas), 
-                               usuario=session.get('usuario'))
+                               usuario=session.get('usuario'),
+                               mensaje_confirmacion=session.pop('mensaje_confirmacion', None),  # Añadir esta línea
+                               mensaje_error=session.pop('mensaje_error', None))  # Añadir esta línea
     except (requests.RequestException, ValueError) as e:
         print(f"Error al obtener o procesar datos: {e}")
         return render_template('competenciastransversales.html', 
                                pregunta=None, 
                                preguntas=[], 
                                current_index=current_index,
-                               error_message=str(e))  # current_index se sigue enviando
+                               error_message=str(e),
+                               mensaje_error="Hubo un error al obtener los datos. Inténtalo de nuevo.")  # Añadir esta línea

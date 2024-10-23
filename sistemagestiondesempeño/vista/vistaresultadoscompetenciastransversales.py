@@ -37,8 +37,13 @@ def resultadoscompetenciastransversales():
                 'valor_respuesta': detalle_respuesta.get('valor_respuesta', 'Valor no disponible'),
                 'ruta_de_desarrollo': detalle_respuesta.get('ruta_de_desarrollo', 'Ruta de desarrollo no disponible'),
                 'ruta_de_autodesarrollo': detalle_respuesta.get('ruta_de_autodesarrollo', 'Ruta de autodesarrollo no disponible'),
-                'fecha_respuesta': respuesta.get('fecha_respuesta', 'Fecha no disponible')
+                'fecha_respuesta': respuesta.get('fecha_respuesta', 'Fecha no disponible'),
+                'competencia': pregunta.get('competencia', 'Competencia no disponible'),
+                'iluo': detalle_respuesta.get('iluo', 'Iluo no disponible'),
+                'descripcion_iluo': detalle_respuesta.get('descripcion_iluo', 'Descripción de la iluo no disponible')
             })
+
+        #print("Vista de resultados de competencias transversales", detalle_respuesta)
 
     except requests.RequestException as e:
         print(f"Error al obtener datos: {e}")
