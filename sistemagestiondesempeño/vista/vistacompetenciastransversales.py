@@ -24,13 +24,8 @@ def vista_competenciastransversales():
         # Crear un diccionario con los datos de la respuesta
         datos_respuesta = {
             'id_pregunta': int(pregunta_id),
-            'id_respuesta': int(respuesta_id),
-            #'iluo': request.form.get('iluo', 'Iluo no disponible'),  # Asegúrate de obtener este dato si es necesario
-            #'descripcion_iluo': request.form.get('descripcion_iluo', 'Descripción de la iluo no disponible')  # Asegúrate de obtener este dato si es necesario
+            'id_respuesta': int(respuesta_id)
         }
-        
-        print("Datos a enviar a la API: ", pregunta_id)  # Añadir esta línea
-        print("Datos a enviar a la API: ", respuesta_id)  # Añadir esta línea
         print(f"Datos a enviar a la API: {datos_respuesta}")  # Añadir esta línea
         
         # Enviar la respuesta a la API
@@ -55,8 +50,7 @@ def vista_competenciastransversales():
 
     # Obtener preguntas filtradas por fk_nivel_de_contribucion
     try:
-        response_preguntas = requests.get(f'{API_URL}/pregunta/fk_nivel_de_contribucion/1', timeout=10)
-        #response_preguntas = requests.get(f'{API_URL}/pregunta?fk_nivel_de_contribucion={fk_nivel_de_contribucion}', timeout=10) #Todas las preguntas sin filtro
+        response_preguntas = requests.get(f'{API_URL}/pregunta/fk_nivel_de_contribucion/{fk_nivel_de_contribucion}', timeout=10)
         response_preguntas.raise_for_status()
         preguntas = response_preguntas.json()
 

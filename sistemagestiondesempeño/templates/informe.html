@@ -14,13 +14,11 @@ Informe
     </div>
 
     {% if usuario %}
-        {% set user_data = usuario[0] if usuario is iterable and usuario is not string else usuario %}
-        
-        <h5><span class="label">Nombre:</span> {{ user_data['nombre'] if user_data is mapping and 'nombre' in user_data else 'Nombre no disponible' }}</h5>
-        <h5><span class="label">Facultad de programa:</span> {{ user_data['facultad'] if user_data is mapping and 'facultad' in user_data else 'Facultad no disponible' }}</h5>
-        <h5><span class="label">Cargo:</span> {{ user_data['fk_cargo_usu'] if user_data is mapping and 'fk_cargo_usu' in user_data else 'Cargo no disponible' }}</h5>
-        <h5><span class="label">Correo electrónico:</span> {{ user_data['email'] if user_data is mapping and 'email' in user_data else 'Correo no disponible' }}</h5>
-        <h5><span class="label">Nivel de contribución:</span> {{ user_data['fk_nivel_de_contribucion'] if user_data is mapping and 'fk_nivel_de_contribucion' in user_data else 'Nivel no disponible' }}</h5>
+        <h5><span class="label">Nombre:</span> {{ usuario['nombre'] }}</h5>
+        <h5><span class="label">Facultad de programa:</span> {{ usuario['facultad'] }}</h5>
+        <h5><span class="label">Cargo:</span> {{ usuario['fk_cargo_usu'] }}</h5>
+        <h5><span class="label">Correo electrónico:</span> {{ usuario['email'] }}</h5>
+        <h5><span class="label">Nivel de contribución:</span> {{ usuario['fk_nivel_de_contribucion'] }}</h5>
     {% else %}
         <p>No se encontraron datos del usuario.</p>
     {% endif %}
@@ -104,6 +102,8 @@ Informe
         <div class="medium-filled">Volver</div>
     </a>
 </div>
+
+
 
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
 <img src="{{ url_for('static', filename='img/icon-user-friends-icon0.jpg')}}" class="usuarios" />
