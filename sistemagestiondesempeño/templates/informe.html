@@ -16,9 +16,19 @@ Informe
     {% if usuario %}
         <h5><span class="label">Nombre:</span> {{ usuario['nombre'] }}</h5>
         <h5><span class="label">Facultad de programa:</span> {{ usuario['facultad'] }}</h5>
-        <h5><span class="label">Cargo:</span> {{ usuario['fk_cargo_usu'] }}</h5>
+        <!-- <h5><span class="label">Cargo:</span> {{ usuario['fk_cargo_usu'] }}</h5> -->
         <h5><span class="label">Correo electrónico:</span> {{ usuario['email'] }}</h5>
-        <h5><span class="label">Nivel de contribución:</span> {{ usuario['fk_nivel_de_contribucion'] }}</h5>
+        <h5 class="hover-message">
+            <span class="label">Nivel de contribución:</span> {{ usuario['fk_nivel_de_contribucion'] }}
+            <span class="tooltip">
+                Nivel 1: ASISTENCIAL Y DE APOYO
+                <br>
+                Nivel 2: PROFESIONAL
+                <br>
+                Nivel 3: LÍDER
+                <br>
+                Nivel 4: ESTRATEGICO
+        </h5>
     {% else %}
         <p>No se encontraron datos del usuario.</p>
     {% endif %}
@@ -31,8 +41,8 @@ Informe
             <h3>Eliminar</h3>
             <img src="{{ url_for('static', filename='img/vector0.jpg')}}" class="vector" />
         </a>
-    </div> -->
-    <!--Eliminar integrante-->
+    </div>  -->
+    <!--Eliminar integrante -->
 
 </div>
 
@@ -103,7 +113,40 @@ Informe
     </a>
 </div>
 
+<style>
+    .hover-message {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .hover-message .tooltip {
+        visibility: hidden;
+        width: 225px; /* Ajusta el ancho según sea necesario */
+        height: 95px; /* Ajusta el alto según sea necesario */
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 5px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%; /* Position the tooltip above the text */
+        left: 50%;
+        margin-left: -100px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    
+    .hover-message:hover .tooltip {
+        visibility: visible;
+        opacity: 1;
+    }
 
+    .opciones-usuario, .rectangle-2109{
+        z-index: 1000;
+        margin-top: 15px;
+    }
+    </style>
 
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
 <img src="{{ url_for('static', filename='img/icon-user-friends-icon0.jpg')}}" class="usuarios" />
