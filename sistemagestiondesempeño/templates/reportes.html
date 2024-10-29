@@ -1,31 +1,18 @@
 {% extends "layout.html" %}
 
-{% block title %}
-Reportes
-{% endblock %}
+{% block title %}Reportes{% endblock %}
 
 {% block content %}
 
-<h1>Gestión del Desempeño</h1>
-<hr>
+<h1 class="main-title">Gestión del Desempeño</h1>
+<hr class="divider">
 <h1>Resultados de: </h1>
 
 <div class="container">
-
-<!--     <a href="/reportesimpulsandoelcrecimiento">
-        <div class="rectangle-2116">
-            <h3>Impulsando El <br> Crecimiento</h3>
-            <p> Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
-                malesuada rutrum diam, sed sollicitudin sed sed.</p>
-            <img src="{{ url_for('static', filename='img/potencia0.png')}}" class="potencia" />
-        </div>
-    </a> -->
-
     <a href="/reportesanalisisorganizacional">
         <div class="rectangle-2117">
             <h3>Análisis <br>Organizacional</h3>
-            <p> Lorem ipsum dolor se sienta amet, consectetur adipiscing elit. Nullam
-                malesuada rutrum diam, sed sollicitudin sed sed.</p>
+            <p>Exploramos a fondo el funcionamiento institucional para identificar oportunidades de mejora, optimizar recursos y fortalecer la efectividad organizacional.</p>
             <img src="{{ url_for('static', filename='img/organizacion0.png')}}" class="organizacion" />
         </div>
     </a>

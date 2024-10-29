@@ -1,13 +1,11 @@
 {% extends "layout.html" %}
 
-{% block title %}
-Podcast
-{% endblock %}
+{% block title %}Podcast{% endblock %}
 
 {% block content %}
 
-<h1>Podcast</h1>
-<hr>
+<h1 class="main-title">Podcast</h1>
+<hr class="divider">
 <p>Búsqueda de podcast por nombre</p>
 <form class="form-inline" method="GET" action="{{ url_for('idpodcast.vista_podcast') }}">
     <input class="form-control mr-sm-2" type="search" name="search" placeholder="Ingresa el nombre" aria-label="Search" value="{{ request.args.get('search', '') }}">

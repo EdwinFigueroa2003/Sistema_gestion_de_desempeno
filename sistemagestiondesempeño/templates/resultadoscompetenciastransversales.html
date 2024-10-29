@@ -1,11 +1,10 @@
 {% extends "layout.html" %}
-{% block title %} Resultados Competencias Transversales {% endblock %}
+{% block title %}Resultados Competencias Transversales{% endblock %}
 {% block content %}
-<h1>Gestión del Desempeño</h1>
+<h1 class="main-title">Gestión del Desempeño</h1>
+<hr class="divider" />
 
-<hr />
-
-<resultados>Resultados Competencias Transversales</resultados>
+<h2 class="results-title">Resultados Competencias Transversales</h2>
 
 <div class="rectangle-2111">
     <div class="circle-wrapper">
@@ -13,56 +12,167 @@
     </div>
     <text>Edwin Figueroa</text>
 </div>
-<!-- sentido_comunidad -->
+
 <div class="dashboard-buttons">
     {% set competencias_mostradas = [] %}
     {% set imagenes = {
-        'Sentido de la comunidad académica': 'video0.png',
-        'Planificación sustantiva': 'planificacion_sustantiva.png', 
-        'Cuidado de sí, del otro y de los procesos': 'cuidado_procesos.png',
-        'Compromiso son los resultados integrales': 'compromiso_resultados.png', 
-        'Contribución a la transformación': 'contribucion_transformacion.png',
-        'Sinergia colaborativa': 'sinergia_colaborativa.png'
+    'Sentido de la comunidad académica': 'sentido_comunidad.png',
+    'Planificación sustantiva': 'planificacion_sustantiva.png',
+    'Cuidado de sí, del otro y de los procesos': 'cuidado_procesos.png',
+    'Compromiso son los resultados integrales': 'compromiso_resultados.png',
+    'Contribución a la transformación': 'contribucion_transformacion.png',
+    'Sinergia colaborativa': 'sinergia_colaborativa.png'
     } %}
+
     {% for respuesta in respuestas %}
-        {% if respuesta.competencia not in competencias_mostradas %}
-            {% set competencias_mostradas = competencias_mostradas + [respuesta.competencia] %}
-            <div class="button">
-                <button type="button" onclick="mostrarInformacion({{ loop.index0 }})" class="competencias_transversales_borde">
-                    <img src="{{ url_for('static', filename='img/' ~ imagenes[respuesta.competencia]) }}"
-                        class="competencias_transversales" />
-                    <p>{{ respuesta.competencia }}</p>
-                </button>
-            </div>
-        {% endif %}
+    {% if respuesta.competencia not in competencias_mostradas %}
+    {% set competencias_mostradas = competencias_mostradas + [respuesta.competencia] %}
+    <button type="button" onclick='mostrarInformacion({{loop.index0}})' class="competency-button">
+        <img src="{{ url_for('static', filename='img/' ~ imagenes[respuesta.competencia]) }}"
+            alt="{{ respuesta.competencia }}" class="competency-icon" />
+        <p class="competency-name">{{ respuesta.competencia }}</p>
+    </button>
+    {% endif %}
     {% endfor %}
 </div>
 
-<div class="btn">
-    <a href="/resultados" class="volver">
-        <div class="medium-filled">
-            Volver
+<div class="results-container">
+    <div class="levels-grid">
+        {% for i in range(1, 5) %}
+        <div class="level-card" id="nivel{{ i }}">
+            <h4>Nivel {{ i }}</h4>
+            <div class="level-content"></div>
         </div>
-    </a>
+        {% endfor %}
+    </div>
+
+    <div class="info-panel" id="informacion"></div>
 </div>
 
-<div id="informacion" class="informacion">
-    <!-- Aquí se mostrará la información correspondiente al botón seleccionado -->
+<div class="actions">
+    <a href="/resultados" class="back-button">Volver</a>
 </div>
 
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
 <img src="{{ url_for('static', filename='img/competencias-transversales.jpeg')}}" class="usuarios" />
 
 <style>
-    resultados {
-        color: #333333;
+    .competencies-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .competency-button {
+        background: #eaeaea;
+        border: none;
+        border-radius: 1rem;
+        padding: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
         align-items: center;
-        padding: 20px;
+        gap: 0.5rem;
+    }
+
+    .competency-button:hover {
+        background-color: #d0d0d0;
+    }
+
+    .competency-icon {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .competency-name {
+        font-size: 0.9rem;
+        text-align: center;
+        margin: 0;
+    }
+
+    .results-container {
+        display: grid;
+        grid-template-columns: minmax(200px, 250px) 1fr;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        width: 100%;
+        overflow-x: auto;
+        /* Permite scroll si es necesario */
+    }
+
+    .levels-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        gap: 0.5rem;
+        margin-right: 1rem;
+    }
+
+    .level-card {
+        background: #ffffff;
+        border: 1px solid #eaeaea;
+        border-radius: 0.5rem;
+        padding: 0.75rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 120px;
+    }
+
+    .level-card h4 {
+        margin: 0 0 0.5rem 0;
+        font-size: 0.9rem;
+    }
+
+    .level-content {
+        font-size: 0.8rem;
+    }
+
+    .level-card:hover {
+        background-color: #f5f5f5;
+    }
+
+    .level-card.active {
+        border-color: #ff6b6b;
+        background-color: #fff5f5;
+        position: relative;
         z-index: 1;
-        margin-top: -50px;
-        font-size: 40px;
+    }
+
+    .info-panel {
+        background: #fff;
+        border-radius: 1rem;
+        padding: 1rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        overflow-x: auto;
+        /* Permite scroll horizontal si el contenido es muy ancho */
+    }
+
+    .info-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 300px;
+        /* Asegura un ancho mínimo */
+    }
+
+    .info-table th,
+    .info-table td {
+        padding: 0.75rem;
+        border: 1px solid #eaeaea;
+        font-size: 0.9rem;
+        word-wrap: break-word;
+        /* Permite que el texto se ajuste */
+        max-width: 300px;
+        /* Limita el ancho máximo de las celdas */
+    }
+
+    .info-table th {
+        background-color: #ffffff;
+        font-weight: 600;
+        text-align: left;
     }
 
     .dashboard-buttons {
@@ -74,111 +184,84 @@
         flex-wrap: wrap;
 
     }
-
-    .competencias_transversales
-
-    /* imagenes */
-        {
-        border-radius: 50px;
-        width: 90px;
-        /* Ancho */
-        height: 90px;
-        /* Alto */
-        z-index: 1;
-
-    }
-
-    .competencias_transversales_borde {
-        border-radius: 50px;
-        border-color: #eaeaea;
-        border: none;
-        /* Elimina el borde */
-        outline: none;
-        /* Elimina el efecto de enfoque */
-        background-color: #eaeaea;
-        position: relative;
-        height: 170px;
-        /* Alto */
-        width: 150px;
-        /* Ancho */
-        z-index: 1;
-    }
-
-    .competencias_transversales_borde:hover {
-        background-color: #9b9b9b;
-    }
-
-    .rectangle-2111 {
-        background: #ffffff;
-        border-radius: 40px;
-        width: 270px;
-        height: 155px;
-        padding: 10px;
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    }
-
-    .informacion {
-        margin-top: 60px;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    th, td {
-        border: 1px solid #ddd;
-        padding: 8px;
-    }
-    th {
-        background-color: #f2f2f2;
-        text-align: left;
-    }
-
 </style>
 
 <script>
-    const informacion = {{ respuestas|tojson }};
-    
+    const NIVELES = [
+        { nivel: '1', letra: 'i', descripcion: 'Identificación inicial de las competencias' },
+        { nivel: '2', letra: 'l', descripcion: 'Localización de las competencias' },
+        { nivel: '3', letra: 'u', descripcion: 'Utilización de las competencias' },
+        { nivel: '4', letra: 'o', descripcion: 'Nivel óptimo de la competencia' }
+    ];
+
+    let informacion;
+    try {
+        informacion = JSON.parse('{{ respuestas|tojson|safe }}');
+    } catch (error) {
+        console.error('Error al parsear la información:', error);
+        informacion = [];
+    }
+
     function mostrarInformacion(index) {
         const data = informacion[index];
-        const content = `
-            <table>
-                <tr>
-                    <th>Competencia</th>
-                    <td>${data.competencia}</td>
-                </tr>
-                <tr>
-                    <th>Pregunta</th>
-                    <td>${data.texto_pregunta}</td>
-                </tr>
-                <tr>
-                    <th>Respuesta Seleccionada</th>
-                    <td>${data.texto_respuesta}</td>
-                </tr>
-                <tr>
-                    <th>Nivel</th>
-                    <td>${data.valor_respuesta}</td>
-                </tr>
-                <tr>
-                    <th>Ruta de desarrollo</th>
-                    <td>${data.ruta_de_desarrollo}</td>
-                </tr>
-                <tr>
-                    <th>Ruta de autodesarrollo</th>
-                    <td>${data.ruta_de_autodesarrollo}</td>
-                </tr>
-                <tr>
-                    <th>Iluo</th>
-                    <td>${data.iluo}</td>
-                </tr>
-                <tr>
-                    <th>Descripción de la iluo</th>
-                    <td>${data.descripcion_iluo}</td>
-                </tr>
-            </table>
-        `;
-        document.getElementById('informacion').innerHTML = content;
-    }
-</script>
 
+        // Resetear todos los niveles
+        document.querySelectorAll('.level-card').forEach(card => {
+            card.classList.remove('active');
+            const nivel = card.id.replace('nivel', '');
+            const nivelInfo = NIVELES[parseInt(nivel) - 1];
+
+            card.innerHTML = `
+            <h4>Nivel ${nivelInfo.nivel}</h4>
+            <div class="level-content">
+                <p>Letra: ${nivelInfo.letra}</p>
+                <p>${nivelInfo.descripcion}</p>
+            </div>
+        `;
+        });
+
+        // Activar el nivel seleccionado
+        const nivelSeleccionado = document.getElementById(`nivel${data.valor_respuesta}`);
+        if (nivelSeleccionado) {
+            nivelSeleccionado.classList.add('active');
+            nivelSeleccionado.onclick = () => mostrarDetalles(data);
+        }
+    }
+
+    function mostrarDetalles(data) {
+        const infoPanel = document.getElementById('informacion');
+        infoPanel.innerHTML = `
+        <table class="info-table">
+            <tr>
+                <th>Respuesta Seleccionada</th>
+                <td>${data.texto_respuesta}</td>
+            </tr>
+            <tr>
+                <th>Ruta de desarrollo</th>
+                <td>${data.ruta_de_desarrollo}</td>
+            </tr>
+            <tr>
+                <th>Ruta de autodesarrollo</th>
+                <td>${data.ruta_de_autodesarrollo}</td>
+            </tr>
+        </table>
+    `;
+    }
+
+    // Inicializar los niveles al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+        NIVELES.forEach((nivelInfo, index) => {
+            const nivelCard = document.getElementById(`nivel${index + 1}`);
+            if (nivelCard) {
+                nivelCard.innerHTML = `
+                <h4>Nivel ${nivelInfo.nivel}</h4>
+                <div class="level-content">
+                    <p>Letra: ${nivelInfo.letra}</p>
+                    <p>${nivelInfo.descripcion}</p>
+                </div>
+            `;
+            }
+        });
+    });
+</script>
 {% endblock %}

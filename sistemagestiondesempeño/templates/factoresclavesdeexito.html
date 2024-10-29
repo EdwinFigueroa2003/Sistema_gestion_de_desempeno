@@ -1,39 +1,37 @@
 {% extends "layout.html" %}
 
-{% block title %}
-Factores Claves de Éxito
-{% endblock %}
+{% block title %}Factores Claves de Éxito{% endblock %}
 
 {% block content %}
-        <h1>GESTIÓN DEL DESEMPEÑO</h1>
-        <hr>
+<h1 class="main-title">GESTIÓN DEL DESEMPEÑO</h1>
+<hr class="divider">
 
-        <div class="rectangle-2119">
-            <div class="circle-wrapper">
-                <div class="circle"></div>
-            </div>
-            <nombre>Edwin Figueroa</nombre>
+<div class="rectangle-2119">
+    <div class="circle-wrapper">
+        <div class="circle"></div>
+    </div>
+    <nombre>Edwin Figueroa</nombre>
+</div>
+
+<div class="titulo-dimension">
+    <h3>FACTORES CLAVES DE EXITO</h3>
+
+</div>
+
+<div class="btn">
+    <a href="/informe/edwin.figueroa@usbmed.edu.co" class="volver">
+        <div class="medium-filled">
+            VOLVER
         </div>
+    </a>
+</div>
 
-        <div class="titulo-dimension">
-            <h3>FACTORES CLAVES DE EXITO</h3>
-
-        </div>
-
-        <div class="btn">
-            <a href="/informe/edwin.figueroa@usbmed.edu.co" class="volver">
-                <div class="medium-filled">
-                    VOLVER
-                </div>
-            </a>
-        </div>
-
-        <div class="centro">
+<div class="centro">
 
 
-            <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
-            <img src="{{ url_for('static', filename='img/exito0.png')}}" class="usuarios" />
+    <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+    <img src="{{ url_for('static', filename='img/exito0.png')}}" class="usuarios" />
 
-        </div>
+</div>
 
 {% endblock %}

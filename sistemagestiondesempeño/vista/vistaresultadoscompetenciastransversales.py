@@ -43,7 +43,7 @@ def resultadoscompetenciastransversales():
                 'descripcion_iluo': detalle_respuesta.get('descripcion_iluo', 'Descripción de la iluo no disponible')
             })
 
-        #print("Vista de resultados de competencias transversales", detalle_respuesta)
+        #print("Vista de resultados de competencias transversales", resultados)
 
     except requests.RequestException as e:
         print(f"Error al obtener datos: {e}")

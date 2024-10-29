@@ -1,83 +1,82 @@
 {% extends "layout.html" %}
 
-{% block title %}
-Resultados
-{% endblock %}
-
+{% block title %}Resultados{% endblock %}
 {% block content %}
-<h1>GESTIÓN DEL DESEMPEÑO</h1>
-<hr>
+<!-- <div class="container-main"> -->
+    <h1 class="main-title">GESTIÓN DEL DESEMPEÑO</h1>
+    <hr class="divider">
 
-<div class="titulo">
-    <h4>DASHBOARD / REPORTES</h4>
-    <h4>RESULTADOS DE:</h4>
-</div>
-
-<div class="container">
-
-    <div class="rectangle-2110">
-        <div class="circle-wrapper">
-            <div class="circle"></div>
-        </div>
-        <text>Edwin Figueroa</text>
+    <div class="titulo">
+        <h4>DASHBOARD / REPORTES</h4>
+        <h4>RESULTADOS DE:</h4>
     </div>
 
-    <div class="rectangle-group">
-        <div class="rectangle-2070">
-            <a href="/resultadoscompetenciastransversales" style="display:  /* resultadoscompetenciastransversales */
-                flex; align-items: center; justify-content: space-between;">
-                <h5>Competencias transversales</h5>
-                <img src="{{ url_for('static', filename='img/competencias-transversales.jpeg')}}" class="imagenes"
-                    style="float: right; margin-top: -10px;" />
-            </a>
+    <div class="container">
+
+        <div class="rectangle-2110">
+            <div class="circle-wrapper">
+                <div class="circle"></div>
+            </div>
+            <text>Edwin Figueroa</text>
         </div>
 
-        <div class="rectangle-2071">
-            <a href="/resultadoscompetenciasdocentes" style="display: 
+        <div class="rectangle-group">
+            <div class="rectangle-2070">
+                <a href="/resultadoscompetenciastransversales" style="display:  /* resultadoscompetenciastransversales */
                 flex; align-items: center; justify-content: space-between;">
-                <h5>Competencias docentes </h5>
-                <img src="{{ url_for('static', filename='img/ensenar0.png')}}" class="imagenes"
-                    style="float: right; margin-top: -10px;" />
-            </a>
-        </div>
+                    <h5>Competencias transversales</h5>
+                    <img src="{{ url_for('static', filename='img/competencias-transversales.jpeg')}}" class="imagenes"
+                        style="float: right; margin-top: -10px;" />
+                </a>
+            </div>
 
-        <div class="rectangle-2072">
-            <a href="/resultadosconcertaciondepropositos" style="display: 
+            <div class="rectangle-2071">
+                <a href="/resultadoscompetenciasdocentes" style="display: 
                 flex; align-items: center; justify-content: space-between;">
-                <h5> Concertación de propósitos  </h5>
-                <img src="{{ url_for('static', filename='img/concertación-de-propósitos.jpeg')}}" class="imagenes"
-                    style="float: right; margin-top: -10px;" />
-            </a>
-        </div>
+                    <h5>Competencias docentes </h5>
+                    <img src="{{ url_for('static', filename='img/ensenar0.png')}}" class="imagenes"
+                        style="float: right; margin-top: -10px;" />
+                </a>
+            </div>
 
-        <div class="rectangle-2073">
-            <a href="/resultadosfactoresclavesdeexito" style="display: 
+            <div class="rectangle-2072">
+                <a href="/resultadosconcertaciondepropositos" style="display: 
+                flex; align-items: center; justify-content: space-between;">
+                    <h5> Concertación de propósitos </h5>
+                    <img src="{{ url_for('static', filename='img/concertación-de-propósitos.jpeg')}}" class="imagenes"
+                        style="float: right; margin-top: -10px;" />
+                </a>
+            </div>
+
+            <div class="rectangle-2073">
+                <a href="/resultadosfactoresclavesdeexito" style="display: 
                     flex; align-items: center; justify-content: space-between;">
-                <h5> Factores claves de éxito  </h5>
-                <img src="{{ url_for('static', filename='img/exito0.png')}}" class="imagenes"
-                    style="float: right; margin-top: -10px;" />
-            </a>
-        </div>
-        
-        <div class="rectangle-2074">
-            <a href="/resultadosmediciondepotencial" style="display: 
-                    flex; align-items: center; justify-content: space-between;">
-                <h5> Medición de potencial </h5>
-                <img src="{{ url_for('static', filename='img/proyecto-10.png')}}" class="imagenes"
-                    style="float: right; margin-top: -10px;" />
-            </a>
-        </div>
+                    <h5> Factores claves de éxito </h5>
+                    <img src="{{ url_for('static', filename='img/exito0.png')}}" class="imagenes"
+                        style="float: right; margin-top: -10px;" />
+                </a>
+            </div>
 
+            <div class="rectangle-2074">
+                <a href="/resultadosmediciondepotencial" style="display: 
+                    flex; align-items: center; justify-content: space-between;">
+                    <h5> Medición de potencial </h5>
+                    <img src="{{ url_for('static', filename='img/proyecto-10.png')}}" class="imagenes"
+                        style="float: right; margin-top: -10px;" />
+                </a>
+            </div>
+
+        </div>
     </div>
-</div>
 
-<div class="btn">
-    <a href="/informe/edwin.figueroa@usbmed.edu.co" class="volver">
-        <div class="medium-filled">
-            VOLVER
-        </div>
-    </a>
-</div>
+    <div class="btn">
+        <a href="/informe/edwin.figueroa@usbmed.edu.co" class="volver">
+            <div class="medium-filled">
+                VOLVER
+            </div>
+        </a>
+    </div>
+
 
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
 <img src="{{ url_for('static', filename='img/reporte0.png')}}" class="usuarios" />

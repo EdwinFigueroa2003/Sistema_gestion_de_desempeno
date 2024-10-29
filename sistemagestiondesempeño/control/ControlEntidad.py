@@ -1,13 +1,13 @@
 from pprint import pprint
-import psycopg2
+import requests
 from psycopg2 import errors
 from configBd import * 
 
-""" import requests
 
 # Configuración de la URL base del servidor
 PROJECT_NAME = "SGD"
-BASE_URL = f"http://190.217.58.246:5184/api/{PROJECT_NAME}/procedures/execute"  # Reemplaza con la URL correcta
+#BASE_URL = f"http://190.217.58.246:5184/api/{PROJECT_NAME}/procedures/execute"  # Reemplaza con la URL correcta
+BASE_URL = f"http://127.0.0.1:5184/api/{PROJECT_NAME}/procedures/execute"  # Reemplaza con la URL correcta
 
 class ControlEntidad:
     def _init_(self, table_name):
@@ -79,4 +79,4 @@ class ControlEntidad:
             }
         }
         response = requests.post(BASE_URL, json=payload)
-        return response.json() """
+        return response.json()

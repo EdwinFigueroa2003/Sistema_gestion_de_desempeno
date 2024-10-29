@@ -1,13 +1,11 @@
 {% extends "layout.html" %}
 
-{% block title %}
-Videos
-{% endblock %}
+{% block title %}Videos{% endblock %}
 
 {% block content %}
 
-<h1>Videos</h1>
-<hr>
+<h1 class="main-title">Videos</h1>
+<hr class="divider">
 <p>Búsqueda de videos por nombre: <br> </p>
 
 <form class="form-inline" method="GET" action="{{ url_for('idvideos.vista_videos') }}">
