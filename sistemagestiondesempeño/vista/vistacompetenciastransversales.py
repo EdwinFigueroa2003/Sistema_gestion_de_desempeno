@@ -11,6 +11,11 @@ vistacompetenciastransversales = Blueprint('idcompetenciastransversales', __name
 def vista_competenciastransversales():
     # Obtener fk_nivel_de_contribucion desde la sesión
     fk_nivel_de_contribucion = session.get('fk_nivel_de_contribucion')
+    
+    # Obtener id_usuario desde la sesión
+    id_usuario = session.get('id_usuario')
+    if not id_usuario:
+        return redirect(url_for('idvistalogin.vista_login'))  # Redirigir al login si no hay un usuario en sesión
 
     # Inicializar el índice de la pregunta
     current_index = 0 if request.method == 'GET' else int(request.form.get('current_index', 0))
@@ -24,7 +29,8 @@ def vista_competenciastransversales():
         # Crear un diccionario con los datos de la respuesta
         datos_respuesta = {
             'id_pregunta': int(pregunta_id),
-            'id_respuesta': int(respuesta_id)
+            'id_respuesta': int(respuesta_id),
+            'id_usuario': id_usuario  # Añadir el id_usuario a los datos de la respuesta
         }
         print(f"Datos a enviar a la API: {datos_respuesta}")  # Añadir esta línea
         

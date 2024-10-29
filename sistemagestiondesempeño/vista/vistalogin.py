@@ -25,8 +25,10 @@ def vista_login():
                     hashed_contrasena = usuario['contrasena'].encode('utf-8')
                     if bcrypt.checkpw(contrasena, hashed_contrasena):
                         session['usuario'] = usuario
+                        session['id_usuario'] = usuario['id_usuario']  # Guardar el id_usuario en la sesión
+                        pprint(usuario)
+                        pprint(session['id_usuario'])  # Imprimir los datos del usuario en la consola
                         return render_template('/menu.html', ema=email)
-            
             # Credenciales incorrectas
             return render_template('/login.html', mensaje_error='Credenciales incorrectas')
         else:

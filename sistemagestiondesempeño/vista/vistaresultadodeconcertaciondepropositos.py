@@ -7,14 +7,19 @@ vistaresultadosconcertaciondepropositos = Blueprint('idresultadosconcertaciondep
  
 @vistaresultadosconcertaciondepropositos.route('/resultadosconcertaciondepropositos', methods=['GET'])
 def vista_resultadosconcertaciondepropositos():
+    # Obtener el id_usuario desde la sesión
+    id_usuario = session.get('id_usuario')
+    if not id_usuario:
+        return redirect(url_for('idvistalogin.vista_login'))  # Redirigir al login si no hay un usuario en sesión
+
     # Obtener el parámetro de categoría desde la URL
     categoria = request.args.get('categoria', None)
     try:
-        # Usar la URL correcta con el formato especificado
+        # Construir la URL de la API con el filtro de id_usuario
         if categoria:
-            response = requests.get(f'{API_URL}/proposito/id_categoria/{categoria}')
+            response = requests.get(f'{API_URL}/proposito/id_categoria/{categoria}?id_usuario={id_usuario}')
         else:
-            response = requests.get(f'{API_URL}/proposito')
+            response = requests.get(f'{API_URL}/proposito?id_usuario={id_usuario}')
  
         response.raise_for_status()  # Lanza una excepción si hay un error
         propositos = response.json()  # Parsear la respuesta JSON

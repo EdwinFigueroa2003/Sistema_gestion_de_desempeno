@@ -1,7 +1,5 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, redirect, url_for, session
 from configBd import API_URL
-from pprint import pprint
-from flask import request, render_template, redirect, url_for, session
 import requests, random
 from configBd import API_URL
 
@@ -11,6 +9,11 @@ vistamediciondepotencial = Blueprint('idmediciondepotencial', __name__, template
 
 @vistamediciondepotencial.route('/mediciondepotencial', methods=['GET', 'POST'])
 def vista_medicion_potencial():
+    # Obtener el id_usuario desde la sesión
+    id_usuario = session.get('id_usuario')
+    if not id_usuario:
+        return redirect(url_for('idvistalogin.vista_login'))  # Redirigir al login si no hay un usuario en sesión
+
     # Obtener las preguntas de la dimensión
     preguntas = requests.get(f"{API_URL}/dimension_mp_pregunta").json()
     
@@ -43,6 +46,7 @@ def vista_medicion_potencial():
                 
                 # Guardar la respuesta a través de la API
                 guardar_respuesta(
+                    id_usuario,  # Añadir id_usuario al guardar la respuesta
                     pregunta_actual['id_dimension_mp'],
                     pregunta_actual['id_dimension_mp_pregunta'],
                     respuesta_seleccionada_id
@@ -68,20 +72,21 @@ def vista_medicion_potencial():
         random.shuffle(respuestas)
     
         return render_template(
-        'mediciondepotencial.html',
-        pregunta_actual=pregunta_actual,
-        respuestas=respuestas,
-        current_index=current_index,
-        total_preguntas=len(preguntas),
-        dimension_actual=dimension_actual  # Agregar dimensión actual
+            'mediciondepotencial.html',
+            pregunta_actual=pregunta_actual,
+            respuestas=respuestas,
+            current_index=current_index,
+            total_preguntas=len(preguntas),
+            dimension_actual=dimension_actual  # Agregar dimensión actual
         )
     else:
         return redirect(url_for('idmediciondepotencial.finalizo'))
     
 # Función para guardar la respuesta a través de la API
-def guardar_respuesta(id_dimension_mp, id_dimension_mp_pregunta, id_dimension_mp_respuesta):
+def guardar_respuesta(id_usuario, id_dimension_mp, id_dimension_mp_pregunta, id_dimension_mp_respuesta):
     try:
         data = {
+            "id_usuario": id_usuario,  # Incluir id_usuario en los datos
             "id_dimension_mp": id_dimension_mp,
             "id_dimension_mp_pregunta": id_dimension_mp_pregunta,
             "id_dimension_mp_respuesta": id_dimension_mp_respuesta

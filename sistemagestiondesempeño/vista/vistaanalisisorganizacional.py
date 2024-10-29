@@ -1,7 +1,5 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, redirect, url_for, session
 from configBd import API_URL
-from pprint import pprint
-from flask import Blueprint, request, render_template, redirect, url_for, session
 import requests
 import random
 
@@ -15,6 +13,12 @@ def get_dimensiones():
 
 @vistaanalisisorganizacional.route('/analisisorganizacional/<int:id_dimension>', methods=['GET', 'POST'])
 def get_preguntas_respuestas(id_dimension):
+    # Obtener el id_usuario desde la sesión
+    id_usuario = session.get('id_usuario')
+    if not id_usuario:
+        return redirect(url_for('idvistalogin.vista_login'))  # Redirigir al login si no hay un usuario en sesión
+    print(f"ID de usuario obtenido de la sesión: {id_usuario}")  # Debug
+
     # Obtener las preguntas de la dimensión
     preguntas = requests.get(f"{API_URL}/dimension_pregunta/id_dimension/{id_dimension}").json()
     total_preguntas = len(preguntas)
@@ -36,6 +40,7 @@ def get_preguntas_respuestas(id_dimension):
 
                 # Guardar la respuesta en la base de datos a través de la API
                 respuesta_guardada_data = {
+                    "id_usuario": id_usuario,  # Incluir id_usuario en los datos
                     "id_dimension": id_dimension,
                     "id_dimension_pregunta": preguntas[current_index]['id_dimension_pregunta'],
                     "id_dimension_respuesta": int(respuesta_seleccionada_id)

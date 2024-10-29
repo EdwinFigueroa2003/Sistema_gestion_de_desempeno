@@ -34,11 +34,15 @@
 
 <div style="background-color: #ffffff; margin-top: 30px; margin-bottom: -45px; padding: 20px; border-radius: 10px;">
     <div>
-        <h3>Nivel Promedio: {{nivel_detalle['id_nivel']}}</h3>
-        <p><strong>{{ nivel_detalle['nombre'] }} </strong>
-    </div>
-    <div>
-        <strong>Recomendaciones para el lider: </strong>{{ nivel_detalle['descripcion'] }}
+        {% if nivel_detalle %}
+            <h3>Nivel Promedio: {{ nivel_detalle['id_nivel'] }}</h3>
+            <p><strong>{{ nivel_detalle['nombre'] }} </strong></p>
+            <div>
+                <strong>Recomendaciones para el líder: </strong>{{ nivel_detalle['descripcion'] }}
+            </div>
+        {% else %}
+            <h3>Realiza el cuestionario para ver tus resultados.</h3>
+        {% endif %}
     </div>
 </div>
 
@@ -51,11 +55,9 @@
         </div>
     </div>
 
-
     <!-- Información adicional que también será visible inicialmente -->
     <div id="informacion-adicional" class="informacion-adicional" style="flex: 1; padding: 20px;">
         <h3>Detalles</h3>
-        <!-- <p>En esta sección puedes incluir información relevante para el usuario sobre los resultados del gráfico.</p> -->
         <ul>
             <li><strong>Desempeño sólido (1):</strong> Desempeño bueno / potencial limitado</li>
             <li><strong>Miembro Clave (2):</strong> Desempeño bueno / potencial medio</li>
@@ -65,8 +67,6 @@
             <li><strong>Top talent (6):</strong> Desempeño sobresaliente / alto potencial</li>
         </ul>
     </div>
-
-
 </div>
 
 <!-- Sección de tabla que está oculta inicialmente -->
@@ -91,7 +91,7 @@
             {% endfor %}
             {% else %}
             <tr>
-                <td colspan="4" style="text-align: center;">No se encontraron respuestas.</td>
+                <td colspan="3" style="text-align: center;">No se encontraron respuestas.</td>
             </tr>
             {% endif %}
         </tbody>
@@ -108,7 +108,6 @@
         background-color: #ffffff;
         margin-bottom: 20px;
         position: relative;
-        /* Para el posicionamiento de la línea */
     }
 
     .informacion-adicional {
