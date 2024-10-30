@@ -6,34 +6,41 @@
 <h1 class="main-title">Gestión Del Desempeño </h1>
 <hr class="divider">
 
+<div class="container">
+    <a href="/equipo">
+        <div class="rectangle-2104">
+            <gestion_desempeno_descripcion>CONTRIBUCIONES <br>
+                INDIVIDUALES</gestion_desempeno_descripcion>
+        </div>
+    </a>
 
-<a href="/equipo">
-    <div class="rectangle-2104">
-        <gestion_desempeno_descripcion>CONTRIBUCIONES <br>
-            INDIVIDUALES</gestion_desempeno_descripcion>
-    </div>
-</a>
-
-<a href="otrascontribuciones">
-    <div class="rectangle-2105">
-        <gestion_desempeno_descripcion>OTRAS <br>
-            CONTRIBUCIONES</gestion_desempeno_descripcion>
-    </div>
-</a>
+    <a href="otrascontribuciones">
+        <div class="rectangle-2105">
+            <gestion_desempeno_descripcion>OTRAS <br>
+                CONTRIBUCIONES</gestion_desempeno_descripcion>
+        </div>
+    </a>
+</div>
 
 </div>
 
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa1" />
 
 <style>
-        hr {
-            width: 102%;
-            height: 30px;
-            margin-top: -70px;
-            margin-left: auto;
-            border-width: 2px;
-            border-color: rgb(0, 0, 0);
-        }
+    hr {
+        width: 102%;
+        height: 30px;
+        margin-top: -100px;
+        margin-left: auto;
+        border-width: 2px;
+        border-color: rgb(0, 0, 0);
+    }
+
+    .container {
+        margin-top: -100px;
+        margin-left: -15px;
+        z-index: 1;
+    }
 </style>
 
 {% endblock %}

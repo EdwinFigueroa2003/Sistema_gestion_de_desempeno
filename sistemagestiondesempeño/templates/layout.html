@@ -250,7 +250,6 @@
             color: #333333;
             font-size: 25px;
             margin-top: -5px;
-            /* margin-bottom: -23px; */
         }
 
         h5 {
@@ -1062,8 +1061,10 @@
         }
 
         .questionnaire-container {
-            margin-top: 50px;
-            margin-left: 25px;
+            margin-top: -15px;
+            margin-left: 5px;
+            margin-bottom: 20px;
+            z-index: 10;
         }
 
         .usuarios-container {
@@ -1632,7 +1633,7 @@
         /* funcionamiento básico del sistema de pestañas en el apartado de Análisis Organizacional */
 
         .tabs {
-            margin-top: 50px;
+            /* margin-top: 20px; */
             margin-left: -310px;
             padding: 10px;
             color: #000000;
@@ -1946,7 +1947,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link inicio" href="/inicio">
+                            <a class="nav-link inicio" href="/login">
                                 INICIO
                                 <img src="{{ url_for('static', filename='img/inicio.png')}}" class="icon">
                             </a>

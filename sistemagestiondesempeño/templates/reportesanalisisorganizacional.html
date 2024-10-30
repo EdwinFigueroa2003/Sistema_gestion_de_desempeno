@@ -10,31 +10,42 @@
 <body>
     <reporte>Reporte de Análisis Organizacional</reporte>
 
-    {% if reporte %}
-    <div class="dimension-buttons">
-        {% for dimension in reporte|groupby('dimension') %}
-        <button onclick="filterByDimension('{{ dimension.grouper }}')">{{ dimension.grouper }}</button>
-        {% endfor %}
+    <div class="dimension-botones">
+        {% if reporte %}
+        <div class="dimension-buttons">
+            {% for dimension in reporte|groupby('dimension') %}
+            <button onclick="filterByDimension('{{ dimension.grouper }}')">{{ dimension.grouper }}</button>
+            {% endfor %}
+        </div>
     </div>
 
     <!-- Mostrar el promedio de semaforización -->
-    <div id="promedio-semaforo" style="display: none; margin-bottom: 20px;">
-        <descripcion>Promedio de Semaforización:</descripcion>
-        <div class="semaforo">
-            <div class="luz rojo" id="promedio-rojo"></div>
-            <div class="luz amarillo" id="promedio-amarillo"></div>
-            <div class="luz verde" id="promedio-verde"></div>
+    <div class="promedio-resultado">
+        <div id="promedio-semaforo" style="display: none; margin-bottom: 20px;">
+            <descripcion>Promedio de Semaforización:</descripcion>
+            <br>
+            <descripcion>Revisa por qué</descripcion>
+            <br>
+            <!-- <descripcion>Valores: 1 = Verde, 2 = Amarillo, 3 = Rojo</descripcion> -->
+            <descripcion>1 = Verde</descripcion>
+            <br>
+            <descripcion>2 = Amarillo</descripcion>
+            <br>
+            <descripcion>3 = Rojo</descripcion>
+            <div class="semaforo1">
+                <div class="semaforo">
+                    <div class="luz rojo" id="promedio-rojo"></div>
+                    <div class="luz amarillo" id="promedio-amarillo"></div>
+                    <div class="luz verde" id="promedio-verde"></div>
+                </div>
+            </div>
         </div>
-        <descripcion>Revisa por qué</descripcion>
-        <br>
-        <descripcion>Valores: 1 = Verde, 2 = Amarillo, 3 = Rojo</descripcion>
     </div>
 
     <table>
         <thead>
             <tr>
                 <th>Dimensión</th>
-                <!-- <th>Pregunta</th> -->
                 <th>Respuesta</th>
                 <th>Semaforización</th>
             </tr>
@@ -43,7 +54,6 @@
             {% for item in reporte %}
             <tr class="dimension-row" data-dimension="{{ item.dimension }}">
                 <td>{{ item.dimension }}</td>
-                <!-- <td>{{ item.pregunta }}</td> -->
                 <td>{{ item.respuesta }}</td>
                 <td>
                     <div class="semaforo">
@@ -67,27 +77,46 @@
 <img src="{{ url_for('static', filename='img/organizacion0.png')}}" class="usuarios" />
 
 <style>
+    .dimension-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: baseline;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
     .dimension-buttons button {
-        margin-top: 10px;
-        margin-bottom: 10px;
-        z-index: 1000;
         background-color: #838383;
         border: 1px solid #838383;
         border-radius: 10px;
         color: #ffffff;
-        /* width: 175px; */ /* Ancho */
-        height: 50px;  /* Alto */
+        height: 50px;
+        padding: 0 20px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
     }
 
     .dimension-buttons button:hover {
+        background-color: #ffffff;
         color: #333333;
     }
- 
+
+    .dimension-botones {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: -15px;
+        padding: 10px;
+    }
+
     descripcion {
         margin-bottom: 35px;
         margin-top: 35px;
-        font-size: 25px;
-        color: #333333;
+        font-size: 22px;
+        color: #000000;
+        margin-left: -270px;
     }
 
     reporte {
@@ -103,6 +132,12 @@
 
     .semaforo {
         display: flex;
+    }
+
+    .semaforo1 {
+        display: flex;
+        margin-left: 20px;
+        margin-top: -115px;
     }
 
     .luz {
@@ -127,6 +162,17 @@
 
     .verde {
         color: green;
+    }
+
+    .promedio-resultado {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        margin-left: 50px;
+        background-color: #dadada;
+        width: 800px; /* ancho */
+        height: 165px;/* altura */
+        border-radius: 10px;
     }
 </style>
 

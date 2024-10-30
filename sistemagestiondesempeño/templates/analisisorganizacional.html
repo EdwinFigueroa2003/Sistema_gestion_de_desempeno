@@ -6,9 +6,9 @@
 
 <h1 class="main-title">Gestión del Desempeño</h1>
 <hr class="divider">
-<div class="titulo-dimension">
-    <h3>Análisis Organizacional</h3>
-</div>
+
+<h3 class="titulo-dimension">Análisis Organizacional</h3>
+
 
 <div class="tabs">
     <div class="tab-container">
@@ -96,5 +96,17 @@
 
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
 <img src="{{ url_for('static', filename='img/organizacion0.png')}}" class="usuarios" />
+
+<style>
+    h3 {
+        color: #333333;
+        font-size: 25px;
+        text-align: center;
+    }
+
+    .titulo-dimension {
+        margin-top: -45px;
+    }
+</style>
 
 {% endblock %}
