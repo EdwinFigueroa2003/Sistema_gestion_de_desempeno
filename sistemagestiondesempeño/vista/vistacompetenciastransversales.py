@@ -39,11 +39,13 @@ def vista_competenciastransversales():
             response = requests.post(f"{API_URL}/usuario_respuesta", json=datos_respuesta, timeout=10)
             print(f"Respuesta de la API: {response.status_code}, {response.text}")  # Añadir esta línea
             response.raise_for_status()
+
             # Si la respuesta se guardó correctamente, actualizar la sesión
             respuestas = session.get('respuestas', {})
             respuestas[pregunta_id] = respuesta_id
             session['respuestas'] = respuestas
             session['mensaje_confirmacion'] = "Respuesta guardada correctamente."  # Añadir esta línea
+
         except requests.RequestException as e:
             print(f"Error al guardar la respuesta en la API: {e}")
             print(f"Detalles de la respuesta: {e.response.text if e.response else 'No hay detalles'}")  # Añadir esta línea
@@ -96,8 +98,10 @@ def vista_competenciastransversales():
                                usuario=session.get('usuario'),
                                mensaje_confirmacion=session.pop('mensaje_confirmacion', None),  # Añadir esta línea
                                mensaje_error=session.pop('mensaje_error', None))  # Añadir esta línea
+    
     except (requests.RequestException, ValueError) as e:
         print(f"Error al obtener o procesar datos: {e}")
+        
         return render_template('competenciastransversales.html', 
                                pregunta=None, 
                                preguntas=[], 

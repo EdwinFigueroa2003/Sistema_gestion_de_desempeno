@@ -1,5 +1,5 @@
 from pprint import pprint
-from flask import Blueprint, request, render_template, redirect, url_for
+from flask import Blueprint, render_template, session
 import requests
 from configBd import API_URL
  
@@ -8,5 +8,55 @@ vistaresultadoscompetenciasdocentes = Blueprint('idresultadoscompetenciasdocente
  
 @vistaresultadoscompetenciasdocentes.route('/resultadoscompetenciasdocentes', methods=['GET', 'POST'])
 def vista_resultadoscompetenciasdocentes():
+    resultados = []
 
-    return render_template('resultadoscompetenciasdocentes.html')
+        # Obtener el id_usuario desde la sesión
+    id_usuario = session.get('id_usuario')
+    if not id_usuario:
+        return "Usuario no autenticado", 401  # Redirigir o mostrar un mensaje si no hay un usuario en sesión
+
+    try:
+        # Obtener todas las respuestas de usuario
+        response_respuestas = requests.get(f'{API_URL}/seccion_respuesta_guardada', timeout=10)
+        response_respuestas.raise_for_status()
+        respuestas_usuario = response_respuestas.json()
+
+        # Obtener todas las preguntas
+        response_preguntas = requests.get(f'{API_URL}/seccion_pregunta', timeout=10)
+        response_preguntas.raise_for_status()
+        preguntas = {p['id_seccion_pregunta']: p for p in response_preguntas.json()}
+
+        # Obtener todas las respuestas
+        response_respuestas_detalle = requests.get(f'{API_URL}/seccion_respuesta', timeout=10)
+        response_respuestas_detalle.raise_for_status()
+        respuestas_detalle = {r['id_seccion_respuesta']: r for r in response_respuestas_detalle.json()}
+
+        # Filtrar respuestas por id_usuario
+        for respuesta in respuestas_usuario:
+            if respuesta['id_usuario'] == id_usuario:
+                pregunta = preguntas.get(respuesta['id_seccion_pregunta'], {})
+                detalle_respuesta = respuestas_detalle.get(respuesta['id_seccion_respuesta'], {})
+                
+                resultados.append({
+                    'id_usuario_respuesta': respuesta['id'],
+                    'texto_pregunta': pregunta.get('pregunta', 'Pregunta no disponible'),
+                    'texto_respuesta': detalle_respuesta.get('respuestas', 'Respuesta no disponible'),
+                    'valor_respuesta': detalle_respuesta.get('valor', 'Valor no disponible'),
+                    'fecha_respuesta': respuesta.get('fecha_creacion', 'Fecha no disponible'),
+                    'competencia': pregunta.get('competencia', 'Competencia no disponible')
+                })
+
+    except requests.RequestException as e:
+        print(f"Error al obtener datos: {e}")
+        return "Error al obtener los resultados", 500
+
+    # Agrupar resultados por competencia
+    competencias = {}
+    for resultado in resultados:
+        competencia = resultado['competencia']
+        if competencia not in competencias:
+            competencias[competencia] = []
+        competencias[competencia].append(resultado)
+
+    # Pasar el diccionario de competencias al template
+    return render_template('resultadoscompetenciasdocentes.html', competencias=competencias)

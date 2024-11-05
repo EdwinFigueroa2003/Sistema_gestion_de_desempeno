@@ -6,6 +6,33 @@
 <h1 class="main-title">Resultados Competencias Docentes</h1>
 <hr class="divider">
 
+<!-- Botones para seleccionar competencias -->
+<div class="contenedor_botones">
+    <div id="competencias">
+        {% for competencia in competencias.keys() %}
+        <button class="botones" onclick="mostrarResultados('{{ competencia }}')">{{ competencia }}</button>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Mostrar resultados agrupados -->
+<div class="contenedor_resultados">
+    <div id="resultados">
+        {% for competencia, resultados in competencias.items() %}
+        <div class="competencia" id="{{ competencia }}" style="display: none;">
+            <h4><strong>Competencia: </strong> {{ competencia }}</h4>
+            {% for resultado in resultados %}
+            <div class="resultado">
+                <p><strong>Pregunta: </strong> {{ resultado.texto_pregunta }}</p>
+                <p><strong>Respuesta: </strong> {{ resultado.texto_respuesta }}</p>
+                <!-- <p>Valor: {{ resultado.valor_respuesta }}</p> 
+                <p>Fecha: {{ resultado.fecha_respuesta }}</p>-->
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
 <div class="btn">
     <a href="/resultados" class="volver">
@@ -17,5 +44,47 @@
 
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
 <img src="{{ url_for('static', filename='img/ensenar0.png')}}" class="usuarios" />
+
+<script>
+    function mostrarResultados(competencia) {
+        // Ocultar todas las competencias
+        const competencias = document.querySelectorAll('.competencia');
+        competencias.forEach(comp => comp.style.display = 'none');
+
+        // Mostrar la competencia seleccionada
+        const selectedCompetencia = document.getElementById(competencia);
+        if (selectedCompetencia) {
+            selectedCompetencia.style.display = 'block';
+        }
+    }
+</script>
+
+<style>
+
+    .contenedor_botones{
+        margin-bottom: 30px;
+        z-index: 1000;
+    }
+
+    .contenedor_resultados{
+        margin-top: 40px;
+        z-index: 1000;
+    }
+
+    .botones{
+        display: inline-block; /* Make the link behave like a button */
+        padding: 10px 20px; 
+        background-color: #666;
+        border-color: #666;
+        color: white; 
+        border-radius: 5px;
+        margin: auto;
+        cursor: pointer;
+        text-decoration: none; /* Remove underline */
+        text-align: center;
+
+    }
+
+</style>
 
 {% endblock %}
