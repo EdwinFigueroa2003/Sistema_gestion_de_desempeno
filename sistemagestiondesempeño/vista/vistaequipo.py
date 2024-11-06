@@ -3,11 +3,14 @@ from pprint import pprint
 from flask import Blueprint, request, render_template, redirect, url_for, session
 import requests
 from configBd import API_URL
+from flask_login import login_required 
  
 # Crear un Blueprint
 vistaequipo = Blueprint('idequipo', __name__, template_folder='templates')
  
 @vistaequipo.route('/equipo', methods=['GET', 'POST'])
+
+#@login_required
 def vista_equipo():
     # Hacer una solicitud GET a la API para obtener los usuarios
     try:
@@ -35,6 +38,7 @@ def vista_equipo():
     # Renderizar la plantilla 'equipo.html' con los usuarios obtenidos
     return render_template('equipo.html', usuarios=usuarios)
 
+#@login_required
 def get_fk_nivel_contribucion_by_usuario(id_usuario, niveles):
     # Aquí debes tener tu lógica para determinar el fk_nivel_de_contribucion
     # Esto es solo un ejemplo y debe ser reemplazado con tu lógica real

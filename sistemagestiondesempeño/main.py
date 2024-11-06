@@ -1,11 +1,13 @@
 # main.py
-from pprint import pprint
-from flask import Flask, render_template, request, url_for, redirect, session, jsonify, flash, send_file, send_file
-import markupsafe, uuid, psycopg2, os, io, xlsxwriter, openpyxl, pandas, requests, base64 
+from flask import Flask, render_template, request, url_for, redirect, session, flash, send_file
+import os, io, xlsxwriter, requests, datetime, wraps
 from matplotlib.figure import Figure
-from werkzeug.utils import secure_filename
 from PIL import Image
 from configBd import API_URL
+from flask_login import LoginManager, UserMixin
+from flask_sqlalchemy import SQLAlchemy
+
+
 
 
 from menu import menu
@@ -55,6 +57,10 @@ from vista.vistalogin import vistalogin
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
+
+# Configurar el gestor de inicio de sesión
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 
 
@@ -115,7 +121,44 @@ def get_presentacionGDD():
 @app.route('/cerrarSesion')
 def cerrarSesion():
     session.clear() # Limpiar la sesión
-    return redirect('inicio.html')
+    return redirect('/login')
+
+#Inicio de rutas seguras
+
+class User(UserMixin):
+    def __init__(self, id_usuario, email):
+        self.id = id_usuario
+        self.email = email
+
+    def get_id(self):
+        return str(self.id)
+
+    def __repr__(self):
+        return f"<User(id={self.id}, email={self.email})>"
+
+    def __str__(self):
+        return f"User ID: {self.id}, Email: {self.email}"
+
+
+def get_user_by_id(id_usuario):
+    try:
+        response = requests.get(f"{API_URL}/usuario/{id_usuario}")  # Cambia la ruta si es necesario
+        if response.status_code == 200:
+            return response.json()
+        return None
+    except requests.RequestException:
+        return None
+
+@login_manager.user_loader
+def load_user(id_usuario):
+    # Obtener los datos del usuario a partir del ID
+    user_data = get_user_by_id(id_usuario)
+    if user_data:
+        # Suponiendo que `User` es una clase que representa al usuario
+        return User(user_data['id_usuario'], user_data['email'])  # Ajusta campos según los que tienes en `user_data`
+    return None
+
+#Fin de rutas seguras
 
 @app.route('/download_excel')
 def download_excel():

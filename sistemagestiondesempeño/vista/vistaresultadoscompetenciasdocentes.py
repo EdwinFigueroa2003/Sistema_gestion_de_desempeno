@@ -10,7 +10,7 @@ vistaresultadoscompetenciasdocentes = Blueprint('idresultadoscompetenciasdocente
 def vista_resultadoscompetenciasdocentes():
     resultados = []
 
-        # Obtener el id_usuario desde la sesión
+    # Obtener el id_usuario desde la sesión
     id_usuario = session.get('id_usuario')
     if not id_usuario:
         return "Usuario no autenticado", 401  # Redirigir o mostrar un mensaje si no hay un usuario en sesión
