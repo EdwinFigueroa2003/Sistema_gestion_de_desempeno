@@ -26,6 +26,10 @@
 <!-- <p>Fecha de subida: {{ video_seleccionado.fecha_subida.split('T')[0] }}</p> -->
 {% endif %}
 
+{% if session['usuario']['fk_rol_usu'] == 1 %}
+<h1>Editar información</h1>
+{% endif %}
+
 <div class="video-list">
     <otros_videos>Más videos:</otros_videos>
     {% for video in videos %}
@@ -90,7 +94,7 @@
     }
 
     /* Estilos adicionales para el buscador */
-/*     .form-inline {
+    /*     .form-inline {
         display: flex;
         flex-flow: row wrap;
         align-items: center;

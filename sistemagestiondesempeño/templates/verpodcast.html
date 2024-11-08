@@ -24,6 +24,10 @@
     {% endfor %}
 </div>
 
+{% if session['usuario']['fk_rol_usu'] == 1 %}
+<h1>Editar Capitulos</h1>
+{% endif %}
+
 <div class="rectangles-container">
     <div class="medium-filled">
         <a href="{{ url_for('idcatalogopodcasts.vista_catalogopodcasts') }}" class="volver">VOLVER AL CATALOGO</a>

@@ -28,6 +28,11 @@
     {% endfor %}
 </div>
 
+{% if session['usuario']['fk_rol_usu'] == 1 %}
+    <p>Agregar nueva categoría<br>Borrar categoría</p>
+{% endif %}
+
+
 <div class="rectangles-container">
     <div class="medium-filled">
         <a href="/gestiondeldesarrollo" class="volver">VOLVER</a>

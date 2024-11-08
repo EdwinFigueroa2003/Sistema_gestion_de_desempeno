@@ -57,8 +57,11 @@
     </div>
 
 
-
 </section>
+
+{% if session['usuario']['fk_rol_usu'] == 1 %}
+<h1>Editar podcast</h1>
+{% endif %}
 
 <div class="rectangles-container">
     <div class="medium-filled">

@@ -12,45 +12,29 @@
 
 <body>
     <h1>Bienvenido Administrador</h1>
+    <h2>A que apartado deseas ingresar para modificar/actualizar</h2>
 
     <div class="medium-filled">
         <a href="/cerrarSesion" class="volver">cerrar sesion</a>
     </div>
 
-    <div class="busqueda-equipo">
+<!--     <div class="busqueda-equipo">
         <h2>Mi Equipo</h2>
         <p>Búsqueda de colaborador</p>
         <form class="form-inline" method="POST" action="{{ url_for('idadministrador.vista_administrador') }}">
             <input class="form-control mr-sm-2" type="text" name="nombre_colaborador" placeholder="Ingresa el nombre" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
         </form>
-    </div>
+    </div> -->
 
-    <div class="lista-usuarios"></div>
-        <h3>Lista de Usuarios</h3>
-        {% if usuarios %}
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Documento</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for usuario in usuarios %}
-                        <tr>
-                            <td>{{ usuario.nombre }}</td>
-                            <td>{{ usuario.email }}</td>
-                            <td>{{ usuario.documento_usu }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% else %}
-            <p>No se encontraron usuarios.</p>
-        {% endif %}
-    </div>
+
+    <a href="/gestiondeldesempeno" class="volver">Gestión de desempeño</a>
+    <br>
+    <a href="/gestiondeldesarrollo" class="volver">Gestión del desarrollo</a>
+    <br>
+    <a href="/equipo" class="volver">Equipo</a>
+
+
 
     <script src="" async defer></script>
 </body>

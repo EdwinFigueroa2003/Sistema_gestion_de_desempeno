@@ -32,6 +32,11 @@
                 <p><strong>ID de tipo de curso: </strong>{{ curso.id_tipo_curso }}</p>
             </div>
         </div>
+
+        {% if session['usuario']['fk_rol_usu'] == 1 %}
+        <p>Editar información</p>
+        {% endif %}
+
     {% else %}
         <div class="alert alert-warning">
             <p>No se encontró información del curso.</p>

@@ -13,6 +13,7 @@
     <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="buscarCursos()">Buscar</button>
 </form>
 
+
 <div id="cursosContainer" class="row">
     {% for curso in cursos %}
     <div class="col-md-4 curso-item">
@@ -26,10 +27,17 @@
     {% if loop.index0 % 3 == 2 and not loop.last %}
 
 </div>
+
+
 <div class="row">
     {% endif %}
     {% endfor %}
 </div>
+
+
+{% if session['usuario']['fk_rol_usu'] == 1 %}
+<p>Editar tematica de cursos</p>
+{% endif %}
 
 <div class="rectangles-container">
     <div class="medium-filled">

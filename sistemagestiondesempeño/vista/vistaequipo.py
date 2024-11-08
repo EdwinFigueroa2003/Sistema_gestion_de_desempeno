@@ -36,9 +36,11 @@ def vista_equipo():
     else:
         print(f"Usuarios: {usuarios}")  # Imprimir usuarios en consola
 
+    rol = session.get('fk_rol_usu', 'usuario')  # Cambia 'usuario' al rol por defecto si no está en la sesión
+    print("rol")
 
     # Renderizar la plantilla 'equipo.html' con los usuarios obtenidos
-    return render_template('equipo.html', usuarios=usuarios)
+    return render_template('equipo.html', usuarios=usuarios, rol=rol)
 
 @login_required
 def get_fk_nivel_contribucion_by_usuario(id_usuario, niveles):
