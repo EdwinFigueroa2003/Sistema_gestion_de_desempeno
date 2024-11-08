@@ -1,13 +1,14 @@
-from flask import Blueprint, render_template
-from configBd import API_URL
+import random
 from pprint import pprint
-from flask import Blueprint, request, render_template, redirect, url_for, session
+from flask import Blueprint, request, render_template, redirect, url_for, session, json, jsonify
 import requests
+from configBd import API_URL
+from flask_login import login_required
 from datetime import datetime
 
 # Crear un Blueprint
 vistavercurso = Blueprint('idvercurso', __name__, template_folder='templates')
- 
+@login_required
 def format_date_safely(date_string):
     if date_string:
         try:
@@ -18,6 +19,7 @@ def format_date_safely(date_string):
     return "No disponible"
 
 @vistavercurso.route('/vercurso/<int:curso_id>', methods=['GET'])
+@login_required
 def vista_ver_curso(curso_id):
     try:
         response = requests.get(f"{API_URL}/cursos/id_tipo_curso/{curso_id}")

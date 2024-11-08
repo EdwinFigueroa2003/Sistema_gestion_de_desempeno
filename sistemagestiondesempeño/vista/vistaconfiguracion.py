@@ -1,7 +1,10 @@
+import random
 from pprint import pprint
-from flask import Blueprint, request, render_template, redirect, url_for, session
+from flask import Blueprint, request, render_template, redirect, url_for, session, json, jsonify
 import requests
 from configBd import API_URL
+from flask_login import login_required
+from datetime import datetime
  
 # Crear un Blueprint
 vistaconfiguracion = Blueprint('idconfiguracion', __name__, template_folder='templates')
@@ -9,6 +12,7 @@ vistaconfiguracion = Blueprint('idconfiguracion', __name__, template_folder='tem
 
 
 @vistaconfiguracion.route('/configuracion', methods=['GET', 'POST'])
+@login_required
 def vista_configuracion():
     id_usuario = session.get('id_usuario')
     if not id_usuario:

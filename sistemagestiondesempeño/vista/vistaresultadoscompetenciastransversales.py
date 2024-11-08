@@ -1,12 +1,16 @@
+import random
 from pprint import pprint
-from flask import Blueprint, render_template, session
+from flask import Blueprint, request, render_template, redirect, url_for, session, json, jsonify
 import requests
 from configBd import API_URL
+from flask_login import login_required
+from datetime import datetime
 
 # Crear un Blueprint
 vistaresultadoscompetenciastransversales = Blueprint('idresultadoscompetenciastransversales', __name__, template_folder='templates')
 
 @vistaresultadoscompetenciastransversales.route('/resultadoscompetenciastransversales', methods=['GET'])
+@login_required
 def resultadoscompetenciastransversales():
     resultados = []
     

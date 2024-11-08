@@ -1,11 +1,15 @@
-from flask import Blueprint, request, render_template, redirect, url_for
+import random
+from pprint import pprint
+from flask import Blueprint, request, render_template, redirect, url_for, session, json, jsonify
 import requests
 from configBd import API_URL
- 
+from flask_login import login_required
+from datetime import datetime
 # Crear un Blueprint
 vistapodcast = Blueprint('idpodcast', __name__, template_folder='templates')
 
 @vistapodcast.route('/podcast', methods=['GET', 'POST'])
+@login_required
 def vista_podcast():
     # Hacer la solicitud a la API
     response = requests.get(f"{API_URL}/tipo_podcast")

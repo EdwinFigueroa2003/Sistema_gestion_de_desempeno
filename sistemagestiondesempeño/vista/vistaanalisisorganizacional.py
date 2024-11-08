@@ -1,17 +1,21 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
-from configBd import API_URL
-import requests
 import random
+from pprint import pprint
+from flask import Blueprint, request, render_template, redirect, url_for, session
+import requests
+from configBd import API_URL
+from flask_login import login_required 
 
 vistaanalisisorganizacional = Blueprint('idanalisisorganizacional', __name__, template_folder='templates')
 
 @vistaanalisisorganizacional.route('/analisisorganizacional', methods=['GET', 'POST'])
+@login_required
 def get_dimensiones():
     dimensiones = requests.get(f"{API_URL}/dimension").json()
     dimensiones_ordenadas = sorted(dimensiones, key=lambda x: int(x['id_dimension']))
     return render_template('analisisorganizacional.html', dimensiones=dimensiones_ordenadas)
 
 @vistaanalisisorganizacional.route('/analisisorganizacional/<int:id_dimension>', methods=['GET', 'POST'])
+@login_required
 def get_preguntas_respuestas(id_dimension):
     # Obtener el id_usuario desde la sesión
     id_usuario = session.get('id_usuario')

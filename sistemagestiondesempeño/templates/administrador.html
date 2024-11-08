@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Administrador</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <h1>Bienvenido Administrador</h1>
+
+    <div class="medium-filled">
+        <a href="/cerrarSesion" class="volver">cerrar sesion</a>
+    </div>
+
+    <div class="busqueda-equipo">
+        <h2>Mi Equipo</h2>
+        <p>Búsqueda de colaborador</p>
+        <form class="form-inline" method="POST" action="{{ url_for('idadministrador.vista_administrador') }}">
+            <input class="form-control mr-sm-2" type="text" name="nombre_colaborador" placeholder="Ingresa el nombre" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+        </form>
+    </div>
+
+    <div class="lista-usuarios"></div>
+        <h3>Lista de Usuarios</h3>
+        {% if usuarios %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Documento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usuario in usuarios %}
+                        <tr>
+                            <td>{{ usuario.nombre }}</td>
+                            <td>{{ usuario.email }}</td>
+                            <td>{{ usuario.documento_usu }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No se encontraron usuarios.</p>
+        {% endif %}
+    </div>
+
+    <script src="" async defer></script>
+</body>
+
+</html>

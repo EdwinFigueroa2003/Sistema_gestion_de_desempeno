@@ -1,11 +1,11 @@
 # main.py
-from flask import Flask, render_template, request, url_for, redirect, session, flash, send_file
-import os, io, xlsxwriter, requests, datetime, wraps
+from flask import Flask, render_template, redirect, session, flash, send_file, request, url_for
+import os, io, xlsxwriter, requests
+from datetime import timedelta
 from matplotlib.figure import Figure
 from PIL import Image
 from configBd import API_URL
-from flask_login import LoginManager, UserMixin
-from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_required, current_user
 
 
 
@@ -52,15 +52,19 @@ from vista.vistavervideo import vistavervideo
 from vista.vistavercurso import vistavercurso
 from vista.vistaverpodcast import vistaverpodcast
 from vista.vistalogin import vistalogin
+from vista.vistaadministrador import vistaadministrador
 
 
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+#app.secret_key = os.urandom(24)
+app.secret_key = 'b14ca5898a4e4133bbce2ea2315a1916'
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=1)
 
 # Configurar el gestor de inicio de sesión
 login_manager = LoginManager()
 login_manager.init_app(app)
+#login_manager.login_view = "idvistalogin.vista_login" #Cuando ya este listo, se vuelve a activar para que sea redireccionado a login
 
 
 
@@ -106,6 +110,7 @@ app.register_blueprint(vistavervideo)
 app.register_blueprint(vistavercurso)
 app.register_blueprint(vistaverpodcast)
 app.register_blueprint(vistalogin)
+app.register_blueprint(vistaadministrador)
  
 # Establecer la ruta base si es necesario, por defecto es '/'
 #breakpoint();
@@ -125,38 +130,45 @@ def cerrarSesion():
 
 #Inicio de rutas seguras
 
+# Clase User con métodos necesarios
 class User(UserMixin):
-    def __init__(self, id_usuario, email):
-        self.id = id_usuario
+    def __init__(self, id_usuario, email, fk_rol_usu=None, nombre=None):
+        self.id_usuario = id_usuario  # Cambia id a id_usuario
         self.email = email
+        self.fk_rol_usu = fk_rol_usu
+        self.nombre = nombre
 
     def get_id(self):
-        return str(self.id)
+        return self.id_usuario
 
     def __repr__(self):
-        return f"<User(id={self.id}, email={self.email})>"
-
-    def __str__(self):
-        return f"User ID: {self.id}, Email: {self.email}"
-
+        return f"<User {self.email}>"
 
 def get_user_by_id(id_usuario):
-    try:
-        response = requests.get(f"{API_URL}/usuario/{id_usuario}")  # Cambia la ruta si es necesario
-        if response.status_code == 200:
-            return response.json()
-        return None
-    except requests.RequestException:
-        return None
+    print(f"Consultando usuario con ID: {id_usuario}")
+    response = requests.get(f"{API_URL}/usuario/id_usuario/{id_usuario}")
+    if response.status_code == 200:
+        print(f"Respuesta de la API: {response.json()}")  # Verifica qué datos recibes
+        # Crear una instancia de la clase User con los datos obtenidos
+        user_data = response.json()[0]  # Asumiendo que la API devuelve una lista de usuarios
+        return User(user_data['id_usuario'], user_data['email'], user_data['fk_rol_usu'], user_data['nombre'])
+    else:
+        print(f"Error al obtener el usuario: {response.status_code}")
+    return None
 
 @login_manager.user_loader
 def load_user(id_usuario):
-    # Obtener los datos del usuario a partir del ID
+    print(f"Debug: Cargando usuario con ID: {id_usuario}")
+    
     user_data = get_user_by_id(id_usuario)
     if user_data:
-        # Suponiendo que `User` es una clase que representa al usuario
-        return User(user_data['id_usuario'], user_data['email'])  # Ajusta campos según los que tienes en `user_data`
+        print(f"Usuario cargado: {user_data}")
+        return user_data  # Devolvemos una instancia de la clase User
+    else:
+        print("No se encontró el usuario.")
     return None
+
+
 
 #Fin de rutas seguras
 

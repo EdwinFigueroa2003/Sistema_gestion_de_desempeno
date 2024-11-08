@@ -1,5 +1,8 @@
-from flask import Blueprint, render_template, session
+from flask import Blueprint, request, render_template, redirect, url_for, session, json, jsonify
+import requests
 from configBd import API_URL
+from flask_login import login_required
+from datetime import datetime
 from markupsafe import Markup
 import requests
 import plotly.graph_objects as go
@@ -8,6 +11,7 @@ import plotly.graph_objects as go
 vistaresultadosmediciondepotencial = Blueprint('idresultadosmediciondepotencial', __name__, template_folder='templates')
 
 @vistaresultadosmediciondepotencial.route('/resultadosmediciondepotencial', methods=['GET'])
+@login_required
 def vista_resultados_medicion_de_potencial():
     # Obtener el id_usuario desde la sesión
     id_usuario = session.get('id_usuario')

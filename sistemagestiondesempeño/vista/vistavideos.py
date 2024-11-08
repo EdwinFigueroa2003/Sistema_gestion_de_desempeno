@@ -1,11 +1,15 @@
+import random
 from pprint import pprint
-from flask import Blueprint, request, render_template, redirect, url_for
+from flask import Blueprint, request, render_template, redirect, url_for, session, json, jsonify
 import requests
-from configBd import API_URL 
+from configBd import API_URL
+from flask_login import login_required
+from datetime import datetime
 # Crear un Blueprint
 vistavideos = Blueprint('idvideos', __name__)
 
 @vistavideos.route('/videos')
+@login_required
 def vista_videos():
     # Obtener el término de búsqueda
     search_query = request.args.get('search', '').lower()

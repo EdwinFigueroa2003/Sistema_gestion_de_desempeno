@@ -1,12 +1,15 @@
+import random
 from pprint import pprint
-from flask import Blueprint, request, render_template, redirect, url_for
+from flask import Blueprint, request, render_template, redirect, url_for, session
 import requests
 from configBd import API_URL
+from flask_login import login_required 
 
 # Crear un Blueprint
 vistacatalogopodcasts = Blueprint('idcatalogopodcasts', __name__, template_folder='templates')
 
 @vistacatalogopodcasts.route('/catalogopodcasts', methods=['GET', 'POST'])
+@login_required
 def vista_catalogopodcasts():
     # Obtener el tipo_podcast de los argumentos
     tipo_podcast = request.args.get('tipo_podcast')

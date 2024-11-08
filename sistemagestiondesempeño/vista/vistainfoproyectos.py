@@ -1,12 +1,16 @@
-from flask import Blueprint, render_template
+import random
+from pprint import pprint
+from flask import Blueprint, request, render_template, redirect, url_for, session, json, jsonify
 import requests
 from configBd import API_URL
-from vista.vistaproyectos import vista_proyectos 
+from flask_login import login_required
+from datetime import datetime
  
 # Crear un nuevo Blueprint para los microproyectos asociados a un proyecto
 vistainfoproyectos = Blueprint('idinfoproyectos', __name__, template_folder='templates')
  
 @vistainfoproyectos.route('/proyecto/<int:id_proyecto>/microproyectos', methods=['GET'])
+@login_required
 def get_infoproyectos(id_proyecto):
     try:
         # Realizar la solicitud a la API para obtener los microproyectos asociados a este proyecto

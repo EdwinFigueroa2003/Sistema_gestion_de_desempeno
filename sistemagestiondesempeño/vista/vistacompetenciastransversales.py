@@ -1,13 +1,15 @@
 import random
 from pprint import pprint
-from flask import Blueprint, request, render_template, redirect, url_for, session
+from flask import Blueprint, request, render_template, redirect, url_for, session, json
 import requests
 from configBd import API_URL
+from flask_login import login_required 
 
 # Crear un Blueprint
 vistacompetenciastransversales = Blueprint('idcompetenciastransversales', __name__, template_folder='templates')
 
 @vistacompetenciastransversales.route('/competenciastransversales', methods=['GET', 'POST'])
+@login_required
 def vista_competenciastransversales():
     # Obtener fk_nivel_de_contribucion desde la sesión
     fk_nivel_de_contribucion = session.get('fk_nivel_de_contribucion')

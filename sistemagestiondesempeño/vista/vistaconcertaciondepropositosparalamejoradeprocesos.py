@@ -1,13 +1,16 @@
+import random
 from pprint import pprint
-from flask import Blueprint, request, render_template, redirect, url_for, flash, jsonify
+from flask import Blueprint, request, render_template, redirect, url_for, session, json, jsonify
 import requests
-from datetime import datetime
 from configBd import API_URL
+from flask_login import login_required
+from datetime import datetime
 
 # Crear un Blueprint
 vistaconcertaciondepropositosparalamejoradeprocesos = Blueprint('idconcertaciondepropositosparalamejoradeprocesos', __name__, template_folder='templates')
  
 @vistaconcertaciondepropositosparalamejoradeprocesos.route('/concertaciondepropositosparalamejoradeprocesos', methods=['GET', 'POST'])
+@login_required
 def vista_concertaciondepropositosparalamejoradeprocesos():
     if request.method == 'POST':
         data = request.get_json()

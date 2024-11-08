@@ -1,13 +1,16 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
+import random
+from pprint import pprint
+from flask import Blueprint, request, render_template, redirect, url_for, session, json, jsonify
+import requests
 from configBd import API_URL
-import requests, random
-from configBd import API_URL
-
+from flask_login import login_required
+from datetime import datetime
 
 # Crear un Blueprint
 vistamediciondepotencial = Blueprint('idmediciondepotencial', __name__, template_folder='templates')
 
 @vistamediciondepotencial.route('/mediciondepotencial', methods=['GET', 'POST'])
+@login_required
 def vista_medicion_potencial():
     # Obtener el id_usuario desde la sesión
     id_usuario = session.get('id_usuario')
@@ -83,6 +86,7 @@ def vista_medicion_potencial():
         return redirect(url_for('idmediciondepotencial.finalizo'))
     
 # Función para guardar la respuesta a través de la API
+@login_required
 def guardar_respuesta(id_usuario, id_dimension_mp, id_dimension_mp_pregunta, id_dimension_mp_respuesta):
     try:
         data = {

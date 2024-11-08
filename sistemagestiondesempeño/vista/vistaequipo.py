@@ -10,7 +10,7 @@ vistaequipo = Blueprint('idequipo', __name__, template_folder='templates')
  
 @vistaequipo.route('/equipo', methods=['GET', 'POST'])
 
-#@login_required
+@login_required
 def vista_equipo():
     # Hacer una solicitud GET a la API para obtener los usuarios
     try:
@@ -18,11 +18,13 @@ def vista_equipo():
 
         if response.status_code == 200:
             usuarios = response.json()  # Parsear la respuesta en JSON
+            print('usuarios')
         else:
             usuarios = []  # En caso de que haya un error
     except Exception as e:
         print(f"Error al conectar con la API: {e}")
         usuarios = []
+        
 
     # Si se ha enviado un formulario de búsqueda
     if request.method == 'POST':
@@ -38,7 +40,7 @@ def vista_equipo():
     # Renderizar la plantilla 'equipo.html' con los usuarios obtenidos
     return render_template('equipo.html', usuarios=usuarios)
 
-#@login_required
+@login_required
 def get_fk_nivel_contribucion_by_usuario(id_usuario, niveles):
     # Aquí debes tener tu lógica para determinar el fk_nivel_de_contribucion
     # Esto es solo un ejemplo y debe ser reemplazado con tu lógica real
@@ -47,6 +49,7 @@ def get_fk_nivel_contribucion_by_usuario(id_usuario, niveles):
             return nivel['id_nivel']
     return None  # O un valor por defecto si no se encuentra
 
+@login_required
 def seleccionar_usuario_equipo():
     id_usuario = request.form.get('id_usuario')
     

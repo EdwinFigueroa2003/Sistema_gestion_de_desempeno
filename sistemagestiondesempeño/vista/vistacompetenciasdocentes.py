@@ -1,12 +1,15 @@
 import random
+from pprint import pprint
 from flask import Blueprint, request, render_template, redirect, url_for, session, json
 import requests
 from configBd import API_URL
+from flask_login import login_required 
 
 # Crear un Blueprint
 vistacompetenciasdocentes = Blueprint('idcompetenciasdocentes', __name__, template_folder='templates')
 
 @vistacompetenciasdocentes.route('/competenciasdocentes', methods=['GET', 'POST'])
+@login_required
 def vista_competenciasdocentes():
     # Obtener id_usuario desde la sesión
     id_usuario = session.get('id_usuario')
