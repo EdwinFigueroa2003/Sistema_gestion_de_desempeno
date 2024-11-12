@@ -1,112 +1,134 @@
-import random
-from pprint import pprint
-from flask import Blueprint, request, render_template, redirect, url_for, session, json
+from flask import Blueprint, request, render_template, redirect, url_for, session, jsonify, flash
 import requests
 from configBd import API_URL
-from flask_login import login_required 
-
+from flask_login import login_required, current_user
+import random
+ 
 # Crear un Blueprint
 vistacompetenciastransversales = Blueprint('idcompetenciastransversales', __name__, template_folder='templates')
-
+ 
 @vistacompetenciastransversales.route('/competenciastransversales', methods=['GET', 'POST'])
 @login_required
 def vista_competenciastransversales():
-    # Obtener fk_nivel_de_contribucion desde la sesión
+    # Confirmar que el usuario esté autenticado y tenga el rol adecuado
+    print(f"Debug: Usuario autenticado: {current_user.is_authenticated}")
+ 
     fk_nivel_de_contribucion = session.get('fk_nivel_de_contribucion')
-    
-    # Obtener id_usuario desde la sesión
     id_usuario = session.get('id_usuario')
-    if not id_usuario:
-        return redirect(url_for('idvistalogin.vista_login'))  # Redirigir al login si no hay un usuario en sesión
-
-    # Inicializar el índice de la pregunta
+    # Validar la existencia de `id_usuario` y `fk_nivel_de_contribucion`
+    if not id_usuario or not fk_nivel_de_contribucion:
+        print("Debug: `id_usuario` o `fk_nivel_de_contribucion` no están presentes en la sesión.")
+        return redirect(url_for('idvistalogin.vista_login'))
+ 
     current_index = 0 if request.method == 'GET' else int(request.form.get('current_index', 0))
     respuestas = session.get('respuestas', {})
-
+ 
     # Manejar las respuestas enviadas por el usuario
     if request.method == 'POST' and 'respuesta_seleccionada' in request.form:
         pregunta_id = request.form.get('pregunta_id')
         respuesta_id = request.form.get('respuesta_seleccionada')
-        
-        # Crear un diccionario con los datos de la respuesta
+ 
         datos_respuesta = {
             'id_pregunta': int(pregunta_id),
             'id_respuesta': int(respuesta_id),
-            'id_usuario': id_usuario  # Añadir el id_usuario a los datos de la respuesta
+            'id_usuario': id_usuario
         }
-        print(f"Datos a enviar a la API: {datos_respuesta}")  # Añadir esta línea
-        
-        # Enviar la respuesta a la API
         try:
             response = requests.post(f"{API_URL}/usuario_respuesta", json=datos_respuesta, timeout=10)
-            print(f"Respuesta de la API: {response.status_code}, {response.text}")  # Añadir esta línea
             response.raise_for_status()
-
-            # Si la respuesta se guardó correctamente, actualizar la sesión
             respuestas = session.get('respuestas', {})
             respuestas[pregunta_id] = respuesta_id
             session['respuestas'] = respuestas
-            session['mensaje_confirmacion'] = "Respuesta guardada correctamente."  # Añadir esta línea
-
+            session['mensaje_confirmacion'] = "Respuesta guardada correctamente."
         except requests.RequestException as e:
             print(f"Error al guardar la respuesta en la API: {e}")
-            print(f"Detalles de la respuesta: {e.response.text if e.response else 'No hay detalles'}")  # Añadir esta línea
-            session['mensaje_error'] = "Hubo un error al guardar la respuesta. Inténtalo de nuevo."  # Añadir esta línea
-
+            session['mensaje_error'] = "Hubo un error al guardar la respuesta. Inténtalo de nuevo."
         if 'next' in request.form:
             current_index += 1
         elif 'prev' in request.form:
             current_index -= 1
-
-    # Obtener preguntas filtradas por fk_nivel_de_contribucion
+ 
     try:
         response_preguntas = requests.get(f'{API_URL}/pregunta/fk_nivel_de_contribucion/{fk_nivel_de_contribucion}', timeout=10)
         response_preguntas.raise_for_status()
         preguntas = response_preguntas.json()
-
-        if not isinstance(preguntas, list):
-            raise ValueError("La respuesta de la API no es una lista de preguntas")
-
+        if not isinstance(preguntas, list) or not preguntas:
+            raise ValueError("La respuesta de la API no es una lista de preguntas válidas")
+ 
         if current_index < 0:
             current_index = 0
         if current_index >= len(preguntas):
             return redirect(url_for('finalizo'))
-
+ 
         pregunta_actual = preguntas[current_index]
-        if not isinstance(pregunta_actual, dict):
-            raise ValueError(f"La pregunta en el índice {current_index} no es un diccionario")
-
         id_pregunta = pregunta_actual.get('id_pregunta')
-        if id_pregunta is None:
-            raise ValueError(f"La pregunta en el índice {current_index} no tiene 'id_pregunta'")
-
-        # Obtener respuestas para la pregunta actual
+ 
         response_respuestas = requests.get(f'{API_URL}/respuesta/id_pregunta/{id_pregunta}', timeout=10)
         response_respuestas.raise_for_status()
         respuestas_list = response_respuestas.json()
-
-        if not isinstance(respuestas_list, list):
-            raise ValueError("La respuesta de la API para las respuestas no es una lista")
-
-        # Mezclar las respuestas aleatoriamente
         random.shuffle(respuestas_list)
         pregunta_actual['respuestas'] = respuestas_list
-
-        return render_template('competenciastransversales.html', 
-                               pregunta=pregunta_actual, 
+ 
+        return render_template('competenciastransversales.html',
+                               pregunta=pregunta_actual,
                                preguntas=preguntas,
                                current_index=current_index,
-                               total_preguntas=len(preguntas), 
+                               total_preguntas=len(preguntas),
                                usuario=session.get('usuario'),
-                               mensaje_confirmacion=session.pop('mensaje_confirmacion', None),  # Añadir esta línea
-                               mensaje_error=session.pop('mensaje_error', None))  # Añadir esta línea
-    
+                               mensaje_confirmacion=session.pop('mensaje_confirmacion', None),
+                               mensaje_error=session.pop('mensaje_error', None))
     except (requests.RequestException, ValueError) as e:
         print(f"Error al obtener o procesar datos: {e}")
-        
-        return render_template('competenciastransversales.html', 
-                               pregunta=None, 
-                               preguntas=[], 
+        return render_template('competenciastransversales.html',
+                               pregunta=None,
+                               preguntas=[],
                                current_index=current_index,
                                error_message=str(e),
-                               mensaje_error="Hubo un error al obtener los datos. Inténtalo de nuevo.")  # Añadir esta línea
+                               mensaje_error="Hubo un error al obtener los datos. Inténtalo de nuevo.")
+ 
+@vistacompetenciastransversales.route('/competenciastransversales/editar/<int:pregunta_id>', methods=['GET', 'POST'])
+@login_required
+def editar_pregunta(pregunta_id):
+    # Solo permitir acceso a los administradores
+    if current_user.rol != 'admin':
+        flash("No tienes permiso para acceder a esta función.", "error")
+        return redirect(url_for('idcompetenciastransversales.vista_competenciastransversales'))
+
+    if request.method == 'POST':
+        # Obtener los datos de edición desde el formulario
+        nuevo_texto_pregunta = request.form.get('texto_pregunta')
+        datos_edicion = {
+            'id_pregunta': pregunta_id,
+            'texto_pregunta': nuevo_texto_pregunta,
+        }
+
+        # Obtener las respuestas editadas
+        respuestas_editadas = request.form.getlist('respuestas')
+        datos_respuestas = [{'id_respuesta': int(res_id), 'texto_respuesta': texto} 
+                            for res_id, texto in enumerate(respuestas_editadas, start=1)]
+
+        try:
+            # Enviar la edición a la API
+            response = requests.post(f"http://190.217.58.246:5184/api/proyecto/procedures/execute", json=datos_edicion, timeout=10)
+            response.raise_for_status()
+            flash("Pregunta editada correctamente.", "success")
+        except requests.RequestException as e:
+            print(f"Error al editar la pregunta o respuestas en la API: {e}")
+            flash("Hubo un error al editar la pregunta o respuestas.", "error")
+        return redirect(url_for('idcompetenciastransversales.vista_competenciastransversales'))
+
+    # Obtener la pregunta actual para mostrarla en el formulario de edición
+    try:
+        response_pregunta = requests.get(f"{API_URL}/pregunta/{pregunta_id}", timeout=10)
+        response_pregunta.raise_for_status()
+        pregunta_actual = response_pregunta.json()
+
+        response_respuestas = requests.get(f"{API_URL}/respuesta/id_pregunta/{pregunta_id}", timeout=10)
+        response_respuestas.raise_for_status()
+        pregunta_actual['respuestas'] = response_respuestas.json()
+    except requests.RequestException as e:
+        print(f"Error al obtener la pregunta o respuestas de la API: {e}")
+        flash("Hubo un error al cargar la pregunta o respuestas.", "error")
+        return redirect(url_for('idcompetenciastransversales.vista_competenciastransversales'))
+
+    return render_template('editar_pregunta.html', pregunta=pregunta_actual)

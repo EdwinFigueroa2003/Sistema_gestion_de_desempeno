@@ -57,14 +57,14 @@ from vista.vistaadministrador import vistaadministrador
 
 
 app = Flask(__name__)
-#app.secret_key = os.urandom(24)
-app.secret_key = 'b14ca5898a4e4133bbce2ea2315a1916'
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=1)
+app.secret_key = os.urandom(24)
+#app.secret_key = 'b14ca5898a4e4133bbce2ea2315a1916'
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=10)
 
 # Configurar el gestor de inicio de sesión
 login_manager = LoginManager()
 login_manager.init_app(app)
-#login_manager.login_view = "idvistalogin.vista_login" #Cuando ya este listo, se vuelve a activar para que sea redireccionado a login
+login_manager.login_view = "idvistalogin.vista_login" #Cuando ya este listo, se vuelve a activar para que sea redireccionado a login
 
 
 
@@ -119,8 +119,8 @@ app.register_blueprint(vistaadministrador)
 @app.route('/', methods = ['GET', 'POST'])
 
 @app.route('/inicio', methods=['GET', 'POST'])
+@login_required
 def get_presentacionGDD():
-
     return render_template('presentacionGDD.html')
 
 @app.route('/cerrarSesion')
@@ -132,11 +132,15 @@ def cerrarSesion():
 
 # Clase User con métodos necesarios
 class User(UserMixin):
-    def __init__(self, id_usuario, email, fk_rol_usu=None, nombre=None):
-        self.id_usuario = id_usuario  # Cambia id a id_usuario
+    def __init__(self, id_usuario, email, fk_rol_usu=None, nombre=None, permisos=[]):
+        self.id_usuario = id_usuario
         self.email = email
         self.fk_rol_usu = fk_rol_usu
         self.nombre = nombre
+        self.permisos = permisos  # Agrega los permisos del usuario
+ 
+    def tiene_permiso(self, permiso):
+        return permiso in self.permisos
 
     def get_id(self):
         return self.id_usuario

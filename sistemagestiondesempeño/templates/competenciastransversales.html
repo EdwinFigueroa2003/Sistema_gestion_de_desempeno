@@ -6,6 +6,7 @@
 <h1 class="main-title">Competencias Transversales</h1>
 <hr class="divider">
 
+{% if session['usuario']['fk_rol_usu'] == 2 %}
 <div class="rectangle-2111">
     <div class="circle-wrapper">
         <div class="circle"></div>
@@ -36,7 +37,8 @@
             <input type="hidden" name="pregunta_id" value="{{ pregunta.id_pregunta }}">
             {% for respuesta in pregunta.respuestas %}
             <div class="opcion-respuesta">
-                <input type="radio" id="respuesta{{ respuesta.id_respuesta }}" name="respuesta_seleccionada" value="{{ respuesta.id_respuesta }}" required>
+                <input type="radio" id="respuesta{{ respuesta.id_respuesta }}" name="respuesta_seleccionada"
+                    value="{{ respuesta.id_respuesta }}" required>
                 <label for="respuesta{{ respuesta.id_respuesta }}">
                     <span class="custom-radio"></span>
                     {{ respuesta.texto_respuesta }}
@@ -47,7 +49,7 @@
             <div class="btn">
                 <a href="/informe/edwin.figueroa@usbmed.edu.co" class="volver1">VOLVER</a>
             </div>
-<!--             <div class="btn">
+            <!--             <div class="btn">
                 <a href="{{ url_for('idinforme.vista_informe', email=email) }}" class="volver1">
                     <div class="medium-filled">Volver</div>
                 </a>
@@ -70,6 +72,31 @@
 </div>
 {% else %}
 <p>No hay preguntas disponibles para este nivel de contribución.</p>
+{% endif %}
+{% endif %}
+
+{% if session['usuario']['fk_rol_usu'] == 1 %}
+<div class="admin-edit">
+    <h3>Editar Preguntas y Respuestas</h3>
+    <form method="POST" action="/editar_pregunta">
+        <input type="hidden" name="pregunta_id" value="{{ pregunta.id_pregunta }}">
+        <label for="competencia">Competencia:</label>
+        <input type="text" id="competencia" name="competencia" value="{{ pregunta.competencia }}">
+
+        <label for="texto_pregunta">Texto de la Pregunta:</label>
+        <textarea id="texto_pregunta" name="texto_pregunta">{{ pregunta.texto_pregunta }}</textarea>
+
+        {% for respuesta in pregunta.respuestas %}
+        <div class="edit-respuesta">
+            <label for="respuesta{{ respuesta.id_respuesta }}">Respuesta {{ loop.index }}:</label>
+            <input type="text" id="respuesta{{ respuesta.id_respuesta }}" name="respuestas[{{ respuesta.id_respuesta }}]"
+                value="{{ respuesta.texto_respuesta }}">
+        </div>
+        {% endfor %}
+
+        <button type="submit" class="guardar-cambios">Guardar Cambios</button>
+    </form>
+</div>
 {% endif %}
 
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />

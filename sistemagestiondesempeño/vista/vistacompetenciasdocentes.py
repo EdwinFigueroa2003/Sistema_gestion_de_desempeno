@@ -9,7 +9,7 @@ from flask_login import login_required
 vistacompetenciasdocentes = Blueprint('idcompetenciasdocentes', __name__, template_folder='templates')
 
 @vistacompetenciasdocentes.route('/competenciasdocentes', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def vista_competenciasdocentes():
     # Obtener id_usuario desde la sesión
     id_usuario = session.get('id_usuario')
