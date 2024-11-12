@@ -78,7 +78,7 @@
 {% if session['usuario']['fk_rol_usu'] == 1 %}
 <div class="admin-edit">
     <h3>Editar Preguntas y Respuestas</h3>
-    <form method="POST" action="/editar_pregunta">
+    <form method="POST" action="#">
         <input type="hidden" name="pregunta_id" value="{{ pregunta.id_pregunta }}">
         <label for="competencia">Competencia:</label>
         <input type="text" id="competencia" name="competencia" value="{{ pregunta.competencia }}">
@@ -89,13 +89,21 @@
         {% for respuesta in pregunta.respuestas %}
         <div class="edit-respuesta">
             <label for="respuesta{{ respuesta.id_respuesta }}">Respuesta {{ loop.index }}:</label>
-            <input type="text" id="respuesta{{ respuesta.id_respuesta }}" name="respuestas[{{ respuesta.id_respuesta }}]"
-                value="{{ respuesta.texto_respuesta }}">
+            <input type="text" id="respuesta{{ respuesta.id_respuesta }}"
+                name="respuestas[{{ respuesta.id_respuesta }}]" value="{{ respuesta.texto_respuesta }}">
         </div>
         {% endfor %}
 
         <button type="submit" class="guardar-cambios">Guardar Cambios</button>
+
+        <a href="/equipo" class="volver1">
+            <div>Volver</div>
+        </a>
+
     </form>
+
+
+
 </div>
 {% endif %}
 

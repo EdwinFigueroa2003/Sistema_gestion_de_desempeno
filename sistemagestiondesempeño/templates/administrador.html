@@ -1,42 +1,52 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Administrador</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
-</head>
+{% block title %}Administrador{% endblock %}
 
-<body>
-    <h1>Bienvenido Administrador</h1>
-    <h2>A que apartado deseas ingresar para modificar/actualizar</h2>
+{% block content %}
 
-    <div class="medium-filled">
-        <a href="/cerrarSesion" class="volver">cerrar sesion</a>
-    </div>
+<h1 class="main-title">Administrador</h1>
 
-<!--     <div class="busqueda-equipo">
-        <h2>Mi Equipo</h2>
-        <p>Búsqueda de colaborador</p>
-        <form class="form-inline" method="POST" action="{{ url_for('idadministrador.vista_administrador') }}">
-            <input class="form-control mr-sm-2" type="text" name="nombre_colaborador" placeholder="Ingresa el nombre" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-        </form>
-    </div> -->
+<hr class="divider">
+<h2>Bienvenido Administrador:</h2>
 
+<div class="apartados">
+    <h3>Que apartados deseas modificar:</h3>
 
-    <a href="/gestiondeldesempeno" class="volver">Gestión de desempeño</a>
+    <a href="/gestiondeldesempeno" class="volver">GESTIÓN DEL DESEMPEÑO</a>
     <br>
-    <a href="/gestiondeldesarrollo" class="volver">Gestión del desarrollo</a>
+    <a href="/gestiondeldesarrollo" class="volver">GESTIÓN DEL DESARROLLO</a>
     <br>
-    <a href="/equipo" class="volver">Equipo</a>
+    <a href="/equipo" class="volver">EQUIPO</a>
+</div>
 
+<img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
 
+<style>
+    
+    .apartados {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: -10px;
+            margin-left: 20px;
+        }
 
-    <script src="" async defer></script>
-</body>
+        .apartados a {
+            display: block;
+            background: linear-gradient(to right, #4ED6FB, #3EB1F8, #2C88F3);
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            color: black;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
 
-</html>
+        .apartados a:hover {
+            background-color: #f0f0f0;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+</style>
+{% endblock%}

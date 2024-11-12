@@ -95,8 +95,14 @@
             margin: 0;
         }
 
+        .navbar {
+            width: 100%;
+            margin-top: -28.3px;
+        }
+
         .navbar-nav {
             width: 100%;
+            margin-top: -5px;
         }
 
         .nav-item {
@@ -300,6 +306,12 @@
             width: 370px;
             height: 230px;
             justify-content: flex-start;
+        }
+
+        cerrar_sesion {
+            color: #00c3ff;
+            font-size: 17px;
+            margin-bottom: -55px;
         }
 
         .Concertación_de_Propositos_Personales {
@@ -656,8 +668,10 @@
             background: #ffffff;
             background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 80%, #656465 70%, #656465 100%);
             border-radius: 25px;
-            width: 295px; /* ancho */
-            height: 215px; /* alto */
+            width: 295px;
+            /* ancho */
+            height: 215px;
+            /* alto */
             margin-right: 20px;
             padding: 10px;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -670,8 +684,10 @@
             background: #ffffff;
             background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 80%, #fc7af7 70%, #fc7af7 100%);
             border-radius: 25px;
-            width: 295px; /* ancho */
-            height: 215px; /* alto */
+            width: 295px;
+            /* ancho */
+            height: 215px;
+            /* alto */
             margin-right: 20px;
             padding: 10px;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -685,8 +701,10 @@
             background: #ffffff;
             background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 80%, #fc4f8d 70%, #fc4f8d 100%);
             border-radius: 25px;
-            width: 295px; /* ancho */
-            height: 215px; /* alto */
+            width: 295px;
+            /* ancho */
+            height: 215px;
+            /* alto */
             margin-right: 20px;
             margin-top: 10px;
             /* Ajustar en pantallas grandes */
@@ -702,8 +720,10 @@
             background: #ffffff;
             background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 80%, #587959 70%, #587959 100%);
             border-radius: 25px;
-            width: 295px; /* ancho */
-            height: 215px; /* alto */
+            width: 295px;
+            /* ancho */
+            height: 215px;
+            /* alto */
             margin-right: 20px;
             padding: 10px;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -881,8 +901,10 @@
             background: #ffffff;
             background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 80%, #7AFCEC 70%, #7AFCEC 100%);
             border-radius: 25px;
-            width: 295px; /* ancho */
-            height: 215px; /* alto */
+            width: 295px;
+            /* ancho */
+            height: 215px;
+            /* alto */
             margin-right: 20px;
             padding: 10px;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -896,8 +918,10 @@
             background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 80%, #587959 70%, #587959 100%);
             border-radius: 25px;
             top: -60px;
-            width: 295px; /* ancho */
-            height: 215px; /* alto */
+            width: 295px;
+            /* ancho */
+            height: 215px;
+            /* alto */
             margin-right: 20px;
             padding: 10px;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -947,8 +971,10 @@
             background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 80%, #587959 70%, #587959 100%);
             border-radius: 25px;
             top: -25px;
-            width: 295px; /* ancho */
-            height: 215px; /* alto */
+            width: 295px;
+            /* ancho */
+            height: 215px;
+            /* alto */
             margin-right: 20px;
             padding: 10px;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -1324,8 +1350,10 @@
         .curso,
         .video,
         .casete {
-            width: 40px; /* ancho */
-            height: 40px; /* alto */
+            width: 40px;
+            /* ancho */
+            height: 40px;
+            /* alto */
             position: absolute;
             margin-left: 225px;
             top: 10px;
@@ -1439,7 +1467,7 @@
         }
 
         .imagenes {
-            width: 40x;
+            width: 40px;
             height: 40px;
             object-fit: cover;
             border-radius: 50%;
@@ -1899,6 +1927,7 @@
         .back-button:hover {
             background-color: #555;
         }
+
     </style>
 </head>
 
@@ -1910,14 +1939,12 @@
                 <img src="{{ url_for('static', filename='img/image copy.png')}}" class="user-img">
                 <h4 class="user-name">James Bonb</h4>
                 <p class="user-title">Director de Programa</p>
+                <a href="/cerrarSesion">
+                    <cerrar_sesion>Cerrar Sesión</cerrar_sesion>
+                </a>
             </div>
             <nav class="navbar">
                 <ul class="navbar-nav flex-column">
-
-                    <a href="/cerrarSesion" class="text-white ml-3 nav-link-cerrar">
-                        <h5>Cerrar Sesión</h5>
-                    </a>
-
                     <li class="nav-item dropdown">
                         <a class="nav-link gestion-desempeno" href="/gestiondeldesempeno">
                             GESTIÓN DEL DESEMPEÑO

@@ -94,8 +94,14 @@
             margin: 0;
         }
 
+        .navbar {
+            width: 100%;
+            margin-top: -28.3px;
+        }
+
         .navbar-nav {
             width: 100%;
+            margin-top: -5px;
         }
 
         .nav-item {
@@ -202,6 +208,12 @@
             background-color: #3e3e3e;
         }
 
+        cerrar_sesion{
+            color: #00c3ff;
+            font-size: 17px;
+            margin-bottom: -55px;
+        }
+
     </style>
 </head>
 
@@ -209,10 +221,12 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="user-profile">
-            <!-- <img src="profile.png" alt="User Image" class="user-img"> -->
             <img src="{{ url_for('static', filename='img/image copy.png')}}" class="user-img">
             <h4 class="user-name">James Bonb</h4>
             <p class="user-title">Director de Programa</p>
+               <a href="/cerrarSesion">
+                <cerrar_sesion>Cerrar Sesión</cerrar_sesion>
+            </a>
         </div>
         <nav class="navbar">
             <ul class="navbar-nav flex-column">

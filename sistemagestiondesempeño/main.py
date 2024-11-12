@@ -53,6 +53,7 @@ from vista.vistavercurso import vistavercurso
 from vista.vistaverpodcast import vistaverpodcast
 from vista.vistalogin import vistalogin
 from vista.vistaadministrador import vistaadministrador
+from vista.vistaasignarliderazgo import vistaasignarliderazgo
 
 
 
@@ -111,6 +112,7 @@ app.register_blueprint(vistavercurso)
 app.register_blueprint(vistaverpodcast)
 app.register_blueprint(vistalogin)
 app.register_blueprint(vistaadministrador)
+app.register_blueprint(vistaasignarliderazgo)
  
 # Establecer la ruta base si es necesario, por defecto es '/'
 #breakpoint();

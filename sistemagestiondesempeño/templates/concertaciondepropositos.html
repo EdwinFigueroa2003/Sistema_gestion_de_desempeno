@@ -8,14 +8,16 @@
 <h1 class="main-title">GESTIÓN DEL DESEMPEÑO</h1>
 <hr class="divider">
 
+{% if session['usuario']['fk_rol_usu'] == 2 %}
 <div class="rectangle-2111">
     <div class="circle-wrapper">
         <div class="circle"></div>
     </div>
     <nombre>Edwin Figueroa</nombre>
 </div>
+{% endif %}
 
-<div class="titulo-dimension">
+<div class="titulo_dimension">
     <h3>CONCERTACIÓN DE PROPOSITOS</h3>
 </div>
 
@@ -53,6 +55,7 @@
     </div>
 </div>
 
+{% if session['usuario']['fk_rol_usu'] == 2 %}
 <div class="btn">
     <a href="/informe/edwin.figueroa@usbmed.edu.co" class="volver">
         <div class="medium-filled">
@@ -60,6 +63,17 @@
         </div>
     </a>
 </div>
+{% endif %}
+
+{% if session['usuario']['fk_rol_usu'] == 1 %}
+<div class="btn">
+    <a href="equipo" class="volver">
+        <div class="medium-filled">
+            VOLVER
+        </div>
+    </a>
+</div>
+{% endif %}
 
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
 <img src="{{ url_for('static', filename='img/objetivo-10.png')}}" class="usuarios" />
@@ -80,6 +94,11 @@
         height: 30px;
         margin-top: -8px;
         
+    }
+
+    .titulo_dimension{
+        margin-bottom: 60px;
+        margin-right: 30px;
     }
 
     p {
