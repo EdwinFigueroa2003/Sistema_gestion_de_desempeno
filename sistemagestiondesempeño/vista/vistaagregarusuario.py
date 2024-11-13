@@ -4,11 +4,11 @@ from configBd import API_URL
 import requests
 
 # Crear un Blueprint
-vistaagregarequipo = Blueprint('idagregarequipo', __name__, template_folder='templates')
+vistaagregarusuario = Blueprint('idagregarusuario', __name__, template_folder='templates')
 
-@vistaagregarequipo.route('/agregarequipo', methods=['GET', 'POST'])
+@vistaagregarusuario.route('/agregarusuario', methods=['GET', 'POST'])
 @login_required # Hace que si no está autenticado, saque error.
-def vista_agregar_equipo():
+def vista_agregar_usuario():
 
     print("Debug: Atributos de current_user:", vars(current_user))
     # Obtener el ID del usuario autenticado usando current_user
@@ -30,8 +30,8 @@ def vista_agregar_equipo():
                 usuario_actual = usuario_data[-1] if usuario_data else None
                 if usuario_actual:
                     print("Debug: Último registro del usuario actual:", usuario_actual)
-                    print("Debug: Renderizando plantilla 'agregarequipo.html' con datos del usuario.")
-                    return render_template('agregarequipo.html', usuario=usuario_actual)
+                    print("Debug: Renderizando plantilla 'agregarusuario.html' con datos del usuario.")
+                    return render_template('agregarusuario.html', usuario=usuario_actual)
                 else:
                     print("Debug: No se encontraron registros válidos en la respuesta de la API.")
                     flash("No se encontraron registros del usuario en la base de datos.", "error")
@@ -45,5 +45,5 @@ def vista_agregar_equipo():
         print("Debug: ID de usuario no disponible en current_user.")
         flash("Usuario no autenticado o sesión no válida.", "error")
 
-    print("Debug: Renderizando plantilla 'agregarequipo.html' con mensaje de error.")
-    return render_template('agregarequipo.html', mensaje="No se pudo obtener la información del usuario")
+    print("Debug: Renderizando plantilla 'agregarusuario.html' con mensaje de error.")
+    return render_template('agregarusuario.html', mensaje="No se pudo obtener la información del usuario")

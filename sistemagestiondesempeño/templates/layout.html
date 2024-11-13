@@ -1522,6 +1522,7 @@
             position: relative;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
             margin-top: 15px;
+            /* margin-left: 600px; */
         }
 
         .texto-respuesta {
@@ -1821,22 +1822,6 @@
             transition: background-color 0.3s ease;
         }
 
-        .custom-radio {
-            position: absolute;
-            top: 0;
-            left: -10px;
-            height: 20px;
-            width: 20px;
-            background-color: #E2DFDF;
-            border-radius: 10%;
-            transition: background-color 0.3s ease;
-        }
-
-        /*         .opcion-respuesta input[type="radio"]:checked+label {
-            background-color: #007bff;
-            color: #ffffff;
-        } */
-
         .opcion-respuesta input[type="radio"]:checked+label .custom-radio::after {
             content: '\2714';
             /* Código Unicode para un check (✔) */
@@ -1846,7 +1831,17 @@
             transform: translate(-50%, -50%);
             font-size: 14px;
             color: #007bff;
+        }
 
+        .custom-radio {
+            position: absolute;
+            top: 0;
+            left: -10px;
+            height: 20px;
+            width: 20px;
+            background-color: #E2DFDF;
+            border-radius: 10%;
+            transition: background-color 0.3s ease;
         }
 
         /* Reporte en analisis organizacional */
@@ -1927,7 +1922,6 @@
         .back-button:hover {
             background-color: #555;
         }
-
     </style>
 </head>
 

@@ -12,7 +12,7 @@ from flask_login import LoginManager, UserMixin, login_required, current_user
 
 from menu import menu
 from vista.vistaequipo import vistaequipo
-from vista.vistaagregarequipo import vistaagregarequipo
+from vista.vistaagregarusuario import vistaagregarusuario
 from vista.vistaconfiguracion import vistaconfiguracion
 from vista.vistadetallemicroproyecto import vistadetallemicroproyecto
 from vista.vistagestiondeldesarrollo import vistagestiondeldesarrollo
@@ -83,7 +83,7 @@ app.register_blueprint(vistacompetenciasdocentes)
 app.register_blueprint(vistacompetenciastransversales)
 app.register_blueprint(vistaconcertaciondepropositosparalamejoradeprocesos)
 app.register_blueprint(vistaconcertaciondepropositospersonales)
-app.register_blueprint(vistaagregarequipo)
+app.register_blueprint(vistaagregarusuario)
 app.register_blueprint(vistaconfiguracion)
 app.register_blueprint(vistagestiondeldesarrollo)
 app.register_blueprint(vistainforme)

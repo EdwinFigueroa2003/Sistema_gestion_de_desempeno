@@ -40,3 +40,25 @@ def vista_catalogopodcasts():
         print(f"ID de serie: {serie['id_serie']}, Nombre: {serie['nombre_serie']}, ID Tipo Podcast: {serie['id_tipo_podcast']}")
 
     return render_template('catalogopodcasts.html', series_podcast=series_podcast_filtradas)
+
+@vistacatalogopodcasts.route('/catalogopodcasts/editar/<int:serie_id>', methods=['GET', 'POST'])
+@login_required
+def editar_podcast(serie_id):
+    # Lógica para editar el podcast con ID `serie_id`
+    if request.method == 'POST':
+        # Aquí puedes obtener los datos del formulario y hacer la solicitud a la API
+        # para actualizar el podcast
+        pass
+    # Cargar los datos actuales del podcast y renderizar el formulario de edición
+    return render_template('editar_podcast.html', serie_id=serie_id)
+
+@vistacatalogopodcasts.route('/catalogopodcasts/eliminar/<int:serie_id>', methods=['POST'])
+@login_required
+def eliminar_podcast(serie_id):
+    # Hacer una solicitud DELETE a la API para eliminar el podcast con el ID dado
+    response = requests.delete(f"{API_URL}/serie/{serie_id}")
+    if response.status_code == 204:
+        return redirect(url_for('idcatalogopodcasts.vista_catalogopodcasts'))
+    else:
+        return "Error al eliminar el podcast", 500
+

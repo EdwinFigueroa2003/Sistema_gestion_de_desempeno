@@ -25,6 +25,6 @@ def vista_videos():
         filtered_videos = videos
     
     # Imprimir los videos filtrados para depuración
-    print("Videos filtrados:", filtered_videos)
+    #print("Videos filtrados:", filtered_videos)
     
     return render_template('videos.html', videos=filtered_videos)

@@ -101,6 +101,49 @@ def guardar_respuesta(id_usuario, id_dimension_mp, id_dimension_mp_pregunta, id_
     except requests.RequestException as e:
         print(f"Error al guardar la respuesta: {e}")
 
+
+@vistamediciondepotencial.route('/editar_pregunta/<int:id_pregunta>', methods=['GET', 'POST'])
+@login_required
+def editar_pregunta(id_pregunta):
+    if session.get('usuario')['fk_rol_usu'] != 1:  # Verificar que el usuario es administrador
+        return redirect(url_for('idmediciondepotencial.vista_medicion_potencial'))
+
+    # Obtener la pregunta a editar
+    pregunta = requests.get(f"{API_URL}/dimension_mp_pregunta/{id_pregunta}").json()
+    
+    # Obtener las respuestas asociadas
+    respuestas = requests.get(f"{API_URL}/dimension_mp_respuesta/id_dimension_mp_pregunta/{id_pregunta}").json()
+
+    if request.method == 'POST':
+        # Obtener los nuevos valores de la pregunta y respuestas
+        nueva_pregunta = request.form.get('pregunta')
+        nuevas_respuestas = {}
+        
+        for respuesta in respuestas:
+            nueva_respuesta = request.form.get(f"respuesta_{respuesta['id_dimension_mp_respuesta']}")
+            if nueva_respuesta:
+                nuevas_respuestas[respuesta['id_dimension_mp_respuesta']] = nueva_respuesta
+        
+        # Actualizar la pregunta
+        data_pregunta = {"pregunta": nueva_pregunta}
+        response = requests.put(f"{API_URL}/dimension_mp_pregunta/{id_pregunta}", json=data_pregunta)
+
+        if response.status_code != 200:
+            print("Error al actualizar la pregunta")
+
+        # Actualizar las respuestas
+        for id_respuesta, nueva_respuesta in nuevas_respuestas.items():
+            data_respuesta = {"respuesta_mp": nueva_respuesta}
+            response = requests.put(f"{API_URL}/dimension_mp_respuesta/{id_respuesta}", json=data_respuesta)
+            if response.status_code != 200:
+                print(f"Error al actualizar la respuesta con ID {id_respuesta}")
+
+        # Redirigir después de guardar los cambios
+        return redirect(url_for('idmediciondepotencial.vista_medicion_potencial', current_index=request.form.get('current_index', 0)))
+
+    return render_template('editar_pregunta.html', pregunta=pregunta, respuestas=respuestas)
+
+
 @vistamediciondepotencial.route('/finalizo', methods=['GET'])
 def finalizo():
     # Aquí se mostrará un mensaje de finalización

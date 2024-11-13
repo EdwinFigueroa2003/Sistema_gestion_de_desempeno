@@ -49,11 +49,6 @@
             <div class="btn">
                 <a href="/informe/edwin.figueroa@usbmed.edu.co" class="volver1">VOLVER</a>
             </div>
-            <!--             <div class="btn">
-                <a href="{{ url_for('idinforme.vista_informe', email=email) }}" class="volver1">
-                    <div class="medium-filled">Volver</div>
-                </a>
-            </div> -->
 
             <div class="btn">
                 <button type="submit" name="prev" class="boton-atras">
@@ -73,42 +68,63 @@
 {% else %}
 <p>No hay preguntas disponibles para este nivel de contribución.</p>
 {% endif %}
+
 {% endif %}
 
 {% if session['usuario']['fk_rol_usu'] == 1 %}
 <div class="admin-edit">
-    <h3>Editar Preguntas y Respuestas</h3>
-    <form method="POST" action="#">
-        <input type="hidden" name="pregunta_id" value="{{ pregunta.id_pregunta }}">
-        <label for="competencia">Competencia:</label>
-        <input type="text" id="competencia" name="competencia" value="{{ pregunta.competencia }}">
+    <h3>Editar Pregunta y Respuestas</h3>
 
-        <label for="texto_pregunta">Texto de la Pregunta:</label>
-        <textarea id="texto_pregunta" name="texto_pregunta">{{ pregunta.texto_pregunta }}</textarea>
-
-        {% for respuesta in pregunta.respuestas %}
-        <div class="edit-respuesta">
-            <label for="respuesta{{ respuesta.id_respuesta }}">Respuesta {{ loop.index }}:</label>
-            <input type="text" id="respuesta{{ respuesta.id_respuesta }}"
-                name="respuestas[{{ respuesta.id_respuesta }}]" value="{{ respuesta.texto_respuesta }}">
+    <!-- Formulario para editar la pregunta -->
+    <form method="POST"
+        action="{{ url_for('idcompetenciastransversales.editar_pregunta', pregunta_id=pregunta.id_pregunta) }}">
+        <!-- Campo para editar la competencia (si es necesario) -->
+        <div class="form-group">
+            <label for="competencia">Competencia:</label>
+            <input type="text" id="competencia" name="competencia" value="{{ pregunta.competencia }}">
         </div>
-        {% endfor %}
 
-        <button type="submit" class="guardar-cambios">Guardar Cambios</button>
+        <!-- Campo para editar el texto de la pregunta -->
+        <div class="form-group">
+            <label for="texto_pregunta">Texto de la Pregunta:</label>
+            <textarea id="texto_pregunta" name="texto_pregunta">{{ pregunta.texto_pregunta }}</textarea>
+        </div>
 
-        <a href="/equipo" class="volver1">
-            <div>Volver</div>
-        </a>
+        <!-- Sección para editar las respuestas -->
+        <div class="form-group">
+            <h4>Respuestas</h4>
+            {% for respuesta in pregunta.respuestas %}
+            <div class="edit-respuesta">
+                <label for="respuesta{{ respuesta.id_respuesta }}">Respuesta {{ loop.index }}:</label>
+                <input type="text" id="respuesta{{ respuesta.id_respuesta }}"
+                    name="respuestas[{{ respuesta.id_respuesta }}]" value="{{ respuesta.texto_respuesta }}">
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Botón para guardar los cambios -->
+        <div class="form-group">
+            <button type="submit" class="guardar-cambios">Guardar Cambios</button>
+        </div>
+
+        <!-- Enlace para volver -->
+        <div class="form-group">
+            <a href="/equipo" class="volver1">
+                <div>Volver</div>
+            </a>
+        </div>
 
     </form>
-
-
 
 </div>
 {% endif %}
 
+
+
+
+
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
 <img src="{{ url_for('static', filename='img/competencias-transversales.jpeg')}}" class="usuarios" />
-</div>
+
 
 {% endblock %}

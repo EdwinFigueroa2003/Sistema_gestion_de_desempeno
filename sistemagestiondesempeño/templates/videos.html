@@ -29,9 +29,23 @@
 </div>
 
 {% if session['usuario']['fk_rol_usu'] == 1 %}
-    <p>Agregar nueva categoría<br>Borrar categoría</p>
+<!-- Opciones de editar y eliminar para administrador -->
+<div class="admin-options">
+   
+    <a href="#"
+        class="btn btn-primary btn-sm">Editar</a>
+
+    <a href="#" class="btn btn-danger btn-sm"
+        onclick="return confirm('¿Estás seguro de eliminar esta categoría de video?')">Eliminar</a>
+</div>
 {% endif %}
 
+{% if session['usuario']['fk_rol_usu'] == 1 %}
+    <!-- Botón para añadir una nueva categoría de video -->
+    <div class="admin-options">
+        <a href="#" class="btn btn-success">Añadir Nueva Categoría</a>
+    </div>
+{% endif %}
 
 <div class="rectangles-container">
     <div class="medium-filled">

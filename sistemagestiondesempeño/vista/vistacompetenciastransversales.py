@@ -89,29 +89,35 @@ def vista_competenciastransversales():
 @vistacompetenciastransversales.route('/competenciastransversales/editar/<int:pregunta_id>', methods=['GET', 'POST'])
 @login_required
 def editar_pregunta(pregunta_id):
-    # Solo permitir acceso a los administradores
-    if current_user.rol != 'admin':
+    # Verificar si el usuario es administrador
+    if current_user.fk_rol_usu != '1':
         flash("No tienes permiso para acceder a esta función.", "error")
         return redirect(url_for('idcompetenciastransversales.vista_competenciastransversales'))
 
     if request.method == 'POST':
-        # Obtener los datos de edición desde el formulario
+        # Obtener datos de la pregunta y respuestas desde el formulario
         nuevo_texto_pregunta = request.form.get('texto_pregunta')
         datos_edicion = {
             'id_pregunta': pregunta_id,
             'texto_pregunta': nuevo_texto_pregunta,
+            'respuestas': []
         }
 
-        # Obtener las respuestas editadas
-        respuestas_editadas = request.form.getlist('respuestas')
-        datos_respuestas = [{'id_respuesta': int(res_id), 'texto_respuesta': texto} 
-                            for res_id, texto in enumerate(respuestas_editadas, start=1)]
+        # Obtener respuestas editadas y añadirlas a 'datos_edicion'
+        respuestas_ids = request.form.getlist('respuesta_id')
+        respuestas_textos = request.form.getlist('texto_respuesta')
+
+        for res_id, texto in zip(respuestas_ids, respuestas_textos):
+            datos_edicion['respuestas'].append({
+                'id_respuesta': int(res_id),
+                'texto_respuesta': texto
+            })
 
         try:
-            # Enviar la edición a la API
-            response = requests.post(f"http://190.217.58.246:5184/api/proyecto/procedures/execute", json=datos_edicion, timeout=10)
+            # Enviar los datos editados a la API
+            response = requests.post(f"http://127.0.0.1:5184/api/sgd/editar_pregunta", json=datos_edicion, timeout=10)
             response.raise_for_status()
-            flash("Pregunta editada correctamente.", "success")
+            flash("Pregunta y respuestas editadas correctamente.", "success")
         except requests.RequestException as e:
             print(f"Error al editar la pregunta o respuestas en la API: {e}")
             flash("Hubo un error al editar la pregunta o respuestas.", "error")

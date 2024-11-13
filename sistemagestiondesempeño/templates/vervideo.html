@@ -4,14 +4,8 @@
 
 {% block content %}
 <h1 class="main-title">Videos Relacionados</h1>
+
 <hr class="divider">
-
-<!--<p>Búsqueda de videos por nombre: <br> </p>
-<form class="form-inline" method="GET" action="{{ url_for('idvideos.vista_videos') }}">
-    <input class="form-control mr-sm-2" type="search" name="search" placeholder="Ingresa el nombre" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-</form> -->
-
 
 {% if video_seleccionado %}
 <titulo_video>{{ video_seleccionado.titulo }}</titulo_video>
@@ -20,14 +14,13 @@
         allow="autoplay; encrypted-media" allowfullscreen></iframe>
 </div>
 <descripcion>{{ video_seleccionado.descripcion }}</descripcion>
-<!-- <p>Vistas: {{ video_seleccionado.vistas }} </p> <br>
-<p>Me gusta: {{ video_seleccionado.me_gusta }} | No me gusta: {{ video_seleccionado.no_me_gusta }}</p> -->
-<!-- <p>Categoría: {{ video_seleccionado.categoria }}</p> -->
-<!-- <p>Fecha de subida: {{ video_seleccionado.fecha_subida.split('T')[0] }}</p> -->
 {% endif %}
 
 {% if session['usuario']['fk_rol_usu'] == 1 %}
-<h1>Editar información</h1>
+<div class="admin-options">
+    <h3>Editar información</h3>
+    <a href="{{ url_for('idvervideo.editar_video', video_id=video_seleccionado.id) }}" class="btn btn-primary">Editar Video</a>
+</div>
 {% endif %}
 
 <div class="video-list">
@@ -39,7 +32,6 @@
             <h4>{{ video.titulo }}</h4>
             <img src="{{ video.miniatura_url }}" alt="{{ video.titulo }}" width="50">
         </a>
-        <!-- <p>Vistas: {{ video.vistas }}</p> -->
     </div>
     {% endif %}
     {% endfor %}
@@ -70,7 +62,6 @@
         line-height: normal;
         z-index: 1000;
         margin-bottom: 10px;
-        /* background-color: #ffffff; */
     }
 
     otros_videos {
@@ -80,7 +71,6 @@
         line-height: normal;
         z-index: 1000;
         margin-top: 20px;
-        /* background-color: #ffffff; */
     }
 
     descripcion {
@@ -90,29 +80,7 @@
         line-height: normal;
         z-index: 1000;
         margin-top: -100px;
-        /* background-color: #ffffff; */
     }
-
-    /* Estilos adicionales para el buscador */
-    /*     .form-inline {
-        display: flex;
-        flex-flow: row wrap;
-        align-items: center;
-    }
-
-    .form-inline .form-control {
-        vertical-align: middle;
-        margin: 5px 10px 5px 0;
-        padding: 10px;
-    }
-
-    .form-inline button {
-        padding: 10px 20px;
-        background-color: #007bff;
-        border: 1px solid #007bff;
-        color: white;
-    } */
 </style>
-
 
 {% endblock %}

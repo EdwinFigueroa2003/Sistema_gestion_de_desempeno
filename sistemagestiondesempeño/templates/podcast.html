@@ -27,7 +27,15 @@
 </div>
 
 {% if session['usuario']['fk_rol_usu'] == 1 %}
-<h1>Editar categorias</h1>
+<!-- Botones de Editar y Eliminar para el rol de administrador -->
+<div class="d-flex justify-content-between mt-2">
+    <a href="#"
+        class="btn btn-warning btn-sm">Editar</a>
+    <form action="#" method="POST"
+        onsubmit="return confirm('¿Estás seguro de que deseas eliminar este podcast?');">
+        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+    </form>
+</div>
 {% endif %}
 
 <div class="rectangles-container">

@@ -31,13 +31,13 @@ def vista_equipo():
         nombre_colaborador = request.form.get('nombre_colaborador', '').strip().lower()
         # Filtrar los usuarios según el nombre ingresado
         usuarios = [usuario for usuario in usuarios if nombre_colaborador in usuario['nombre'].lower()]
-        print(f"Usuarios filtrados: {usuarios}")  # Imprimir usuarios filtrados en consola
+       #print(f"Usuarios filtrados: {usuarios}")  # Imprimir usuarios filtrados en consola
 
     else:
         print(f"Usuarios: {usuarios}")  # Imprimir usuarios en consola
 
     rol = session.get('fk_rol_usu', 'usuario')  # Cambia 'usuario' al rol por defecto si no está en la sesión
-    print("rol")
+    #print("rol")
 
     # Renderizar la plantilla 'equipo.html' con los usuarios obtenidos
     return render_template('equipo.html', usuarios=usuarios, rol=rol)
