@@ -45,3 +45,33 @@ def vista_ver_curso(curso_id):
         print(f"Respuesta del servidor: {e.response.text if e.response else 'No hay respuesta'}")
         curso = None
     return render_template('vercurso.html', curso=curso)
+
+@vistavercurso.route('/cursos/actualizar/<int:id>', methods=['POST'])
+@login_required
+def actualizar_curso(id):
+    if session['usuario']['fk_rol_usu'] != 1:
+        return redirect(url_for('idcursos.vista_cursos'))
+
+    # Obtener los datos del formulario o JSON
+    data = request.json or request.form
+    titulo = data.get('titulo')
+
+    # Lógica para actualizar el curso usando la nueva estructura
+    try:
+        payload = {
+            "procedure": "update_json_entity",
+            "parameters": {
+                "table_name": "cursos",
+                "json_data": {
+                    "titulo": titulo
+                },
+                "where_condition": f"id = {id}"
+            }
+        }
+        response = requests.post(f"{API_URL}/procedures/execute", json=payload)
+        print('Respuesta de la API:', response.status_code, response.text)  # Print para verificar la respuesta de la API
+
+        return redirect(url_for('idcursos.vista_cursos'))
+    except requests.RequestException as e:
+        print(f"Error al actualizar el curso: {e}")
+        return redirect(url_for('idcursos.vista_cursos'))

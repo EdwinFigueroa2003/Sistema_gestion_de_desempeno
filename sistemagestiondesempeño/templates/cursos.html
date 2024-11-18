@@ -33,7 +33,6 @@
         </a>
 
         {% if session['usuario']['fk_rol_usu'] == 1 %}
-        <a href="# class=" btn btn-warning">Editar</a>
         <a href="{{ url_for('idcursos.eliminar_curso', id_tipo_curso=curso.id_tipo_curso) }}"
             class="btn btn-danger">Eliminar</a>
         {% endif %}

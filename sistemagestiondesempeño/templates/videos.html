@@ -15,37 +15,26 @@
 
 <div class="rectangles-container">
     {% for video in videos %}
-    <a href="{{ url_for('idvervideo.vista_ver_video', tipo_video_id=video.id_tipo_video) }}" class="video-link">
-        <div class="rectangle-2108">
-            <p>{{ video.nombre }}</p>
-            <img src="{{ video.logo }}" alt="{{ video.nombre }}" class="curso-imagen">
-        </div>
-    </a>
-    {% if loop.index0 % 3 == 2 and not loop.last %}
-</div>
-<div class="rectangles-container">
-    {% endif %}
+    <div class="video-item">
+        <a href="{{ url_for('idvervideo.vista_ver_video', tipo_video_id=video.id_tipo_video) }}" class="video-link">
+            <div class="rectangle-2108">
+                <img src="{{ video.logo }}" alt="{{ video.nombre }}" class="curso-imagen">
+                <p>{{ video.nombre }}</p>
+            </div>
+        </a>
+        {% if session['usuario']['fk_rol_usu'] == 1 %}
+        <button class="btn btn-danger btn-sm" onclick="eliminarCategoria('{{ video.id_tipo_video }}')">Eliminar</button>
+        {% endif %}
+    </div>
     {% endfor %}
 </div>
 
-{% if session['usuario']['fk_rol_usu'] == 1 %}
-<!-- Opciones de editar y eliminar para administrador -->
-<div class="admin-options">
-   
-    <a href="#"
-        class="btn btn-primary btn-sm">Editar</a>
-
-    <a href="#" class="btn btn-danger btn-sm"
-        onclick="return confirm('¿Estás seguro de eliminar esta categoría de video?')">Eliminar</a>
-</div>
-{% endif %}
-
-{% if session['usuario']['fk_rol_usu'] == 1 %}
-    <!-- Botón para añadir una nueva categoría de video -->
+<div class="rectangles-container">
     <div class="admin-options">
         <a href="#" class="btn btn-success">Añadir Nueva Categoría</a>
     </div>
-{% endif %}
+</div>
+
 
 <div class="rectangles-container">
     <div class="medium-filled">
@@ -55,5 +44,81 @@
 
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
 <img src="{{ url_for('static', filename='img/video0.png')}}" class="usuarios" />
+
+<script>
+    function eliminarCategoria(id_tipo_video) {
+        if (!confirm('¿Estás seguro de eliminar esta categoría de video?')) {
+            return;
+        }
+
+        const payload = {
+            "procedure": "delete_json_entity",
+            "parameters": {
+                "table_name": "tipo_video",  // Cambia "cargo" al nombre correcto de la tabla si es diferente // Cambia "id_cargo" al nombre correcto del campo si es diferente
+                "where_condition": `id_tipo_video = ${id_tipo_video}`
+            }
+        };
+
+        fetch('/api/delete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+            .then(response => {
+                if (response.ok) {
+                    location.reload(); // Recargar la página después de eliminar
+                } else {
+                    console.error('Error al eliminar la categoría de video');
+                }
+            })
+            .catch(error => console.error('Error en la solicitud:', error));
+    }
+</script>
+
+<style>
+    .rectangles-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .video-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 150px;
+        margin: 10px;
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+    .rectangle-2108 {
+        text-align: center;
+    }
+
+    .curso-imagen {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        margin-bottom: 10px;
+    }
+
+    .btn-danger {
+        margin-top: 10px;
+        background-color: #d9534f;
+        border: none;
+        color: white;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .btn-danger:hover {
+        background-color: #c9302c;
+    }
+</style>
 
 {% endblock %}

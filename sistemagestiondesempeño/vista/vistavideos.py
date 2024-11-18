@@ -28,3 +28,15 @@ def vista_videos():
     #print("Videos filtrados:", filtered_videos)
     
     return render_template('videos.html', videos=filtered_videos)
+
+@vistavideos.route('/api/delete', methods=['POST'])
+@login_required
+def eliminar_categoria():
+    data = request.json
+    try:
+        response = requests.post(f"{API_URL}/procedures/execute", json=data)
+        response.raise_for_status()
+        return jsonify({"message": "Categoría eliminada exitosamente"}), 200
+    except requests.RequestException as e:
+        print(f"Error al eliminar la categoría: {e}")
+        return jsonify({"error": "Error al eliminar la categoría"}), 500
