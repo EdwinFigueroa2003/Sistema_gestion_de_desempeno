@@ -14,6 +14,7 @@ vistacursos = Blueprint('idcursos', __name__, template_folder='templates')
 def vista_cursos():
     try:
         cursos = requests.get(f"{API_URL}/tipo_curso").json()
+        #print(cursos)
     except requests.RequestException as e:
         print(f"Error al obtener los cursos: {e}")
         cursos = []
@@ -49,47 +50,28 @@ UPLOAD_FOLDER = 'static/img'  # Puedes cambiar esta ruta según tu estructura de
 # Definir los tipos de archivo permitidos (por ejemplo, imágenes JPEG, PNG)
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
-@vistacursos.route('/cursos/editar/<int:curso_id>', methods=['GET', 'POST'])
+
+@vistacursos.route('/cursos/eliminar/<int:id_tipo_curso>', methods=['GET'])
 @login_required
-def editar_curso(curso_id):
+def eliminar_curso(id_tipo_curso):
     if session['usuario']['fk_rol_usu'] != 1:
         return redirect(url_for('idcursos.vista_cursos'))
 
-    if request.method == 'POST':
-        nombre_tipo = request.form['nombre_tipo']
-        imagen = request.files['imagen']
+    print(f"Intentando eliminar el curso con ID: {id_tipo_curso}")  # Print para verificar el ID del curso
 
-        # Aquí actualizaríamos el curso en la base de datos
-        try:
-            #imagen_url = subir_imagen(imagen)  # Función ficticia para subir la imagen
-            payload = {
-                "nombre_tipo": nombre_tipo,
-                #"imagen": imagen_url,
+    try:
+        payload = {
+            "procedure": "delete_json_entity",
+            "parameters": {
+                "table_name": "tipo_curso",
+                "where_condition": f"id_tipo_curso = {id_tipo_curso}"
             }
-            requests.put(f"{API_URL}/tipo_curso/{curso_id}", json=payload)
-            return redirect(url_for('idcursos.vista_cursos'))
-        except Exception as e:
-            print(f"Error al editar el curso: {e}")
-            return redirect(url_for('idcursos.vista_cursos'))
-    
-    # Obtener datos del curso para mostrar en el formulario
-    try:
-        curso = requests.get(f"{API_URL}/tipo_curso/{curso_id}").json()
-    except requests.RequestException as e:
-        print(f"Error al obtener el curso: {e}")
-        curso = {}
+        }
+        print('Payload para eliminar:', payload)  # Print para verificar el payload
 
-    return render_template('vercurso.html', curso=curso)
+        response = requests.post(f"{API_URL}/procedures/execute", json=payload)
+        print('Respuesta de la API:', response.status_code, response.text)  # Print para verificar la respuesta de la API
 
-@vistacursos.route('/cursos/eliminar/<int:curso_id>', methods=['GET'])
-@login_required
-def eliminar_curso(curso_id):
-    if session['usuario']['fk_rol_usu'] != 1:
-        return redirect(url_for('idcursos.vista_cursos'))
-
-    # Lógica para eliminar el curso
-    try:
-        requests.delete(f"{API_URL}/tipo_curso/{curso_id}")
         return redirect(url_for('idcursos.vista_cursos'))
     except requests.RequestException as e:
         print(f"Error al eliminar el curso: {e}")

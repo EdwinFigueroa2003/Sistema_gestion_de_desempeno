@@ -33,8 +33,9 @@
         </a>
 
         {% if session['usuario']['fk_rol_usu'] == 1 %}
-        <a href="{{ url_for('idcursos.editar_curso', curso_id=curso.id_tipo_curso) }}" class="btn btn-warning">Editar</a>
-        <a href="{{ url_for('idcursos.eliminar_curso', curso_id=curso.id_tipo_curso) }}" class="btn btn-danger">Eliminar</a>
+        <a href="# class=" btn btn-warning">Editar</a>
+        <a href="{{ url_for('idcursos.eliminar_curso', id_tipo_curso=curso.id_tipo_curso) }}"
+            class="btn btn-danger">Eliminar</a>
         {% endif %}
 
     </div>
@@ -77,6 +78,32 @@
                 curso.style.display = "none";
             }
         });
+    }
+
+    function eliminarCurso(cursoId) {
+        const payload = {
+            procedure: "delete_json_entity",
+            parameters: {
+                table_name: "tipo_curso",
+                where_condition: `id_curso = ${cursoId}`
+            }
+        };
+
+        fetch('/api/delete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+            .then(response => {
+                if (response.ok) {
+                    location.reload(); // Recargar la página después de eliminar
+                } else {
+                    console.error('Error al eliminar el curso');
+                }
+            })
+            .catch(error => console.error('Error:', error));
     }
 
 </script>

@@ -121,7 +121,7 @@ app.register_blueprint(vistaasignarliderazgo)
 @app.route('/', methods = ['GET', 'POST'])
 
 @app.route('/inicio', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def get_presentacionGDD():
     return render_template('presentacionGDD.html')
 
