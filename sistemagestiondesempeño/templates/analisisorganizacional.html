@@ -17,7 +17,7 @@
         <div id="tab{{ dimension.id_dimension }}" class="tab">
             <div class="frame-2337">
                 <a href="{{ url_for('idanalisisorganizacional.get_preguntas_respuestas', id_dimension=dimension.id_dimension) }}"
-                    class="tooltip-dimension">
+                    class="tooltip-dimension" onclick="hideButton()">
                     {{ dimension.nombre_dimension }}
                     <span class="tooltip-text">{{ dimension.definicion_dimension }}</span>
                 </a>
@@ -25,6 +25,12 @@
         </div>
         {% endfor %}
     </div>
+
+<!--     <div class="tab-content1">
+        <button id="pdfButton" class="boton" onclick="openPDF()">Ver PDF</button>
+    </div> -->
+
+
 </div>
 
 {% if pregunta_actual %}
@@ -107,6 +113,21 @@
     .titulo-dimension {
         margin-top: -45px;
     }
+
+    .boton {
+        background-color: aqua;
+    }
 </style>
+
+<script>
+    function hideButton() {
+        // Ocultar el botón PDF
+        document.getElementById('pdfButton').style.display = 'none';
+    }
+
+    function openPDF() {
+        window.open("{{ url_for('static', filename='document/analisis_organizacional.pdf') }}", '_blank');
+    }
+</script>
 
 {% endblock %}

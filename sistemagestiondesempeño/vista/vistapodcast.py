@@ -38,3 +38,38 @@ def vista_podcast():
     print("Podcasts a renderizar:", podcasts)
 
     return render_template('podcast.html', podcasts=podcasts)
+
+def eliminar_podcast_por_id(id_tipo_podcast):
+    print(f"Eliminando podcast con ID: {id_tipo_podcast}")
+    payload = {
+        "procedure": "delete_json_entity",
+        "parameters": {
+            "table_name": "tipo_podcast",
+            "where_condition": f"id_tipo_podcast = {id_tipo_podcast}"
+        }
+    }
+    try:
+        print("Enviando solicitud de eliminación a la API con payload:", payload)
+        response = requests.post(f"{API_URL}/procedures/execute", json=payload)
+        response.raise_for_status()
+        print("El podcast fue eliminado exitosamente.")
+        return True
+    except requests.RequestException as e:
+        print(f"Error al eliminar el podcast: {e}")
+        return False
+
+@vistapodcast.route('/api/delete', methods=['POST'])
+@login_required
+def eliminar_podcast():
+    data = request.json
+    print("Datos recibidos para eliminar podcast:", data)
+    id_tipo_podcast = data.get('id_tipo_podcast')
+    if not id_tipo_podcast:
+        print("Error: ID de podcast no proporcionado.")
+        return jsonify({"error": "ID de podcast no proporcionado"}), 400
+
+    if eliminar_podcast_por_id(id_tipo_podcast):
+        return jsonify({"message": "Podcast eliminado exitosamente"}), 200
+    else:
+        return jsonify({"error": "Error al eliminar el podcast"}), 500
+

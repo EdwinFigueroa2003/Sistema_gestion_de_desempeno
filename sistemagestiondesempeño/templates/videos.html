@@ -29,11 +29,13 @@
     {% endfor %}
 </div>
 
+{% if session['usuario']['fk_rol_usu'] == 1 %}
 <div class="rectangles-container">
     <div class="admin-options">
         <a href="#" class="btn btn-success">Añadir Nueva Categoría</a>
     </div>
 </div>
+{% endif %}
 
 
 <div class="rectangles-container">

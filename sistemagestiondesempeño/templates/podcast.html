@@ -22,21 +22,21 @@
                 <p class="podcast-description">{{ podcast.descripcion }}</p>
             </div>
         </a>
+
+        {% if session['usuario']['fk_rol_usu'] == 1 %}
+        <!-- Botones de Editar y Eliminar para el rol de administrador -->
+        <div class="d-flex justify-content-between mt-2">
+<!--             <a href="#"
+                class="btn btn-warning btn-sm">Editar</a> -->
+                <button class="btn btn-danger btn-sm" onclick="eliminarPodcast('{{ podcast.id_tipo_podcast }}')">Eliminar</button>
+        </div>
+        {% endif %}
+
     </div>
     {% endfor %}
 </div>
 
-{% if session['usuario']['fk_rol_usu'] == 1 %}
-<!-- Botones de Editar y Eliminar para el rol de administrador -->
-<div class="d-flex justify-content-between mt-2">
-    <a href="#"
-        class="btn btn-warning btn-sm">Editar</a>
-    <form action="#" method="POST"
-        onsubmit="return confirm('¿Estás seguro de que deseas eliminar este podcast?');">
-        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-    </form>
-</div>
-{% endif %}
+
 
 <div class="rectangles-container">
     <div class="medium-filled">
@@ -82,5 +82,33 @@
         color: #666;
     }
 </style>
+
+<script>
+    function eliminarPodcast(id_tipo_podcast) {
+        console.log(`Intentando eliminar el podcast con ID: ${id_tipo_podcast}`);
+        if (!confirm('¿Estás seguro de eliminar este podcast?')) {
+            console.log("Eliminación cancelada por el usuario.");
+            return;
+        }
+
+        fetch('/api/delete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id_tipo_podcast: id_tipo_podcast })
+        })
+        .then(response => {
+            console.log(`Respuesta del servidor: ${response.status}`);
+            if (response.ok) {
+                console.log("El podcast fue eliminado exitosamente.");
+                location.reload(); // Recargar la página después de eliminar
+            } else {
+                console.error('Error al eliminar el podcast:', response.statusText);
+            }
+        })
+        .catch(error => console.error('Error en la solicitud:', error));
+    }
+</script>
 
 {% endblock %}

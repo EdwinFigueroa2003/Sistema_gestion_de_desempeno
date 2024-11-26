@@ -35,29 +35,3 @@ def vista_ver_video():
 
     return render_template('vervideo.html', videos=videos, video_seleccionado=video_seleccionado, tipo_video_id=tipo_video_id)
 
-@vistavervideo.route('/vervideo/editar/<int:video_id>', methods=['GET', 'POST'])
-@login_required
-def editar_video(video_id):
-    if session['usuario']['fk_rol_usu'] != 1:
-        flash("No tienes permiso para editar videos", "error")
-        return redirect(url_for('idvervideo.vista_ver_video'))
-
-    if request.method == 'POST':
-        # Obtener datos del formulario
-        titulo = request.form['titulo']
-        descripcion = request.form['descripcion']
-        url = request.form['url']
-        
-        # Enviar solicitud de actualización a la API
-        try:
-            response = requests.put(f"{API_URL}/videos/{video_id}", json={'titulo': titulo, 'descripcion': descripcion, 'url': url})
-            response.raise_for_status()
-            flash("Video actualizado con éxito", "success")
-            return redirect(url_for('idvervideo.vista_ver_video', video_id=video_id))
-        except requests.RequestException as e:
-            flash(f"Error al actualizar el video: {e}", "error")
-            return redirect(url_for('idvervideo.vista_ver_video', video_id=video_id))
-
-    # Obtener datos del video para prellenar el formulario
-    video = requests.get(f"{API_URL}/videos/{video_id}").json()
-    return render_template('editar_video.html', video=video)
