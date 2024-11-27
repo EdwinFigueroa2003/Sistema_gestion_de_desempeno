@@ -86,6 +86,10 @@
 <script>
     function eliminarPodcast(id_tipo_podcast) {
         console.log(`Intentando eliminar el podcast con ID: ${id_tipo_podcast}`);
+        
+        // Imprimir el ID del podcast que se va a eliminar
+        console.log(`ID del podcast a eliminar: ${id_tipo_podcast}`);
+        
         if (!confirm('¿Estás seguro de eliminar este podcast?')) {
             console.log("Eliminación cancelada por el usuario.");
             return;

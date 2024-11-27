@@ -33,19 +33,19 @@
                 <span class="close" onclick="closeModal()">&times;</span>
                 <form action="{{ url_for('idconfiguracion.vista_configuracion') }}" method="post">
                     <label for="nombre">Nombre:</label>
-                    <input type="text" id="nombre" name="nombre">
+                    <input type="text" id="nombre" name="nombre" value="{{ usuario['nombre'] }}">
                     <br>
 
                     <label for="facultad">Facultad:</label>
-                    <input type="text" id="facultad" name="facultad">
+                    <input type="text" id="facultad" name="facultad" value="{{ usuario['facultad'] }}">
                     <br>
 
                     <label for="cargo">Cargo:</label>
-                    <input type="text" id="cargo" name="cargo">
+                    <input type="text" id="cargo" name="cargo" value="{{ usuario['fk_cargo_usu'] }}">
                     <br>
 
                     <label for="foto">Foto:</label>
-                    <input type="text" id="foto_usu" name="foto_usu">
+                    <input type="text" id="foto_usu" name="foto_usu" value="{{ usuario['foto_usu'] }}">
                     <br>
 
                     <button type="submit">Guardar cambios</button>

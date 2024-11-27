@@ -41,6 +41,10 @@ def vista_podcast():
 
 def eliminar_podcast_por_id(id_tipo_podcast):
     print(f"Eliminando podcast con ID: {id_tipo_podcast}")
+    
+    # Aquí puedes agregar un print para mostrar el ID que se va a eliminar
+    print(f"ID del podcast a eliminar: {id_tipo_podcast}")
+    
     payload = {
         "procedure": "delete_json_entity",
         "parameters": {
@@ -48,6 +52,10 @@ def eliminar_podcast_por_id(id_tipo_podcast):
             "where_condition": f"id_tipo_podcast = {id_tipo_podcast}"
         }
     }
+    
+    # Imprimir el payload que se enviará a la API
+    print("Payload enviado:", payload)
+    
     try:
         print("Enviando solicitud de eliminación a la API con payload:", payload)
         response = requests.post(f"{API_URL}/procedures/execute", json=payload)
@@ -56,9 +64,11 @@ def eliminar_podcast_por_id(id_tipo_podcast):
         return True
     except requests.RequestException as e:
         print(f"Error al eliminar el podcast: {e}")
+        if e.response is not None:
+            print("Respuesta del servidor:", e.response.text)
         return False
 
-@vistapodcast.route('/api/delete', methods=['POST'])
+@vistapodcast.route('/podcast', methods=['POST'])
 @login_required
 def eliminar_podcast():
     data = request.json
