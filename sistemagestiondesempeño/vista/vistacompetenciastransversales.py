@@ -115,6 +115,7 @@ def editar_pregunta(pregunta_id):
 
         try:
             # Enviar los datos editados a la API
+            #response = requests.post(f"{API_URL}/procedures/execute", json=update_data)
             response = requests.post(f"http://127.0.0.1:5184/api/sgd/editar_pregunta", json=datos_edicion, timeout=10)
             response.raise_for_status()
             flash("Pregunta y respuestas editadas correctamente.", "success")

@@ -79,10 +79,8 @@
     <form method="POST"
         action="{{ url_for('idcompetenciastransversales.editar_pregunta', pregunta_id=pregunta.id_pregunta) }}">
         <!-- Campo para editar la competencia (si es necesario) -->
-        <div class="form-group">
-            <label for="competencia">Competencia:</label>
-            <input type="text" id="competencia" name="competencia" value="{{ pregunta.competencia }}">
-        </div>
+        
+            <titulo-dimension for="competencia">Competencia:</titulo-dimension>{{ pregunta.competencia }}
 
         <!-- Campo para editar el texto de la pregunta -->
         <div class="form-group">

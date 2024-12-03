@@ -81,16 +81,17 @@
     <form method="POST" action="#">
         <input type="hidden" name="pregunta_id" value="{{ pregunta.pregunta }}">
         <label for="competencia">Competencia:</label>
-        <input type="text" id="competencia" name="competencia" value="{{ pregunta.competencia }}">
-
+        <titulo-dimension>Competencia: </titulo-dimension> {{ pregunta.competencia }}
+        <br>
         <label for="texto_pregunta">Texto de la Pregunta:</label>
+        <br>
         <textarea id="texto_pregunta" name="texto_pregunta">{{ pregunta.id_seccion_pregunta }}</textarea>
 
         {% for respuesta in pregunta.respuestas %}
         <div class="edit-respuesta">
             <label for="respuesta{{ respuesta.id_respuesta }}">Respuesta {{ loop.index }}:</label>
-            <input type="text" id="respuesta{{ respuesta.id_respuesta }}"
-                name="respuestas[{{ respuesta.id_respuesta }}]" value="{{ respuesta.texto_respuesta }}">
+            <input type="text" id="respuesta{{ respuesta.respuestas }}"
+                name="respuestas[{{ respuesta.respuestas }}]" value="{{ respuesta.respuestas}}">
         </div>
         {% endfor %}
 
@@ -106,6 +107,5 @@
 
 <img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
 <img src="{{ url_for('static', filename='img/ensenar0.png')}}" class="usuarios" />
-</div>
 
 {% endblock %}

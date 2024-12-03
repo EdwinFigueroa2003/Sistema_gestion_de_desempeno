@@ -13,5 +13,18 @@ vistaasignarliderazgo = Blueprint('idasignarliderazgo', __name__, template_folde
 @login_required
 def vista_asignarliderazgo():
 
+    # Hacer una solicitud GET a la API para obtener los usuarios
+    try:
+        response = requests.get(f'{API_URL}/usuario', timeout=10)
+
+        if response.status_code == 200:
+            usuarios = response.json()  # Parsear la respuesta en JSON
+            print('usuarios')
+        else:
+            usuarios = []  # En caso de que haya un error
+    except Exception as e:
+        print(f"Error al conectar con la API: {e}")
+        usuarios = []
+
     # Pasar la lista de usuarios a la plantilla
-    return render_template('asignarliderazgo.html')
+    return render_template('asignarliderazgo.html', usuarios= usuarios)
