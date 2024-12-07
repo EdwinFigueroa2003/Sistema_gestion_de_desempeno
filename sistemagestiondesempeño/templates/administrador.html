@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block title %}Administrador{% endblock %}
+
+{% block content %}
+
+<h1 class="main-title">Administrador</h1>
+
+<hr class="divider">
+<h2>Bienvenido Administrador:</h2>
+
+<div class="apartados">
+    <h3>Que apartados deseas modificar:</h3>
+
+    <a href="/gestiondeldesempeno" class="volver">GESTIÓN DEL DESEMPEÑO</a>
+    <br>
+    <a href="/gestiondeldesarrollo" class="volver">GESTIÓN DEL DESARROLLO</a>
+    <br>
+    <a href="/equipo" class="volver">EQUIPO</a>
+</div>
+
+<img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+
+<style>
+    
+    .apartados {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: -10px;
+            margin-left: 20px;
+        }
+
+        .apartados a {
+            display: block;
+            background: linear-gradient(to right, #4ED6FB, #3EB1F8, #2C88F3);
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            color: black;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .apartados a:hover {
+            background-color: #f0f0f0;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+</style>
+{% endblock%}

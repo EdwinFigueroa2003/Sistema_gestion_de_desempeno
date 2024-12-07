@@ -1,0 +1,188 @@
+{% extends "layout.html" %}
+
+{% block title %}Medición de Potencial{% endblock %}
+
+{% block content %}
+
+<h1 class="main-title">GESTIÓN DEL DESEMPEÑO</h1>
+<hr class="divider">
+
+{% if session['usuario']['fk_rol_usu'] == 2 %}
+<div class="rectangle-2111">
+    <div class="circle-wrapper">
+        <div class="circle"></div>
+    </div>
+    <nombre>Edwin Figueroa</nombre>
+</div>
+
+
+
+<div class="progress-container">
+    <label for="progress">Progreso:</label>
+    <progress id="progress" value="{{ current_index + 1 }}" max="{{ total_preguntas }}"></progress>
+    <span>{{ current_index + 1 }} de {{ total_preguntas }}</span>
+</div>
+
+</div>
+
+
+{% if pregunta_actual %}
+<div class="pregunta">
+    <div class="questionnaire-container">
+
+        {% if dimension_actual and dimension_actual|length > 0 %}
+        <div class="dimension-info">
+            <titulo-dimension>Dimensión: </titulo-dimension> {{ dimension_actual[0]['nombre'] }}
+        </div>
+        {% endif %}
+
+
+        <form method="POST"
+            action="{{ url_for('idmediciondepotencial.vista_medicion_potencial', current_index=current_index) }}">
+
+            <div class="pregunta-dimension">
+                <texto-pregunta>{{ pregunta_actual['pregunta'] }}</texto-pregunta>
+            </div>
+
+            <!-- Mostrar las respuestas disponibles -->
+            <div class="cuadro-respuestas">
+                {% for respuesta in respuestas %}
+                <div class="opcion-respuesta">
+                    <input type="radio" id="respuesta{{ respuesta['id_dimension_mp_respuesta'] }}" name="respuesta"
+                        value="{{ respuesta['id_dimension_mp_respuesta'] }}" required>
+                    <label for="respuesta{{ respuesta['id_dimension_mp_respuesta'] }}">
+                        <span class="custom-radio"></span>
+                        {{ respuesta['respuesta_mp'] }}
+                    </label>
+                </div>
+                {% endfor %}
+
+                <!-- Botones de navegación -->
+                <div class="navegacion">
+                    <div class="btn">
+                        <a href="/informe/edwin.figueroa@usbmed.edu.co" class="volver1">VOLVER</a>
+                    </div>
+
+                    <div class="btn">
+                        <button type="submit" name="previous" class="btn boton-atras">
+                            <span class="atras">Atrás</span>
+                        </button>
+                    </div>
+
+                    <div class="btn">
+                        <button type="submit" name="next" class="btn boton-siguiente">
+                            <span class="siguiente">Siguiente</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <input type="hidden" name="current_index" value="{{ current_index + 1 }}">
+        </form>
+    </div>
+</div>
+{% else %}
+<p>No hay preguntas disponibles.</p>
+{% endif %}
+
+{% endif %}
+
+{% if session['usuario']['fk_rol_usu'] == 1 %}
+<div class="titulo-dimension">
+    <h3>MEDICIÓN DE POTENCIAL</h3>
+</div>
+<br>
+<div class="titulo">
+    <h3>Editar Pregunta y Respuesta</h3>
+</div>
+
+<form method="POST"
+    action="{{ url_for('idmediciondepotencial.editar_pregunta', id_pregunta=pregunta_actual['id_dimension_mp_pregunta']) }}">
+    <div class="pregunta-dimension">
+        <label for="pregunta">Pregunta:</label>
+        <input type="text" id="pregunta" name="pregunta" value="{{ pregunta_actual['pregunta'] }}" required>
+    </div>
+
+    <!-- Mostrar las respuestas disponibles para edición -->
+    <div class="cuadro-respuestas">
+        {% for respuesta in respuestas %}
+        <div class="opcion-respuesta">
+            <label for="respuesta{{ respuesta['id_dimension_mp_respuesta'] }}">
+                Respuesta:
+                <input type="text" id="respuesta{{ respuesta['id_dimension_mp_respuesta'] }}"
+                    name="respuesta_{{ respuesta['id_dimension_mp_respuesta'] }}"
+                    value="{{ respuesta['respuesta_mp'] }}">
+            </label>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="btn">
+        <button type="submit" class="btn boton-guardar">
+            <span>Guardar Cambios</span>
+        </button>
+    </div>
+</form>
+
+<div class="btn">
+    <a href="/equipo" class="volver">
+        <div class="medium-filled">
+            VOLVER
+        </div>
+    </a>
+</div>
+{% endif %}
+
+
+<img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+<img src="{{ url_for('static', filename='img/proyecto-10.png')}}" class="usuarios" />
+
+<style>
+    .dimension-info {
+        font-size: 20px;
+        margin-bottom: 5px;
+    }
+
+    .pregunta {
+        margin-left: 360px;
+    }
+
+    titulo-dimension {
+        color: #1100ff;
+        top: 50px;
+        font-family: Arial, Helvetica, sans-serif;
+        margin-top: 5px;
+    }
+
+    .cuadro-respuestas,
+    .cuadro-respuestas * {
+        box-sizing: border-box;
+    }
+
+    .cuadro-respuestas {
+        background: #e6f5f7;
+        color: #000;
+        border-radius: 16px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 925px; 
+        row-gap: 0px;
+        align-items: flex-start;
+        justify-content: flex-start;
+        position: relative;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        margin-top: 15px;
+    }
+
+    .titulo{
+        margin-top: 30px;
+        margin-left: -300px;
+    }
+
+    
+</style>
+
+
+{% endblock %}

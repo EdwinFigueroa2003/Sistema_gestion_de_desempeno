@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+
+{% block title %}Ver Video{% endblock %}
+
+{% block content %}
+<h1 class="main-title">Videos Relacionados</h1>
+
+<hr class="divider">
+
+{% if video_seleccionado %}
+<titulo_video>{{ video_seleccionado.titulo }}</titulo_video>
+<div class="video-container">
+    <iframe width="560" height="315" src="{{ video_seleccionado.url | replace('watch?v=', 'embed/') }}" frameborder="0"
+        allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div>
+<descripcion>{{ video_seleccionado.descripcion }}</descripcion>
+{% endif %}
+
+{% if session['usuario']['fk_rol_usu'] == 1 %}
+<div class="admin-options">
+    <a href="#" class="btn btn-primary">Editar Información del video</a>
+</div>
+{% endif %}
+
+<div class="video-list">
+    <otros_videos>Más videos:</otros_videos>
+    {% for video in videos %}
+    {% if not video_seleccionado or video.id != video_seleccionado.id %}
+    <div class="video-item">
+        <a href="{{ url_for('idvervideo.vista_ver_video', tipo_video_id=tipo_video_id, video_id=video.id) }}">
+            <h4>{{ video.titulo }}</h4>
+            <img src="{{ video.miniatura_url }}" alt="{{ video.titulo }}" width="50">
+        </a>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+
+<div class="rectangles-container">
+    <div class="medium-filled">
+        <a href="{{ url_for('idvideos.vista_videos') }}" class="volver">VOLVER</a>
+    </div>
+</div>
+
+<img src="{{ url_for('static', filename='img/mariposa0.png')}}" class="mariposa" />
+<img src="{{ url_for('static', filename='img/video0.png')}}" class="usuarios" />
+
+<style>
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        /* 16:9 aspect ratio */
+        height: 0;
+        margin-bottom: -70px;
+    }
+
+    titulo_video {
+        color: #000;
+        font-size: 25px;
+        font-weight: 700;
+        line-height: normal;
+        z-index: 1000;
+        margin-bottom: 10px;
+    }
+
+    otros_videos {
+        color: #000;
+        font-size: 25px;
+        font-weight: 700;
+        line-height: normal;
+        z-index: 1000;
+        margin-top: 20px;
+    }
+
+    descripcion {
+        color: #000;
+        font-size: 15px;
+        font-weight: 10;
+        line-height: normal;
+        z-index: 1000;
+        margin-top: -100px;
+    }
+</style>
+
+{% endblock %}

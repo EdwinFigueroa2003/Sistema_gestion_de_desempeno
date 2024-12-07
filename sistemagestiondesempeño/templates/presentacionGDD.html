@@ -2,14 +2,15 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Presentación</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
 
     <style>
         body {
@@ -18,7 +19,9 @@
         }
 
         .inicio {
-            background: linear-gradient(242.76deg, rgba(203, 46, 242, 0.51) 0%, rgba(255, 84, 94, 1) 100%);
+            background: linear-gradient(242.76deg,
+                    rgba(203, 46, 242, 0.51) 0%,
+                    rgba(255, 84, 94, 1) 100%);
             min-height: 100vh;
             /* 100% de la altura del viewport */
             position: relative;
@@ -90,8 +93,10 @@
                     rgba(40, 128, 242, 1) 100%);
             color: #ffffff;
             border-radius: 10px;
-            font-family: "NexaBold-Regular", sans-serif;  /* Cambia el estilo de letra */
-            font-size: 18px;  /* Ajusta el tamaño de la letra */
+            font-family: "NexaBold-Regular", sans-serif;
+            /* Cambia el estilo de letra */
+            font-size: 18px;
+            /* Ajusta el tamaño de la letra */
             text-align: center;
             display: flex;
             justify-content: center;
@@ -106,7 +111,7 @@
         }
 
         .rectangle-2101:hover {
-            background-image: linear-gradient(to right, #D99DE2, #ffffff);
+            background-image: linear-gradient(to right, #d99de2, #ffffff);
         }
 
         .rectangles-container {
@@ -122,30 +127,49 @@
 <body>
     <div class="inicio">
         <div class="titulo">
-            SISTEMA DE <br>
-            GESTIÓN DEL <br>
-            DESEMPEÑO.
+            SISTEMA DE <br />
+            GESTIÓN DEL <br />
+            DESEMPEÑO
         </div>
         <div class="descripcion">
-            Área donde los estudiantes, lideres, colaboradores y <br>
-            Administrativos
-            realizamos actividades para <br>
-            El crecimiento de todos
+            Área donde los estudiantes, lideres, colaboradores y <br />
+            administrativos realizamos actividades para <br />
+            el crecimiento de todos.
         </div>
-
+<!--         <div class="desarrolladores">
+            Aplicación realizada por: <br />
+            Edwin Junior Figueroa de la Cuesta <br />
+            Jaider Alfonso Perez Gutierrez <br />
+            Carlos Arturo Castro Castro
+        </div> -->
 
         <div class="rectangles-container">
-            <a href="/inicio">
+            <a href="/login">
                 <div class="rectangle-2101">
                     <h1>Entrar</h1>
                 </div>
             </a>
-
         </div>
 
         <img src="{{ url_for('static', filename='img/mariposa0.png') }}" class="mariposa" />
         <img src="{{ url_for('static', filename='img/group-10.png') }}" class="group-1" />
+
     </div>
 </body>
 
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 </html>
+
+<style>
+    .desarrolladores {
+        color: #ffffff;
+        margin-top: 510px;
+        margin-left: 25px;
+    }
+</style>
